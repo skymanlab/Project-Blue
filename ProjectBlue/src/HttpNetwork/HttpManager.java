@@ -1,18 +1,26 @@
 package HttpNetwork;
 
 import Data.HangleData;
+import Developer.DeveloperManager;
 import Enums.PrintType;
 
 public class HttpManager {
-
-	private final PrintType PRINT_TYPE = PrintType.ON;
 	
+	/*
+	 * ====================================================================================
+	 * Kakao API를 사용하기 위해 HttpConnector 객체를 생성하고,
+	 * 이 객체를 관리하는 Manager 클래스이다.
+	 * ====================================================================================
+	 */
+	// variable
 	private HttpConnector connector;
 
+	// Constructor
 	public HttpManager(HttpConnector connector) {
 		this.connector = connector;
 	}
 
+	// method
 	public String startManager() {
 		String response = null;
 
@@ -26,25 +34,16 @@ public class HttpManager {
 				// 3. Whether success response message getting
 				if (connector.isSuccessable()) {
 					connector.close();
-					printDeveloperMessage("HttpManager : httpURLConnection object disconnect() success");
+					DeveloperManager.printDeveloperMessage("HttpManager : httpURLConnection object disconnect() success");
 				} else {
-					printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_3);					
+					DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_3);
 				}
 			} else {
-				printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_2);					
+				DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_2);
 			}
 		} else {
-			printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_1);					
+			DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_1);
 		}
 		return response;
-	}
-
-	// print developer message
-	private void printDeveloperMessage(String message) {
-		if (PRINT_TYPE == PRINT_TYPE.ON) {
-			System.out.println(message);
-		} else {
-
-		}
 	}
 }

@@ -1,10 +1,14 @@
 package HttpRequest;
 
+import Developer.DeveloperManager;
 import Enums.PrintType;
 
 public class HttpParameterData {
-
-	private final static PrintType PRINT_TYPE = PrintType.ON;
+	/*
+	 * ====================================================================================
+	 * Kakao API를 사용할 때, url 에 실어보 낼 Query String 만들고 관리하는 클래스이다.
+	 * ====================================================================================
+	 */
 
 	/*
 	 * ====================  인증 코드 받기  ====================
@@ -48,7 +52,7 @@ public class HttpParameterData {
 		domain.append("&response_type=");
 		domain.append("code");
 
-		printDeveloperMessage("domain : " + domain.toString());
+		DeveloperManager.printDeveloperMessage("domain : " + domain.toString());
 		return domain.toString();
 	}
 
@@ -101,8 +105,7 @@ public class HttpParameterData {
 		domain.append(code);
 		// post ++ 5. client_secret
 		domain.append("&client_secret=");
-
-		printDeveloperMessage("domain : " + domain.toString());
+		DeveloperManager.printDeveloperMessage("domain : " + domain.toString());
 		return domain.toString();
 	}
 
@@ -186,18 +189,7 @@ public class HttpParameterData {
 		domain.append("&state=");
 		domain.append(LOGOUT_UNLINK_STATE);
 
-		printDeveloperMessage("HttpParameterData : " +domain.toString());
+		DeveloperManager.printDeveloperMessage("HttpParameterData : " +domain.toString());
 		return domain.toString();
-	}
-
-	/*
-	 *  developer message print
-	 */
-	public static void printDeveloperMessage(String message) {
-		if (PRINT_TYPE == PRINT_TYPE.ON) {
-			System.out.println(message);
-		} else {
-
-		}
 	}
 }

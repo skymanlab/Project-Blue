@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import Developer.DeveloperManager;
 import Enums.PrintType;
 import Enums.RequestType;
 import HttpNetwork.HttpConnector;
@@ -19,31 +20,20 @@ import HttpRequest.HttpParameterData;
 import HttpResponse.ResponseTokenData;
 import HttpResponse.ResponseUserInfoData;
 
-/**
- * Servlet implementation class LoginServlet
- */
+
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private final PrintType PRINT_TYPE = PrintType.ON;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+	
 	public LoginServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// step 0. html 臾몄꽌 encoding 諛⑹떇 �꽕�젙
+		// step 0. html encoding setting / request, response : UTF-8
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -52,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String error_description = request.getParameter("error_description");
 		String error = request.getParameter("error");
 
-		// Access Token Request
+		// Access Token Request ( 카카오 로그인 / REST API / 인증 코드 받기 )
 		// ===============================================================================
 		// step 2. Request - Post Method : Access Token
 		HttpConnector connector_request_1 = new HttpConnector(
@@ -61,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 
 		// step 3. Json Object Receive - Response : Access Token
 		String access_token_data = manager_request_1.startManager();
-		printDeveloperMessage(access_token_data);
+		DeveloperManager.printDeveloperMessage(access_token_data);
 
 		// step 4. Json Object parsing : Access Token
 		Gson gson = new Gson();
@@ -71,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 		// step 5. session - ResponseTokenData object : Access Token
 		request.getSession().setAttribute("session_token", responseTokenData);
 
-		// User Info Request
+		// User Info Request ( 카카오 로그인 / REST API / 사용자 관리 )
 		// ===============================================================================
 		// step 6. Request - setting HashMap to make : User Info
 		HashMap<String, String> setting = new HashMap<String, String>();
@@ -85,7 +75,7 @@ public class LoginServlet extends HttpServlet {
 
 		// step 8. Json Object Receive - Response : User Info
 		String user_info_data = manager_request_2.startManager();
-		printDeveloperMessage(user_info_data);
+		DeveloperManager.printDeveloperMessage(user_info_data);
 
 		// step 9. Json Object parsing : User Info
 		ResponseUserInfoData responseUserInfoData = gson.fromJson(user_info_data, ResponseUserInfoData.class);
@@ -93,29 +83,16 @@ public class LoginServlet extends HttpServlet {
 
 		// step 10. session - ResponseUserInfoData object : User Info
 		request.getSession().setAttribute("session_user_info", responseUserInfoData);
-		printDeveloperMessage("LoginServlet : " + responseUserInfoData.getId());
+		DeveloperManager.printDeveloperMessage("LoginServlet : " + responseUserInfoData.getId());
 
 		// step 11. next page - main.jsp
 		// ===============================================================================
 		response.sendRedirect("index.jsp");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-
-	// print developer message
-	private void printDeveloperMessage(String message) {
-		if (PRINT_TYPE == PRINT_TYPE.ON) {
-			System.out.println(message);
-		} else {
-
-		}
 	}
 }

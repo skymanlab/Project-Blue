@@ -1,12 +1,27 @@
 package HttpResponse;
 
+import Developer.DeveloperManager;
 import Enums.PrintType;
 
 public class ResponseTokenData {
 	
-	// constant
-	private final PrintType PRINT_TYPE = PrintType.ON;
-	// 변수
+	/*
+	 * ====================================================================================
+	 * 카카오 로그인 / REST API / 사용자 토큰 받기 / Response / Json 객체
+	 * - LoginServlet / step 4.
+	 * - Example
+	 *	{
+	 *		"token_type":"bearer",
+     *		"access_token":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     *		"expires_in":43199,
+     *		"refresh_token":"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+     *		"refresh_token_expires_in":25184000,
+     *		"scope":"account_email profile"
+	 *	}
+	 * ====================================================================================
+	 */
+	
+	// variable
 	private String token_type;
 	private String access_token;
 	private int expires_in;
@@ -14,7 +29,19 @@ public class ResponseTokenData {
 	private int refresh_token_expires_in;
 	private String scope;
 	
-	// getter, setter method
+	// Constructor
+	public ResponseTokenData(String token_type, String access_token, int expires_in, String refresh_token,
+			int refresh_token_expires_in, String scope) {
+		super();
+		this.token_type = token_type;
+		this.access_token = access_token;
+		this.expires_in = expires_in;
+		this.refresh_token = refresh_token;
+		this.refresh_token_expires_in = refresh_token_expires_in;
+		this.scope = scope;
+	}
+	
+	// method : getter, setter
 	public String getToken_type() {
 		return token_type;
 	}
@@ -52,7 +79,7 @@ public class ResponseTokenData {
 		this.scope = scope;
 	}
 	
-	// method : print
+	// method : parameter print
 	public void printParameter() {
 		StringBuilder jsonParsingData = new StringBuilder();
 		
@@ -72,12 +99,6 @@ public class ResponseTokenData {
 		jsonParsingData.append("<<Json parsing data>>\n");
 		jsonParsingData.append("<<       end       >>\n");
 		
-		printDeveloperMessage(jsonParsingData.toString());
-	}
-	
-	// method : developer message
-	private void printDeveloperMessage(String message) {
-		if (PRINT_TYPE == PrintType.ON)
-			System.out.println(message);
+		DeveloperManager.printDeveloperMessage(jsonParsingData.toString());
 	}
 }

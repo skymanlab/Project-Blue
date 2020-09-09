@@ -11,13 +11,18 @@ import java.util.Iterator;
 import java.util.Map;
 
 import Data.HangleData;
+import Developer.DeveloperManager;
 import Enums.PrintType;
 import Enums.RequestType;
 
 public class HttpConnector {
-
-	private final PrintType PRINT_TYPE = PrintType.ON;
-
+	
+	/*
+	 * ====================================================================================
+	 * Kakao API를 사용하기 위해 HttpURLConnector으로 통신연결을 하는 Connecotr 클래스이다.
+	 * ====================================================================================
+	 */
+	// variable
 	private String domain;
 	private RequestType requestType;
 	private String dataType;
@@ -31,6 +36,7 @@ public class HttpConnector {
 	private boolean streamable;
 	private boolean successable;
 
+	// Constructor
 	public HttpConnector(String domain, RequestType requestType, String dataType) {
 		this.domain = domain;
 		this.requestType = requestType;
@@ -50,6 +56,7 @@ public class HttpConnector {
 		this.successable = false;
 	}
 
+	// method : getter, setter
 	public boolean isConnectable() {
 		return connectable;
 	}
@@ -62,10 +69,11 @@ public class HttpConnector {
 		return successable;
 	}
 
+	// method
 	// step1. Http Newtork Connection
 	public void openConnection() {
 		try {
-			printDeveloperMessage("domain :" + domain);
+			DeveloperManager.printDeveloperMessage("domain :" + domain);
 			url = new URL(domain);
 			connector = (HttpURLConnection) url.openConnection();
 
@@ -81,11 +89,11 @@ public class HttpConnector {
 				while (iterator.hasNext()) {
 					Map.Entry entry = (Map.Entry) iterator.next();
 					connector.setRequestProperty(entry.getKey().toString(), entry.getValue().toString());
-					printDeveloperMessage("HttpConnector : data name = " + entry.getKey());
-					printDeveloperMessage("HttpConnector : value = " + entry.getValue());
+					DeveloperManager.printDeveloperMessage("HttpConnector : data name = " + entry.getKey());
+					DeveloperManager.printDeveloperMessage("HttpConnector : value = " + entry.getValue());
 				}
 			} else {
-				printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
+				DeveloperManager.printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
 			}
 
 			connector.setDoInput(true);
@@ -109,7 +117,7 @@ public class HttpConnector {
 			} else {
 			}
 		} catch (IOException ioe) {
-			printDeveloperMessage("HttpConnector : 뭐냐 왜 못 가져오냐?");
+			DeveloperManager.printDeveloperMessage("HttpConnector : 뭐냐 왜 못 가져오냐?");
 			ioe.printStackTrace();
 		}
 	}
@@ -129,7 +137,7 @@ public class HttpConnector {
 			} else if (dataType.equals("UnlimitedLine")) {
 				unlimitedLine(response);
 			} else {
-				printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_NOTING_DATATYPE_MESSAGE);
+				DeveloperManager.printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_NOTING_DATATYPE_MESSAGE);
 			}
 		}
 		return response.toString();
@@ -187,16 +195,7 @@ public class HttpConnector {
 		}
 	}
 
-	// print developer message
-	private void printDeveloperMessage(String message) {
-		if (PRINT_TYPE == PRINT_TYPE.ON) {
-			System.out.println(message);
-		} else {
-
-		}
-	}
-
-	// http connection one step
+	// method : http connection one step
 	public String start() {
 		StringBuilder responseMessage = new StringBuilder();
 
@@ -219,11 +218,11 @@ public class HttpConnector {
 				while (iterator.hasNext()) {
 					Map.Entry entry = (Map.Entry) iterator.next();
 					connector.setRequestProperty(entry.getKey().toString(), entry.getValue().toString());
-					printDeveloperMessage("data name : " + entry.getKey());
-					printDeveloperMessage("value : " + entry.getValue());
+					DeveloperManager.printDeveloperMessage("data name : " + entry.getKey());
+					DeveloperManager.printDeveloperMessage("value : " + entry.getValue());
 				}
 			} else {
-				printDeveloperMessage(HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
+				DeveloperManager.printDeveloperMessage(HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
 			}
 
 			// 4. connection setting - request get input stream
