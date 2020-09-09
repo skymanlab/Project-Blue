@@ -11,7 +11,7 @@ public class HttpParameterData {
 	 */
 
 	/*
-	 * ====================  인증 코드 받기  ====================
+	 * ==================== 1. 인증 코드 받기  ====================
 	 * Request Parameter	
 	 * 1. client_id
 	 * 2. redirect_uri
@@ -52,12 +52,11 @@ public class HttpParameterData {
 		domain.append("&response_type=");
 		domain.append("code");
 
-		DeveloperManager.printDeveloperMessage("domain : " + domain.toString());
 		return domain.toString();
 	}
 
 	/*
-	 * ====================  사용자 토큰 받기  ====================
+	 * ==================== 2. 사용자 토큰 받기  ====================
 	 * Request Parameter
 	 * 1. grant_type
 	 * 2. client_id
@@ -105,12 +104,12 @@ public class HttpParameterData {
 		domain.append(code);
 		// post ++ 5. client_secret
 		domain.append("&client_secret=");
-		DeveloperManager.printDeveloperMessage("domain : " + domain.toString());
+
 		return domain.toString();
 	}
 
 	/*
-	 * ====================  사용자 정보 받기  ====================
+	 * ==================== 3. 사용자 정보 받기  ====================
 	 * Request Header
 	 * 1. Authorization: Bearer {USER_ACCESS_TOKEN}			/			헤더 포맷 -> Authorization: Bearer {USER_ACCESS_TOKEN}
 	 * 2. Content-type: application/x-www-form-urlencoded;charset=utf-8
@@ -119,16 +118,18 @@ public class HttpParameterData {
 
 	// user information 
 	public static String mappingQueryStringUserInfoReceive() {
+		
 		StringBuilder domain = new StringBuilder();
 		// Host
 		domain.append(USER_INFO_HOST);
 		// get or post ++ 
 		domain.append("v2/user/me");
+		
 		return domain.toString();
 	}
 
 	/*
-	 * ====================  로그아웃  ====================
+	 * ==================== 4.  로그아웃  ====================
 	 * - 사용자 액세스 토큰과 리프레시 토큰을 모두 만료시킵니다.
 	 * - 로그아웃 시에도 웹 브라우저의 카카오계정 세션은 만료되지 않고, 로그아웃을 호출한 앱의 사용자 토큰만 만료됩니다. 따라서 웹 브라우저의 카카오계정 로그인 상태는 로그아웃 API를 호출해도 유지됩니다.
 	 * Request Header
@@ -138,6 +139,7 @@ public class HttpParameterData {
 
 	// logout 
 	public static String mappingQueryStringLogoutReceive() {
+		
 		StringBuilder domain = new StringBuilder();
 		// Host
 		domain.append(LOGOUT_HOST);
@@ -148,7 +150,7 @@ public class HttpParameterData {
 	}
 
 	/* 
-	 * ====================  연결 끊기  ====================
+	 * ==================== 5. 연결 끊기  ====================
 	 * Request Header 
 	 * 1. Authorization: Bearer {USER_ACCESS_TOKEN}
 	 */
@@ -156,6 +158,7 @@ public class HttpParameterData {
 
 	// unlink 
 	public static String mappingQueryStringUnlinkReceive() {
+		
 		StringBuilder domain = new StringBuilder();
 		// Host
 		domain.append(UNLINK_HOST);
@@ -166,7 +169,7 @@ public class HttpParameterData {
 	}
 
 	/* 
-	 * ====================  카카오 계정과 함께 로그아웃 하기  ====================
+	 * ==================== 6. 카카오 계정과 함께 로그아웃 하기  ====================
 	 */
 	public static final String LOGOUT_UNLINK_HOST = "https://kauth.kakao.com/";
 	public static final String LOGOUT_REDIRECT_URI = "http://192.168.0.6:80/ProjectBlueKakaoLogin";
@@ -174,6 +177,7 @@ public class HttpParameterData {
 
 	// logout + unlink
 	public static String mappingQueryStringLogoutUnlinkReceive() {
+		
 		StringBuilder domain = new StringBuilder();
 		// Host
 		domain.append(LOGOUT_UNLINK_HOST);
@@ -189,7 +193,6 @@ public class HttpParameterData {
 		domain.append("&state=");
 		domain.append(LOGOUT_UNLINK_STATE);
 
-		DeveloperManager.printDeveloperMessage("HttpParameterData : " +domain.toString());
 		return domain.toString();
 	}
 }

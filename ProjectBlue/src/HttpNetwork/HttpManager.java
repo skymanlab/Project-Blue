@@ -34,15 +34,15 @@ public class HttpManager {
 				// 3. Whether success response message getting
 				if (connector.isSuccessable()) {
 					connector.close();
-					DeveloperManager.printDeveloperMessage("HttpManager : httpURLConnection object disconnect() success");
+					DeveloperManager.printDeveloperMessage("HttpManager / F / httpURLConnection object disconnect() success");
 				} else {
-					DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_3);
+					DeveloperManager.printDeveloperMessage("HttpManager / " +HangleData.HttpManager_STEP_3);
 				}
 			} else {
-				DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_2);
+				DeveloperManager.printDeveloperMessage("HttpManager / " +HangleData.HttpManager_STEP_2);
 			}
 		} else {
-			DeveloperManager.printDeveloperMessage("HttpManager : " +HangleData.HttpManager_STEP_1);
+			DeveloperManager.printDeveloperMessage("HttpManager / " +HangleData.HttpManager_STEP_1);
 		}
 		return response;
 	}

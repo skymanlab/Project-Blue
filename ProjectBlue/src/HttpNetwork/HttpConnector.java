@@ -73,7 +73,7 @@ public class HttpConnector {
 	// step1. Http Newtork Connection
 	public void openConnection() {
 		try {
-			DeveloperManager.printDeveloperMessage("domain :" + domain);
+			DeveloperManager.printDeveloperMessage("HttpConnector / F / domain : " + domain);
 			url = new URL(domain);
 			connector = (HttpURLConnection) url.openConnection();
 
@@ -89,15 +89,12 @@ public class HttpConnector {
 				while (iterator.hasNext()) {
 					Map.Entry entry = (Map.Entry) iterator.next();
 					connector.setRequestProperty(entry.getKey().toString(), entry.getValue().toString());
-					DeveloperManager.printDeveloperMessage("HttpConnector : data name = " + entry.getKey());
-					DeveloperManager.printDeveloperMessage("HttpConnector : value = " + entry.getValue());
+					DeveloperManager.printDeveloperMessage("HttpConnector / data name : " + entry.getKey() + ", value : " + entry.getValue());
 				}
 			} else {
-				DeveloperManager.printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
+				DeveloperManager.printDeveloperMessage("HttpConnector / " + HangleData.HttpConnector_HEADER_NOTHING_MSSEAGE);
 			}
-
 			connector.setDoInput(true);
-
 			connectable = true;
 		} catch (MalformedURLException mue) {
 			connectable = false;
@@ -117,7 +114,7 @@ public class HttpConnector {
 			} else {
 			}
 		} catch (IOException ioe) {
-			DeveloperManager.printDeveloperMessage("HttpConnector : 뭐냐 왜 못 가져오냐?");
+			DeveloperManager.printDeveloperMessage("HttpConnector / error / 뭐냐 왜 못 가져오냐?");
 			ioe.printStackTrace();
 		}
 	}
@@ -137,7 +134,7 @@ public class HttpConnector {
 			} else if (dataType.equals("UnlimitedLine")) {
 				unlimitedLine(response);
 			} else {
-				DeveloperManager.printDeveloperMessage("HttpConnector : " + HangleData.HttpConnector_NOTING_DATATYPE_MESSAGE);
+				DeveloperManager.printDeveloperMessage("HttpConnector / " + HangleData.HttpConnector_NOTING_DATATYPE_MESSAGE);
 			}
 		}
 		return response.toString();
@@ -162,7 +159,7 @@ public class HttpConnector {
 	// 3-1. response data type : one line
 	private void oneLine(StringBuilder response) {
 		try {
-			response.append(reader.readLine());
+			response.append( reader.readLine());
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} finally {

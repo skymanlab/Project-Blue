@@ -1,3 +1,4 @@
+<%@page import="Session.SessionManager"%>
 <%@page import="HttpRequest.HttpParameterData"%>
 <%@ page
      language="java"
@@ -78,7 +79,7 @@
                                                        class="btn btn-user btn-block bg-blue"
                                                        style="background:#6495ed; color:#FFFFFF;"
                                                   > <i class="fas fa-comment"></i> <%
- 	if (session.getAttribute("session_token") != null) {
+ 	if (session.getAttribute("session_manager") != null) {
  	out.write("Restart");
  } else {
  	out.write("Login with Kakao");

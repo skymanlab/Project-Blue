@@ -16,6 +16,7 @@ import HttpNetwork.HttpConnector;
 import HttpNetwork.HttpManager;
 import HttpRequest.HttpParameterData;
 import HttpResponse.ResponseTokenData;
+import Session.SessionManager;
 
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
@@ -34,16 +35,16 @@ public class LogoutServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		// step 1. session vlaue
-		ResponseTokenData responseTokenData = (ResponseTokenData) request.getSession().getAttribute("session_token");
+		SessionManager sessionManager = (SessionManager) request.getSession().getAttribute("session_manager");
 
-		if (responseTokenData != null) {
-			DeveloperManager.printDeveloperMessage("LogoutServlet : session_token :" + responseTokenData.getAccess_token());
+		if (sessionManager != null) {
+			DeveloperManager.printDeveloperMessage("LogoutServlet / F / access token :" + sessionManager.getToken().getAccess_token());
 
 			// Logout + Unlink Request ( 카카오 로그인 / REST API / 카카오계정과 함께 로그아웃 )
 			// ===============================================================================
 			// step 2. Request - setting HashMap to make : Logout + Unlink
 			HashMap<String, String> setting = new HashMap<String, String>();
-			setting.put("Authorization", "Bearer " + responseTokenData.getAccess_token());
+			setting.put("Authorization", "Bearer " + sessionManager.getToken().getAccess_token());
 
 			// step 3. Request - GET method : Logout + Unlink
 			HttpConnector connector_request_1 = new HttpConnector(
@@ -52,11 +53,10 @@ public class LogoutServlet extends HttpServlet {
 			
 			// step 4. Response : Logout + Unlink
 			String result = manager_request_1.startManager();
-			DeveloperManager.printDeveloperMessage("LogoutServlet : " + result);
+			DeveloperManager.printDeveloperMessage("LogoutServlet / E / result : " + result);
 
 			// step 5. Session remove
-			request.getSession().removeAttribute("session_token");
-			request.getSession().removeAttribute("session_user_info");
+			request.getSession().removeAttribute("session_manager");
 
 			// step 6. sendRedirect
 			response.sendRedirect("login.jsp");

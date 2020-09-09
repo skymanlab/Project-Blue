@@ -81,24 +81,24 @@ public class ResponseTokenData {
 	
 	// method : parameter print
 	public void printParameter() {
-		StringBuilder jsonParsingData = new StringBuilder();
+		StringBuilder temp = new StringBuilder();
 		
-		jsonParsingData.append("<<Json parsing data>>\n");
-		jsonParsingData.append("1. token_type : ");
-		jsonParsingData.append(token_type);
-		jsonParsingData.append("\n2. access_token : ");
-		jsonParsingData.append(access_token);
-		jsonParsingData.append("\n3. expires_in : ");
-		jsonParsingData.append(expires_in);
-		jsonParsingData.append("\n4. refresh_token : ");
-		jsonParsingData.append(refresh_token);
-		jsonParsingData.append("\n5. refresh_token_expires_in : ");
-		jsonParsingData.append(refresh_token_expires_in);
-		jsonParsingData.append("\n6. scope : ");
-		jsonParsingData.append(scope);
-		jsonParsingData.append("<<Json parsing data>>\n");
-		jsonParsingData.append("<<       end       >>\n");
+		temp.append("<<Json parsing data>>\n");
+		temp.append("1. token_type : ");
+		temp.append(token_type);
+		temp.append("\n2. access_token : ");
+		temp.append(access_token);
+		temp.append("\n3. expires_in : ");
+		temp.append(expires_in);
+		temp.append("\n4. refresh_token : ");
+		temp.append(refresh_token);
+		temp.append("\n5. refresh_token_expires_in : ");
+		temp.append(refresh_token_expires_in);
+		temp.append("\n6. scope : ");
+		temp.append(scope);
+		temp.append("<<Json parsing data>>\n");
+		temp.append("<<       end       >>");
 		
-		DeveloperManager.printDeveloperMessage(jsonParsingData.toString());
+		DeveloperManager.printDeveloperMessage(temp.toString());
 	}
 }

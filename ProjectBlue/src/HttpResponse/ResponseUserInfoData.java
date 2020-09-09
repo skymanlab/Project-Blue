@@ -93,23 +93,35 @@ public class ResponseUserInfoData {
 
 	// method : parameter print
 	public void printParameter() {
-		if (DeveloperManager.PRINT_TYPE == PrintType.ON) {
-			System.out.println("<< json parsing data >>");
-			System.out.println("== id : " + id);
-			System.out.println("== connected_at : " + connected_at);
-			System.out.println("== properties");
-			System.out.println("======= nickname : " + properties.getNickname());
-			System.out.println("======= profile_image : " + properties.getProfile_image());
-			System.out.println("======= thumbnail_image : " + properties.getThumbnail_image());
-			System.out.println("== kakao_accuount");
-			System.out.println("======= profile_needs_agreement : " + kakao_account.getProfile_needs_agreement());
-			System.out.println("======= profile");
-			System.out.println("============ nickname : " + kakao_account.getProfile().getNickname());
-			System.out.println("============ thumbnail_image_url : " + kakao_account.getProfile().getThumbnail_image());
-			System.out.println("============ profile_image_url : " + kakao_account.getProfile().getProfile_image_url());
-			System.out.println("<< 		  end  		 >>");
-		} else {
-
-		}
+		StringBuilder temp = new StringBuilder();
+		temp.append("<< json parsing data >>");
+		temp.append("\n");
+		temp.append("== id : " + id);
+		temp.append("\n");
+		temp.append("== connected_at : " + connected_at);
+		temp.append("\n");
+		temp.append("== properties");
+		temp.append("\n");
+		temp.append("======= nickname : " + properties.getNickname());
+		temp.append("\n");
+		temp.append("======= profile_image : " + properties.getProfile_image());
+		temp.append("\n");
+		temp.append("======= thumbnail_image : " + properties.getThumbnail_image());
+		temp.append("\n");
+		temp.append("== kakao_accuount");
+		temp.append("\n");
+		temp.append("======= profile_needs_agreement : " + kakao_account.getProfile_needs_agreement());
+		temp.append("\n");
+		temp.append("======= profile");
+		temp.append("\n");
+		temp.append("============ nickname : " + kakao_account.getProfile().getNickname());
+		temp.append("\n");
+		temp.append("============ thumbnail_image_url : " + kakao_account.getProfile().getThumbnail_image());
+		temp.append("\n");
+		temp.append("============ profile_image_url : " + kakao_account.getProfile().getProfile_image_url());
+		temp.append("\n");
+		temp.append("<<        end        >>");
+		
+		DeveloperManager.printDeveloperMessage(temp.toString());
 	}
 }
