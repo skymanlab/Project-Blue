@@ -55,7 +55,7 @@
 
 
 <!--	                 body	                 -->
-<body class="bg-gradient-primary">
+<body style="background:#6495ed">
      <div class="container">
           <!-- Outer Row -->
           <div class="row justify-content-center">
@@ -75,7 +75,8 @@
                                                   <hr>
                                                   <a
                                                        href=<%=HttpParameterData.mappingQueryStringAuthoCodeReceive()%>
-                                                       class="btn btn-primary btn-user btn-block bg-blue"
+                                                       class="btn btn-user btn-block bg-blue"
+                                                       style="background:#6495ed; color:#FFFFFF;"
                                                   > <i class="fas fa-comment"></i> <%
  	if (session.getAttribute("session_token") != null) {
  	out.write("Restart");
