@@ -11,10 +11,12 @@ public  class BilliardDatabase {
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +
                     Entry.COLUMN_NAME_DATE + " TEXT, " +
+                    Entry.COLUMN_NAME_TARGET_SCORE + " TEXT, " +
+                    Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +
+                    Entry.COLUMN_NAME_PLAY_TIME + " TEXT," +
                     Entry.COLUMN_NAME_VICTOREE + " TEXT, " +
                     Entry.COLUMN_NAME_SCORE + " TEXT, " +
-                    Entry.COLUMN_NAME_COST + " TEXT, " +
-                    Entry.COLUMN_NAME_PLAY_TIME + " TEXT)";
+                    Entry.COLUMN_NAME_COST + " TEXT)" ;
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
@@ -35,6 +37,8 @@ public  class BilliardDatabase {
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "billiardBasic";
         public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
+        public static final String COLUMN_NAME_SPECIALITY = "speciality";
         public static final String COLUMN_NAME_VICTOREE = "victoree";
         public static final String COLUMN_NAME_SCORE = "score";
         public static final String COLUMN_NAME_COST = "cost";

@@ -21,7 +21,6 @@
             android:text="1"
             android:textAlignment="gravity"
             android:textColor="@color/selectItemTextColor"></TextView>
-
     </LinearLayout><!-- End of content 1 -->
 
     <!-- content 2. infomation -->
@@ -100,7 +99,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/selectitem_1"
+                    android:id="@+id/selectitem_speciality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/selectItemTableColum"

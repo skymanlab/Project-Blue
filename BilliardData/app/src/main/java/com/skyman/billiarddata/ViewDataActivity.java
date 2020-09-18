@@ -71,16 +71,18 @@ public class ViewDataActivity extends AppCompatActivity {
         Cursor cursor = readDb.rawQuery(BilliardDatabase.SQL_SELECT_TABLE_ALL_CONTENT, null);
 
         // DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
-        ArrayList<DataListItem> items = new ArrayList<>();
+        ArrayList<DataListItem> dataListItems = new ArrayList<>();
 
         // Cursor 객체를 통해 하나씩 읽어온다.
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             long id = cursor.getInt(0);
             String date = cursor.getString(1);
-            String victoree = cursor.getString(2);
-            String score = cursor.getString(3);
-            String cost = cursor.getString(4);
-            String palyTime = cursor.getString(5);
+            String targetScore = cursor.getString(2);
+            String speciality = cursor.getString(3);
+            String palyTime = cursor.getString(4);
+            String victoree = cursor.getString(5);
+            String score = cursor.getString(6);
+            String cost = cursor.getString(7);
 
             Log.d("select", "읽어오는 내용");
             Log.d("select", "id : " + id);
@@ -94,34 +96,42 @@ public class ViewDataActivity extends AppCompatActivity {
             DataListItem dataListItem = new DataListItem();
             dataListItem.setId(id);
             dataListItem.setDate(date);
+            dataListItem.setTarget_score(targetScore);
+            dataListItem.setSpeciality(speciality);
+            dataListItem.setPaly_time(palyTime);
             dataListItem.setVictoree(victoree);
             dataListItem.setScore(score);
             dataListItem.setCost(cost);
-            dataListItem.setPaly_time(palyTime);
 
             // array list 에 insert
-            items.add(dataListItem);
+            dataListItems.add(dataListItem);
         }
 
-        // 읽어온 내용이 들어있는 items를 DataListAdapter를 이용하여 ListView에 그리기
-        setDataList(items);
+        // 읽어온 내용이 들어있는 dataListItems를 DataListAdapter를 이용하여 ListView에 그리기
+        setDataList(dataListItems);
     }
 
     // list view adapter
-    private void setDataList(ArrayList<DataListItem> items){
+    private void setDataList(ArrayList<DataListItem> dataListItems) {
 
         // list view adapter 객체 생성
         DataListAdapter dataListAdapter = new DataListAdapter();
 
-        // adapter 객체의 addItem 메소드를 이용하여
-        for(int position=0 ; position <items.size() ; position++) {
-            dataListAdapter.addItem(items.get(position).getId(),
-                    items.get(position).getDate(),
-                    items.get(position).getVictoree(),
-                    items.get(position).getScore(),
-                    items.get(position).getCost(),
-                    items.get(position).getPaly_time());
+        // dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
+        for (int position = 0; position < dataListItems.size(); position++) {
+            dataListAdapter.addItem(
+                    dataListItems.get(position).getId(),                // id
+                    dataListItems.get(position).getDate(),              // date
+                    dataListItems.get(position).getTarget_score(),      // target score
+                    dataListItems.get(position).getSpeciality(),        // speciality
+                    dataListItems.get(position).getPaly_time(),         // play time
+                    dataListItems.get(position).getVictoree(),          // victoree
+                    dataListItems.get(position).getScore(),             // score
+                    dataListItems.get(position).getCost()               // cost
+            );
         }
+
+        // 읽어온 내용을 다 넣고, adapter를 dataList(ListView)에 연결 시키기
         allBilliardData.setAdapter(dataListAdapter);
     }
 }

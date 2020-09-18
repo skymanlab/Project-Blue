@@ -95,7 +95,7 @@ public class InputDataActivity extends AppCompatActivity {
         speciality.setAdapter(specialityAdapter);
         speciality.setSelection(2);
 
-        // inputData list view setting
+        // inputData list view setting ( ListView )
         dataList = (ListView) findViewById(R.id.inputdata_dataList);
 
         // input button setting
@@ -189,20 +189,31 @@ public class InputDataActivity extends AppCompatActivity {
 
         // get value
         String dateContent = date.getText().toString();
+        String targetScoreContent = targetScore.getSelectedItem().toString();
+        String specialityContent = speciality.getSelectedItem().toString();
         String victoreeContent = user.getSelectedItem().toString();
         String scoreContent = BilliardDataManager.setFormatToScore(score_1.getText().toString(), score_2.getText().toString());
         String costContent = cost.getText().toString();
         String palyTimeContent = playtime.getText().toString();
 
         // 빈 곳 없나 검사
-        if (!dateContent.equals("") && !victoreeContent.equals("") && !scoreContent.equals("") && !costContent.equals("") && !palyTimeContent.equals("")) {
+        if (!dateContent.equals("")                             // date
+                && !targetScoreContent.equals("")               // target score
+                && !specialityContent.equals("")                // speciality
+                && !palyTimeContent.equals("")                  // playtime
+                && !victoreeContent.equals("")                  // victoree
+                && !scoreContent.equals("")                     // score
+                && !costContent.equals("")) {                   // cost
+
             // 입력할 내용 setting
             ContentValues values = new ContentValues();
-            values.put(BilliardDatabase.Entry.COLUMN_NAME_COST, costContent);
             values.put(BilliardDatabase.Entry.COLUMN_NAME_DATE, dateContent);
-            values.put(BilliardDatabase.Entry.COLUMN_NAME_SCORE, scoreContent);
-            values.put(BilliardDatabase.Entry.COLUMN_NAME_VICTOREE, victoreeContent);
+            values.put(BilliardDatabase.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);
+            values.put(BilliardDatabase.Entry.COLUMN_NAME_SPECIALITY, specialityContent);
             values.put(BilliardDatabase.Entry.COLUMN_NAME_PLAY_TIME, palyTimeContent);
+            values.put(BilliardDatabase.Entry.COLUMN_NAME_VICTOREE, victoreeContent);
+            values.put(BilliardDatabase.Entry.COLUMN_NAME_SCORE, scoreContent);
+            values.put(BilliardDatabase.Entry.COLUMN_NAME_COST, costContent);
 
             // 해당 billiardBasic 테이블에 내용 insert
             // nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
@@ -215,7 +226,7 @@ public class InputDataActivity extends AppCompatActivity {
                 toastHandler("데이터 입력에 실패했습니다.");
             } else {
                 // 데이터 insert 성공
-                toastHandler(newRowId + " 번째 데이터를 입력에 성공했습니다. " );
+                toastHandler(newRowId + " 번째 데이터를 입력에 성공했습니다. ");
             }
         } else {
             toastHandler("빈곳을 채워주세요.");
@@ -242,16 +253,18 @@ public class InputDataActivity extends AppCompatActivity {
         Cursor cursor = readDb.rawQuery(BilliardDatabase.SQL_SELECT_TABLE_ALL_CONTENT, null);
 
         // DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
-        ArrayList<DataListItem> items = new ArrayList<>();
+        ArrayList<DataListItem> dataListItems = new ArrayList<>();
 
         // Cursor 객체를 통해 하나씩 읽어온다.
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             long id = cursor.getInt(0);
             String date = cursor.getString(1);
-            String victoree = cursor.getString(2);
-            String score = cursor.getString(3);
-            String cost = cursor.getString(4);
-            String palyTime = cursor.getString(5);
+            String targetScore = cursor.getString(2);
+            String speciality = cursor.getString(3);
+            String palyTime = cursor.getString(4);
+            String victoree = cursor.getString(5);
+            String score = cursor.getString(6);
+            String cost = cursor.getString(7);
 
             Log.d("select", "읽어오는 내용");
             Log.d("select", "id : " + id);
@@ -265,17 +278,19 @@ public class InputDataActivity extends AppCompatActivity {
             DataListItem dataListItem = new DataListItem();
             dataListItem.setId(id);
             dataListItem.setDate(date);
+            dataListItem.setTarget_score(targetScore);
+            dataListItem.setSpeciality(speciality);
+            dataListItem.setPaly_time(palyTime);
             dataListItem.setVictoree(victoree);
             dataListItem.setScore(score);
             dataListItem.setCost(cost);
-            dataListItem.setPaly_time(palyTime);
 
             // array list 에 insert
-            items.add(dataListItem);
+            dataListItems.add(dataListItem);
         }
 
-        // 읽어온 내용이 들어있는 items를 DataListAdapter를 이용하여 ListView에 그리기
-        setDataList(items);
+        // 읽어온 내용이 들어있는 dataListItems를 DataListAdapter를 이용하여 ListView에 그리기
+        setDataList(dataListItems);
     }
 
     // DB 4. delete 테이블 내용 전부 삭제
@@ -301,45 +316,49 @@ public class InputDataActivity extends AppCompatActivity {
     // =============================================================================================================
 
     // list view adapter
-    private void setDataList(ArrayList<DataListItem> items){
+    private void setDataList(ArrayList<DataListItem> dataListItems) {
 
         // list view adapter 객체 생성
         DataListAdapter dataListAdapter = new DataListAdapter();
 
-        // adapter 객체의 addItem 메소드를 이용하여
-        for(int position=0 ; position <items.size() ; position++) {
-            dataListAdapter.addItem(items.get(position).getId(),
-                    items.get(position).getDate(),
-                    items.get(position).getVictoree(),
-                    items.get(position).getScore(),
-                    items.get(position).getCost(),
-                    items.get(position).getPaly_time());
+        // dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
+        for (int position = 0; position < dataListItems.size(); position++) {
+            dataListAdapter.addItem(
+                    dataListItems.get(position).getId(),                // id
+                    dataListItems.get(position).getDate(),              // date
+                    dataListItems.get(position).getTarget_score(),      // target score
+                    dataListItems.get(position).getSpeciality(),        // speciality
+                    dataListItems.get(position).getPaly_time(),         // play time
+                    dataListItems.get(position).getVictoree(),          // victoree
+                    dataListItems.get(position).getScore(),             // score
+                    dataListItems.get(position).getCost()               // cost
+            );
         }
+
+        // 읽어온 내용을 다 넣고, adapter를 dataList(ListView)에 연결 시키기
         dataList.setAdapter(dataListAdapter);
     }
-
 
 
     // =============================================================================================================
 
     // toast 메시지
-    private void toastHandler(String content)
-    {
-        Toast myToast = Toast.makeText(this.getApplicationContext(),content, Toast.LENGTH_SHORT);
+    private void toastHandler(String content) {
+        Toast myToast = Toast.makeText(this.getApplicationContext(), content, Toast.LENGTH_SHORT);
         myToast.show();
     }
 
     // 가격 형태 변환한 값을 toast 메시지로 출력
-    private void displayCost (){
+    private void displayCost() {
         if (!playtime.getText().toString().equals("")) {
-             toastHandler("포맷한 내용 : " + BilliardDataManager.setFormatToCost(playtime.getText().toString()));
+            toastHandler("포맷한 내용 : " + BilliardDataManager.setFormatToCost(playtime.getText().toString()));
         } else {
             toastHandler("데이터를 입력해주세요.");
         }
     }
 
     // 게임 시간 형태 변환한 값을 toast 메시지로 출력
-    private void displayPlayTime(){
+    private void displayPlayTime() {
         if (!playtime.getText().toString().equals("")) {
             toastHandler("포맷한 내용 : " + BilliardDataManager.setFormatToPlayTime(playtime.getText().toString()));
         } else {

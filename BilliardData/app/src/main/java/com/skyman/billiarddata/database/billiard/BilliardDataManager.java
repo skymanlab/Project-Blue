@@ -1,10 +1,21 @@
 package com.skyman.billiarddata.database.billiard;
 
+import android.widget.ListView;
+
 import java.text.DecimalFormat;
 
 public class BilliardDataManager {
 
-    /* 스코어 형태로 문자열 만들기 - #:# */
+    /*// value
+    private BilliardHelper;
+    private ListView targetListView;
+
+    // constructor
+    public BilliardDataManager(ListView targetListView) {
+        this.targetListView = targetListView;
+    }*/
+
+    /* method : 스코어 형태로 문자열 만들기 - #:# */
     public static String setFormatToScore(String score_1, String score_2) {
         StringBuilder scoreData = new StringBuilder();
         scoreData.append(score_1);
@@ -13,7 +24,7 @@ public class BilliardDataManager {
         return scoreData.toString();
     }
 
-    /* 가격 형태로 문자열 만들기 - ###,### 원 */
+    /* method : 가격 형태로 문자열 만들기 - ###,### 원 */
     public static String setFormatToCost(String cost) {
         DecimalFormat wonFormat = new DecimalFormat("###,###");
         StringBuilder costData = new StringBuilder();
@@ -25,7 +36,7 @@ public class BilliardDataManager {
         return costData.toString();
     }
 
-    /* 게임 시간 형태로 문자열 만들기 - ## 분 */
+    /* method : 게임 시간 형태로 문자열 만들기 - ## 분 */
     public static String setFormatToPlayTime(String playTime) {
         StringBuilder playTimeData = new StringBuilder();
         playTimeData.append(playTime);

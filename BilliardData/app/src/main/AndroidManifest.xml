@@ -9,6 +9,8 @@
         android:roundIcon="@drawable/icon_android_round_v1_196xxxh"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity android:name=".UserDataActivity"></activity>
         <activity android:name=".ViewDataActivity" />
         <activity android:name=".InputDataActivity" />
@@ -19,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
