@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 선수 목록 -->
+    <string-array name="user">
+        <item>장동익</item>
+        <item>김현</item>
+    </string-array>
+
+    <!-- 나의 수지 -->
+    <string-array name="targetScore">
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+    </string-array>
+
+    <!-- 나의 주 종목(게임 종목) -->
+    <string-array name="speciality">
+        <item>3구</item>
+        <item>4구</item>
+        <item>포켓</item>
+    </string-array>
+</resources>

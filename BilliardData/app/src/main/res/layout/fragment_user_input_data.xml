@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".factivity.UserInputData">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!-- main -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- title-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지금 입력해봐!"
+                android:textAlignment="center"></TextView>
+        </LinearLayout><!-- End of title-->
+
+        <!-- content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 1. name -->
+            <LinearLayout
+                android:id="@+id/userdata_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8dfeb"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:text="이름 "></TextView>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
+
+                <EditText
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="너 이름 뭐냐?"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"></EditText>
+            </LinearLayout><!-- End of content 1 -->
+
+            <!-- content 2. target score -->
+            <LinearLayout
+                android:id="@+id/userdata_target_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#d9e7ff"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:text="수지 "></TextView>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
+
+                <EditText
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="너 수지 100은 되냐?"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"></EditText>
+            </LinearLayout><!-- End of content 2-->
+
+            <!-- content 3. target score -->
+            <LinearLayout
+                android:id="@+id/userdata_speciality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8dfeb"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:text="주 종목"></TextView>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
+
+                <EditText
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="주 종목은 3구냐?"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"></EditText>
+            </LinearLayout><!-- End of content 2-->
+
+            <!-- content 4. input button-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/f_userinputdata_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/selectItemBackground"
+                    android:text="입력"
+                    android:textColor="@color/selectItemTextColor"></Button>
+            </LinearLayout><!-- End of content 3 -->
+        </LinearLayout><!-- End of content -->
+
+    </LinearLayout><!-- End of mian-->
+</FrameLayout>

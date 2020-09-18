@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".factivity.UserFriend">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!-- main -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- title-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="나의 친구는 누굴까?"
+                android:textAlignment="center"></TextView>
+        </LinearLayout><!-- End of title-->
+
+        <!-- content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 1. friend list -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="#d8dfeb"
+                android:padding="5dp">
+
+                <!-- content 1-1. title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="친구 목록 ▼"></TextView>
+                </LinearLayout><!-- End of content 1-1 -->
+
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" /><!-- End of divider-->
+
+                <!-- content 1-2. list-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/userfriend_list">
+                    </ListView>
+                </LinearLayout><!-- End of content 1-2 -->
+            </LinearLayout><!-- End of content 1 -->
+
+            <!-- content 2. friend add -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#d9e7ff"
+                android:padding="5dp">
+
+                <!-- content 2-1. title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="친구 추가 ▼">
+                    </TextView>
+                </LinearLayout>
+
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" /><!-- End of divider-->
+
+                <!-- content 2-2. input -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="이름"
+                        android:paddingLeft="10dp"></TextView>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </EditText>
+                </LinearLayout><!-- End of content 2-2-->
+
+                <!-- content 2-3. button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/selectItemBackground"
+                        android:text="친구 추가"
+                        android:textColor="@color/selectItemTextColor"
+                        android:id="@+id/userfriend_friend_add">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout><!-- End of content-->
+    </LinearLayout><!-- End of main -->
+
+</FrameLayout>

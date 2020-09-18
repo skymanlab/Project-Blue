@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputDataActivity">
+
+
+    <!-- main -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ebe8ff"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="당신은 오늘 데이터를 입력합니다."
+                android:textAlignment="center"></TextView>
+        </LinearLayout>
+
+
+        <!-- content 1. input data-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 1-1. default data (targetScore, speciality) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d8dfeb">
+
+                <!-- content 1-1-1. targetScore -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="수지"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textAlignment="center"></TextView>
+
+                    <Spinner
+                        android:id="@+id/inputdata_target_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"></Spinner>
+                </LinearLayout>
+
+                <!-- divider -->
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+                <!-- content 1-1-2. speciality -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="종목"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textAlignment="center"></TextView>
+                    <Spinner
+                        android:id="@+id/inputdata_speciality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></Spinner>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- content 1-2. date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="#d9e7ff">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="날짜"
+                    android:textAlignment="textStart"></TextView>
+
+                <TextView
+                    android:id="@+id/inputdate_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="날짜는 입력됩니다."
+                    android:textAlignment="textStart"></TextView>
+            </LinearLayout>
+
+            <!-- content 1-3. victoree -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="#d8dfeb">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="승자"
+                    android:textAlignment="textStart"></TextView>
+
+                <Spinner
+                    android:id="@+id/inputdata_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></Spinner>
+            </LinearLayout>
+
+            <!-- content 1-4. score -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d9e7ff">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="스코어"
+                    android:textAlignment="textStart"></TextView>
+
+                <EditText
+                    android:id="@+id/inputdata_score_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text|numberDecimal"></EditText>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:textAlignment="center"></TextView>
+
+                <EditText
+                    android:id="@+id/inputdata_score_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text|numberDecimal"></EditText>
+            </LinearLayout>
+
+            <!-- content 1-5. cost -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d8dfeb">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="금액"
+                    android:textAlignment="textStart"></TextView>
+
+                <EditText
+                    android:id="@+id/inputdata_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|numberDecimal"></EditText>
+            </LinearLayout>
+
+            <!-- content 1-6. play time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d9e7ff">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="경기 시간"
+                    android:textAlignment="textStart"></TextView>
+
+                <EditText
+                    android:id="@+id/inputdata_play_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|numberDecimal"></EditText>
+            </LinearLayout>
+
+            <!-- input button -->
+            <Button
+                android:id="@+id/inputdata_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/selectItemBackground"
+                android:text="입력"
+                android:textColor="@color/selectItemTextColor"></Button>
+        </LinearLayout><!-- End of content 1 -->
+
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /> <!-- End of divider -->
+
+        <!-- content 2. view -->
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 2-1. list view -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#d8dfeb">
+                <ListView
+                    android:id="@+id/inputdata_dataList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+            </LinearLayout>
+        </LinearLayout><!-- End of content 2 -->
+
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /> <!-- End of divider -->
+
+        <!-- content 3. button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 3-1. coment -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d9e7ff"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/inputdata_coment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="coment"
+                    android:textAlignment="center"></TextView>
+            </LinearLayout>
+
+            <!-- content 3-2. button group -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#d9e7ff">
+
+                <Button
+                    android:id="@+id/inputdate_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="#6495ED"
+                    android:text="보기"
+                    android:textColor="@color/selectItemTextColor"></Button>
+
+                <Button
+                    android:id="@+id/inputdate_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="#6495ED"
+                    android:text="삭제"
+                    android:textColor="@color/selectItemTextColor"></Button>
+            </LinearLayout>
+        </LinearLayout><!-- End of content 3 -->
+
+    </LinearLayout><!-- End of main -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
