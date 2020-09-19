@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         inputData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InputDataActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
                 startActivity(intent);
             }
         });
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         viewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), DisplayDataActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         userData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserDataActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserManageActivity.class);
                 startActivity(intent);
             }
         });

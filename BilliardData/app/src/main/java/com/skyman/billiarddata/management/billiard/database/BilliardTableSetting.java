@@ -8,32 +8,32 @@ import android.provider.BaseColumns;
  * ===========================================================================================
  * */
 public  class BilliardTableSetting {
-    // SQL 1. create table setting
+    // constant : sql query, create table setting
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +
                     Entry.COLUMN_NAME_DATE + " TEXT, " +
-                    Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER, " +
+                    Entry.COLUMN_NAME_TARGET_SCORE + " TEXT, " +
                     Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +
-                    Entry.COLUMN_NAME_PLAY_TIME + " INTEGER," +
+                    Entry.COLUMN_NAME_PLAY_TIME + " TEXT," +
                     Entry.COLUMN_NAME_WINNER + " TEXT, " +
                     Entry.COLUMN_NAME_SCORE + " TEXT, " +
-                    Entry.COLUMN_NAME_COST + " INTEGER)" ;
+                    Entry.COLUMN_NAME_COST + " TEXT)" ;
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
-    // SQL 2. select table setting - all item
+    // constant : sql query, select table setting - all item
     public static final String SQL_SELECT_TABLE_ALL_ITEM =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
-    // SQL 3. delete table setting - all item
+    // constant : sql query, delete table setting - all item
     public static final String SQL_DELETE_TABLE_ALL_ITEM =
             "DELETE FROM " + Entry.TABLE_NAME;
 
-    // constructor - private
+    // constructor : private
     private BilliardTableSetting() {}
 
-    // inner class - Entry
+    // inner class : Entry, table desc
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "billiardBasic";
         public static final String COLUMN_NAME_DATE = "date";

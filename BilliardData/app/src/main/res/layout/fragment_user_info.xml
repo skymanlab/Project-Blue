@@ -129,7 +129,7 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_sepeciality"
+                        android:id="@+id/f_userinfo_speciality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -197,7 +197,7 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_total_time"
+                        android:id="@+id/f_userinfo_total_play_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"

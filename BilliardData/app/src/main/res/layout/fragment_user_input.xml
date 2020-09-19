@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".factivity.user.UserInputData">
+    tools:context=".factivity.user.UserInput">
 
     <!-- TODO: Update blank fragment layout -->
     <!-- main -->
@@ -37,7 +37,6 @@
 
             <!-- content 1. name -->
             <LinearLayout
-                android:id="@+id/userdata_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#d8dfeb"
@@ -58,8 +57,7 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    style="@style/Widget.AppCompat.AutoCompleteTextView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/f_userinput_user_name"                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="너 이름 뭐냐?"
                     android:inputType="text"
@@ -70,7 +68,6 @@
 
             <!-- content 2. target score -->
             <LinearLayout
-                android:id="@+id/userdata_target_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#d9e7ff"
@@ -91,7 +88,7 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:id="@+id/f_userinput_target_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="너 수지 100은 되냐?"
@@ -105,9 +102,10 @@
             <LinearLayout
                 android:id="@+id/userdata_speciality"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="#d8dfeb"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:padding="3dp">
 
                 <TextView
@@ -123,15 +121,36 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/listDivider" />
 
-                <EditText
-                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                <RadioGroup
+                    android:id="@+id/f_userInput_speciality"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="주 종목은 3구냐?"
-                    android:inputType="text"
-                    android:paddingLeft="10dp"
-                    android:selectAllOnFocus="false"
-                    android:singleLine="true"></EditText>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <RadioButton
+                        android:id="@+id/f_userInput_speciality_three_cushion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="3구" />
+                    <RadioButton
+                        android:id="@+id/f_userInput_speciality_four_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="4구" />
+                    <RadioButton
+                        android:id="@+id/f_userInput_speciality_pocket_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="포켓" />
+
+                </RadioGroup>
+
+
             </LinearLayout><!-- End of content 2-->
 
             <!-- content 4. input button-->
@@ -142,7 +161,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/f_userinputdata_input"
+                    android:id="@+id/f_userinput_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/selectItemBackground"

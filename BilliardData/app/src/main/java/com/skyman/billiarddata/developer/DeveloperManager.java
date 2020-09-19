@@ -14,4 +14,5 @@ public class DeveloperManager {
     public static void displayLog(String className, String logMessage){
         Log.d(className, logMessage);
     }
+
 }

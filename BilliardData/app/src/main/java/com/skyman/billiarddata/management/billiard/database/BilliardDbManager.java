@@ -34,10 +34,9 @@ public class BilliardDbManager {
     public void init_tables() {
         /*
          * =====================================================
-         * billiard.db setting
-         * - 해당 db와 table 생성 여부를 체크하여 없으면 만들고,
-         * 있으면 해당 db와 커넥션한다.
-         * - 2020-9-18 : billiardBasic 테이블 생성
+         * billiard.db 에 billiardBasic 테이블 setting
+         * - 해당 db에 table 생성 여부를 체크하여 없으면 만들고,
+         * 있으면 해당 db의 table을 연결한다.
          * =====================================================
          * */
         billiardDbHelper = new BilliardDbHelper(activityContext);

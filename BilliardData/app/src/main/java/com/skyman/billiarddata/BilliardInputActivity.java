@@ -20,7 +20,7 @@ import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class InputDataActivity extends AppCompatActivity {
+public class BilliardInputActivity extends AppCompatActivity {
 
     // value : helper manager 객체 선언
     BilliardDbManager billiardDbManager = null;
@@ -44,7 +44,7 @@ public class InputDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_data);
+        setContentView(R.layout.activity_billiard_input);
 
         // BilliardDbManager class : helper manager setting
         billiardDbManager = new BilliardDbManager(this);

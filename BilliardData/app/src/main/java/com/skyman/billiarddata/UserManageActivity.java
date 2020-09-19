@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
 
-public class UserDataActivity extends AppCompatActivity {
+public class UserManageActivity extends AppCompatActivity {
 
     // faragment pager 객체 생성
     ViewPager pager;
@@ -22,7 +22,7 @@ public class UserDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_data);
+        setContentView(R.layout.activity_user_manage);
 
         // pager setting
         pager = (ViewPager) findViewById(R.id.userdata_pager);

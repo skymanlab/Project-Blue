@@ -11,9 +11,9 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".UserDataActivity"></activity>
-        <activity android:name=".DisplayDataActivity" />
-        <activity android:name=".InputDataActivity" />
+        <activity android:name=".UserManageActivity"></activity>
+        <activity android:name=".BilliardDisplayActivity" />
+        <activity android:name=".BilliardInputActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

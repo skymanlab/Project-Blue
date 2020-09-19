@@ -15,7 +15,7 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new UserInputData();
+                return new UserInput();
             case 1:
                 return new UserInfo();
             case 2:
