@@ -1,11 +1,13 @@
 package com.skyman.billiarddata.database.billiard;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-public  class BilliardDatabase {
+/**
+ * ===========================================================================================
+ * billiardBasic 테이블을 생성하고 필요한 설정을 하기위한 클래스
+ * ===========================================================================================
+ * */
+public  class BilliardTableSetting {
     // SQL 1. create table setting
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
@@ -31,7 +33,7 @@ public  class BilliardDatabase {
 
 
     // constructor - private
-    private BilliardDatabase() {}
+    private BilliardTableSetting() {}
 
     // inner class - Entry
     public static class Entry implements BaseColumns {

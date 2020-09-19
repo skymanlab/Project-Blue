@@ -103,7 +103,7 @@
                 android:background="#d9e7ff">
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="날짜"
@@ -111,11 +111,21 @@
 
                 <TextView
                     android:id="@+id/inputdate_date"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:text="날짜는 입력됩니다."
                     android:textAlignment="textStart"></TextView>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="5dp"
+                   android:text=" Re "
+                   android:id="@+id/inputdata_re_date"
+                   android:background="@color/selectItemBackground">
+               </TextView>
             </LinearLayout>
 
             <!-- content 1-3. victoree -->
@@ -128,7 +138,7 @@
                 android:background="#d8dfeb">
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="승자"
@@ -149,7 +159,7 @@
                 android:background="#d9e7ff">
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="스코어"
@@ -184,7 +194,7 @@
                 android:background="#d8dfeb">
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="금액"
@@ -205,7 +215,7 @@
                 android:background="#d9e7ff">
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="경기 시간"
@@ -268,7 +278,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <!-- content 3-1. coment -->
+            <!-- content 3-1. comment -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -277,7 +287,7 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/inputdata_coment"
+                    android:id="@+id/inputdata_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="coment"

@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.factivity;
+package com.skyman.billiarddata.factivity.user;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

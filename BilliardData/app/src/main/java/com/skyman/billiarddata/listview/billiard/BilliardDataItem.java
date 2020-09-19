@@ -1,6 +1,6 @@
-package com.skyman.billiarddata.listview;
+package com.skyman.billiarddata.listview.billiard;
 
-public class DataListItem {
+public class BilliardDataItem {
     private long id;
     private String date;
     private String target_score;

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.skyman.billiarddata.factivity.UserPagerAdapter;
+import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
 
 public class UserDataActivity extends AppCompatActivity {
 

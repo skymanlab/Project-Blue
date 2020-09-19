@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 public class UserDbHelper extends SQLiteOpenHelper {
 
     // database setting
@@ -18,12 +16,12 @@ public class UserDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(UserDatabase.SQL_CREATE_ENTRIES);
+        db.execSQL(UserTableSetting.SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(UserDatabase.SQL_DELETE_ENTRIES);
+        db.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 

@@ -2,11 +2,7 @@ package com.skyman.billiarddata.database.user;
 
 import android.provider.BaseColumns;
 
-import com.skyman.billiarddata.database.billiard.BilliardDatabase;
-
-import java.util.EmptyStackException;
-
-public class UserDatabase {
+public class UserTableSetting {
 
     // SQLite query
     public static final String SQL_CREATE_ENTRIES =
@@ -20,7 +16,7 @@ public class UserDatabase {
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
 
-    private UserDatabase(){}
+    private UserTableSetting(){}
 
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "user";

@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.listview;
+package com.skyman.billiarddata.listview.billiard;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,18 +12,18 @@ import com.skyman.billiarddata.database.billiard.BilliardDataManager;
 
 import java.util.ArrayList;
 
-public class DataListAdapter extends BaseAdapter {
+public class BilliardDataAdapter extends BaseAdapter {
 
-    private ArrayList<DataListItem> dataListItems = new ArrayList<>();
+    private ArrayList<BilliardDataItem> billiardDataItemArrayList = new ArrayList<>();
 
     @Override
     public int getCount() {
-        return dataListItems.size();
+        return billiardDataItemArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return dataListItems.get(position);
+        return billiardDataItemArrayList.get(position);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class DataListAdapter extends BaseAdapter {
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_select_item, parent, false);
+            convertView = inflater.inflate(R.layout.custom_select_item, parent, false);
         }
 
         /* 'activity_select_item' 에 정의된 위젯에 대한 참조 획득
@@ -64,20 +64,20 @@ public class DataListAdapter extends BaseAdapter {
 
 
         /* 각 리스트에 뿌려줄 아이템을 받아오는데 DataListItem 재활용 */
-        DataListItem dataListItem = (DataListItem) getItem(position);
+        BilliardDataItem billiardDataItem = (BilliardDataItem) getItem(position);
 
 
         /* 각 위젯에 셋팅된 아이템을 뿌려준다. */
-        id.setText(dataListItem.getId() +"");
-        date.setText(dataListItem.getDate());
+        id.setText(billiardDataItem.getId() +"");
+        date.setText(billiardDataItem.getDate());
 
-        target_score.setText(dataListItem.getTarget_score());
-        speciality.setText(dataListItem.getSpeciality());
-        play_time.setText(BilliardDataManager.setFormatToPlayTime(dataListItem.getPaly_time()));
+        target_score.setText(billiardDataItem.getTarget_score());
+        speciality.setText(billiardDataItem.getSpeciality());
+        play_time.setText(BilliardDataManager.setFormatToPlayTime(billiardDataItem.getPaly_time()));
 
-        victoree.setText(dataListItem.getVictoree());
-        score.setText(dataListItem.getScore());
-        cost.setText(BilliardDataManager.setFormatToCost(dataListItem.getCost()));
+        victoree.setText(billiardDataItem.getVictoree());
+        score.setText(billiardDataItem.getScore());
+        cost.setText(BilliardDataManager.setFormatToCost(billiardDataItem.getCost()));
 
         return convertView;
     }
@@ -89,21 +89,21 @@ public class DataListAdapter extends BaseAdapter {
 
     // db에서 읽어온 내용을 ArrayList에 추가하기 위한 method
     public void addItem(long id, String date, String target_score, String speciality, String play_time, String victoree, String score, String cost){
-        DataListItem dataListItem = new DataListItem();
+        BilliardDataItem billiardDataItem = new BilliardDataItem();
 
         /* DataListItem 에 아이템을 setting 한다.*/
-        dataListItem.setId(id);
-        dataListItem.setDate(date);
+        billiardDataItem.setId(id);
+        billiardDataItem.setDate(date);
 
-        dataListItem.setTarget_score(target_score);
-        dataListItem.setSpeciality(speciality);
-        dataListItem.setPaly_time(play_time);
+        billiardDataItem.setTarget_score(target_score);
+        billiardDataItem.setSpeciality(speciality);
+        billiardDataItem.setPaly_time(play_time);
 
-        dataListItem.setVictoree(victoree);
-        dataListItem.setScore(score);
-        dataListItem.setCost(cost);
+        billiardDataItem.setVictoree(victoree);
+        billiardDataItem.setScore(score);
+        billiardDataItem.setCost(cost);
 
         /* items 에 dataListItem 을 추가한다.*/
-        dataListItems.add(dataListItem);
+        billiardDataItemArrayList.add(billiardDataItem);
     }
 }

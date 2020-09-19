@@ -8,17 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.skyman.billiarddata.database.billiard.BilliardDatabase;
-import com.skyman.billiarddata.database.billiard.BilliardHelper;
-import com.skyman.billiarddata.listview.DataListAdapter;
-import com.skyman.billiarddata.listview.DataListItem;
+import com.skyman.billiarddata.database.billiard.BilliardDbHelper;
+import com.skyman.billiarddata.database.billiard.BilliardTableSetting;
+import com.skyman.billiarddata.listview.billiard.BilliardDataItem;
+import com.skyman.billiarddata.listview.billiard.BilliardDataAdapter;
 
 import java.util.ArrayList;
 
 public class ViewDataActivity extends AppCompatActivity {
 
     //  Billiard DB Helper 객체 선언
-    private BilliardHelper billiardHelper = null;
+    private BilliardDbHelper billiardHelper = null;
 
     // activity 에서 사용하는 객체 선언
     private ListView allBilliardData;
@@ -49,7 +49,7 @@ public class ViewDataActivity extends AppCompatActivity {
          * 생성 됨
          * =====================================================
          * */
-        billiardHelper = new BilliardHelper(this);
+        billiardHelper = new BilliardDbHelper(this);
     }
 
     // DB 3. select
@@ -68,10 +68,10 @@ public class ViewDataActivity extends AppCompatActivity {
         SQLiteDatabase readDb = billiardHelper.getReadableDatabase();
 
         // 해당 쿼리문으로 읽어온 테이블 내용을 Cursor 객체를 통해 읽을 수 있도록 하기
-        Cursor cursor = readDb.rawQuery(BilliardDatabase.SQL_SELECT_TABLE_ALL_CONTENT, null);
+        Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_TABLE_ALL_CONTENT, null);
 
         // DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
-        ArrayList<DataListItem> dataListItems = new ArrayList<>();
+        ArrayList<BilliardDataItem> dataListItems = new ArrayList<>();
 
         // Cursor 객체를 통해 하나씩 읽어온다.
         while (cursor.moveToNext()) {
@@ -93,7 +93,7 @@ public class ViewDataActivity extends AppCompatActivity {
             Log.d("select", "paly_time : " + palyTime);
 
             // 읽어온 dataListItem 을 items에 추가하기
-            DataListItem dataListItem = new DataListItem();
+            BilliardDataItem dataListItem = new BilliardDataItem();
             dataListItem.setId(id);
             dataListItem.setDate(date);
             dataListItem.setTarget_score(targetScore);
@@ -112,10 +112,10 @@ public class ViewDataActivity extends AppCompatActivity {
     }
 
     // list view adapter
-    private void setDataList(ArrayList<DataListItem> dataListItems) {
+    private void setDataList(ArrayList<BilliardDataItem> dataListItems) {
 
         // list view adapter 객체 생성
-        DataListAdapter dataListAdapter = new DataListAdapter();
+        BilliardDataAdapter dataListAdapter = new BilliardDataAdapter();
 
         // dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
         for (int position = 0; position < dataListItems.size(); position++) {
