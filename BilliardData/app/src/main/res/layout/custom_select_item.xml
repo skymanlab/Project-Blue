@@ -139,7 +139,7 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-        <!-- content 2-3. victoree, score, cost -->
+        <!-- content 2-3. winner, score, cost -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
             android:orientation="horizontal"
             android:padding="2dp">
 
-            <!-- content 2-3-1. victoree -->
+            <!-- content 2-3-1. winner -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -164,7 +164,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/selectitem_victoree"
+                    android:id="@+id/selectitem_winner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"

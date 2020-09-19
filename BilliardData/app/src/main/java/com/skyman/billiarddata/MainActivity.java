@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         viewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), ViewDataActivity.class);
+                Intent intent = new Intent(getApplicationContext(), DisplayDataActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.database.user;
+package com.skyman.billiarddata.management.user.database;
 
 import android.provider.BaseColumns;
 
@@ -22,6 +22,7 @@ public class UserTableSetting {
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_NAME_USERNAME = "userName";
         public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
+        public static final String COLUMN_NAME_SPECIALITY = "speciality";
         public static final String COLUMN_NAME_GAME_RECORD = "gameRecord";
         public static final String COLUMN_NAME_TOTAL_TIME ="totalTime";
         public static final String COLUMN_NAME_TOTAL_COST = "totalCost";

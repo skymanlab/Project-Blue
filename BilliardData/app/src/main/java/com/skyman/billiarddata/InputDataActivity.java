@@ -13,22 +13,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.skyman.billiarddata.database.billiard.BilliardDataManager;
-import com.skyman.billiarddata.database.billiard.BilliardDbManager;
-import com.skyman.billiarddata.listview.billiard.BilliardDataItem;
-import com.skyman.billiarddata.listview.billiard.BilliardDataAdapter;
+import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class InputDataActivity extends AppCompatActivity {
 
-    // helper manager 객체 선언
+    // value : helper manager 객체 선언
     BilliardDbManager billiardDbManager = null;
 
-    // activity 에서 사용하는 객체 선언
-    Spinner user;
+    // value : activity 에서 사용하는 객체 선언
+    Spinner player;
     Spinner targetScore;
     Spinner speciality;
     TextView date;
@@ -41,12 +39,7 @@ public class InputDataActivity extends AppCompatActivity {
     Button input;
     Button display;
     Button delete;
-    ListView billiardDataList;
-
-    // spinner selected item
-    String userSelectedItem;
-    String targetScoreSelectedItem;
-    String specialitySelectedItem;
+    ListView billiardLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +61,11 @@ public class InputDataActivity extends AppCompatActivity {
         playTime = (EditText) findViewById(R.id.inputdata_play_time);
 
         // spinner : user spinner setting
-        user = (Spinner) findViewById(R.id.inputdata_user);
+        player = (Spinner) findViewById(R.id.inputdata_player);
         ArrayAdapter userAdapter = ArrayAdapter.createFromResource(this, R.array.user, android.R.layout.simple_spinner_dropdown_item);
         userAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        user.setAdapter(userAdapter);
-        user.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        player.setAdapter(userAdapter);
+        player.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -93,10 +86,9 @@ public class InputDataActivity extends AppCompatActivity {
         speciality = (Spinner) findViewById(R.id.inputdata_speciality);
         ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(this, R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
         speciality.setAdapter(specialityAdapter);
-        speciality.setSelection(2);
 
         // list view : inputData list view setting
-        billiardDataList = (ListView) findViewById(R.id.inputdata_dataList);
+        billiardLv = (ListView) findViewById(R.id.inputdata_billiard_data);
 
         // button : input button setting
         input = (Button) findViewById(R.id.inputdata_input);
@@ -105,15 +97,16 @@ public class InputDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // check : billiardDbManager가 생성 되었습니까?
                 if (billiardDbManager != null) {
-                    billiardDbManager.save_content(
-                            date.getText().toString(),                                                                                      // 1. date
-                            targetScore.getSelectedItem().toString(),                                                                       // 2. target score
-                            speciality.getSelectedItem().toString(),                                                                        // 3. speciality
-                            playTime.getText().toString(),                                                                                  // 4. play time
-                            user.getSelectedItem().toString(),                                                                              // 5. victoree
-                            BilliardDataManager.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),               // 6. score
-                            cost.getText().toString()                                                                                       // 7. cost
+                            billiardDbManager.save_content(
+                                    date.getText().toString(),                                                                                      // 1. date
+                                    targetScore.getSelectedItem().toString(),                                                                       // 2. target score
+                                    speciality.getSelectedItem().toString(),                                                                        // 3. speciality
+                                    playTime.getText().toString(),                                                                                  // 4. play time
+                                    player.getSelectedItem().toString(),                                                                            // 5. winner
+                                    BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),             // 6. score
+                                    cost.getText().toString()                                                                                       // 7. cost
                     );
+//                    save_content_Builder();
                 } else {
 
                 }
@@ -127,7 +120,11 @@ public class InputDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // check : billiardDbManager가 생성 되었습니까?
                 if (billiardDbManager != null) {
-                    setDataList(billiardDbManager.load_contents());
+                    // object create : billiard data manager 를 통해 load
+                    BilliardLvManager billiardLvManager = new BilliardLvManager(billiardLv);
+
+                    // load : billiardDbManager 의 load_contents 메소드를 통해 받은 데이터를 이용하여 ListView 에 뿌려준다.
+                    billiardLvManager.setListViewToBilliardData(billiardDbManager.load_contents());
                 } else {
 
                 }
@@ -140,7 +137,7 @@ public class InputDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check : billiardDbManager가 생성 되었습니까?
-                if(billiardDbManager != null) {
+                if (billiardDbManager != null) {
                     billiardDbManager.delete_contents();
                 } else {
 
@@ -157,6 +154,7 @@ public class InputDataActivity extends AppCompatActivity {
         reDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // refresh date
                 setDateFormat();
             }
         });
@@ -164,36 +162,10 @@ public class InputDataActivity extends AppCompatActivity {
 
     // =============================================================================================================
     /* method : date set, 지금 현태의 날짜를 특정 형태로 가져오기*/
-    private void setDateFormat(){
+    private void setDateFormat() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
         date.setText(format.format(new Date()));
     }
-
-    /* method : list view adapter, 받아온 내용을 adapter를 통해 dataList 에 뿌려 준다.*/
-    private void setDataList(ArrayList<BilliardDataItem> dataListItems) {
-
-        // object create : list view adapter 객체 생성
-        BilliardDataAdapter dataListAdapter = new BilliardDataAdapter();
-
-        // cycle : Array List add, dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
-        for (int position = 0; position < dataListItems.size(); position++) {
-            dataListAdapter.addItem(
-                    dataListItems.get(position).getId(),                // id
-                    dataListItems.get(position).getDate(),              // date
-                    dataListItems.get(position).getTarget_score(),      // target score
-                    dataListItems.get(position).getSpeciality(),        // speciality
-                    dataListItems.get(position).getPaly_time(),         // play time
-                    dataListItems.get(position).getVictoree(),          // victoree
-                    dataListItems.get(position).getScore(),             // score
-                    dataListItems.get(position).getCost()               // cost
-            );
-        }
-        // set : set adapter, 읽어온 내용을 다 넣고, adapter를 dataList(ListView)에 연결 시키기
-        billiardDataList.setAdapter(dataListAdapter);
-    }
-
-
-    // =============================================================================================================
 
     /* method : display, toast 메시지 형태로 화면 출력*/
     private void toastHandler(String content) {
@@ -205,7 +177,7 @@ public class InputDataActivity extends AppCompatActivity {
     private void displayCost() {
         // check : cost edit text 내용이 있습니까?
         if (!cost.getText().toString().equals("")) {
-            toastHandler("포맷한 내용 : " + BilliardDataManager.setFormatToCost(cost.getText().toString()));
+            toastHandler("포맷한 내용 : " + BilliardDataFormatter.setFormatToCost(cost.getText().toString()));
         } else {
             toastHandler("데이터를 입력해주세요.");
         }
@@ -215,9 +187,35 @@ public class InputDataActivity extends AppCompatActivity {
     private void displayPlayTime() {
         // check : playtime edit text 내용이 있습니까?
         if (!playTime.getText().toString().equals("")) {
-            toastHandler("포맷한 내용 : " + BilliardDataManager.setFormatToPlayTime(playTime.getText().toString()));
+            toastHandler("포맷한 내용 : " + BilliardDataFormatter.setFormatToPlayTime(playTime.getText().toString()));
         } else {
             toastHandler("데이터를 입력해주세요.");
         }
     }
+
+   /* *//* method : insert, BilliardData 객체를 만들어 테이블에 추가하기*//*
+    private void save_content_Builder(){
+        if (!date.getText().toString().equals("")                                                  // 1. date
+                && !targetScore.getSelectedItem().toString().equals("")                  // 2. target score
+                && !speciality.getSelectedItem().toString().equals("")                                     // 3. speciality
+                && !playTime.getText().toString().equals("")                     // 4. playtime
+                && !player.getSelectedItem().toString().equals("")                                         // 5. winner
+                && !BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()).equals("")                                          // 6. score
+                && !cost.getText().toString().equals("")) {                      // 7. cost
+            toastHandler("빈 곳 없음");
+
+            billiardDbManager.save_content(
+                    new BilliardData.DataBuilder()
+                            .setDate(date.getText().toString())
+                            .setTargetScore(Integer.parseInt(targetScore.getSelectedItem().toString()))
+                            .setSpeciality(speciality.getSelectedItem().toString())
+                            .setPlayTime(Integer.parseInt(playTime.getText().toString()))
+                            .setWinner(player.getSelectedItem().toString())
+                            .setScore(BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()))
+                            .setCost(Integer.parseInt(cost.getText().toString())).builder()
+            );
+        } else {
+            toastHandler("빈 곳  채워주세요.");
+        }
+    }*/
 }

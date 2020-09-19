@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.database.billiard;
+package com.skyman.billiarddata.management.billiard.data;
 
 import java.text.DecimalFormat;
 
@@ -7,9 +7,7 @@ import java.text.DecimalFormat;
  * billiardBasic 테이블의 데이터를 변형하거나 다루는 클래스
  * ===========================================================================================
  * */
-public class BilliardDataManager {
-
-
+public class BilliardDataFormatter {
     /* method : formatter, 스코어 형태로 문자열 만들기 - #:# */
     public static String setFormatToScore(String score_1, String score_2) {
         StringBuilder scoreData = new StringBuilder();
@@ -17,6 +15,7 @@ public class BilliardDataManager {
         scoreData.append(" : ");
         scoreData.append(score_2);
         return scoreData.toString();
+
     }
 
     /* method : formatter, 가격 형태로 문자열 만들기 - ###,### 원 */
@@ -24,7 +23,6 @@ public class BilliardDataManager {
         DecimalFormat wonFormat = new DecimalFormat("###,###");
         StringBuilder costData = new StringBuilder();
         long longCost = Long.parseLong(cost);
-
 
         costData.append(wonFormat.format(longCost));
         costData.append(" 원");

@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.database.billiard;
+package com.skyman.billiarddata.management.billiard.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.listview.billiard.BilliardDataItem;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * ===========================================================================================
  * BilliardDbHelper를 관리하는 클래스
  * ===========================================================================================
- * */
+ */
 public class BilliardDbManager {
 
     // value : SQLite DB open helper 객체 선언
@@ -46,12 +46,12 @@ public class BilliardDbManager {
 
     /* method : insert, SQLite DB Helper를 이용하여 해당 테이블에 정보를 insert 한다. */
     public void save_content(String dateContent,
-                              String targetScoreContent,
-                              String specialityContent,
-                              String playTimeContent,
-                              String victoreeContent,
-                              String scoreContent,
-                              String costContent) {
+                             String targetScoreContent,
+                             String specialityContent,
+                             String playTimeContent,
+                             String winnerContent,
+                             String scoreContent,
+                             String costContent) {
         /*
          * =====================================================
          * billiardBasic table insert query
@@ -72,13 +72,13 @@ public class BilliardDbManager {
          * */
         DeveloperManager.displayLog("BilliardDbManager", "save_content 실행");
 
-        DeveloperManager.displayLog("BilliardDbManager", "=== date : " + dateContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== targetScoreContent : " + targetScoreContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== specialityContent : " + specialityContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== playTimeContent : " + playTimeContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== victoreeContent : " + victoreeContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== scoreContent : " + scoreContent);
-        DeveloperManager.displayLog("BilliardDbManager", "=== costContent : " + costContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== date : " + dateContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== targetScoreContent : " + targetScoreContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== specialityContent : " + specialityContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== playTimeContent : " + playTimeContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== winnerContent : " + winnerContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== scoreContent : " + scoreContent);
+//        DeveloperManager.displayLog("BilliardDbManager", "=== costContent : " + costContent);
 
         //  쓰기로 객체 생성
         SQLiteDatabase writeDb = billiardDbHelper.getWritableDatabase();
@@ -88,7 +88,7 @@ public class BilliardDbManager {
                 && !targetScoreContent.equals("")               // target score
                 && !specialityContent.equals("")                // speciality
                 && !playTimeContent.equals("")                  // playtime
-                && !victoreeContent.equals("")                  // victoree
+                && !winnerContent.equals("")                    // winner
                 && !scoreContent.equals("")                     // score
                 && !costContent.equals("")) {                   // cost
 
@@ -98,7 +98,7 @@ public class BilliardDbManager {
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);            // 2. target score
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_SPECIALITY, specialityContent);               // 3. speciality
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTimeContent);                  // 4. play time
-            values.put(BilliardTableSetting.Entry.COLUMN_NAME_VICTOREE, victoreeContent);                   // 5. victoree
+            values.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER, winnerContent);                       // 5. winner
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                         // 6. score
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                           // 7. cost
 
@@ -121,8 +121,10 @@ public class BilliardDbManager {
         DeveloperManager.displayLog("BilliardDbManager", "save_content 실행 완료");
     }
 
+
+
     /* method : load, SQLite DB Helper를 이용하여 해당 테이블에 정보를 select 한다. */
-    public ArrayList<BilliardDataItem> load_contents() {
+    public ArrayList<BilliardData> load_contents() {
         /*
          * =====================================================
          * billiardBasic table select query
@@ -145,10 +147,10 @@ public class BilliardDbManager {
         SQLiteDatabase readDb = billiardDbHelper.getReadableDatabase();
 
         // 해당 쿼리문으로 읽어온 테이블 내용을 Cursor 객체를 통해 읽을 수 있도록 하기
-        Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_TABLE_ALL_CONTENT, null);
+        Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
 
         // DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
-        ArrayList<BilliardDataItem> billiardDataItemArrayList = new ArrayList<>();
+        ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
         // Cursor 객체를 통해 하나씩 읽어온다.
         while (cursor.moveToNext()) {
@@ -157,7 +159,7 @@ public class BilliardDbManager {
             String targetScore = cursor.getString(2);
             String speciality = cursor.getString(3);
             String playTime = cursor.getString(4);
-            String victoree = cursor.getString(5);
+            String winner = cursor.getString(5);
             String score = cursor.getString(6);
             String cost = cursor.getString(7);
 
@@ -167,26 +169,37 @@ public class BilliardDbManager {
             DeveloperManager.displayLog("BilliardDbManager", "targetScore : " + targetScore);
             DeveloperManager.displayLog("BilliardDbManager", "speciality : " + speciality);
             DeveloperManager.displayLog("BilliardDbManager", "paly_time : " + playTime);
-            DeveloperManager.displayLog("BilliardDbManager", "victoree : " + victoree);
+            DeveloperManager.displayLog("BilliardDbManager", "victoree : " + winner);
             DeveloperManager.displayLog("BilliardDbManager", "score : " + score);
             DeveloperManager.displayLog("BilliardDbManager", "cost : " + cost);
 
             // 읽어온 dataListItem 을 items에 추가하기
-            BilliardDataItem dataItem = new BilliardDataItem();
+//            BilliardData billiardData = new BilliardData.DataBuilder()
+//                    .setId(cursor.getLong(0))
+//                    .setDate(cusor.)
+//                    .setTargetScore()
+//                    .setSpeciality()
+//                    .setPlayTime()
+//                    .setWinner()
+//                    .setScore()
+//                    .setCost().builder();
+
+
+            BilliardData dataItem = new BilliardData();
             dataItem.setId(id);
             dataItem.setDate(date);
-            dataItem.setTarget_score(targetScore);
+            dataItem.setTargetScore(targetScore);
             dataItem.setSpeciality(speciality);
-            dataItem.setPaly_time(playTime);
-            dataItem.setVictoree(victoree);
+            dataItem.setPlayTime(playTime);
+            dataItem.setWinner(winner);
             dataItem.setScore(score);
             dataItem.setCost(cost);
 
             // array list 에 insert
-            billiardDataItemArrayList.add(dataItem);
+            billiardDataArrayList.add(dataItem);
         }
         DeveloperManager.displayLog("BilliardDbManager", "load_contents 실행 완료");
-        return billiardDataItemArrayList;
+        return billiardDataArrayList;
     }
 
     /* method : delete,  */
@@ -203,7 +216,7 @@ public class BilliardDbManager {
         SQLiteDatabase deleteDb = billiardDbHelper.getWritableDatabase();
 
         // all contents delete_query execute
-        deleteDb.execSQL(BilliardTableSetting.SQL_DELETE_TABLE_ALL_CONTENT);
+        deleteDb.execSQL(BilliardTableSetting.SQL_DELETE_TABLE_ALL_ITEM);
 
         DeveloperManager.displayLog("BilliardDbManager", "delete_contents 실행 완료");
     }

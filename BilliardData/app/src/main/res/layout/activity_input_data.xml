@@ -145,7 +145,7 @@
                     android:textAlignment="textStart"></TextView>
 
                 <Spinner
-                    android:id="@+id/inputdata_user"
+                    android:id="@+id/inputdata_player"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"></Spinner>
@@ -258,7 +258,7 @@
                 android:layout_height="match_parent"
                 android:background="#d8dfeb">
                 <ListView
-                    android:id="@+id/inputdata_dataList"
+                    android:id="@+id/inputdata_billiard_data"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </ListView>

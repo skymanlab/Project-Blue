@@ -1,8 +1,10 @@
-package com.skyman.billiarddata.database.billiard;
+package com.skyman.billiarddata.management.billiard.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.skyman.billiarddata.management.projectdb.BilliardDatabase;
 
 /**
  * ===========================================================================================
@@ -11,13 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
  * */
 public class BilliardDbHelper extends SQLiteOpenHelper {
 
-    // database setting
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "billiard.db";
-
     // constructor
     public BilliardDbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, BilliardDatabase.DATABASE_NAME, null, BilliardDatabase.DATABASE_VERSION);
     }
 
     @Override

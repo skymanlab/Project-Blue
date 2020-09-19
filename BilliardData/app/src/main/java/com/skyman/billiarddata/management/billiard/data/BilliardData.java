@@ -1,12 +1,13 @@
-package com.skyman.billiarddata.listview.billiard;
+package com.skyman.billiarddata.management.billiard.data;
 
-public class BilliardDataItem {
+public class BilliardData {
+
     private long id;
     private String date;
-    private String target_score;
+    private String targetScore;
     private String speciality;
-    private String paly_time;
-    private String victoree;
+    private String playTime;
+    private String winner;
     private String score;
     private String cost;
 
@@ -26,12 +27,12 @@ public class BilliardDataItem {
         this.date = date;
     }
 
-    public String getTarget_score() {
-        return target_score;
+    public String getTargetScore() {
+        return targetScore;
     }
 
-    public void setTarget_score(String target_score) {
-        this.target_score = target_score;
+    public void setTargetScore(String targetScore) {
+        this.targetScore = targetScore;
     }
 
     public String getSpeciality() {
@@ -42,20 +43,20 @@ public class BilliardDataItem {
         this.speciality = speciality;
     }
 
-    public String getPaly_time() {
-        return paly_time;
+    public String getPlayTime() {
+        return playTime;
     }
 
-    public void setPaly_time(String paly_time) {
-        this.paly_time = paly_time;
+    public void setPlayTime(String playTime) {
+        this.playTime = playTime;
     }
 
-    public String getVictoree() {
-        return victoree;
+    public String getWinner() {
+        return winner;
     }
 
-    public void setVictoree(String victoree) {
-        this.victoree = victoree;
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     public String getScore() {

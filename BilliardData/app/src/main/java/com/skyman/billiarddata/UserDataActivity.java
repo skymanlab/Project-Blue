@@ -19,8 +19,6 @@ public class UserDataActivity extends AppCompatActivity {
     Button userInfo;
     Button userFriend;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

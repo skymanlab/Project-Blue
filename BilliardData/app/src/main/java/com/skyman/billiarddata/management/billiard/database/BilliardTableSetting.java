@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.database.billiard;
+package com.skyman.billiarddata.management.billiard.database;
 
 import android.provider.BaseColumns;
 
@@ -13,24 +13,22 @@ public  class BilliardTableSetting {
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +
                     Entry.COLUMN_NAME_DATE + " TEXT, " +
-                    Entry.COLUMN_NAME_TARGET_SCORE + " TEXT, " +
+                    Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER, " +
                     Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +
-                    Entry.COLUMN_NAME_PLAY_TIME + " TEXT," +
-                    Entry.COLUMN_NAME_VICTOREE + " TEXT, " +
+                    Entry.COLUMN_NAME_PLAY_TIME + " INTEGER," +
+                    Entry.COLUMN_NAME_WINNER + " TEXT, " +
                     Entry.COLUMN_NAME_SCORE + " TEXT, " +
-                    Entry.COLUMN_NAME_COST + " TEXT)" ;
+                    Entry.COLUMN_NAME_COST + " INTEGER)" ;
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
-    // SQL 2. select table setting
-    public static final String SQL_SELECT_TABLE_ALL_CONTENT =
+    // SQL 2. select table setting - all item
+    public static final String SQL_SELECT_TABLE_ALL_ITEM =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
-    // SQL 3. delete table all content
-    public static final String SQL_DELETE_TABLE_ALL_CONTENT =
+    // SQL 3. delete table setting - all item
+    public static final String SQL_DELETE_TABLE_ALL_ITEM =
             "DELETE FROM " + Entry.TABLE_NAME;
-
-
 
     // constructor - private
     private BilliardTableSetting() {}
@@ -41,7 +39,7 @@ public  class BilliardTableSetting {
         public static final String COLUMN_NAME_DATE = "date";
         public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
         public static final String COLUMN_NAME_SPECIALITY = "speciality";
-        public static final String COLUMN_NAME_VICTOREE = "victoree";
+        public static final String COLUMN_NAME_WINNER = "winner";
         public static final String COLUMN_NAME_SCORE = "score";
         public static final String COLUMN_NAME_COST = "cost";
         public static final String COLUMN_NAME_PLAY_TIME = "play_time";
