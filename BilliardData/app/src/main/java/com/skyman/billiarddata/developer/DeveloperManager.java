@@ -12,7 +12,8 @@ public class DeveloperManager {
     public static final Display DISPLAY_POWER = Display.ON;
 
     public static void displayLog(String className, String logMessage){
-        Log.d(className, logMessage);
+        if (DISPLAY_POWER == Display.ON)
+            Log.d(className, logMessage);
     }
 
 }

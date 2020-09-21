@@ -48,7 +48,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
         // BilliardDbManager class : helper manager setting
         billiardDbManager = new BilliardDbManager(this);
-        billiardDbManager.init_tables();
+        billiardDbManager.init_db();
 
         // text view : TextView setting
         date = (TextView) findViewById(R.id.inputdate_date);
@@ -192,30 +192,4 @@ public class BilliardInputActivity extends AppCompatActivity {
             toastHandler("데이터를 입력해주세요.");
         }
     }
-
-   /* *//* method : insert, BilliardData 객체를 만들어 테이블에 추가하기*//*
-    private void save_content_Builder(){
-        if (!date.getText().toString().equals("")                                                  // 1. date
-                && !targetScore.getSelectedItem().toString().equals("")                  // 2. target score
-                && !speciality.getSelectedItem().toString().equals("")                                     // 3. speciality
-                && !playTime.getText().toString().equals("")                     // 4. playtime
-                && !player.getSelectedItem().toString().equals("")                                         // 5. winner
-                && !BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()).equals("")                                          // 6. score
-                && !cost.getText().toString().equals("")) {                      // 7. cost
-            toastHandler("빈 곳 없음");
-
-            billiardDbManager.save_content(
-                    new BilliardData.DataBuilder()
-                            .setDate(date.getText().toString())
-                            .setTargetScore(Integer.parseInt(targetScore.getSelectedItem().toString()))
-                            .setSpeciality(speciality.getSelectedItem().toString())
-                            .setPlayTime(Integer.parseInt(playTime.getText().toString()))
-                            .setWinner(player.getSelectedItem().toString())
-                            .setScore(BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()))
-                            .setCost(Integer.parseInt(cost.getText().toString())).builder()
-            );
-        } else {
-            toastHandler("빈 곳  채워주세요.");
-        }
-    }*/
 }

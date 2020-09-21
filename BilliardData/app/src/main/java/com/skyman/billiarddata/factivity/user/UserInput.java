@@ -89,7 +89,7 @@ public class UserInput extends Fragment {
 
         // 데이터 있는지 확인
         userDbManager = new UserDbManager(view.getContext());
-        userDbManager.init_tables();
+        userDbManager.init_db();
 
         ArrayList<UserData> userDataArrayList = userDbManager.load_contents();
 
@@ -134,9 +134,6 @@ public class UserInput extends Fragment {
             speciality.setEnabled(false);
             input.setEnabled(false);
         }
-
-
-
 
         // Inflate the layout for this fragment
         return view;

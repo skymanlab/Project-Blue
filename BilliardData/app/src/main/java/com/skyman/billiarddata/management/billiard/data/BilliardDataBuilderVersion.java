@@ -1,6 +1,6 @@
 package com.skyman.billiarddata.management.billiard.data;
 
-public class BilliardDataEx {
+public class BilliardDataBuilderVersion {
 
     // value
     private long id;            // 0. id
@@ -13,7 +13,7 @@ public class BilliardDataEx {
     private int cost;           // 7. cost
 
     // constructor
-    public BilliardDataEx(DataBuilder dataBuilder){
+    public BilliardDataBuilderVersion(DataBuilder dataBuilder){
         this.id = dataBuilder.id;
         this.date = dataBuilder.date;
         this.targetScore = dataBuilder.targetScore;
@@ -112,8 +112,8 @@ public class BilliardDataEx {
             return this;
         }
 
-        public BilliardDataEx builder(){
-            return new BilliardDataEx(this);
+        public BilliardDataBuilderVersion builder(){
+            return new BilliardDataBuilderVersion(this);
         }
     }
 }

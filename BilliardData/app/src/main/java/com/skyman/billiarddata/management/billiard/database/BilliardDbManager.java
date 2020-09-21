@@ -21,29 +21,29 @@ public class BilliardDbManager {
     // value : SQLite DB open helper 객체 선언
     private BilliardDbHelper billiardDbHelper;
 
-    // value : 생성 요청하는 activity 관련 객체 선언
-    private Context activityContext;
+    // value : 생성 요청하는 activity 관련 된 객체 선언
+    private Context targetContext;
 
     // constructor
-    public BilliardDbManager(Context activityContext) {
-        this.billiardDbHelper = null;                                 // 이 클래스 모든 영역에서 사용하기 위해 null 값으로 , 생성은 method : init 에서
-        this.activityContext = activityContext;
+    public BilliardDbManager(Context targetContext) {
+        this.billiardDbHelper = null;                       // 직관성을 위해, 객체 생성은 init_db 에서 한다.
+        this.targetContext = targetContext;
     }
 
-    /* method : init, SQLite DB Helper를 이용하여 초기화 */
-    public void init_tables() {
+    /* method : init, SQLite DB open helper 를 이용하여 초기화 */
+    public void init_db() {
         /*
-         * =====================================================
-         * billiard.db 에 billiardBasic 테이블 setting
-         * - 해당 db에 table 생성 여부를 체크하여 없으면 만들고,
-         * 있으면 해당 db의 table을 연결한다.
-         * =====================================================
+         * ====================================================================
+         * project_blue.db 에 billiard, user 테이블의 존재 여부 확인한다.
+         * 없으면 project_blue.db 생성 후 billiard, user 테이블을 생성하고,
+         * project_blue.db 를 open 한다.
+         * ====================================================================
          * */
-        billiardDbHelper = new BilliardDbHelper(activityContext);
-        DeveloperManager.displayLog("BilliardDbManager", "초기화 완료");
+        billiardDbHelper = new BilliardDbHelper(targetContext);
+        DeveloperManager.displayLog("BilliardDbManager", "** init_db function is complete!");
     }
 
-    /* method : insert, SQLite DB Helper를 이용하여 해당 테이블에 정보를 insert 한다. */
+    /* method : insert, SQLite DB open helper 를 이용하여 해당 테이블에 정보를 insert 한다. */
     public void save_content(String dateContent,
                              String targetScoreContent,
                              String specialityContent,
@@ -53,12 +53,12 @@ public class BilliardDbManager {
                              String costContent) {
         /*
          * =====================================================
-         * billiardBasic table insert query
+         * billiard table insert query
          * -    데이터를 매개변수로 받아서
          *      모든 값을 입력 받은지 확인한다. 그리고
-         *      ContentValues의 객체에 내용 setting을 한 다음
+         *      ContentValues의 객체에 매개변수의 내용을 setting을 한 다음
          *      helper를 통해 쓰기용으로 받아온 SQLiteDatabase를
-         *      이용하여 해당 db 해당 table에 isnert 한다.
+         *      이용하여 project_blue.db 의 billiard table에 isnert 한다.
          * - 입력 순서
          *      1. date
          *      2. target score
@@ -69,7 +69,7 @@ public class BilliardDbManager {
          *      7. cost
          * =====================================================
          * */
-        DeveloperManager.displayLog("BilliardDbManager", "save_content 실행");
+        DeveloperManager.displayLog("BilliardDbManager", "** save_content is executing ............");
 
 //        DeveloperManager.displayLog("BilliardDbManager", "=== date : " + dateContent);
 //        DeveloperManager.displayLog("BilliardDbManager", "=== targetScoreContent : " + targetScoreContent);
@@ -101,7 +101,7 @@ public class BilliardDbManager {
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                         // 6. score
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                           // 7. cost
 
-            // 해당 billiardBasic 테이블에 내용 insert
+            // 해당 billiard 테이블에 내용 insert
             // nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
             //                이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.
             long newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, values);
@@ -117,12 +117,10 @@ public class BilliardDbManager {
         } else {
             toastHandler("빈곳을 채워주세요.");
         }
-        DeveloperManager.displayLog("BilliardDbManager", "save_content 실행 완료");
+        DeveloperManager.displayLog("BilliardDbManager", "** save_content is complete");
     }
 
-
-
-    /* method : load, SQLite DB Helper를 이용하여 해당 테이블에 정보를 select 한다. */
+    /* method : load, SQLite DB Helper를 이용하여 해당 테이블의 정보를 가져온다. */
     public ArrayList<BilliardData> load_contents() {
         /*
          * =====================================================
@@ -140,7 +138,7 @@ public class BilliardDbManager {
          * - return : 읽어온 내용이 담기 ArrayList<DataListItem>
          * =====================================================
          * */
-        DeveloperManager.displayLog("BilliardDbManager", "load_contents 실행");
+        DeveloperManager.displayLog("BilliardDbManager", "** load_contents is executing ............");
 
         // 읽기용 객체 생성
         SQLiteDatabase readDb = billiardDbHelper.getReadableDatabase();
@@ -197,7 +195,7 @@ public class BilliardDbManager {
             // array list 에 insert
             billiardDataArrayList.add(dataItem);
         }
-        DeveloperManager.displayLog("BilliardDbManager", "load_contents 실행 완료");
+        DeveloperManager.displayLog("BilliardDbManager", "** load_contents is complete!");
         return billiardDataArrayList;
     }
 
@@ -210,20 +208,19 @@ public class BilliardDbManager {
          *      이용하여 해당 db 해당 table의 모든 내용을 delete 한다.
          * =====================================================
          * */
-        DeveloperManager.displayLog("BilliardDbManager", "delete_contents 실행");
+        DeveloperManager.displayLog("BilliardDbManager", "** delete_contents is executing ............");
         // 쓰기용 객체 생성
         SQLiteDatabase deleteDb = billiardDbHelper.getWritableDatabase();
 
         // all contents delete_query execute
         deleteDb.execSQL(BilliardTableSetting.SQL_DELETE_TABLE_ALL_ITEM);
 
-        DeveloperManager.displayLog("BilliardDbManager", "delete_contents 실행 완료");
+        DeveloperManager.displayLog("BilliardDbManager", "** delete_contents is complete!");
     }
-
 
     /* method : display, toast 메시지 출력 */
     private void toastHandler(String content) {
-        Toast myToast = Toast.makeText(activityContext, content, Toast.LENGTH_SHORT);
+        Toast myToast = Toast.makeText(targetContext, content, Toast.LENGTH_SHORT);
         myToast.show();
     }
 

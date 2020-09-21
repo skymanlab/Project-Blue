@@ -35,7 +35,7 @@ public  class BilliardTableSetting {
 
     // inner class : Entry, table desc
     public static class Entry implements BaseColumns {
-        public static final String TABLE_NAME = "billiardBasic";
+        public static final String TABLE_NAME = "billiard";
         public static final String COLUMN_NAME_DATE = "date";
         public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
         public static final String COLUMN_NAME_SPECIALITY = "speciality";

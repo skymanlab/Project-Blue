@@ -2,10 +2,12 @@ package com.skyman.billiarddata;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
@@ -30,7 +32,8 @@ public class BilliardDisplayActivity extends AppCompatActivity {
 
         // BilliardDbManager class : helper manager setting
         billiardDbManager = new BilliardDbManager(this);
-        billiardDbManager.init_tables();
+        billiardDbManager.init_db();
+
 
         ArrayList<BilliardData> billiardDataArrayList = billiardDbManager.load_contents();
 
@@ -39,9 +42,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardLv);
             billiardLvManager.setListViewToBilliardData(billiardDataArrayList);
         } else {
-            Toast.makeText(this, "notting", Toast.LENGTH_SHORT).show();
+            DeveloperManager.displayLog("BilliardDisplayActivity", "content is not exist in billiard table.");
         }
-
-
     }
 }

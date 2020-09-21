@@ -19,27 +19,27 @@ public class UserDbManager {
     // value : SQLite DB open helper 객체 선언
     private UserDbHelper userDbHelper;
 
-    // value : 생성 요청하는 activity 관련 객체 선언
-    private Context activityContext;
+    // value : 생성 요청하는 activity 관련 된 객체 선언
+    private Context targetContext;
 
 
     // constructor
-    public UserDbManager(Context activityContext){
-        this.userDbHelper = null;
-        this.activityContext = activityContext;
+    public UserDbManager(Context targetContext){
+        this.userDbHelper = null;                       // 직관성을 위해, 객체 생성은 init_db 에서 한다.
+        this.targetContext = targetContext;
     }
 
-    /* method : init, SQLite DB Helper를 이용하여 초기화 */
-    public void init_tables() {
+    /* method : init, SQLite DB open helper 를 이용하여 초기화 */
+    public void init_db() {
         /*
-         * =====================================================
-         * billiard.db 에 user 테이블 setting
-         * - 해당 db에 table 생성 여부를 체크하여 없으면 만들고,
-         * 있으면 해당 db의 table 을 연결한다.
-         * =====================================================
+         * ====================================================================
+         * project_blue.db 에 billiard, user 테이블의 존재 여부 확인한다.
+         * 없으면 project_blue.db 생성 후 billiard, user 테이블을 생성하고,
+         * project_blue.db 를 open 한다.
+         * ====================================================================
          * */
-        userDbHelper = new UserDbHelper(activityContext);
-        DeveloperManager.displayLog("userDbManager", "초기화 완료");
+        userDbHelper = new UserDbHelper(targetContext);
+        DeveloperManager.displayLog("userDbManager", "** init_db function is complete!");
     }
 
     /* method : insert, SQLite DB Helper를 이용하여 해당 테이블에 정보를 insert 한다. */
@@ -55,7 +55,7 @@ public class UserDbManager {
          * - 입력 순서
          * =====================================================
          * */
-        DeveloperManager.displayLog("userDbManager", "save_content 실행");
+        DeveloperManager.displayLog("userDbManager", "** save_content is executing ............");
         //  쓰기로 객체 생성
         SQLiteDatabase writeDb = userDbHelper.getWritableDatabase();
 
@@ -103,7 +103,7 @@ public class UserDbManager {
         } else {
             toastHandler("빈곳을 채워주세요.");
         }
-        DeveloperManager.displayLog("userDbManager", "save_content 실행 완료");
+        DeveloperManager.displayLog("userDbManager", "** save_content is complete!");
     }
 
     /* method : load, SQLite DB Helper를 이용하여 해당 테이블에 정보를 select 한다. */
@@ -124,7 +124,7 @@ public class UserDbManager {
          * - return : 읽어온 내용이 담기 ArrayList<DataListItem>
          * =====================================================
          * */
-        DeveloperManager.displayLog("UserDbManager", "load_contents 실행 ");
+        DeveloperManager.displayLog("UserDbManager", "** load_contents is executing ............");
 
         // 읽기용 객체 생성
         SQLiteDatabase readDb = userDbHelper.getReadableDatabase();
@@ -186,13 +186,13 @@ public class UserDbManager {
             // array list 에 insert
             userDataArrayList.add(userData);
         }
-        DeveloperManager.displayLog("userDbManager", "load_contents 실행 완료");
+        DeveloperManager.displayLog("userDbManager", "** load_contents is complete!");
         return userDataArrayList;
     }
 
     /* method : display, toast 메시지 출력 */
     private void toastHandler(String content) {
-        Toast myToast = Toast.makeText(activityContext, content, Toast.LENGTH_SHORT);
+        Toast myToast = Toast.makeText(targetContext, content, Toast.LENGTH_SHORT);
         myToast.show();
     }
 }

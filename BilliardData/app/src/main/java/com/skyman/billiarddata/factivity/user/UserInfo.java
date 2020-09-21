@@ -92,7 +92,7 @@ public class UserInfo extends Fragment {
         totalCost = (TextView) view.findViewById(R.id.f_userinfo_total_cost);
 
         userDbManager = new UserDbManager(view.getContext());
-        userDbManager.init_tables();
+        userDbManager.init_db();
         ArrayList<UserData> userDataArrayList = userDbManager.load_contents();
 
         if(userDataArrayList != null){

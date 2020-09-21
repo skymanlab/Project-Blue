@@ -3,9 +3,12 @@ package com.skyman.billiarddata;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.skyman.billiarddata.management.projectblue.ProjectBlueDatabaseManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         * 1. 유저 데이터가 있는지 확인
         * 2. 없으면 일단 user 기본 정보 입력하는 activity 로 이동 */
 
-
+        // project_blue.db 를 생성하고 테이블 만들기
+        ProjectBlueDatabaseManager projectBlueDatabaseManager = new ProjectBlueDatabaseManager(this);
+        projectBlueDatabaseManager.init_db();
     }
 }
