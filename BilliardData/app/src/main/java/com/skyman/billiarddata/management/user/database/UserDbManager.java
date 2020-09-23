@@ -221,7 +221,8 @@ public class UserDbManager {
         SQLiteDatabase deleteDb = userDbHelper.getWritableDatabase();
 
         // SQLiteDatabase :
-        deleteDb.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);
+        deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, null, null);
+//        deleteDb.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);
 
         // toast
         toastHandler("모든 내용이 삭제되었씁니다.");
