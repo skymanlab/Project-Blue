@@ -11,7 +11,7 @@ public  class BilliardTableSetting {
     // constant : sql query, create table setting
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
-                    Entry._ID + " INTEGER PRIMARY KEY, " +
+                    Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     Entry.COLUMN_NAME_DATE + " TEXT, " +
                     Entry.COLUMN_NAME_TARGET_SCORE + " TEXT, " +
                     Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +
@@ -39,10 +39,10 @@ public  class BilliardTableSetting {
         public static final String COLUMN_NAME_DATE = "date";
         public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
         public static final String COLUMN_NAME_SPECIALITY = "speciality";
+        public static final String COLUMN_NAME_PLAY_TIME = "playTime";
         public static final String COLUMN_NAME_WINNER = "winner";
         public static final String COLUMN_NAME_SCORE = "score";
         public static final String COLUMN_NAME_COST = "cost";
-        public static final String COLUMN_NAME_PLAY_TIME = "play_time";
     }
 
 

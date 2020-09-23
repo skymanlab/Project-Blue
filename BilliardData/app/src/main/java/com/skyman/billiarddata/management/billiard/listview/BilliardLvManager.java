@@ -21,7 +21,7 @@ public class BilliardLvManager {
     }
 
     /* method : list view adapter, 받아온 내용을 adapter를 통해 dataList 에 뿌려 준다.*/
-    public void setListViewToBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
+    public void setListViewToAllBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
 
         DeveloperManager.displayLog("BilliardDataManager", "setListViewToBilliardData 실행");
 

@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="지금 입력해봐!"
+                android:text="@string/f_user_input_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title-->
 
@@ -39,7 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#d8dfeb"
+                android:background="@color/colorSecondBackground"
                 android:orientation="horizontal"
                 android:padding="3dp">
 
@@ -49,7 +49,7 @@
                     android:layout_marginRight="1dp"
                     android:gravity="start"
                     android:paddingLeft="10dp"
-                    android:text="이름 "></TextView>
+                    android:text="@string/f_user_input_name"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -57,9 +57,10 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    android:id="@+id/f_userinput_user_name"                    android:layout_width="match_parent"
+                    android:id="@+id/f_user_input_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="너 이름 뭐냐?"
+                    android:hint="@string/f_user_input_name_hint"
                     android:inputType="text"
                     android:paddingLeft="10dp"
                     android:selectAllOnFocus="false"
@@ -70,7 +71,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#d9e7ff"
+                android:background="@color/colorThirdBackground"
                 android:orientation="horizontal"
                 android:padding="3dp">
 
@@ -80,7 +81,7 @@
                     android:layout_marginRight="1dp"
                     android:gravity="start"
                     android:paddingLeft="10dp"
-                    android:text="수지 "></TextView>
+                    android:text="@string/f_user_input_target_score"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -88,24 +89,24 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    android:id="@+id/f_userinput_target_score"
+                    android:id="@+id/f_user_input_target_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="너 수지 100은 되냐?"
+                    android:hint="@string/f_user_input_target_score_hint"
                     android:inputType="text"
                     android:paddingLeft="10dp"
                     android:selectAllOnFocus="false"
                     android:singleLine="true"></EditText>
-            </LinearLayout><!-- End of content 2-->
+            </LinearLayout><!-- End of content 2 -->
 
-            <!-- content 3. target score -->
+            <!-- content 3. speciality -->
             <LinearLayout
                 android:id="@+id/userdata_speciality"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#d8dfeb"
-                android:orientation="horizontal"
+                android:background="@color/colorSecondBackground"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:padding="3dp">
 
                 <TextView
@@ -114,7 +115,7 @@
                     android:layout_marginRight="1dp"
                     android:gravity="start"
                     android:paddingLeft="10dp"
-                    android:text="주 종목"></TextView>
+                    android:text="@string/f_user_input_speciality"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -122,53 +123,76 @@
                     android:background="?android:attr/listDivider" />
 
                 <RadioGroup
-                    android:id="@+id/f_userInput_speciality"
+                    android:id="@+id/f_user_input_speciality"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/f_userInput_speciality_three_cushion"
+                        android:id="@+id/f_user_input_speciality_three_cushion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="3구" />
-                    <RadioButton
-                        android:id="@+id/f_userInput_speciality_four_ball"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="4구" />
-                    <RadioButton
-                        android:id="@+id/f_userInput_speciality_pocket_ball"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="포켓" />
+                        android:text="@string/f_user_input_speciality_three_cushion" />
 
+                    <RadioButton
+                        android:id="@+id/f_user_input_speciality_four_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/f_user_input_speciality_four_ball" />
+
+                    <RadioButton
+                        android:id="@+id/f_user_input_speciality_pocket_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/f_user_input_speciality_pocket_ball" />
                 </RadioGroup>
+            </LinearLayout><!-- End of content 3 -->
 
-
-            </LinearLayout><!-- End of content 2-->
-
-            <!-- content 4. input button-->
+            <!-- content 4. input data button-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorThirdBackground"
                 android:gravity="bottom"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="4dp">
 
                 <Button
-                    android:id="@+id/f_userinput_input"
+                    android:id="@+id/f_user_input_bt_save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemBackground"
-                    android:text="입력"
-                    android:textColor="@color/selectItemTextColor"></Button>
-            </LinearLayout><!-- End of content 3 -->
-        </LinearLayout><!-- End of content -->
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryBackground"
+                    android:text="@string/f_user_input_bt_save"
+                    android:textColor="@color/colorTextPrimaryBackground"></Button>
 
-    </LinearLayout><!-- End of mian-->
+                <Button
+                    android:id="@+id/f_user_input_bt_modify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryBackground"
+                    android:text="@string/f_user_input_bt_modify"
+                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+
+                <Button
+                    android:id="@+id/f_user_input_bt_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryBackground"
+                    android:text="@string/f_user_input_bt_delete"
+                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+            </LinearLayout><!-- End of content 4 -->
+        </LinearLayout><!-- End of content -->
+    </LinearLayout><!-- End of main -->
 </FrameLayout>

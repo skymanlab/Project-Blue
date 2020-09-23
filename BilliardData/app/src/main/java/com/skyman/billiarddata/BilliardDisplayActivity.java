@@ -20,27 +20,26 @@ public class BilliardDisplayActivity extends AppCompatActivity {
     private BilliardDbManager billiardDbManager = null;
 
     // value : activity 에서 사용하는 객체 선언
-    private ListView allBilliardLv;
+    private ListView allBilliardData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
-        // allBilliardData setting
-        allBilliardLv = (ListView) findViewById(R.id.viewdata_all_billiard_data);
+        // ListView : allBilliardData setting
+        allBilliardData = (ListView) findViewById(R.id.billiard_display_lv_all_billiard_data);
 
-        // BilliardDbManager class : helper manager setting
+        // BilliardDbManager : billiardDbManager setting - SQLiteOpenHelper 를 관리하는 클래스
         billiardDbManager = new BilliardDbManager(this);
         billiardDbManager.init_db();
 
-
+        // BilliardDbManager : load_contents method - 저장 되어 있는 billiard 데이터를 billiardDbManager 를 통해 가져온다.
         ArrayList<BilliardData> billiardDataArrayList = billiardDbManager.load_contents();
-
         if(billiardDataArrayList.size() != 0) {
-            // billiard data manager setting : ListView 화면 뿌려주기
-            BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardLv);
-            billiardLvManager.setListViewToBilliardData(billiardDataArrayList);
+            // BilliardLvManager : allBilliardData setting - 위에서 가져온 데이터를 allBilliardData 에 뿌려준다.
+            BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
+            billiardLvManager.setListViewToAllBilliardData(billiardDataArrayList);
         } else {
             DeveloperManager.displayLog("BilliardDisplayActivity", "content is not exist in billiard table.");
         }

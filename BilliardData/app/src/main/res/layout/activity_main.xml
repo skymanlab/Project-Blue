@@ -10,9 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorMainActivityBackground"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="#f3f2fa">
+        android:padding="10dp">
 
         <!-- title -->
         <LinearLayout
@@ -25,8 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="당신은 당구의 세계에 오셨군요!"></TextView>
-        </LinearLayout>
+                android:text="@string/main_title"></TextView>
+        </LinearLayout><!-- End of title -->
 
         <!-- content -->
         <LinearLayout
@@ -36,41 +36,43 @@
             android:gravity="top|center"
             android:orientation="vertical">
 
-            <!-- icon image -->
+            <!-- content 1. icon image -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
                 android:src="@drawable/icon_noline_152x152_v2"></ImageView>
 
-
+            <!-- content 2. inputData -->
             <Button
-                android:id="@+id/main_inputData"
+                android:id="@+id/main_bt_billiard_input"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#6495ED"
-                android:text="데이터 입력"
-                android:textColor="@color/selectItemTextColor"></Button>
+                android:background="@color/colorPrimaryBackground"
+                android:text="@string/main_bt_billiard_input"
+                android:textColor="@color/colorTextPrimaryBackground"></Button>
 
+            <!-- content 3. viewData-->
             <Button
-                android:id="@+id/main_viewdata"
+                android:id="@+id/main_bt_billiard_display"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#6495ED"
-                android:text="데이터 보기"
-                android:textColor="@color/selectItemTextColor"></Button>
+                android:background="@color/colorPrimaryBackground"
+                android:text="@string/main_bt_billiard_display"
+                android:textColor="@color/colorTextPrimaryBackground"></Button>
 
+            <!-- content 4. userManager-->
             <Button
-                android:id="@+id/main_userData"
+                android:id="@+id/main_bt_user_manager"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#6495ED"
-                android:text="유저 정보 보기"
-                android:textColor="@color/selectItemTextColor"></Button>
-        </LinearLayout>
+                android:background="@color/colorPrimaryBackground"
+                android:text="@string/main_bt_user_manager"
+                android:textColor="@color/colorTextPrimaryBackground"></Button>
+        </LinearLayout><!-- End of content -->
 
         <!-- footer -->
         <LinearLayout
@@ -81,14 +83,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Developed by JDI ⓒ 2020 skymanlab."
-                android:textAlignment="center">
-            </TextView>
-        </LinearLayout>
-    </LinearLayout>
-
-
-
-
-
+                android:text="@string/main_footer"
+                android:textAlignment="center"></TextView>
+        </LinearLayout><!-- End of footer -->
+    </LinearLayout><!-- End of main -->
 </androidx.constraintlayout.widget.ConstraintLayout>

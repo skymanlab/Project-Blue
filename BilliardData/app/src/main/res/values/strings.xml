@@ -2,4 +2,73 @@
     <string name="app_name">당구자료</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- main activity -->
+    <string name="main_title">당신은 당구의 세계에 오셨군요!</string>
+    <string name="main_bt_billiard_input">당구 정보 입력</string>
+    <string name="main_bt_billiard_display">당구 정보 보기</string>
+    <string name="main_bt_user_manager">나의 정보</string>
+    <string name="main_footer">Developed by JDI ⓒ 2020 skymanlab.</string>
+
+    <!-- billiard input activity -->
+    <string name="billiard_input_title">당신은 오늘 데이터를 입력합니다.</string>
+    <string name="billiard_input_target_score">수지</string>
+    <string name="billiard_input_speciality">종목</string>
+    <string name="billiard_input_date">날짜</string>
+    <string name="billiard_input_date_content">날짜 데이터를 셋팅 중입니다.</string>
+    <string name="billiard_input_date_re">다시</string>
+    <string name="billiard_input_winner">승자</string>
+    <string name="billiard_input_score">스코어</string>
+    <string name="billiard_input_score_colon">:</string>
+    <string name="billiard_input_cost">가격</string>
+    <string name="billiard_input_play_time">경기시간</string>
+    <string name="billiard_input_bt_input">데이터 입력</string>
+    <string name="billiard_input_comment">상황 파악 중....</string>
+    <string name="billiard_input_bt_display">데이터 보기</string>
+    <string name="billiard_input_bt_delete">모든 내용 삭제</string>
+
+    <!-- billiard display activity -->
+    <string name="billiard_display_title">당신의 입력데이터를 봅시다.</string>
+
+    <!-- user manager activity -->
+    <string name="user_manager_title">당신은 자신의 데이터를 입력합니다.</string>
+    <string name="user_manager_bt_user_input_data">기본 정보 입력</string>
+    <string name="user_manager_bt_user_info">정보 보기</string>
+    <string name="user_manager_bt_user_friend">친구 목록</string>
+
+    <!-- fragment : user input-->
+    <string name="f_user_input_title">너의 정보를 보관해봐!</string>
+    <string name="f_user_input_name">이름</string>
+    <string name="f_user_input_name_hint">이름이 뭐예요?</string>
+    <string name="f_user_input_target_score">수지</string>
+    <string name="f_user_input_target_score_hint">수지는 얼마예요?</string>
+    <string name="f_user_input_speciality">주 종목</string>
+    <string name="f_user_input_speciality_three_cushion">3구</string>
+    <string name="f_user_input_speciality_four_ball">4구</string>
+    <string name="f_user_input_speciality_pocket_ball">포켓볼</string>
+    <string name="f_user_input_bt_save">저장</string>
+    <string name="f_user_input_bt_modify">수정</string>
+    <string name="f_user_input_bt_delete">삭제</string>
+
+    <!-- fragment : user info -->
+    <string name="f_user_info_title">입력된 정보 확인해봐!</string>
+    <string name="f_user_info_name">이름</string>
+    <string name="f_user_info_name_default">이름이 뭐예요?</string>
+    <string name="f_user_info_target_score">스코어</string>
+    <string name="f_user_info_target_score_default">수지는 그 수지가 아니예요.</string>
+    <string name="f_user_info_speciality">주 종목</string>
+    <string name="f_user_info_speciality_default">3구, 4구, 포켓 중에 선택해봐요.</string>
+    <string name="f_user_info_game_record">전적</string>
+    <string name="f_user_info_game_record_default">x전 x승 x패</string>
+    <string name="f_user_info_total_play_time">총 게임시간</string>
+    <string name="f_user_info_total_play_time_default">xxx,xxx 분</string>
+    <string name="f_user_info_total_cost">총 비용</string>
+    <string name="f_user_info_total_cost_default">xxx,xxx 원</string>
+
+    <!-- fragment : user friend -->
+    <string name="f_user_friend_title">친구를 확인해 봐요.</string>
+    <string name="f_user_friend_list_title">친구 목록 ▼</string>
+    <string name="f_user_friend_add_title">친구 추가 ▼</string>
+    <string name="f_user_friend_friend_name">이름</string>
+    <string name="f_user_friend_bt_add_friend">친구 추가</string>
 </resources>

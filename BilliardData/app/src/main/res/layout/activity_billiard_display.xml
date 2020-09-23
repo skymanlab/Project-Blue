@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".BilliardDisplayActivity">
 
+    <!-- main -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,30 +14,34 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <!-- title -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorActivityTitle"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:background="#ebe8ff">
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="당신의 입력데이터를 봅시다."
+                android:text="@string/billiard_display_title"
                 android:textAlignment="center"></TextView>
-        </LinearLayout>
+        </LinearLayout><!-- End of title -->
 
+        <!-- content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:background="@color/colorSecondBackground">
 
+            <!-- content 1. all billiard data -->
             <ListView
+                android:id="@+id/billiard_display_lv_all_billiard_data"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/viewdata_all_billiard_data"></ListView>
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="match_parent"></ListView><!-- End of content 1 -->
+        </LinearLayout><!-- End of content -->
+    </LinearLayout><!-- End of main -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

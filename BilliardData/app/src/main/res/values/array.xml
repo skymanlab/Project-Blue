@@ -2,7 +2,7 @@
 <resources>
 
     <!-- 선수 목록 -->
-    <string-array name="user">
+    <string-array name="player">
         <item>장동익</item>
         <item>김현</item>
     </string-array>

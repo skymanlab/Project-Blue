@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="너의 정보를 난 봤어!"
+                android:text="@string/f_user_info_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title-->
 
@@ -44,15 +44,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorSecondBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d8dfeb">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="이름"
+                        android:text="@string/f_user_info_name"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -61,11 +61,11 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_user_name"
+                        android:id="@+id/f_user_info_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="장동익"></TextView>
+                        android:text="@string/f_user_info_name_default"></TextView>
                 </LinearLayout><!-- End of content 1-1 -->
 
                 <!-- divider -->
@@ -78,15 +78,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorThirdBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d9e7ff">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="수지"
+                        android:text="@string/f_user_info_target_score"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -95,11 +95,11 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_target_score"
+                        android:id="@+id/f_user_info_target_score"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="100"></TextView>
+                        android:text="@string/f_user_info_target_score_default"></TextView>
                 </LinearLayout><!-- End of content 1-2 -->
 
                 <!-- divider -->
@@ -112,15 +112,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorSecondBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d8dfeb">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="주 종목"
+                        android:text="@string/f_user_info_speciality"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -129,11 +129,11 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_speciality"
+                        android:id="@+id/f_user_info_speciality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="3구"></TextView>
+                        android:text="@string/f_user_info_speciality_default"></TextView>
                 </LinearLayout><!-- End of content 1-3 -->
 
                 <!-- divider -->
@@ -146,15 +146,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorThirdBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d9e7ff">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="전적"
+                        android:text="@string/f_user_info_game_record"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -163,11 +163,11 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_game_record"
+                        android:id="@+id/f_user_info_game_record"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="32전 11승 21패"></TextView>
+                        android:text="@string/f_user_info_game_record_default"></TextView>
                 </LinearLayout><!-- End of content 1-4 -->
 
                 <!-- divider -->
@@ -180,15 +180,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorSecondBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d8dfeb">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="총 게임시간"
+                        android:text="@string/f_user_info_total_play_time"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -197,11 +197,11 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_total_play_time"
+                        android:id="@+id/f_user_info_total_play_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="234분"></TextView>
+                        android:text="@string/f_user_info_total_play_time_default"></TextView>
                 </LinearLayout><!-- End of content 1-5-->
 
                 <!-- divider -->
@@ -214,15 +214,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorThirdBackground"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="#d9e7ff">
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:text="총 비용"
+                        android:text="@string/f_user_info_total_cost"
                         android:textAlignment="textStart"></TextView>
 
                     <View
@@ -231,17 +231,15 @@
                         android:background="?android:attr/listDivider" />
 
                     <TextView
-                        android:id="@+id/f_userinfo_total_cost"
+                        android:id="@+id/f_user_info_total_cost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="430,000 원"></TextView>
+                        android:text="@string/f_user_info_total_cost_default"></TextView>
                 </LinearLayout><!-- End of content 1-6-->
+
+
             </LinearLayout><!-- End of content 1 -->
-
-
         </LinearLayout><!-- End of content-->
-
     </LinearLayout><!-- End of main-->
-
 </FrameLayout>

@@ -3,11 +3,13 @@ package com.skyman.billiarddata.factivity.user;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,16 +40,24 @@ public class UserInfo extends Fragment {
     private String mParam2;
 
     // value : activity 의 widget 객체 선언
-    private TextView userName;
+    private TextView name;
     private TextView targetScore;
     private TextView speciality;
     private TextView gameRecord;
     private TextView totalPlayTime;
     private TextView totalCost;
 
-    // SQLite DB Helper Manager 객체 선언
-    private UserDbManager userDbManager;
+    // value : userData - 화면에 뿌릴 데이터를 담을 객체 선언
+    UserData userData;
+    ViewPager userPager;
 
+    // constructor
+    public UserInfo(UserData userData, ViewPager userPager){
+        this.userData = userData;
+        this.userPager = userPager;
+    }
+
+    // constructor
     public UserInfo() {
         // Required empty public constructor
     }
@@ -82,33 +92,46 @@ public class UserInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // view : view setting
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
 
-        userName = (TextView) view.findViewById(R.id.f_userinfo_user_name);
-        targetScore = (TextView) view.findViewById(R.id.f_userinfo_target_score);
-        speciality = (TextView) view.findViewById(R.id.f_userinfo_speciality);
-        gameRecord = (TextView) view.findViewById(R.id.f_userinfo_game_record);
-        totalPlayTime = (TextView) view.findViewById(R.id.f_userinfo_total_play_time);
-        totalCost = (TextView) view.findViewById(R.id.f_userinfo_total_cost);
+        // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost setting - id 값을 가져온다.
+        name = (TextView) view.findViewById(R.id.f_user_info_name);
+        targetScore = (TextView) view.findViewById(R.id.f_user_info_target_score);
+        speciality = (TextView) view.findViewById(R.id.f_user_info_speciality);
+        gameRecord = (TextView) view.findViewById(R.id.f_user_info_game_record);
+        totalPlayTime = (TextView) view.findViewById(R.id.f_user_info_total_play_time);
+        totalCost = (TextView) view.findViewById(R.id.f_user_info_total_cost);
 
-        userDbManager = new UserDbManager(view.getContext());
-        userDbManager.init_db();
-        ArrayList<UserData> userDataArrayList = userDbManager.load_contents();
-
-        if(userDataArrayList != null){
-            for(int position=0; position < userDataArrayList.size() ; position++) {
-                userName.setText(userDataArrayList.get(position).getUserName());
-                targetScore.setText(Integer.toString(userDataArrayList.get(0).getTargetScore()));
-                speciality.setText(userDataArrayList.get(position).getSpeciality());
-                gameRecord.setText(UserDataFomatter.setFormatToGameRecord(userDataArrayList.get(position).getGameRecordWin(), userDataArrayList.get(position).getGameRecordLoss()));
-                totalPlayTime.setText(Integer.toString(userDataArrayList.get(0).getTotalPlayTime()));
-                totalCost.setText(Integer.toString(userDataArrayList.get(0).getTotalCost()));
-                DeveloperManager.displayLog("UserInfo", "내용 가져오기 성공");
-            }
-
+        // check : userData 의 참조 값이 있냐?
+        if(userData != null){
+            // display : userData 내용 뿌려주기
+            displayUserData();
         } else {
-            DeveloperManager.displayLog("UserInfo", "내용 가져오기 실패");
+
         }
+
+        // return : view - 해당 뷰를 셋팅하고 넘겨주기
         return view;
+    }
+
+    /* method : userData 가 있으면 화면에 뿌려준다.*/
+    private void displayUserData(){
+            // String : nameContent, targetScoreContent, specialityContent, gameRecordContent, totalPlayTimeContent, totalCostContent - userData 에서 가져온 내용을 적절한 형태로 변경하기
+            String nameContent = userData.getName();
+            String targetScoreContent = Integer.toString( userData.getTargetScore()) ;
+            String specialityContent = userData.getSpeciality();
+            String gameRecordContent = UserDataFomatter.setFormatToGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss());
+            String totalPlayTimeContent = Integer.toString( userData.getTotalPlayTime() );
+            String totalCostContent = Integer.toBinaryString( userData.getTotalCost());
+
+            // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost - 위 의 내용을 화면에 뿌려준다.
+            name.setText(nameContent);
+            targetScore.setText(targetScoreContent);
+            speciality.setText(specialityContent);
+            gameRecord.setText(gameRecordContent);
+            totalPlayTime.setText(totalPlayTimeContent);
+            totalCost.setText(totalCostContent);
     }
 }

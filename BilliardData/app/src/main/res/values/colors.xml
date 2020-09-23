@@ -9,4 +9,19 @@
     <color name="selectItemTableBar">#e5e4f2</color>
     <color name="selectItemTableColum">#FFFFFF</color>
 
+    <!-- background color -->
+    <color name="colorPrimaryBackground">#6495ed</color>
+    <color name="colorSecondBackground">#d8dfeb</color>
+    <color name="colorThirdBackground">#d9e7ff</color>
+
+    <!-- text color -->
+    <color name="colorTextPrimaryBackground">#ffffff</color>
+
+    <!-- activity color -->
+    <color name="colorMainActivityBackground">#f3f2fa</color>
+    <color name="colorActivityTitle">#ebe8ff</color>
+
+    <!-- fragment manager activity -->
+    <color name="colorPagerTab">#c0c7d1</color>
+    <color name="colorPagerContent">#9cb6db</color>
 </resources>

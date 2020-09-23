@@ -23,75 +23,76 @@ import java.util.Date;
 public class BilliardInputActivity extends AppCompatActivity {
 
     // value : helper manager 객체 선언
-    BilliardDbManager billiardDbManager = null;
+    private BilliardDbManager billiardDbManager = null;
 
     // value : activity 에서 사용하는 객체 선언
-    Spinner player;
-    Spinner targetScore;
-    Spinner speciality;
-    TextView date;
-    TextView reDate;
-    TextView comment;
-    EditText score_1;
-    EditText score_2;
-    EditText cost;
-    EditText playTime;
-    Button input;
-    Button display;
-    Button delete;
-    ListView billiardLv;
+    private Spinner player;
+    private  Spinner targetScore;
+    private Spinner speciality;
+    private TextView date;
+    private TextView reDate;
+    private TextView comment;
+    private EditText score_1;
+    private EditText score_2;
+    private EditText cost;
+    private EditText playTime;
+    private Button input;
+    private Button display;
+    private Button delete;
+    private ListView allBilliardData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_input);
 
-        // BilliardDbManager class : helper manager setting
+        // BilliardDbManager : billiardDbManager setting - SQLiteOpenHelper 를 관리하는 클래스
         billiardDbManager = new BilliardDbManager(this);
         billiardDbManager.init_db();
 
-        // text view : TextView setting
-        date = (TextView) findViewById(R.id.inputdate_date);
-        comment = (TextView) findViewById(R.id.inputdata_comment);
+        // TextView : date setting
+        date = (TextView) findViewById(R.id.billiard_input_date);
+        setDateFormat();
 
-        // edit text : EditText setting
-        score_1 = (EditText) findViewById(R.id.inputdata_score_1);
-        score_2 = (EditText) findViewById(R.id.inputdata_score_2);
-        cost = (EditText) findViewById(R.id.inputdata_cost);
-        playTime = (EditText) findViewById(R.id.inputdata_play_time);
-
-        // spinner : user spinner setting
-        player = (Spinner) findViewById(R.id.inputdata_player);
-        ArrayAdapter userAdapter = ArrayAdapter.createFromResource(this, R.array.user, android.R.layout.simple_spinner_dropdown_item);
-        userAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        player.setAdapter(userAdapter);
-        player.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // TextView : reDate setting - 날짜 새로 받기
+        reDate = (TextView) findViewById(R.id.billiard_input_re_date);
+        reDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                // refresh date
+                setDateFormat();
             }
         });
 
-        // spinner : target score spinner setting
-        targetScore = (Spinner) findViewById(R.id.inputdata_target_score);
+        // TextView : comment setting - 상태 확인을 위한 TextView
+        comment = (TextView) findViewById(R.id.billiard_input_comment);
+
+        // EditText : score, cost, playtime setting
+        score_1 = (EditText) findViewById(R.id.billiard_input_score_1);
+        score_2 = (EditText) findViewById(R.id.billiard_input_score_2);
+        cost = (EditText) findViewById(R.id.billiard_input_cost);
+        playTime = (EditText) findViewById(R.id.billiard_input_play_time);
+
+        // Spinner : player setting - userAdapter 를 이용하여 R.array.player 를 연결, 나와 친구목록에 있는 선수들
+        player = (Spinner) findViewById(R.id.billiard_input_sp_player);
+        ArrayAdapter userAdapter = ArrayAdapter.createFromResource(this, R.array.player, android.R.layout.simple_spinner_dropdown_item);
+        player.setAdapter(userAdapter);
+
+        // Spinner : target score setting - targetScoreAdapter 를 이용하여 R.array.targetScore 를 연결, 수지
+        targetScore = (Spinner) findViewById(R.id.billiard_input_sp_target_score);
         ArrayAdapter targetScoreAdapter = ArrayAdapter.createFromResource(this, R.array.targetScore, android.R.layout.simple_spinner_dropdown_item);
         targetScore.setAdapter(targetScoreAdapter);
 
-        // spinner : speciality spinner setting
-        speciality = (Spinner) findViewById(R.id.inputdata_speciality);
+        // Spinner : speciality setting - specialityAdapter 를 이용하여 R.array.speciality 를 연결, 주 종목
+        speciality = (Spinner) findViewById(R.id.billiard_input_sp_speciality);
         ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(this, R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
         speciality.setAdapter(specialityAdapter);
 
-        // list view : inputData list view setting
-        billiardLv = (ListView) findViewById(R.id.inputdata_billiard_data);
+        // ListView  : inputData setting - billiardDbManager 를 통해 가져온 내용을 billiardLvManger 로 화면에 뿌려줄 준비
+        allBilliardData = (ListView) findViewById(R.id.billiard_input_lv_all_billiard_data);
 
-        // button : input button setting
-        input = (Button) findViewById(R.id.inputdata_input);
+        // Button 1 : input setting - '데이터 입력' 버튼
+        input = (Button) findViewById(R.id.billiard_input_bt_input);
         input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,33 +107,32 @@ public class BilliardInputActivity extends AppCompatActivity {
                                     BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),             // 6. score
                                     cost.getText().toString()                                                                                       // 7. cost
                     );
-//                    save_content_Builder();
                 } else {
 
                 }
             }
         });
 
-        // button : display button setting
-        display = (Button) findViewById(R.id.inputdate_display);
+        // Button 2 : display setting - '데이터 보기' 버튼
+        display = (Button) findViewById(R.id.billiard_input_bt_display);
         display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // check : billiardDbManager가 생성 되었습니까?
                 if (billiardDbManager != null) {
                     // object create : billiard data manager 를 통해 load
-                    BilliardLvManager billiardLvManager = new BilliardLvManager(billiardLv);
+                    BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
 
                     // load : billiardDbManager 의 load_contents 메소드를 통해 받은 데이터를 이용하여 ListView 에 뿌려준다.
-                    billiardLvManager.setListViewToBilliardData(billiardDbManager.load_contents());
+                    billiardLvManager.setListViewToAllBilliardData(billiardDbManager.load_contents());
                 } else {
 
                 }
             }
         });
 
-        // button : delete button setting
-        delete = (Button) findViewById(R.id.inputdate_delete);
+        // button 3 : delete setting - '데이터 삭제 버튼'
+        delete = (Button) findViewById(R.id.billiard_input_bt_delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,19 +145,7 @@ public class BilliardInputActivity extends AppCompatActivity {
             }
         });
 
-        // text view : TextView text setting, date format init
-        TextView date = (TextView) findViewById(R.id.inputdate_date);
-        setDateFormat();
 
-        // text view : TextView onClick setting,
-        reDate = (TextView) findViewById(R.id.inputdata_re_date);
-        reDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // refresh date
-                setDateFormat();
-            }
-        });
     }
 
     // =============================================================================================================

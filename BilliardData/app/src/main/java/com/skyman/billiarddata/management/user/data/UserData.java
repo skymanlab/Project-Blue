@@ -3,23 +3,30 @@ package com.skyman.billiarddata.management.user.data;
 public class UserData {
 
     // value : desc
-    private String userName;                // 0.
-    private int targetScore;                // 1.
-    private String speciality;              // 2.
-    private int gameRecordWin;              // 3.
-    private int gameRecordLoss;             // 4.
-    private int totalPlayTime;              // 5.
-    private int totalCost;                  // 6.
+    private long id;                         // 0. id
+    private String  name;                   // 1. name
+    private int targetScore;                // 2. target score
+    private String speciality;              // 3. speciality
+    private int gameRecordWin;              // 4. game record win
+    private int gameRecordLoss;             // 5. game record loss
+    private int totalPlayTime;              // 6. total play time
+    private int totalCost;                  // 7. total cost
 
-    // value : getter, setter
-
-
-    public String getUserName() {
-        return userName;
+    // method : getter, setter
+    public long getId() {
+        return id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getTargetScore() {
