@@ -23,7 +23,7 @@ public class UserDbManager {
     private Context targetContext;
 
     // constructor
-    public UserDbManager(Context targetContext){
+    public UserDbManager(Context targetContext) {
         this.userDbHelper = null;                       // 직관성을 위해, 객체 생성은 init_db 에서 한다.
         this.targetContext = targetContext;
     }
@@ -71,11 +71,11 @@ public class UserDbManager {
                 !speciality.equals("") &&                       // 3. speciality        -- not null
                 (gameRecordWin >= 0) &&                         // 4. game record win   -- 0 보다 커야
                 (gameRecordLoss >= 0) &&                        // 5. game record loss  -- 0 보다 커야
-                (totalPlayTime >=0) &&                          // 6. total play time   -- 0 보다 커야
+                (totalPlayTime >= 0) &&                          // 6. total play time   -- 0 보다 커야
                 (totalCost >= 0)                                // 7. total cost        -- 0 보다 커야
-            ) {
+        ) {
 
-            // 입력할 내용 setting
+            // ContentValues : 매개변수의 내용을 insertValues 에 셋팅하기
             ContentValues insertValues = new ContentValues();
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_USERNAME, name);                        // 1. name
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);             // 2. target score
@@ -85,12 +85,14 @@ public class UserDbManager {
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);        // 6. total play time
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                 // 7. total cost
 
-            // 해당 billiardBasic 테이블에 내용 insert
-            // nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
-            //                이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.
-            long newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
+            /*  해당 billiardBasic 테이블에 내용 insert
+                nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
+                               이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.*/
 
             // newRowId는 데이터베이스에 insert 가 실패하면 '-1'을 반환하고, 성공하면 해당 '행 번호'를 반환한다.
+            long newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
+
+            // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
             if (newRowId == -1) {
                 // 데이터 insert 실패
                 toastHandler("데이터 입력에 실패했습니다.");
@@ -101,6 +103,10 @@ public class UserDbManager {
         } else {
             toastHandler("빈곳을 채워주세요.");
         }
+
+        // SQLiteDatabase : DB close
+        writeDb.close();
+
         DeveloperManager.displayLog("userDbManager", "** save_content is complete!");
     }
 
@@ -108,7 +114,7 @@ public class UserDbManager {
     public ArrayList<UserData> load_contents() {
         /*
          * =========================================================================================
-         * billiardBasic table select query
+         * user table select query
          * -    userDbHelper 를 통해 readable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 의 user 테이블의 모든 내용을 읽어온다.
          * - column title
@@ -150,6 +156,10 @@ public class UserDbManager {
             // ArrayList<UserData> : 위의 내용을 가지는 배열 userDataArrayList 에 추가하여 저장
             userDataArrayList.add(userData);
         }
+
+        // SQLiteDatabase : DB close
+        readDb.close();
+
         DeveloperManager.displayLog("userDbManager", "** load_contents is complete!");
 
         //  return : userDataArrayList - 모든 내용이 담긴 배열을 리턴한다.
@@ -160,7 +170,7 @@ public class UserDbManager {
     public UserData load_content() {
         /*
          * =========================================================================================
-         * billiardBasic table select query
+         * user table select query
          * -    userDbHelper 를 통해 readable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 에서 user 테이블의 첫 번째 내용을 select 한다.
          * - column title
@@ -187,7 +197,7 @@ public class UserDbManager {
         UserData userData = new UserData();
 
         // check : Cursor 객체를 통해 가져온 데이터가 있는 지 검사한다.
-        if(readCursor.moveToFirst()){
+        if (readCursor.moveToFirst()) {
             // UserData : userData 내용 넣기 - readCursor 을 통해 읽어온 내용 중 첫 번째 행의 내용을 넣는다.
             userData.setId(readCursor.getLong(0));                  // 0. id
             userData.setName(readCursor.getString(1));              // 1. name
@@ -200,6 +210,10 @@ public class UserDbManager {
         } else {
             return null;
         }
+
+        // SQLiteDatabase : DB close
+        readDb.close();
+
         DeveloperManager.displayLog("userDbManager", "** load_contents is complete!");
 
         // return : userData - 첫 번째 행의 내용이 담긴 userData 를 리턴한다.
@@ -207,10 +221,10 @@ public class UserDbManager {
     }
 
     /* method : delete - SQLite DB Open Helper 를 이용하여 user 테이블에 있던 내용을 모두 delete 한다.*/
-    public void delete_contents(){
+    public int delete_contents() {
         /*
          * =========================================================================================
-         * billiardBasic table select query
+         * user table select query
          * -    userDbHelper 를 통해 writable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 에서 user 테이블의 모든 내용을 delete 한다.
          * =========================================================================================
@@ -220,13 +234,61 @@ public class UserDbManager {
         // SQLiteDatabase : write database - userDbHelper 를 write 용으로 가져오기
         SQLiteDatabase deleteDb = userDbHelper.getWritableDatabase();
 
-        // SQLiteDatabase :
-        deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, null, null);
+        // SQLiteDatabase : 모든 내용 삭제
+        int deleteResult = deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, null, null);
 //        deleteDb.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);
 
         // toast
         toastHandler("모든 내용이 삭제되었씁니다.");
+
+        // SQLiteDatabase : DB close
+        deleteDb.close();
         DeveloperManager.displayLog("UserDbManager", "** delete_contents is complete!");
+
+        // return : delete 문 실행 결과 리턴
+        return deleteResult;
+    }
+
+    /* method : update - SQLite DB Open Helper 를 이용하여 user 테이블에 있던 내용을 update 한다.*/
+    public int update_content(String name, int targetScore, String speciality){
+        /*
+         * =========================================================================================
+         * user table insert query
+         * -    데이터를 매개변수로 받아서 모든 값을 입력 받은지 확인한다.
+         *      그리고 ContentValues 의 객체에 내용 setting 을 한다.
+         *      userDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 의 user 테이블에 해당 내용을 update 한다.
+         * - 입력 순서
+         * 1. name
+         * 2. target score
+         * 3. speciality
+         * 4. game record win
+         * 5. game record loss
+         * 6. total play time
+         * 7. total cost
+         * =========================================================================================
+         * */
+
+        // SQLiteDatabase : userDbHelper 를 이용하여 write 용으로 가져오기
+        SQLiteDatabase updateDb = userDbHelper.getWritableDatabase();
+
+        // ContentValues :
+        ContentValues updateValue = new ContentValues();
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_USERNAME, name);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);
+
+        // SQLiteDatabase : update query 수행
+        int updateResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, UserTableSetting.Entry._ID + "=1" , null);
+
+        // return : updateResult 반환
+        return updateResult;
+    }
+
+    /* method : userDbHelper 를 close 한다. */
+    public void closeUserDbHelper () {
+        userDbHelper.close();
+        DeveloperManager.displayLog("F UserInput", "** userDbHelper is closed.");
     }
 
     /* method : display, toast 메시지 출력 */

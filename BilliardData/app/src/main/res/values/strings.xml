@@ -71,4 +71,7 @@
     <string name="f_user_friend_add_title">친구 추가 ▼</string>
     <string name="f_user_friend_friend_name">이름</string>
     <string name="f_user_friend_bt_add_friend">친구 추가</string>
+
+    <!-- menu : re date-->
+    <string name="menu_re_date_title">날짜 셋팅</string>
 </resources>

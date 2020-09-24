@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".UserManagerActivity"></activity>
+        <activity android:name=".UserManagerActivity" />
         <activity android:name=".BilliardDisplayActivity" />
         <activity android:name=".BilliardInputActivity" />
         <activity android:name=".MainActivity">
@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

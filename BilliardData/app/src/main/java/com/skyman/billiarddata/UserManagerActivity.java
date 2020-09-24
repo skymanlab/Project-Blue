@@ -33,11 +33,14 @@ public class UserManagerActivity extends AppCompatActivity {
 
         // UserDbManager : userDbManager setting
         userDbManager = new UserDbManager(this);
-        userDbManager.init_db();
 
         // UserData :  userData setting - userDbmanager 의 load_content method 를 통해 내용 가져오기
         UserData userData = new UserData();
-        userData = userDbManager.load_content();
+
+        if (userDbManager != null) {
+            userDbManager.init_db();
+            userData = userDbManager.load_content();
+        }
 
         // DeveloperManager
         if(userData != null) {
@@ -73,5 +76,13 @@ public class UserManagerActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // UserDbManager : close
+        userDbManager.closeUserDbHelper();
     }
 }

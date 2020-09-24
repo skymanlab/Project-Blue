@@ -33,7 +33,7 @@ public  class BilliardTableSetting {
     // constructor : private
     private BilliardTableSetting() {}
 
-    // inner class : Entry, table desc
+    // inner class : Entry, Table column name
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "billiard";
         public static final String COLUMN_NAME_DATE = "date";

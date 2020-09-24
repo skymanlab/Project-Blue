@@ -9,7 +9,7 @@ public class UserTableSetting {
     // constant : sql query, create table setting
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE  " + Entry.TABLE_NAME + "(" +
-                    Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    Entry._ID + " INTEGER PRIMARY KEY, " +
                     Entry.COLUMN_NAME_USERNAME + " TEXT NOT NULL, " +
                     Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER NOT NULL, " +
                     Entry.COLUMN_NAME_SPECIALITY + " TEXT NOT NULL, " +
@@ -31,7 +31,7 @@ public class UserTableSetting {
     // constructor : private
     private UserTableSetting(){}
 
-    // inner class : Entry, table desc
+    // inner class : Entry, Table column name
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_NAME_USERNAME = "name";

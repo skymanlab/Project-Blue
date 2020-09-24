@@ -20,8 +20,10 @@
     <!-- activity color -->
     <color name="colorMainActivityBackground">#f3f2fa</color>
     <color name="colorActivityTitle">#ebe8ff</color>
+    <color name="colorActivityDisable">#8a96a8</color>
 
     <!-- fragment manager activity -->
     <color name="colorPagerTab">#c0c7d1</color>
     <color name="colorPagerContent">#9cb6db</color>
+
 </resources>

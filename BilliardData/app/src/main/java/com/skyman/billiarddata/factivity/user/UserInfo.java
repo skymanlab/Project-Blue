@@ -2,6 +2,8 @@ package com.skyman.billiarddata.factivity.user;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -48,8 +50,8 @@ public class UserInfo extends Fragment {
     private TextView totalCost;
 
     // value : userData - 화면에 뿌릴 데이터를 담을 객체 선언
-    UserData userData;
-    ViewPager userPager;
+    private UserData userData;
+    private ViewPager userPager;
 
     // constructor
     public UserInfo(UserData userData, ViewPager userPager){
@@ -92,9 +94,12 @@ public class UserInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_user_info, container, false);
+    }
 
-        // view : view setting
-        View view = inflater.inflate(R.layout.fragment_user_info, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost setting - id 값을 가져온다.
         name = (TextView) view.findViewById(R.id.f_user_info_name);
@@ -111,9 +116,6 @@ public class UserInfo extends Fragment {
         } else {
 
         }
-
-        // return : view - 해당 뷰를 셋팅하고 넘겨주기
-        return view;
     }
 
     /* method : userData 가 있으면 화면에 뿌려준다.*/
@@ -134,4 +136,6 @@ public class UserInfo extends Fragment {
             totalPlayTime.setText(totalPlayTimeContent);
             totalCost.setText(totalCostContent);
     }
+
+
 }

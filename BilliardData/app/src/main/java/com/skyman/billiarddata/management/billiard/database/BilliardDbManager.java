@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import androidx.cursoradapter.widget.CursorAdapter;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 
@@ -54,35 +56,26 @@ public class BilliardDbManager {
         /*
          * =====================================================
          * billiard table insert query
-         * -    데이터를 매개변수로 받아서
-         *      모든 값을 입력 받은지 확인한다. 그리고
-         *      ContentValues의 객체에 매개변수의 내용을 setting을 한 다음
-         *      helper를 통해 쓰기용으로 받아온 SQLiteDatabase를
-         *      이용하여 project_blue.db 의 billiard table에 isnert 한다.
+         * -    데이터를 매개변수로 받아서 모든 값을 입력 받은지 확인한다.
+         *      그리고 ContentValues 의 객체에 내용 setting 을 한다.
+         *      userDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 의 billiard 테이블에 해당 내용을 insert 한다.
          * - 입력 순서
          *      1. date
          *      2. target score
          *      3. speciality
          *      4. play time
-         *      5. victoree
+         *      5. winner
          *      6. score
          *      7. cost
          * =====================================================
          * */
         DeveloperManager.displayLog("BilliardDbManager", "** save_content is executing ............");
 
-//        DeveloperManager.displayLog("BilliardDbManager", "=== date : " + dateContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== targetScoreContent : " + targetScoreContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== specialityContent : " + specialityContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== playTimeContent : " + playTimeContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== winnerContent : " + winnerContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== scoreContent : " + scoreContent);
-//        DeveloperManager.displayLog("BilliardDbManager", "=== costContent : " + costContent);
-
-        //  쓰기로 객체 생성
+        // SQLiteDatabase : write database - billiardDbHelper 를 통해 write 용으로 가져오기
         SQLiteDatabase writeDb = billiardDbHelper.getWritableDatabase();
 
-        // 빈 곳 없나 검사
+        // check : 매개변수의 내용 중에 빈 곳이 없나 검사
         if (!dateContent.equals("")                             // date
                 && !targetScoreContent.equals("")               // target score
                 && !specialityContent.equals("")                // speciality
@@ -91,7 +84,7 @@ public class BilliardDbManager {
                 && !scoreContent.equals("")                     // score
                 && !costContent.equals("")) {                   // cost
 
-            // 입력할 내용 setting
+            // ContentValues : 매개변수의 내용을 insertValues 에 셋팅하기
             ContentValues values = new ContentValues();
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, dateContent);                           // 1. date
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);            // 2. target score
@@ -101,12 +94,14 @@ public class BilliardDbManager {
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                         // 6. score
             values.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                           // 7. cost
 
-            // 해당 billiard 테이블에 내용 insert
-            // nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
-            //                이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.
-            long newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, values);
+            /*  해당 billiardBasic 테이블에 내용 insert
+                nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
+                               이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.*/
 
             // newRowId는 데이터베이스에 insert 가 실패하면 '-1'을 반환하고, 성공하면 해당 '행 번호'를 반환한다.
+            long newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, values);
+
+            // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
             if (newRowId == -1) {
                 // 데이터 insert 실패
                 toastHandler("데이터 입력에 실패했습니다.");
@@ -117,6 +112,10 @@ public class BilliardDbManager {
         } else {
             toastHandler("빈곳을 채워주세요.");
         }
+
+        // SQLiteDatabase : close
+        writeDb.close();
+
         DeveloperManager.displayLog("BilliardDbManager", "** save_content is complete");
     }
 
@@ -125,97 +124,84 @@ public class BilliardDbManager {
         /*
          * =====================================================
          * billiardBasic table select query
-         * -    helper를 통해 읽기용으로 받아온 SQLiteDatabase를
-         *      이용하여 해당 db 해당 table의 모든 내용을 select 한다.
+         * -    userDbHelper 를 통해 readable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 의 billiard 테이블의 모든 내용을 읽어온다.
          * - column title
-         *      0: date
-         *      1: target score
-         *      2: speciality
-         *      3: play time
-         *      4: victoree
-         *      5: score
-         *      6: cost
-         * - return : 읽어온 내용이 담기 ArrayList<DataListItem>
+         *      0: id
+         *      1: date
+         *      2: target score
+         *      3: speciality
+         *      4: play time
+         *      5: victoree
+         *      6: score
+         *      7: cost
+         * - return : 읽어온 내용이 담기 ArrayList<BilliardData>
          * =====================================================
          * */
         DeveloperManager.displayLog("BilliardDbManager", "** load_contents is executing ............");
 
-        // 읽기용 객체 생성
+        // SQLiteDatabase : read database - billiardDbHelper 를 통해 read 용으로 가져오기
         SQLiteDatabase readDb = billiardDbHelper.getReadableDatabase();
 
-        // 해당 쿼리문으로 읽어온 테이블 내용을 Cursor 객체를 통해 읽을 수 있도록 하기
+        // Cursor : 해당 쿼리문으로 읽어온 테이블 내용을 Cursor 객체를 통해 읽을 수 있도록 하기
         Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
 
-        // DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
+        // ArrayList<BilliardData> : DataListItem 객체를 담을 ArrayList 객체 생성 - 한 행을 DataListItem 객체에 담는다.
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
-        // Cursor 객체를 통해 하나씩 읽어온다.
+        // cycle : Cursor 객체의 다음 내용이 있을 때 마다 체크하여 모두 billiardDataArrayList 에 담는다.
         while (cursor.moveToNext()) {
-            long id = cursor.getInt(0);
-            String date = cursor.getString(1);
-            String targetScore = cursor.getString(2);
-            String speciality = cursor.getString(3);
-            String playTime = cursor.getString(4);
-            String winner = cursor.getString(5);
-            String score = cursor.getString(6);
-            String cost = cursor.getString(7);
+            // BilliardData : cursor 에서 읽어 온 내용(한 행)을 billiardData 에 담는다.
+            BilliardData billiardData = new BilliardData();
+            billiardData.setId(cursor.getLong(0));
+            billiardData.setDate(cursor.getString(1));
+            billiardData.setTargetScore(cursor.getString(2));
+            billiardData.setSpeciality(cursor.getString(3));
+            billiardData.setPlayTime(cursor.getString(4));
+            billiardData.setWinner(cursor.getString(5));
+            billiardData.setScore(cursor.getString(6));
+            billiardData.setCost(cursor.getString(7));
 
-            DeveloperManager.displayLog("BilliardDbManager", "읽어온 내용");
-            DeveloperManager.displayLog("BilliardDbManager", "id : " + id);
-            DeveloperManager.displayLog("BilliardDbManager", "date : " + date);
-            DeveloperManager.displayLog("BilliardDbManager", "targetScore : " + targetScore);
-            DeveloperManager.displayLog("BilliardDbManager", "speciality : " + speciality);
-            DeveloperManager.displayLog("BilliardDbManager", "paly_time : " + playTime);
-            DeveloperManager.displayLog("BilliardDbManager", "victoree : " + winner);
-            DeveloperManager.displayLog("BilliardDbManager", "score : " + score);
-            DeveloperManager.displayLog("BilliardDbManager", "cost : " + cost);
-
-            // 읽어온 dataListItem 을 items에 추가하기
-//            BilliardData billiardData = new BilliardData.DataBuilder()
-//                    .setId(cursor.getLong(0))
-//                    .setDate(cusor.)
-//                    .setTargetScore()
-//                    .setSpeciality()
-//                    .setPlayTime()
-//                    .setWinner()
-//                    .setScore()
-//                    .setCost().builder();
-
-
-            BilliardData dataItem = new BilliardData();
-            dataItem.setId(id);
-            dataItem.setDate(date);
-            dataItem.setTargetScore(targetScore);
-            dataItem.setSpeciality(speciality);
-            dataItem.setPlayTime(playTime);
-            dataItem.setWinner(winner);
-            dataItem.setScore(score);
-            dataItem.setCost(cost);
-
-            // array list 에 insert
-            billiardDataArrayList.add(dataItem);
+            // ArrayList<BilliardData> : 위 의 내용을 배열 형태로 담아둔다.
+            billiardDataArrayList.add(billiardData);
         }
+
+        // SQLiteDatabase : close
+        readDb.close();
+
         DeveloperManager.displayLog("BilliardDbManager", "** load_contents is complete!");
+
+        // return : 모든 내용이 담김 billiardDataArrayList 를 반환한다.
         return billiardDataArrayList;
     }
 
     /* method : delete,  */
     public void delete_contents() {
         /*
-         * =====================================================
-         * billiardBasic table delete query
-         * -    helper를 통해 쓰기용으로 받아온 SQLiteDatabase를
-         *      이용하여 해당 db 해당 table의 모든 내용을 delete 한다.
-         * =====================================================
+         * =========================================================================================
+         * user table select query
+         * -    userDbHelper 를 통해 writable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 에서 billiard 테이블의 모든 내용을 delete 한다.
+         * =========================================================================================
          * */
         DeveloperManager.displayLog("BilliardDbManager", "** delete_contents is executing ............");
-        // 쓰기용 객체 생성
+
+        // SQLiteDatabase : write database - billiardDbHelper 를 write 용으로 가져오기
         SQLiteDatabase deleteDb = billiardDbHelper.getWritableDatabase();
 
-        // all contents delete_query execute
-        deleteDb.execSQL(BilliardTableSetting.SQL_DELETE_TABLE_ALL_ITEM);
+        // SQLiteDatabase : 모든 내용 삭제
+        deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, null, null);
+
+        // SQLiteDatabase : close
+        deleteDb.close();
 
         DeveloperManager.displayLog("BilliardDbManager", "** delete_contents is complete!");
+    }
+
+    /* method : billiardDbHelper close */
+    public void closeBilliardDbHelper() {
+        billiardDbHelper.close();
+        DeveloperManager.displayLog("BilliardDbManager", "** billiardDbHelper is closed.");
     }
 
     /* method : display, toast 메시지 출력 */
@@ -223,6 +209,5 @@ public class BilliardDbManager {
         Toast myToast = Toast.makeText(targetContext, content, Toast.LENGTH_SHORT);
         myToast.show();
     }
-
 }
 

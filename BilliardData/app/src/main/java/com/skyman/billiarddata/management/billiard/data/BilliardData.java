@@ -2,15 +2,17 @@ package com.skyman.billiarddata.management.billiard.data;
 
 public class BilliardData {
 
-    private long id;
-    private String date;
-    private String targetScore;
-    private String speciality;
-    private String playTime;
-    private String winner;
-    private String score;
-    private String cost;
+    // value : desc
+    private long id;                    // 0. id
+    private String date;                // 1. date
+    private String targetScore;         // 2. target score
+    private String speciality;          // 3. speciality
+    private String playTime;            // 4. play time
+    private String winner;              // 5. winner
+    private String score;               // 6. score
+    private String cost;                // 7. cost
 
+    // method : getter, setter
     public long getId() {
         return id;
     }

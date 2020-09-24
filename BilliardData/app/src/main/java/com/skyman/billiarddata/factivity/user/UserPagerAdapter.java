@@ -11,7 +11,7 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 public class UserPagerAdapter extends FragmentStatePagerAdapter {
 
-    // UserData : UserManager 로 부터 받은 UserData 객체를 담을 객체 선언
+    // UserData : UserManager 로 부터 받은 UserData 객체를 담을 객체 선언\
     private UserDbManager userDbManager;
     private UserData userData;
     private ViewPager userPager;

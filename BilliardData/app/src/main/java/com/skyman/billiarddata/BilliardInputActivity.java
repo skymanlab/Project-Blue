@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,17 +12,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
+import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BilliardInputActivity extends AppCompatActivity {
 
-    // value : helper manager 객체 선언
+    // value : helper manager 관련 객체 선언
     private BilliardDbManager billiardDbManager = null;
+    private UserDbManager userDbManager = null;
+    private UserData userData;
 
     // value : activity 에서 사용하는 객체 선언
     private Spinner player;
@@ -50,6 +54,14 @@ public class BilliardInputActivity extends AppCompatActivity {
         billiardDbManager = new BilliardDbManager(this);
         billiardDbManager.init_db();
 
+        // UserDbManager : userDbManager setting - SQLiteOpenHelper 를 관리하는 클래스
+        userDbManager = new UserDbManager(this);
+        userDbManager.init_db();
+
+        // UserData : userDbManager 에서 받아온 데이터를 userData에 넣는다.
+        userData = userDbManager.load_content();
+        DeveloperManager.displayToUserData("BilliardInputActivity", userData);
+
         // TextView : date setting
         date = (TextView) findViewById(R.id.billiard_input_date);
         setDateFormat();
@@ -73,11 +85,6 @@ public class BilliardInputActivity extends AppCompatActivity {
         cost = (EditText) findViewById(R.id.billiard_input_cost);
         playTime = (EditText) findViewById(R.id.billiard_input_play_time);
 
-        // Spinner : player setting - userAdapter 를 이용하여 R.array.player 를 연결, 나와 친구목록에 있는 선수들
-        player = (Spinner) findViewById(R.id.billiard_input_sp_player);
-        ArrayAdapter userAdapter = ArrayAdapter.createFromResource(this, R.array.player, android.R.layout.simple_spinner_dropdown_item);
-        player.setAdapter(userAdapter);
-
         // Spinner : target score setting - targetScoreAdapter 를 이용하여 R.array.targetScore 를 연결, 수지
         targetScore = (Spinner) findViewById(R.id.billiard_input_sp_target_score);
         ArrayAdapter targetScoreAdapter = ArrayAdapter.createFromResource(this, R.array.targetScore, android.R.layout.simple_spinner_dropdown_item);
@@ -87,6 +94,17 @@ public class BilliardInputActivity extends AppCompatActivity {
         speciality = (Spinner) findViewById(R.id.billiard_input_sp_speciality);
         ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(this, R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
         speciality.setAdapter(specialityAdapter);
+
+        // Spinner : player setting - userAdapter 를 이용하여 R.array.player 를 연결, 나와 친구목록에 있는 선수들
+        player = (Spinner) findViewById(R.id.billiard_input_sp_player);
+        ArrayAdapter userAdapter = ArrayAdapter.createFromResource(this, R.array.player, android.R.layout.simple_spinner_dropdown_item);
+        player.setAdapter(userAdapter);
+
+        if(userData != null) {
+            // Spinner : userData 저장 된 값이 있을 경우 - '수지', '주 종목'을 해당 값으로 변경
+            targetScore.setSelection(userData.getTargetScore() - 1);
+            speciality.setSelection(getSelectedPositionToUserData(userData.getSpeciality()));
+        }
 
         // ListView  : inputData setting - billiardDbManager 를 통해 가져온 내용을 billiardLvManger 로 화면에 뿌려줄 준비
         allBilliardData = (ListView) findViewById(R.id.billiard_input_lv_all_billiard_data);
@@ -131,7 +149,7 @@ public class BilliardInputActivity extends AppCompatActivity {
             }
         });
 
-        // button 3 : delete setting - '데이터 삭제 버튼'
+        // button 3 : delete setting - '데이터 삭제' 버튼
         delete = (Button) findViewById(R.id.billiard_input_bt_delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +166,14 @@ public class BilliardInputActivity extends AppCompatActivity {
 
     }
 
+    /* method : 사용자 또는 시스템에 의한 액티비티 종료가 될 때 부르는 콜백함수 */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // BilliardDbManager : billiardDbManager 가 사용하는 OpenDbHelper 를 종료.
+        billiardDbManager.closeBilliardDbHelper();
+    }
+
     // =============================================================================================================
     /* method : date set, 지금 현태의 날짜를 특정 형태로 가져오기*/
     private void setDateFormat() {
@@ -159,6 +185,19 @@ public class BilliardInputActivity extends AppCompatActivity {
     private void toastHandler(String content) {
         Toast myToast = Toast.makeText(this.getApplicationContext(), content, Toast.LENGTH_SHORT);
         myToast.show();
+    }
+
+    /* method: userData 의 getSpeciality 값으로 speciality spinner 의 선택 */
+    private int getSelectedPositionToUserData(String speciality){
+        if(speciality.equals("3구")){
+            return 0;
+        } else if(speciality.equals("4구")) {
+            return 1;
+        } else if(speciality.equals("포켓볼")){
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
     /* method : display, 가격 형태로 변환한 값을 toast 메시지 형태로 화면 출력*/

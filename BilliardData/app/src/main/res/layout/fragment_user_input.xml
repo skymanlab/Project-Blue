@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -44,26 +45,29 @@
                 android:padding="3dp">
 
                 <TextView
-                    android:layout_width="130dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:paddingLeft="10dp"
                     android:text="@string/f_user_input_name"></TextView>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="?android:attr/listDivider" />
 
                 <EditText
                     android:id="@+id/f_user_input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
                     android:hint="@string/f_user_input_name_hint"
                     android:inputType="text"
                     android:paddingLeft="10dp"
-                    android:selectAllOnFocus="false"
                     android:singleLine="true"></EditText>
             </LinearLayout><!-- End of content 1 -->
 
@@ -76,26 +80,29 @@
                 android:padding="3dp">
 
                 <TextView
-                    android:layout_width="130dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:paddingLeft="10dp"
                     android:text="@string/f_user_input_target_score"></TextView>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="?android:attr/listDivider" />
 
                 <EditText
                     android:id="@+id/f_user_input_target_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
                     android:hint="@string/f_user_input_target_score_hint"
-                    android:inputType="text"
+                    android:inputType="numberDecimal"
                     android:paddingLeft="10dp"
-                    android:selectAllOnFocus="false"
                     android:singleLine="true"></EditText>
             </LinearLayout><!-- End of content 2 -->
 
@@ -107,31 +114,36 @@
                 android:background="@color/colorSecondBackground"
                 android:gravity="center"
                 android:orientation="horizontal"
+
                 android:padding="3dp">
 
                 <TextView
-                    android:layout_width="130dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:paddingLeft="10dp"
                     android:text="@string/f_user_input_speciality"></TextView>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="?android:attr/listDivider" />
 
                 <RadioGroup
                     android:id="@+id/f_user_input_speciality"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/f_user_input_speciality_three_cushion"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
@@ -139,14 +151,14 @@
 
                     <RadioButton
                         android:id="@+id/f_user_input_speciality_four_ball"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/f_user_input_speciality_four_ball" />
 
                     <RadioButton
                         android:id="@+id/f_user_input_speciality_pocket_ball"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/f_user_input_speciality_pocket_ball" />
@@ -179,7 +191,8 @@
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimaryBackground"
+                    android:enabled="false"
+                    android:background="@color/colorActivityDisable"
                     android:text="@string/f_user_input_bt_modify"
                     android:textColor="@color/colorTextPrimaryBackground"></Button>
 
@@ -192,7 +205,9 @@
                     android:background="@color/colorPrimaryBackground"
                     android:text="@string/f_user_input_bt_delete"
                     android:textColor="@color/colorTextPrimaryBackground"></Button>
-            </LinearLayout><!-- End of content 4 -->
+            </LinearLayout>
+
+            <!-- End of content 4 -->
         </LinearLayout><!-- End of content -->
     </LinearLayout><!-- End of main -->
 </FrameLayout>

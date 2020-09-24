@@ -44,4 +44,10 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             DeveloperManager.displayLog("BilliardDisplayActivity", "content is not exist in billiard table.");
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        billiardDbManager.closeBilliardDbHelper();
+    }
 }
