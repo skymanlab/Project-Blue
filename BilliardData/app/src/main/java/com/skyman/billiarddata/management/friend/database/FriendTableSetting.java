@@ -12,6 +12,10 @@ public class FriendTableSetting {
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME ;
 
+    // constant : sql query, select table setting
+    public static final String SQL_SELECT_TABLE_ALL_ITEM =
+            "SELECT * FROM " + Entry.TABLE_NAME;
+
     // constructor : private
     private FriendTableSetting() {
 

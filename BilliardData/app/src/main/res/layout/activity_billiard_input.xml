@@ -194,7 +194,6 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
                     android:text="@string/billiard_input_score"
                     android:textAlignment="textStart"></TextView>
 
@@ -239,7 +238,6 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
                     android:text="@string/billiard_input_cost"
                     android:textAlignment="textStart"></TextView>
 
@@ -268,7 +266,6 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
                     android:text="@string/billiard_input_play_time"
                     android:textAlignment="textStart"></TextView>
 

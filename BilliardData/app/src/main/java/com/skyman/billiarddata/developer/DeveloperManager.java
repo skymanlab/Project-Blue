@@ -3,6 +3,7 @@ package com.skyman.billiarddata.developer;
 import android.util.Log;
 
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
+import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 /**
@@ -46,6 +47,13 @@ public class DeveloperManager {
             Log.d(className, "7. cost : " + billiardData.getCost());
         } else {
             Log.d(className, "** The object of billiardData is null.");
+        }
+    }
+
+    public static void displayToFriendData(String className, FriendData friendData) {
+        if(friendData != null) {
+            Log.d(className, "0. count : " + friendData.getCount());
+            Log.d(className, "1. name : " + friendData.getName());
         }
     }
 }

@@ -11,7 +11,7 @@ public  class BilliardTableSetting {
     // constant : sql query, create table setting
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Entry.TABLE_NAME  + " (" +
-                    Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    Entry._ID + " INTEGER PRIMARY KEY, " +
                     Entry.COLUMN_NAME_DATE + " TEXT, " +
                     Entry.COLUMN_NAME_TARGET_SCORE + " TEXT, " +
                     Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +

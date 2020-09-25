@@ -28,12 +28,18 @@ public class UserDbManager {
         this.targetContext = targetContext;
     }
 
+
+    /*                                      public method
+     * =============================================================================================
+     * =============================================================================================
+     * */
+
     /* method : init, SQLite DB open helper 를 이용하여 초기화 */
     public void init_db() {
         /*
          * =========================================================================================
-         * project_blue.db 에 billiard, user 테이블의 존재 여부 확인한다.
-         * 없으면 project_blue.db 생성 후 billiard, user 테이블을 생성하고,
+         * project_blue.db 에 billiard, user, friend 테이블의 존재 여부 확인한다.
+         * 없으면 project_blue.db 생성 후 billiard, user, friend 테이블을 생성하고,
          * project_blue.db 를 open 한다.
          * =========================================================================================
          * */
@@ -85,7 +91,7 @@ public class UserDbManager {
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);        // 6. total play time
             insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                 // 7. total cost
 
-            /*  해당 billiardBasic 테이블에 내용 insert
+            /*  해당 user 테이블에 내용 insert
                 nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
                                이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.*/
 
@@ -110,7 +116,7 @@ public class UserDbManager {
         DeveloperManager.displayLog("userDbManager", "** save_content is complete!");
     }
 
-    /* method : load, SQLite DB Helpe r를 이용하여 해당 테이블에 모든 정보를 select 한다. */
+    /* method : load, SQLite DB Helper 를 이용하여 해당 테이블에 모든 정보를 select 한다. */
     public ArrayList<UserData> load_contents() {
         /*
          * =========================================================================================
@@ -288,8 +294,14 @@ public class UserDbManager {
     /* method : userDbHelper 를 close 한다. */
     public void closeUserDbHelper () {
         userDbHelper.close();
-        DeveloperManager.displayLog("F UserInput", "** userDbHelper is closed.");
+        DeveloperManager.displayLog("UserDbManager", "** userDbHelper is closed.");
     }
+
+
+    /*                                      private method
+     * =============================================================================================
+     * =============================================================================================
+     * */
 
     /* method : display, toast 메시지 출력 */
     private void toastHandler(String content) {

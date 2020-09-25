@@ -1,7 +1,9 @@
 package com.skyman.billiarddata;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.dialog.DateModify;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
@@ -72,7 +76,13 @@ public class BilliardInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // refresh date
-                setDateFormat();
+//                setDateFormat();
+
+                // DateModify : date 를 수정하기 위한 dialog 를 생성한다.
+                DateModify dateModify = new DateModify(BilliardInputActivity.this);
+
+                // DateModify : dialog 를 셋팅하고 노출한다. 그리고 dialog 를 보여주는 custom 된 activity 의 widget 을 셋팅한다. 그리고 그 수정한 date 를 받아와서 'date' 를 수정한 값으로 셋팅한다.
+                dateModify.setDialog(date);
             }
         });
 
@@ -172,6 +182,16 @@ public class BilliardInputActivity extends AppCompatActivity {
         super.onDestroy();
         // BilliardDbManager : billiardDbManager 가 사용하는 OpenDbHelper 를 종료.
         billiardDbManager.closeBilliardDbHelper();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+
+            }
+        }
     }
 
     // =============================================================================================================
