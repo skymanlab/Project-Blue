@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,7 +15,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.user.data.UserData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +40,16 @@ public class UserFriend extends Fragment {
     private EditText name;
     private Button friendAdd;
 
-    // value : FirendDbManager
+    // value : FriendDbManager
     private FriendDbManager friendDbManager;
+
+    // value : UserData
+    private UserData userData;
+
+    // constructor
+    public UserFriend(UserData userData) {
+        this.userData = userData;
+    }
 
     public UserFriend() {
         // Required empty public constructor
@@ -82,7 +93,7 @@ public class UserFriend extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // FriendDbManager :
         friendDbManager = new FriendDbManager(view.getContext());
-        if(friendDbManager != null){
+        if (friendDbManager != null) {
             friendDbManager.init_db();
         }
         // ListView : allFriendData setting
@@ -96,20 +107,34 @@ public class UserFriend extends Fragment {
         friendAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // check : friendDbManager  null?
-                if(friendDbManager != null) {
-                    // check : name
-                    if(!name.getText().toString().equals("")) {
-                        // FriendDbManager : save_content method executing
-                        friendDbManager.save_content(name.getText().toString());
 
-                        // FriendDbManager : load_contents method executing
-                        friendDbManager.load_contents();
+                if (userData != null) {
+                    // check : friendDbManager  null?
+                    if (friendDbManager != null) {
+                        // check : name
+                        if (!name.getText().toString().equals("")) {
+
+                            DeveloperManager.displayLog("UserFriend", "모든 조건이 통과되었습니다. : " + userData.getId());
+                            // FriendDbManager : save_content method executing
+                            friendDbManager.save_content(
+                                    userData.getId(),
+                                    name.getText().toString(),
+                                    0,
+                                    0,
+                                    "첫 뻔째 입력",
+                                    0,
+                                    0);
+
+                            // FriendDbManager : load_contents method executing
+                            friendDbManager.load_contents();
+                        } else {
+                            DeveloperManager.displayLog("UserFriend", "name 이 입력되지 않았습니다.");
+                        }
                     } else {
-
+                        DeveloperManager.displayLog("UserFriend", "userDbManager 가 없습니다.");
                     }
                 } else {
-
+                    DeveloperManager.displayLog("UserFriend", "userData 가 없습니다.");
                 }
             }
         });

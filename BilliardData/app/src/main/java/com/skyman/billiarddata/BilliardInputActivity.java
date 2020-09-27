@@ -62,7 +62,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         userDbManager = new UserDbManager(this);
         userDbManager.init_db();
 
-        // UserData : userDbManager 에서 받아온 데이터를 userData에 넣는다.
+        // UserData : userDbManager 에서 받아온 데이터를 userData 에 넣는다.
         userData = userDbManager.load_content();
         DeveloperManager.displayToUserData("BilliardInputActivity", userData);
 
@@ -172,8 +172,6 @@ public class BilliardInputActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     /* method : 사용자 또는 시스템에 의한 액티비티 종료가 될 때 부르는 콜백함수 */

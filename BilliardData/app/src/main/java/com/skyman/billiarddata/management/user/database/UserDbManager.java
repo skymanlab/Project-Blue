@@ -48,7 +48,7 @@ public class UserDbManager {
     }
 
     /* method : insert, SQLite DB Helper를 이용하여 해당 테이블에 정보를 insert 한다. */
-    public void save_content(String name, int targetScore, String speciality, int gameRecordWin, int gameRecordLoss, int totalPlayTime, int totalCost) {
+    public void save_content(String name, int targetScore, String speciality, int gameRecordWin, int gameRecordLoss, int recentGamePlayerId, String recentPlayDate, int totalPlayTime, int totalCost) {
         /*
          * =========================================================================================
          * user table insert query
@@ -57,13 +57,13 @@ public class UserDbManager {
          *      userDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 의 user 테이블에 해당 내용을 insert 한다.
          * - 입력 순서
-         * 1. name
-         * 2. target score
-         * 3. speciality
-         * 4. game record win
-         * 5. game record loss
-         * 6. total play time
-         * 7. total cost
+         *      1. name
+         *      2. target score
+         *      3. speciality
+         *      4. game record win
+         *      5. game record loss
+         *      6. total play time
+         *      7. total cost
          * =========================================================================================
          * */
         DeveloperManager.displayLog("userDbManager", "** save_content is executing ............");
@@ -72,24 +72,28 @@ public class UserDbManager {
         SQLiteDatabase writeDb = userDbHelper.getWritableDatabase();
 
         // 빈 곳 없나 검사
-        if (!name.equals("") &&                                 // 1. name              -- not null
-                (targetScore >= 0) &&                           // 2. target score      -- 0 보다 커야
-                !speciality.equals("") &&                       // 3. speciality        -- not null
-                (gameRecordWin >= 0) &&                         // 4. game record win   -- 0 보다 커야
-                (gameRecordLoss >= 0) &&                        // 5. game record loss  -- 0 보다 커야
-                (totalPlayTime >= 0) &&                          // 6. total play time   -- 0 보다 커야
-                (totalCost >= 0)                                // 7. total cost        -- 0 보다 커야
+        if (!name.equals("") &&                                 // 1. name                      -- 내용이 있어야 함
+                (targetScore >= 0) &&                           // 2. target score              -- 0 보다 크거나 같다.
+                !speciality.equals("") &&                       // 3. speciality                -- not null
+                (gameRecordWin >= 0) &&                         // 4. game record win           -- 0 보다 크거나 같다.
+                (gameRecordLoss >= 0) &&                        // 5. game record loss          -- 0 보다 크거나 같다.
+                (recentGamePlayerId >=0) &&                     // 6. recent game player id     -- 0 보다 크거나 같다.
+                !recentPlayDate.equals("") &&                   // 7. recent play date          -- 내용이 있어야 함
+                (totalPlayTime >= 0) &&                         // 8. total play time           -- 0 보다 크거나 같다.
+                (totalCost >= 0)                                // 9. total cost                -- 0 보다 크거나 같다.
         ) {
 
             // ContentValues : 매개변수의 내용을 insertValues 에 셋팅하기
             ContentValues insertValues = new ContentValues();
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_USERNAME, name);                        // 1. name
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);             // 2. target score
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);                // 3. speciality
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);        // 4. game record win
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);      // 5. game record loss
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);        // 6. total play time
-            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                 // 7. total cost
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_NAME, name);                                    // 1. name
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);                     // 2. target score
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);                        // 3. speciality
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);                // 4. game record win
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);              // 5. game record loss
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_PLAYER_ID, recentGamePlayerId);     // 6. recent game player id
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_PLAY_DATE, recentPlayDate);              // 7. recent play date
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);                // 8. total play time
+            insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                         // 9. total cost
 
             /*  해당 user 테이블에 내용 insert
                 nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
@@ -156,8 +160,10 @@ public class UserDbManager {
             userData.setSpeciality(readCursor.getString(3));        // 3. speciality
             userData.setGameRecordWin(readCursor.getInt(4));        // 4. game record win
             userData.setGameRecordLoss(readCursor.getInt(5));       // 5. game record loss
-            userData.setTotalPlayTime(readCursor.getInt(6));        // 6. total play time
-            userData.setTotalCost(readCursor.getInt(7));            // 7. total cost
+            userData.setRecentGamePlayerId(readCursor.getLong(6));  // 6. recent game player id
+            userData.setRecentPlayDate(readCursor.getString(7));    // 7. recent play time
+            userData.setTotalPlayTime(readCursor.getInt(8));        // 8. total play time
+            userData.setTotalCost(readCursor.getInt(9));            // 9. total cost
 
             // ArrayList<UserData> : 위의 내용을 가지는 배열 userDataArrayList 에 추가하여 저장
             userDataArrayList.add(userData);
@@ -211,8 +217,10 @@ public class UserDbManager {
             userData.setSpeciality(readCursor.getString(3));        // 3. speciality
             userData.setGameRecordWin(readCursor.getInt(4));        // 4. game record win
             userData.setGameRecordLoss(readCursor.getInt(5));       // 5. game record loss
-            userData.setTotalPlayTime(readCursor.getInt(6));        // 6. total play time
-            userData.setTotalCost(readCursor.getInt(7));            // 7. total cost
+            userData.setRecentGamePlayerId(readCursor.getLong(6));  // 6. recent game player id
+            userData.setRecentPlayDate(readCursor.getString(7));    // 7. recent play time
+            userData.setTotalPlayTime(readCursor.getInt(8));        // 8. total play time
+            userData.setTotalCost(readCursor.getInt(9));            // 9. total cost
         } else {
             return null;
         }
@@ -280,7 +288,7 @@ public class UserDbManager {
 
         // ContentValues :
         ContentValues updateValue = new ContentValues();
-        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_USERNAME, name);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_NAME, name);
         updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);
         updateValue.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);
 

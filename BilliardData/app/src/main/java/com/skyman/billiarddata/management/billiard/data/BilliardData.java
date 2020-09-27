@@ -1,6 +1,8 @@
 package com.skyman.billiarddata.management.billiard.data;
 
-public class BilliardData {
+import java.io.Serializable;
+
+public class BilliardData implements Serializable {
 
     // value : desc
     private long id;                    // 0. id

@@ -36,7 +36,7 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new UserInfo(userData, userPager);
             case 2:
-                return new UserFriend();
+                return new UserFriend(userData);
             default:
                 return null;
         }

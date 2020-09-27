@@ -48,7 +48,7 @@ public class FriendDbManager {
     }   // End of 'init_db'
 
     /* method 1 : insert, SQLite DB open helper 를 이용하여 해당 테이블에 정보를 insert 한다. */
-    public void save_content(String name) {
+    public void save_content(long userId, String name, int gameRecordWin, int gameRecordLoss, String recentPlayDate, int totalPlayTime, int totalCost) {
         /*
          * =====================================================
          * friend table insert query
@@ -57,7 +57,13 @@ public class FriendDbManager {
          *      friendDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 의 friend 테이블에 해당 내용을 insert 한다.
          * - 입력 순서
-         *      1. name
+         *      1. userID
+         *      2. name
+         *      3. gameRecordWin
+         *      4. gameRecordLoss
+         *      5. recentPlayDate
+         *      6. totalPlayTime
+         *      7. totalCost
          * =====================================================
          * */
         DeveloperManager.displayLog("FriendDbManager", "** save_content is executing ............");
@@ -66,11 +72,24 @@ public class FriendDbManager {
         SQLiteDatabase writeDb = friendDbHelper.getWritableDatabase();
 
         // check : 매개변수의 내용 중에 빈 곳이 없나 검사
-        if (!name.equals("")) {
-
+        if ((userId > 0) &&
+                !name.equals("") &&
+                (gameRecordWin >= 0) &&
+                (gameRecordLoss >= 0) &&
+                !recentPlayDate.equals("") &&
+                (totalPlayTime >= 0) &&
+                (totalCost >= 0)
+        ) {
+            DeveloperManager.displayLog("FriendDbManager", "모든 조건이 통과되었습니다.");
             // ContentValues : 매개변수의 내용을 insertValues 에 셋팅하기
             ContentValues insertValues = new ContentValues();
-            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_NAME, name);                           // 1. name
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_USER_ID, userId);                     // 1. user id
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_NAME, name);                          // 2. name
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);      // 3. game record win
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);    // 4. game record loss
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_RECENT_PLAY_DATE, recentPlayDate);    // 5. recent play date
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);      // 6. total play time
+            insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);               // 7. total cost
 
             /*  해당 friend 테이블에 내용 insert
                 nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
@@ -126,13 +145,19 @@ public class FriendDbManager {
         while (cursor.moveToNext()) {
             // FriendData : cursor 에서 읽어 온 내용(한 행)을 friendData 에 담는다.
             FriendData friendData = new FriendData();
-            friendData.setCount(cursor.getLong(0));
-            friendData.setName(cursor.getString(1));
+            friendData.setId(cursor.getLong(0));
+            friendData.setUserId(cursor.getLong(1));
+            friendData.setName(cursor.getString(2));
+            friendData.setGameRecordWin(cursor.getInt(3));
+            friendData.setGameRecordLoss(cursor.getInt(4));
+            friendData.setRecentPlayDate(cursor.getString(5));
+            friendData.setTotalPlayTime(cursor.getInt(6));
+            friendData.setTotalCost(cursor.getInt(7));
 
             // ArrayList<friendData> : 위 의 내용을 배열 형태로 담아둔다.
             friendDataArrayList.add(friendData);
 
-            DeveloperManager.displayToFriendData("FriendDbManager",friendData);
+            DeveloperManager.displayToFriendData("FriendDbManager", friendData);
         }
 
         // SQLiteDatabase : close
@@ -152,9 +177,9 @@ public class FriendDbManager {
 
 
     /*                                      private method
-    * =============================================================================================
-    * =============================================================================================
-    * */
+     * =============================================================================================
+     * =============================================================================================
+     * */
 
     /* method : display, toast 메시지 출력 */
     private void toastHandler(String content) {

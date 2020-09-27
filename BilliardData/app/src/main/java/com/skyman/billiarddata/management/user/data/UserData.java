@@ -1,6 +1,8 @@
 package com.skyman.billiarddata.management.user.data;
 
-public class UserData {
+import java.io.Serializable;
+
+public class UserData implements Serializable {
 
     // value : desc
     private long id;                         // 0. id
@@ -9,8 +11,10 @@ public class UserData {
     private String speciality;              // 3. speciality
     private int gameRecordWin;              // 4. game record win
     private int gameRecordLoss;             // 5. game record loss
-    private int totalPlayTime;              // 6. total play time
-    private int totalCost;                  // 7. total cost
+    private long recentGamePlayerId;         // 6. recent game player id
+    private String recentPlayDate;          // 7. recent play date
+    private int totalPlayTime;              // 8. total play time
+    private int totalCost;                  // 9. total cost
 
     // method : getter, setter
     public long getId() {
@@ -59,6 +63,22 @@ public class UserData {
 
     public void setGameRecordLoss(int gameRecordLoss) {
         this.gameRecordLoss = gameRecordLoss;
+    }
+
+    public long getRecentGamePlayerId() {
+        return recentGamePlayerId;
+    }
+
+    public void setRecentGamePlayerId(long recentGamePlayerId) {
+        this.recentGamePlayerId = recentGamePlayerId;
+    }
+
+    public String getRecentPlayDate() {
+        return recentPlayDate;
+    }
+
+    public void setRecentPlayDate(String recentPlayDate) {
+        this.recentPlayDate = recentPlayDate;
     }
 
     public int getTotalPlayTime() {

@@ -10,20 +10,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.developer.DeveloperManager;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 public class DateModify {
 
     // const : date format
     private final String DATE_FORMAT = "{0}년 {1}월 {2}일";
+    private Spinner year;
+    private Spinner month;
+    private Spinner day;
+
 
     // value : Dialog 를 생성하는 곳의 Activity context
     private Context context;
 
     // constructor
-    public DateModify(Context context){
+    public DateModify(Context context) {
         this.context = context;
     }
 
@@ -42,17 +49,17 @@ public class DateModify {
         dialog.show();
 
         // Spinner : year
-        final Spinner year = (Spinner) dialog.findViewById(R.id.d_re_date_sp_year);
+        year = (Spinner) dialog.findViewById(R.id.d_re_date_sp_year);
         ArrayAdapter yearAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.year, android.R.layout.simple_spinner_dropdown_item);
         year.setAdapter(yearAdapter);
 
         // Spinner : month
-        final Spinner month = (Spinner) dialog.findViewById(R.id.d_re_date_sp_month);
+        month = (Spinner) dialog.findViewById(R.id.d_re_date_sp_month);
         ArrayAdapter monthAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.month, android.R.layout.simple_spinner_dropdown_item);
         month.setAdapter(monthAdapter);
 
         // Spinner : day
-        final Spinner day = (Spinner) dialog.findViewById(R.id.d_re_date_sp_day);
+        day = (Spinner) dialog.findViewById(R.id.d_re_date_sp_day);
         ArrayAdapter dayAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.day, android.R.layout.simple_spinner_dropdown_item);
         day.setAdapter(dayAdapter);
 
@@ -68,14 +75,40 @@ public class DateModify {
 
                 // Dialog : 셋팅 과 함께 dialog 를 dismiss (종료) 한다.
                 dialog.dismiss();
+
             }
         });
+
+        setNowDate(dialog);
     }
 
 
     /* method : Spinner 에서 선택한 값을 'yyyy년 MM월 dd일'로 만들어 반환한다. */
-    public String setDate(String year, String month, String day){
-        String[] arguments = { year, month, day };
+    private String setDate(String year, String month, String day) {
+        String[] arguments = {year, month, day};
         return MessageFormat.format(DATE_FORMAT, arguments);
+    }
+
+    /* method : 현재 날짜를 Date 클래스로 부터 받아오고 spinner 를 초기값 설정*/
+    private void setNowDate(Dialog dialog) {
+        SimpleDateFormat nowDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDate = nowDateFormat.format(new Date());
+        StringTokenizer nowDateToken = new StringTokenizer(nowDate, "-");
+        DeveloperManager.displayLog("DateModify", "날짜 : " + nowDate);
+        String[] date = new String[3];
+
+        for (int index = 0; nowDateToken.hasMoreTokens(); index++) {
+            date[index] = nowDateToken.nextToken();
+            DeveloperManager.displayLog("DateModify", index + " = " + date[index]);
+            if (index == 0) {
+                year.setSelection(Integer.parseInt(date[index])-2020);
+            } else if (index == 1) {
+                DeveloperManager.displayLog("DateModify", index + " = " + Integer.parseInt(date[index]));
+                month.setSelection(Integer.parseInt(date[index]) - 1);
+            } else if(index ==2) {
+                day.setSelection(Integer.parseInt(date[index])-1);
+            }
+
+        }
     }
 }

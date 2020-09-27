@@ -20,40 +20,49 @@ public class DeveloperManager {
             Log.d(className, logMessage);
     }
 
-    public static void displayToUserData(String className, UserData userData){
-        if(userData != null) {
-            Log.d(className, "0. id : " + userData.getId());
-            Log.d(className, "1. name : " + userData.getName());
-            Log.d(className, "2. target score : " + userData.getTargetScore());
-            Log.d(className, "3. speciality : " + userData.getSpeciality());
-            Log.d(className, "4. game record win : " + userData.getGameRecordWin());
-            Log.d(className, "5. game record loss : " + userData.getGameRecordLoss());
-            Log.d(className, "6. total play time : " + userData.getTotalPlayTime());
-            Log.d(className, "7. total cost : " + userData.getTotalCost());
-        } else {
-            Log.d(className, "** The object of userData is null.");
-        }
-    }
-
+    /* method : billiardData 보기 */
     public static void displayToBilliardData(String className, BilliardData billiardData) {
         if(billiardData != null) {
-            Log.d(className, "0. id : " + billiardData.getId());
-            Log.d(className, "1. date : " + billiardData.getDate());
-            Log.d(className, "2. target score : " + billiardData.getTargetScore());
-            Log.d(className, "3. speciality : " + billiardData.getSpeciality());
-            Log.d(className, "4. play time : " + billiardData.getPlayTime());
-            Log.d(className, "5. winner : " + billiardData.getWinner());
-            Log.d(className, "6. score : " + billiardData.getScore());
-            Log.d(className, "7. cost : " + billiardData.getCost());
+            Log.d(className, "0. id : " + billiardData.getId());                                // 0. count
+            Log.d(className, "1. date : " + billiardData.getDate());                            // 1. date
+            Log.d(className, "2. target score : " + billiardData.getTargetScore());             // 2. target score
+            Log.d(className, "3. speciality : " + billiardData.getSpeciality());                // 3. speciality
+            Log.d(className, "4. play time : " + billiardData.getPlayTime());                   // 4. play time
+            Log.d(className, "5. winner : " + billiardData.getWinner());                        // 5. winner
+            Log.d(className, "6. score : " + billiardData.getScore());                          // 6. score
+            Log.d(className, "7. cost : " + billiardData.getCost());                            // 7. cost
         } else {
             Log.d(className, "** The object of billiardData is null.");
         }
     }
 
+    /* method : userData 보기*/
+    public static void displayToUserData(String className, UserData userData){
+        if(userData != null) {
+            Log.d(className, "0. id : " + userData.getId());                                    // 0. id
+            Log.d(className, "1. name : " + userData.getName());                                // 1. name
+            Log.d(className, "2. target score : " + userData.getTargetScore());                 // 2. target score
+            Log.d(className, "3. speciality : " + userData.getSpeciality());                    // 3. speciality
+            Log.d(className, "4. game record win : " + userData.getGameRecordWin());            // 4. game record win
+            Log.d(className, "5. game record loss : " + userData.getGameRecordLoss());          // 5. game record loss
+            Log.d(className, "6. total play time : " + userData.getTotalPlayTime());            // 6. total play time
+            Log.d(className, "7. total cost : " + userData.getTotalCost());                     // 7. total cost
+        } else {
+            Log.d(className, "** The object of userData is null.");
+        }
+    }
+
+    /* method : friendData 보기 */
     public static void displayToFriendData(String className, FriendData friendData) {
         if(friendData != null) {
-            Log.d(className, "0. count : " + friendData.getCount());
-            Log.d(className, "1. name : " + friendData.getName());
+            Log.d(className, "0. id : " + friendData.getId());                                  // 0. id
+            Log.d(className, "1. user id : " + friendData.getUserId());                         // 1. user id
+            Log.d(className, "2. name : " + friendData.getName());                              // 2. name
+            Log.d(className, "3. recent play date : " + friendData.getRecentPlayDate());        // 3. recent play date
+            Log.d(className, "4. game record win : " + friendData.getGameRecordWin());          // 4. game record win
+            Log.d(className, "5. game record loss : " + friendData.getGameRecordLoss());        // 5. game record loss
+            Log.d(className, "6. total play time : " + friendData.getTotalPlayTime());          // 6. total play time
+            Log.d(className, "7. total cost : " + friendData.getTotalCost());                   // 7. total cost
         }
     }
 }
