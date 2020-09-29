@@ -238,6 +238,73 @@
                         android:text="@string/f_user_info_total_cost_default"></TextView>
                 </LinearLayout><!-- End of content 1-6-->
 
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+                <!-- content 1-7. total cost-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorSecondBackground"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/f_user_info_recent_game_player_id"
+                        android:textAlignment="textStart"></TextView>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/f_user_info_recent_game_player_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/f_user_info_recent_game_player_i_default"></TextView>
+                </LinearLayout><!-- End of content 1-7 -->
+
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+                <!-- content 1-8. total cost-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorThirdBackground"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/f_user_info_recent_play_date"
+                        android:textAlignment="textStart"></TextView>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/f_user_info_recent_play_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/f_user_info_recent_play_date_default"></TextView>
+                </LinearLayout><!-- End of content 1-8 -->
 
             </LinearLayout><!-- End of content 1 -->
         </LinearLayout><!-- End of content-->

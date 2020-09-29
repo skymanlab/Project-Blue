@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -22,8 +23,12 @@ import android.widget.Toast;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.friend.data.FriendData;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,16 +58,20 @@ public class UserInput extends Fragment {
     private Button modify;
     private Button delete;
 
-    // value : userData - 화면에 뿌릴 데이터를 담을 객체 선언
+    // value : DbManager
     private UserDbManager userDbManager;
+    private FriendDbManager friendDbManager;
+
+    // value : Data
     private UserData userData;
-    private ViewPager userPager;
+    private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserInput(UserDbManager userDbManager, UserData userData, ViewPager userPager) {
+    public UserInput(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
         this.userDbManager = userDbManager;
         this.userData = userData;
-        this.userPager = userPager;
+        this.friendDbManager = friendDbManager;
+        this.friendDataArrayList = friendDataArrayList;
     }
 
     // constructor
@@ -162,7 +171,7 @@ public class UserInput extends Fragment {
                                         0,                                                   // 4. game record win
                                         0,                                                   // 5. game record loss
                                         0,                                                 // 6. recent game player id
-                                        "첫번째 입력",                                                    // 7. recent play date
+                                        "-1",                                                    // 7. recent play date
                                         0,                                                      // 8. total play time
                                         0                                                          // 9. total cost
                                 );
@@ -210,6 +219,11 @@ public class UserInput extends Fragment {
                         } else {
                             DeveloperManager.displayLog("UserInput", "1번째 내용을 수정하는데 실패하였습니다.");
                         }
+
+                        // move : activity move - 지금 activity 는 stack 에서 제거하고, 현재 페이지를 다시 road 한다.
+                        Intent intent = new Intent(view.getContext(), UserManagerActivity.class);
+                        getActivity().finish();
+                        startActivity(intent);
                     } else {
                         DeveloperManager.displayLog("UserInput", "userDbManager 가 없으므로 데이터베이스 메니저를 생성해주세요.");
                     }
@@ -235,13 +249,17 @@ public class UserInput extends Fragment {
                         // UserDbManager : 테이블의 모든 내용 삭제
                         userDbManager.delete_contents();
 
+                        // FriendDbManager : 테이블의 모든 내용 삭제
+                        friendDbManager.delete_contents();
+
+                        // 삭제 된 데이터는 생성할 때 넘어온 값이므로 null로 만들어야 함.
+                        userData = null;
+
                         // move : activity move - 지금 activity 는 stack 에서 제거하고, 현재 페이지를 다시 road 한다.
                         Intent intent = new Intent(view.getContext(), UserManagerActivity.class);
                         getActivity().finish();
                         startActivity(intent);
 
-                        // 삭제 된 데이터는 생성할 때 넘어온 값이므로 null로 만들어야 함.
-                        userData = null;
                     } else {
                         DeveloperManager.displayLog("UserInput", "데이터를 가져올 DB를 가져오지 못했습니다.");
                     }

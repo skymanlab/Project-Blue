@@ -53,32 +53,32 @@ public class BilliardLvAdapter extends BaseAdapter {
         * 6. score
         * 7. cost
         * */
-        TextView id = (TextView) convertView.findViewById(R.id.selectitem_id);                              // 0. id
-        TextView date = (TextView) convertView.findViewById(R.id.selectitem_date);                          // 1. date
-        TextView target_score = (TextView) convertView.findViewById(R.id.selectitem_target_score);          // 2. target score
-        TextView speciality = (TextView) convertView.findViewById(R.id.selectitem_speciality);              // 3. speciality
-        TextView play_time = (TextView) convertView.findViewById(R.id.selectitem_play_time);                // 4. play time
-        TextView victoree = (TextView) convertView.findViewById(R.id.selectitem_winner);                    // 5. winner
-        TextView score = (TextView) convertView.findViewById(R.id.selectitem_score);                        // 6. score
-        TextView cost = (TextView) convertView.findViewById(R.id.selectitem_cost);                          // 7. cost
+        TextView id = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_id);                              // 0. id
+        TextView date = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_date);                          // 1. date
+        TextView target_score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_target_score);          // 2. target score
+        TextView speciality = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_speciality);              // 3. speciality
+        TextView play_time = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_play_time);                // 4. play time
+        TextView victoree = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner);                    // 5. winner
+        TextView score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_score);                        // 6. score
+        TextView cost = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_cost);                          // 7. cost
 
         /* 각 리스트에 뿌려줄 아이템을 받아오는데 DataListItem 재활용 */
-        BilliardData billiardDataItem = (BilliardData) getItem(position);
+        BilliardData billiardData = (BilliardData) getItem(position);
 
         /* 각 위젯에 셋팅된 아이템을 뿌려준다. */
-        id.setText(billiardDataItem.getId() +"");                                                               // 0. id
-        date.setText(billiardDataItem.getDate());                                                               // 1. date
-        target_score.setText(billiardDataItem.getTargetScore());                                                // 2. target score
-        speciality.setText(billiardDataItem.getSpeciality());                                                   // 3. speciality
-        play_time.setText(BilliardDataFormatter.setFormatToPlayTime(billiardDataItem.getPlayTime()));           // 4. play time
-        victoree.setText(billiardDataItem.getWinner());                                                         // 5. winner
-        score.setText(billiardDataItem.getScore());                                                             // 6. score
-        cost.setText(BilliardDataFormatter.setFormatToCost(billiardDataItem.getCost()));                        // 7. cost
+        id.setText(billiardData.getId() +"");                                                               // 0. id
+        date.setText(billiardData.getDate());                                                               // 1. date
+        target_score.setText(billiardData.getTargetScore());                                                // 2. target score
+        speciality.setText(billiardData.getSpeciality());                                                   // 3. speciality
+        play_time.setText(BilliardDataFormatter.setFormatToPlayTime(billiardData.getPlayTime()));           // 4. play time
+        victoree.setText(billiardData.getWinner());                                                         // 5. winner
+        score.setText(billiardData.getScore());                                                             // 6. score
+        cost.setText(BilliardDataFormatter.setFormatToCost(billiardData.getCost()));                        // 7. cost
 
         return convertView;
     }
 
-    // db에서 읽어온 내용을 ArrayList에 추가하기 위한 method
+    // method : billiard 테이블에서 읽어온 내용을 ArrayList<BilliardData> 에 추가한다.
     public void addItem(long id, String date, String target_score, String speciality, String play_time, String winner, String score, String cost){
         BilliardData billiardData = new BilliardData();
 

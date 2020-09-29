@@ -11,7 +11,7 @@ public class UserData implements Serializable {
     private String speciality;              // 3. speciality
     private int gameRecordWin;              // 4. game record win
     private int gameRecordLoss;             // 5. game record loss
-    private long recentGamePlayerId;         // 6. recent game player id
+    private long recentGamePlayerId;        // 6. recent game player id
     private String recentPlayDate;          // 7. recent play date
     private int totalPlayTime;              // 8. total play time
     private int totalCost;                  // 9. total cost

@@ -22,9 +22,24 @@ public class FriendTableSetting {
     public static final String SQL_SELECT_TABLE_ALL_ITEM =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
+    // constant : sql query, where select
+    public static final String SQL_SELECT_TABLE_WHERE_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + "WHERE ID=";
+
     // constructor : private
     private FriendTableSetting() {
 
+    }
+
+    // method : query
+    public static String mappingQueryFromId(String id) {
+        StringBuilder query = new StringBuilder();
+        query.append(SQL_SELECT_TABLE_WHERE_ID);
+        query.append("'");
+        query.append(id);
+        query.append("'");
+
+        return query.toString();
     }
 
     // inner class : Entry, Table column name

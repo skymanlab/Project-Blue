@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/d_re_date_title"
+                android:text="@string/c_di_re_date_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title -->
 
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="@string/d_re_date_year"
+                    android:text="@string/c_di_re_date_year"
                     android:textAlignment="center"></TextView>
 
                 <!-- divider -->
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="@string/d_re_date_month"
+                    android:text="@string/c_di_re_date_month"
                     android:textAlignment="center"></TextView>
 
                 <!-- divider -->
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="@string/d_re_date_day"
+                    android:text="@string/c_di_re_date_day"
                     android:textAlignment="center"></TextView>
 
                 <!-- divider -->
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryBackground"
-                android:text="@string/d_re_date_bt_modify"
+                android:text="@string/c_di_re_date_bt_modify"
                 android:textColor="@color/colorTextPrimaryBackground"></Button>
         </LinearLayout>
     </LinearLayout><!-- End of main -->

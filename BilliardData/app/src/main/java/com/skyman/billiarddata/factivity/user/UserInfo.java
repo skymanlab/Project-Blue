@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.friend.data.FriendData;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.data.UserDataFomatter;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -48,15 +50,23 @@ public class UserInfo extends Fragment {
     private TextView gameRecord;
     private TextView totalPlayTime;
     private TextView totalCost;
+    private TextView recentGamePlayerId;
+    private TextView recentPlayDate;
 
-    // value : userData - 화면에 뿌릴 데이터를 담을 객체 선언
+    // value : DbManager
+    private UserDbManager userDbManager;
+    private FriendDbManager friendDbManager;
+
+    // value : Data
     private UserData userData;
-    private ViewPager userPager;
+    private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserInfo(UserData userData, ViewPager userPager){
+    public UserInfo(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
+        this.userDbManager = userDbManager;
         this.userData = userData;
-        this.userPager = userPager;
+        this.friendDbManager = friendDbManager;
+        this.friendDataArrayList = friendDataArrayList;
     }
 
     // constructor
@@ -108,9 +118,11 @@ public class UserInfo extends Fragment {
         gameRecord = (TextView) view.findViewById(R.id.f_user_info_game_record);
         totalPlayTime = (TextView) view.findViewById(R.id.f_user_info_total_play_time);
         totalCost = (TextView) view.findViewById(R.id.f_user_info_total_cost);
+        recentGamePlayerId = (TextView) view.findViewById(R.id.f_user_info_recent_game_player_id);
+        recentPlayDate = (TextView) view.findViewById(R.id.f_user_info_recent_play_date);
 
         // check : userData 의 참조 값이 있냐?
-        if(userData != null){
+        if (userData != null) {
             // display : userData 내용 뿌려주기
             displayUserData();
         } else {
@@ -119,23 +131,38 @@ public class UserInfo extends Fragment {
     }
 
     /* method : userData 가 있으면 화면에 뿌려준다.*/
-    private void displayUserData(){
-            // String : nameContent, targetScoreContent, specialityContent, gameRecordContent, totalPlayTimeContent, totalCostContent - userData 에서 가져온 내용을 적절한 형태로 변경하기
-            String nameContent = userData.getName();
-            String targetScoreContent = Integer.toString( userData.getTargetScore()) ;
-            String specialityContent = userData.getSpeciality();
-            String gameRecordContent = UserDataFomatter.setFormatToGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss());
-            String totalPlayTimeContent = Integer.toString( userData.getTotalPlayTime() );
-            String totalCostContent = Integer.toBinaryString( userData.getTotalCost());
+    private void displayUserData() {
+        // String : nameContent, targetScoreContent, specialityContent, gameRecordContent, totalPlayTimeContent, totalCostContent - userData 에서 가져온 내용을 적절한 형태로 변경하기
+        String nameContent = userData.getName();
+        String targetScoreContent = Integer.toString(userData.getTargetScore());
+        String specialityContent = userData.getSpeciality();
+        String gameRecordContent = UserDataFomatter.setFormatToGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss());
+        String totalPlayTimeContent = Integer.toString(userData.getTotalPlayTime());
+        String totalCostContent = Integer.toString(userData.getTotalCost());
+        String recentPlayDateContent = userData.getRecentPlayDate();
 
-            // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost - 위 의 내용을 화면에 뿌려준다.
-            name.setText(nameContent);
-            targetScore.setText(targetScoreContent);
-            speciality.setText(specialityContent);
-            gameRecord.setText(gameRecordContent);
-            totalPlayTime.setText(totalPlayTimeContent);
-            totalCost.setText(totalCostContent);
+        DeveloperManager.displayToUserData("F UserInfo", userData);
+
+        // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost - 위 의 내용을 화면에 뿌려준다.
+        name.setText(nameContent);
+        targetScore.setText(targetScoreContent);
+        speciality.setText(specialityContent);
+        gameRecord.setText(gameRecordContent);
+        totalPlayTime.setText(UserDataFomatter.setFormatToPlayTime(totalPlayTimeContent));
+        totalCost.setText(UserDataFomatter.setFormatToCost(totalCostContent));
+
+        // check : userData 의 recentPlayDate 가 "-1" 이 아닐 때
+        if (userData.getRecentPlayDate().equals("-1")) {
+            recentPlayDate.setText("최근 경기 없음");
+        } else {
+            recentPlayDate.setText(recentPlayDateContent);
+        }
+
+        // check : userData 의 recentGamePlayerId 가 0 이상 일때
+        if (userData.getRecentGamePlayerId() > 0) {
+            recentGamePlayerId.setText(friendDataArrayList.get(((int) userData.getRecentGamePlayerId() - 1)).getName());
+        } else {
+            recentGamePlayerId.setText("최근 경기 없음");
+        }
     }
-
-
 }

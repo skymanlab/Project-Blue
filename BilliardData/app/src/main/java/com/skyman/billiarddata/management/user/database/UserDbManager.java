@@ -62,8 +62,10 @@ public class UserDbManager {
          *      3. speciality
          *      4. game record win
          *      5. game record loss
-         *      6. total play time
-         *      7. total cost
+         *      6. recent game player id
+         *      7. recent play date
+         *      8: total play time
+         *      9: total cost
          * =========================================================================================
          * */
         DeveloperManager.displayLog("userDbManager", "** save_content is executing ............");
@@ -134,8 +136,10 @@ public class UserDbManager {
          *      3: speciality
          *      4: game record win
          *      5: game record loss
-         *      6: total play time
-         *      7: total cost
+         *      6. recent game player id
+         *      7. recent play date
+         *      8: total play time
+         *      9: total cost
          * - return : 읽어온 내용이 담기 ArrayList<UserData>
          * =========================================================================================
          * */
@@ -178,7 +182,7 @@ public class UserDbManager {
         return userDataArrayList;
     }
 
-    /* method : load, SQLite DB Helper를 이용하여 해당 테이블에 모든 정보를 select 한다. */
+    /* method : load, SQLite DB Helper 를 이용하여 해당 테이블에 모든 정보를 select 한다. */
     public UserData load_content() {
         /*
          * =========================================================================================
@@ -192,8 +196,10 @@ public class UserDbManager {
          *      3: speciality
          *      4: game record win
          *      5: game record loss
-         *      6: total play time
-         *      7: total cost
+         *      6. recent game player id
+         *      7. recent play date
+         *      8: total play time
+         *      9: total cost
          * - return : 읽어온 내용이 담기 userData
          * =========================================================================================
          * */
@@ -250,10 +256,9 @@ public class UserDbManager {
 
         // SQLiteDatabase : 모든 내용 삭제
         int deleteResult = deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, null, null);
-//        deleteDb.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);
 
         // toast
-        toastHandler("모든 내용이 삭제되었씁니다.");
+        toastHandler("모든 내용이 삭제되었습니다.");
 
         // SQLiteDatabase : DB close
         deleteDb.close();
@@ -273,13 +278,10 @@ public class UserDbManager {
          *      userDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
          *      project_blue.db 의 user 테이블에 해당 내용을 update 한다.
          * - 입력 순서
+         * 0. id
          * 1. name
          * 2. target score
          * 3. speciality
-         * 4. game record win
-         * 5. game record loss
-         * 6. total play time
-         * 7. total cost
          * =========================================================================================
          * */
 
@@ -294,6 +296,45 @@ public class UserDbManager {
 
         // SQLiteDatabase : update query 수행
         int updateResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, UserTableSetting.Entry._ID + "=1" , null);
+
+        // return : updateResult 반환
+        return updateResult;
+    }
+
+    /* method : update - SQLite DB Open Helper 를 이용하여 user 테이블에 있던 내용을 update 한다. */
+    public int update_content(long id, int gameRecordWin, int gameRecordLoss, long recentGamePlayerId, String recentPlayDate, int totalPlayTime, int totalCost){
+        /*
+         * =========================================================================================
+         * user table insert query
+         * -    데이터를 매개변수로 받아서 모든 값을 입력 받은지 확인한다.
+         *      그리고 ContentValues 의 객체에 내용 setting 을 한다.
+         *      userDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 의 user 테이블에 해당 내용을 update 한다.
+         * - 입력 순서
+         * 0. id
+         * 4. game record win
+         * 5. game record loss
+         * 6. recent game player id
+         * 7. recent play date
+         * 8. total play time
+         * 9. total cost
+         * =========================================================================================
+         * */
+
+        // SQLiteDatabase : userDbHelper 를 이용하여 write 용으로 가져오기
+        SQLiteDatabase updateDb = userDbHelper.getWritableDatabase();
+
+        // ContentValues :
+        ContentValues updateValue = new ContentValues();
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin );
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_PLAYER_ID, recentGamePlayerId);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_PLAY_DATE, recentPlayDate);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);
+        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);
+
+        // SQLiteDatabase : update query 수행
+        int updateResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, UserTableSetting.Entry._ID + "=" + id , null);
 
         // return : updateResult 반환
         return updateResult;

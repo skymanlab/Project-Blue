@@ -53,7 +53,7 @@
                 android:text="@string/main_bt_billiard_input"
                 android:textColor="@color/colorTextPrimaryBackground"></Button>
 
-            <!-- content 3. viewData-->
+            <!-- content 3. viewData -->
             <Button
                 android:id="@+id/main_bt_billiard_display"
                 android:layout_width="200dp"
@@ -63,7 +63,7 @@
                 android:text="@string/main_bt_billiard_display"
                 android:textColor="@color/colorTextPrimaryBackground"></Button>
 
-            <!-- content 4. userManager-->
+            <!-- content 4. userManager -->
             <Button
                 android:id="@+id/main_bt_user_manager"
                 android:layout_width="200dp"
@@ -72,6 +72,24 @@
                 android:background="@color/colorPrimaryBackground"
                 android:text="@string/main_bt_user_manager"
                 android:textColor="@color/colorTextPrimaryBackground"></Button>
+
+            <!-- content 5. DevelopmentInfo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom|end">
+                <Button
+                    android:id="@+id/main_bt_app_info"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/colorPrimaryBackground"
+                    android:text="@string/main_bt_development_info"
+                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+
+            </LinearLayout>
+
         </LinearLayout><!-- End of content -->
 
         <!-- footer -->

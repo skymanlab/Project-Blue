@@ -1,8 +1,8 @@
-package com.skyman.billiarddata.management.user.data;
+package com.skyman.billiarddata.management.friend.data;
 
 import java.text.DecimalFormat;
 
-public class UserDataFomatter {
+public class FriendDataFormatter {
 
     /* method : gameRecordWin 과 gameRecordLoss 를 가지고 'x전 x승 x패' 형태로 변환 */
     public static String setFormatToGameRecord(int gameRecordWin, int gameRecordLoss){
@@ -15,7 +15,6 @@ public class UserDataFomatter {
         temp.append("패");
         return temp.toString();
     }
-
     /* method : formatter, 가격 형태로 문자열 만들기 - ###,### 원 */
     public static String setFormatToCost(String cost) {
         DecimalFormat wonFormat = new DecimalFormat("###,###");
