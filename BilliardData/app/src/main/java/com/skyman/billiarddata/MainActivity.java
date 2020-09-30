@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Button billiardInput = (Button) findViewById(R.id.main_bt_billiard_input);
         Button billiardDisplay = (Button) findViewById(R.id.main_bt_billiard_display);
         Button userManager = (Button) findViewById(R.id.main_bt_user_manager);
+        Button statisticsManager = (Button) findViewById(R.id.main_bt_statistics_manager);
         Button appInfo = (Button) findViewById(R.id.main_bt_app_info);
 
         // Button 1 : inputData setting - '데이터 입력'
@@ -94,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Button 5 : statistics setting - '통계 정보'
+        statisticsManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
                 startActivity(intent);
             }
         });

@@ -43,4 +43,5 @@ public class ProjectBlueDataFormatter {
         costData.append(" 원");
         return costData.toString();
     }
+
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StatisticsManagerActivity">
+
+    <!-- main -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorActivityTitle"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_manager_title"
+                android:textAlignment="center"></TextView>
+        </LinearLayout>
+
+        <!-- content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorActivityContent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- content 1. tab -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPagerTab"
+                android:padding="5dp">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/statistics_manager_tl_tab_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.google.android.material.tabs.TabLayout>
+            </LinearLayout><!-- End of content 1 -->
+
+            <!-- divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+            <!-- content 2. pager-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPagerContent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/statistics_manager_pg_statistics_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+            </LinearLayout><!-- End of content 2 -->
+        </LinearLayout><!-- End of content-->
+    </LinearLayout><!-- End of main-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

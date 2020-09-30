@@ -131,10 +131,10 @@
                         android:background="@color/colorBackgroundPrimary"
                         android:text="@string/f_user_friend_bt_add_friend"
                         android:textColor="@color/colorTextPrimary"></Button>
-                </LinearLayout>
-            </LinearLayout>
-
+                </LinearLayout><!-- End of content 2-3 -->
+            </LinearLayout><!-- End of content 2 -->
         </LinearLayout><!-- End of content-->
+
     </LinearLayout><!-- End of main -->
 
 </FrameLayout>

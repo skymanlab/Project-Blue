@@ -1,27 +1,35 @@
 <resources>
+
+
     <string name="app_name">당구데이터</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <!--                                Activity
+    ===============================================================================================-
+    -->
     <!-- Activity : main -->
     <string name="main_title">당신은 당구의 세계에 오셨군요!</string>
     <string name="main_bt_billiard_input">당구 정보 입력</string>
     <string name="main_bt_billiard_display">당구 정보 보기</string>
     <string name="main_bt_user_manager">나의 정보</string>
+    <string name="main_bt_statistics_manager">통계 정보</string>
     <string name="main_bt_development_info">어플 정보</string>
     <string name="main_footer">Developed by JDI ⓒ 2020 skymanlab.</string>
-    <!-- AlertDialog : main activity -->
-    <string name="ad_main_user_data_title">유저 정보 등록</string>
-    <string name="ad_main_user_data_message">유저 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
-    <string name="ad_main_bt_user_data_positive">다음 화면</string>
-    <string name="ad_main_bt_user_data_negative">취소</string>
-    <string name="ad_main_friend_data_title">친구 추가</string>
-    <string name="ad_main_friend_data_message">친구 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
-    <string name="ad_main_bt_friend_data_positive">다음 화면</string>
-    <string name="ad_main_bt_friend_data_negative">취소</string>
-    <string name="ad_main_friend_list_title">친구 목록</string>
-    <string name="ad_main_bt_friend_list_positive">게임 시작</string>
-    <string name="ad_main_bt_friend_list_negative">취소</string>
+        <!-- AlertDialog : main activity -->
+        <string name="ad_main_user_data_title">유저 정보 등록</string>
+        <string name="ad_main_user_data_message">유저 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
+        <string name="ad_main_bt_user_data_positive">다음 화면</string>
+        <string name="ad_main_bt_user_data_negative">취소</string>
+        <string name="ad_main_friend_data_title">친구 추가</string>
+        <string name="ad_main_friend_data_message">친구 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
+        <string name="ad_main_bt_friend_data_positive">다음 화면</string>
+        <string name="ad_main_bt_friend_data_negative">취소</string>
+        <string name="ad_main_friend_list_title">친구 목록</string>
+        <string name="ad_main_bt_friend_list_positive">게임 시작</string>
+        <string name="ad_main_bt_friend_list_negative">취소</string>
 
     <!-- Activity : app info -->
     <string name="app_info_title">어플리케이션 정보</string>
@@ -57,10 +65,10 @@
     <string name="billiard_input_comment">상황 파악 중....</string>
     <string name="billiard_input_bt_display">데이터 보기</string>
     <string name="billiard_input_bt_delete">모든 내용 삭제</string>
-    <!-- AlertDialog : billiard input activity-->
-    <string name="ad_billiard_input_complete_input_title">화면 이동</string>
-    <string name="ad_billiard_input_complete_input_message">다음 화면으로 이동합니다.</string>
-    <string name="ad_billiard_input_bt_complete_input_positive">다음 화면</string>
+        <!-- AlertDialog : billiard input activity-->
+        <string name="ad_billiard_input_complete_input_title">화면 이동</string>
+        <string name="ad_billiard_input_complete_input_message">다음 화면으로 이동합니다.</string>
+        <string name="ad_billiard_input_bt_complete_input_positive">다음 화면</string>
 
     <!-- Activity : billiard display -->
     <string name="billiard_display_title">당신의 입력데이터를 봅시다.</string>
@@ -71,6 +79,15 @@
     <string name="user_manager_bt_user_info">정보 보기</string>
     <string name="user_manager_bt_user_friend">친구 목록</string>
 
+    <!-- Activity : statistics manager -->
+    <string name="statistics_manager_title">당신의 데이터를 시각화해보겠습니다.</string>
+    <string name="statistics_manager_"></string>
+
+
+
+    <!--                                Fragment
+    ===============================================================================================-
+    -->
     <!-- Fragment : user input-->
     <string name="f_user_input_title">너의 정보를 보관해봐!</string>
     <string name="f_user_input_name">이름</string>
@@ -110,12 +127,27 @@
     <string name="f_user_friend_add_title">친구 추가 ▼</string>
     <string name="f_user_friend_friend_name">이름</string>
     <string name="f_user_friend_bt_add_friend">친구 추가</string>
-    <!-- AlertDialog : user friend activity -->
-    <string name="ad_user_friend_first_friend_add_title">화면 이동</string>
-    <string name="ad_user_friend_first_friend_add_message">모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?</string>
-    <string name="ad_user_friend_first_bt_friend_add_positive">다음 화면</string>
-    <string name="ad_user_friend_first_bt_friend_add_negative">취소</string>
+        <!-- AlertDialog : user friend activity -->
+        <string name="ad_user_friend_first_friend_add_title">화면 이동</string>
+        <string name="ad_user_friend_first_friend_add_message">모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?</string>
+        <string name="ad_user_friend_first_bt_friend_add_positive">다음 화면</string>
+        <string name="ad_user_friend_first_bt_friend_add_negative">취소</string>
 
+    <!-- Fragment : calendar -->
+    <string name="f_calendar_title">달력으로 확인해봐요.</string>
+    <string name="f_calendar_win">승리</string>
+    <string name="f_calendar_loss">패배</string>
+    <string name="f_calendar_"></string>
+
+    <!-- Fragment : chart -->
+    <string name="f_chart_title">차트로 확인해봐요.</string>
+    <string name="f_chart_"></string>
+
+
+
+    <!--                                Dialog
+    ===============================================================================================-
+    -->
     <!-- Dialog : re date-->
     <string name="c_di_re_date_title">날짜 셋팅</string>
     <string name="c_di_re_date_year">년도</string>
@@ -123,6 +155,11 @@
     <string name="c_di_re_date_day">일</string>
     <string name="c_di_re_date_bt_modify">변경</string>
 
+
+
+    <!--                                Custom Layout
+    ===============================================================================================-
+    -->
     <!-- Custom ListView : billiard data-->
     <string name="c_lv_billiard_date_date">xxxx년 xx월 xx일</string>
     <string name="c_lv_billiard_date_target_score">수지</string>
@@ -149,5 +186,40 @@
     <string name="c_lv_friend_data_total_cost">총 비용</string>
     <string name="c_lv_friend_data_total_cost_default">xxx,xxx원</string>
     <string name="c_lv_friend_data_bt_delete">삭제</string>
+
+
+
+    <!--                        Applandeo Material Calendar View
+    ===============================================================================================-
+    -->
+    <!-- material calendar view : translation - Day of the week -->
+    <string name="material_calendar_monday">월</string>
+    <string name="material_calendar_tuesday">화</string>
+    <string name="material_calendar_wednesday">수</string>
+    <string name="material_calendar_thursday">목</string>
+    <string name="material_calendar_friday">금</string>
+    <string name="material_calendar_saturday">토</string>
+    <string name="material_calendar_sunday">일</string>
+
+    <!-- material calendar view : translation - Month -->
+    <array name="material_calendar_months_array">
+        <item>1월</item>
+        <item>2월</item>
+        <item>3월</item>
+        <item>4월</item>
+        <item>5월</item>
+        <item>6월</item>
+        <item>7월</item>
+        <item>8월</item>
+        <item>9월</item>
+        <item>10월</item>
+        <item>11월</item>
+        <item>12월</item>
+    </array>
+
+    <!-- material calendar view : translation - Bottom button -->
+    <string name="material_calendar_today_button">Today</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Cancel</string>
 
 </resources>
