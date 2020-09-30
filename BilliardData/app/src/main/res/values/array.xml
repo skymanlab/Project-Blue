@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 선수 목록 -->
-    <string-array name="player">
-        <item>장동익</item>
-        <item>김현</item>
-    </string-array>
-
     <!-- 나의 수지 -->
     <string-array name="targetScore">
         <item>1</item>

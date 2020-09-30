@@ -36,12 +36,14 @@ public class BilliardDisplayActivity extends AppCompatActivity {
 
         // BilliardDbManager : load_contents method - 저장 되어 있는 billiard 데이터를 billiardDbManager 를 통해 가져온다.
         ArrayList<BilliardData> billiardDataArrayList = billiardDbManager.load_contents();
+
+        // check : billiard 테이블에서 가져온 내용이 있다.
         if(billiardDataArrayList.size() != 0) {
             // BilliardLvManager : allBilliardData setting - 위에서 가져온 데이터를 allBilliardData 에 뿌려준다.
             BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
             billiardLvManager.setListViewToAllBilliardData(billiardDataArrayList);
         } else {
-            DeveloperManager.displayLog("BilliardDisplayActivity", "content is not exist in billiard table.");
+            DeveloperManager.displayLog("[Ac] BilliardDisplayActivity", "[billiardDataArrayList] billiardDataArrayList 의 size 가 0 입니다.");
         }
     }
 

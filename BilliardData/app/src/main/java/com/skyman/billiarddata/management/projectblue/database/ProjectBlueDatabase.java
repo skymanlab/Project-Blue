@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.management.projectblue;
+package com.skyman.billiarddata.management.projectblue.database;
 
 public class ProjectBlueDatabase {
     public static final int DATABASE_VERSION = 1;

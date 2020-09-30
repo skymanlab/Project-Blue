@@ -30,7 +30,7 @@ public class UserManagerActivity extends AppCompatActivity {
     private ViewPager userTabPager;
 
     // value : tab layout 객체 선언
-    private TabLayout tabBar;
+    private TabLayout userTabBar;
 
     // value : activity widget 객체 선언
 
@@ -42,7 +42,7 @@ public class UserManagerActivity extends AppCompatActivity {
         // UserDbManager : userDbManager setting
         userDbManager = new UserDbManager(this);
 
-        // UserData :  userData setting - userDbmanager 의 load_content method 를 통해 내용 가져오기
+        // UserData :  userData setting - userDbManager 의 load_content method 를 통해 내용 가져오기
         UserData userData = null;
 
         // FriendDbManager :
@@ -61,41 +61,40 @@ public class UserManagerActivity extends AppCompatActivity {
 
             // friendDbManager : friendData 를
             friendDbManager.init_db();
-//            friendData = friendDbManager.l
             friendData = friendDbManager.load_contents(1);
             friendDataArrayList  = friendDbManager.load_contents();
         } else {
-            DeveloperManager.displayLog("UserManagerActivity", "userDbManager 가 생성되지 않았습니다.");
+            DeveloperManager.displayLog("[Ac] UserManagerActivity", "[userDbManager] userDbManager 가 생성되지 않았습니다.");
         }
 
         // DeveloperManager
         if(friendData != null){
-            DeveloperManager.displayLog("UserManagerActivity", "friendData 가 있습니다.");
-            DeveloperManager.displayToFriendData("UserManagerActivity", friendData);
+            DeveloperManager.displayLog("[Ac] UserManagerActivity", "[friendData] friendData 가 있습니다.");
+            DeveloperManager.displayToFriendData("[Ac] UserManagerActivity", friendData);
         } else {
-            DeveloperManager.displayLog("UserManagerActivity", "friendData 가 xxxxxxx");
+            DeveloperManager.displayLog("[Ac] UserManagerActivity", "[friendData] friendData 가 없어요.");
 
         }
 
         // DeveloperManager
         if(userData != null) {
-            DeveloperManager.displayLog("UserManagerActivity", "userData is not null.");
+            DeveloperManager.displayLog("[Ac] UserManagerActivity", "[userData] userData 가 있습니다.");
         } else {
-            DeveloperManager.displayLog("UserManagerActivity", "userData is null.");
+            DeveloperManager.displayLog("[Ac] UserManagerActivity", "[userData] userData 가 없어요.");
         }
 
         // TabLayout : tab setting
-        tabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
-        tabBar.addTab(tabBar.newTab().setText("기본 정보 입력"));
-        tabBar.addTab(tabBar.newTab().setText("정보 확인"));
-        tabBar.addTab(tabBar.newTab().setText("친구 목록"));
-        tabBar.setTabGravity(TabLayout.GRAVITY_FILL);
+        userTabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
+        userTabBar.addTab(userTabBar.newTab().setText("기본 정보 입력"));
+        userTabBar.addTab(userTabBar.newTab().setText("정보 확인"));
+        userTabBar.addTab(userTabBar.newTab().setText("친구 목록"));
+        userTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // ViewPager : tabPager setting - pager 를 fragment 로 연결하고, tab layout 형식으로 fragment 이동
         userTabPager = (ViewPager) findViewById(R.id.user_manager_pg_user_pager);
         userTabPager.setAdapter(new UserPagerAdapter(getSupportFragmentManager(), userDbManager, userData, friendDbManager, friendDataArrayList));
-        userTabPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabBar));
-        tabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        userTabPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(userTabBar));
+        userTabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 userTabPager.setCurrentItem(tab.getPosition());
@@ -113,16 +112,7 @@ public class UserManagerActivity extends AppCompatActivity {
         });
 
         // Intent : MainActivity 에서 보내온 intent 의 pageNumber 값 확인
-        Intent intent = getIntent();
-        int pageNumber = intent.getIntExtra("pageNumber",-1);
-        DeveloperManager.displayLog("UserManagerActivity", "pageNumber : " + pageNumber + " 입니다.");
-        if(pageNumber == 0) {
-            userTabPager.setCurrentItem(0);
-        } else if(pageNumber == 2) {
-            userTabPager.setCurrentItem(2);
-        } else {
-            DeveloperManager.displayLog("UserManagerActivity", "pageNumber 값이 없어요...");
-        }
+        getPageNumberToIntent();
     }
 
     @Override
@@ -137,4 +127,28 @@ public class UserManagerActivity extends AppCompatActivity {
     }
 
 
+    /*                                      private method
+     *   ============================================================================================
+     *  */
+
+    /* method : */
+    private void getPageNumberToIntent(){
+        Intent pageNumberIntent = getIntent();
+        int pageNumber = pageNumberIntent.getIntExtra("pageNumber", -1);
+
+        DeveloperManager.displayLog("[Ac] UserManagerActivity", "[getPageNumberToIntent] pageNumber : " + pageNumber + " 입니다.");
+        switch (pageNumber) {
+            case 0:
+                userTabPager.setCurrentItem(0);
+                break;
+            case 1:
+                userTabPager.setCurrentItem(1);
+                break;
+            case 2:
+                userTabPager.setCurrentItem(2);
+                break;
+            default:
+                break;
+        }
+    }
 }

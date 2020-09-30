@@ -5,25 +5,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.data.UserDataFomatter;
+import com.skyman.billiarddata.management.user.data.UserDataFormatter;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -136,20 +131,20 @@ public class UserInfo extends Fragment {
         String nameContent = userData.getName();
         String targetScoreContent = Integer.toString(userData.getTargetScore());
         String specialityContent = userData.getSpeciality();
-        String gameRecordContent = UserDataFomatter.setFormatToGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss());
+        String gameRecordContent = UserDataFormatter.setFormatToGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss());
         String totalPlayTimeContent = Integer.toString(userData.getTotalPlayTime());
         String totalCostContent = Integer.toString(userData.getTotalCost());
         String recentPlayDateContent = userData.getRecentPlayDate();
 
-        DeveloperManager.displayToUserData("F UserInfo", userData);
+        DeveloperManager.displayToUserData("[F] UserInfo", userData);
 
         // TextView : name, targetScore, speciality, gameRecord, totalPlayTime, totalCost - 위 의 내용을 화면에 뿌려준다.
         name.setText(nameContent);
         targetScore.setText(targetScoreContent);
         speciality.setText(specialityContent);
         gameRecord.setText(gameRecordContent);
-        totalPlayTime.setText(UserDataFomatter.setFormatToPlayTime(totalPlayTimeContent));
-        totalCost.setText(UserDataFomatter.setFormatToCost(totalCostContent));
+        totalPlayTime.setText(UserDataFormatter.setFormatToPlayTime(totalPlayTimeContent));
+        totalCost.setText(UserDataFormatter.setFormatToCost(totalCostContent));
 
         // check : userData 의 recentPlayDate 가 "-1" 이 아닐 때
         if (userData.getRecentPlayDate().equals("-1")) {

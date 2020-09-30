@@ -111,7 +111,7 @@ public class FriendLvAdapter extends BaseAdapter {
                         FriendDbManager friendDbManager = new FriendDbManager(context);
                         friendDbManager.init_db();
                         friendDbManager.delete_content(id);
-                        DeveloperManager.displayLog("FriendLvAdapter", id + " 번 친구를 삭제하였습니다.");
+                        DeveloperManager.displayLog("[LvA] FriendLvAdapter", "[showAlert] " + id + " 번 친구를 삭제하였습니다.");
                     }
                 })
                 .setNegativeButton("돌아가기", new DialogInterface.OnClickListener() {

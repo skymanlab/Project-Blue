@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:background="@color/selectItemBackground"
+        android:background="@color/colorCustomBackgroundPrimary"
         android:gravity="center">
 
         <TextView
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="1"
             android:textAlignment="gravity"
-            android:textColor="@color/selectItemTextColor"></TextView>
+            android:textColor="@color/colorCustomTextPrimary"></TextView>
     </LinearLayout><!-- End of content 1 -->
 
     <!-- content 2. information -->
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:gravity="center">
 
             <TextView
@@ -44,14 +44,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/c_lv_billiard_date_date"
                 android:textAlignment="textStart"
-                android:textColor="@color/selectItemTextColor"></TextView>
+                android:textColor="@color/colorCustomTextPrimary"></TextView>
         </LinearLayout><!-- End of content 2 -->
 
         <!-- content 2-2. target score, speciality, play time -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp">
 
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_target_score"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -75,7 +75,7 @@
                     android:id="@+id/c_lv_billiard_data_target_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_target_score_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-1 -->
@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_speciality"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -102,7 +102,7 @@
                     android:id="@+id/c_lv_billiard_data_speciality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_speciality_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-2 -->
@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_play_time"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -127,7 +127,7 @@
                     android:id="@+id/c_lv_billiard_data_play_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_play_time_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-3 -->
@@ -143,7 +143,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp">
 
@@ -158,7 +158,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_winner"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -167,7 +167,7 @@
                     android:id="@+id/c_lv_billiard_data_winner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_winner_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout> <!-- End of content 2-3-1 -->
@@ -185,7 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_score"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -194,7 +194,7 @@
                     android:id="@+id/c_lv_billiard_data_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_score_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-3-2 -->
@@ -210,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_billiard_date_cost"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -219,7 +219,7 @@
                     android:id="@+id/c_lv_billiard_data_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_date_cost_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-3-3 -->

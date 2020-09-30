@@ -40,7 +40,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorSecondBackground"
+                android:background="@color/colorBackgroundSecond"
                 android:orientation="horizontal"
                 android:padding="3dp">
 
@@ -75,7 +75,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorThirdBackground"
+                android:background="@color/colorBackgroundThird"
                 android:orientation="horizontal"
                 android:padding="3dp">
 
@@ -111,7 +111,7 @@
                 android:id="@+id/userdata_speciality"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/colorSecondBackground"
+                android:background="@color/colorBackgroundSecond"
                 android:gravity="center"
                 android:orientation="horizontal"
 
@@ -169,7 +169,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorThirdBackground"
+                android:background="@color/colorBackgroundThird"
                 android:gravity="bottom"
                 android:orientation="horizontal"
                 android:padding="4dp">
@@ -180,9 +180,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimaryBackground"
+                    android:background="@color/colorBackgroundPrimary"
                     android:text="@string/f_user_input_bt_save"
-                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+                    android:textColor="@color/colorTextPrimary"></Button>
 
                 <Button
                     android:id="@+id/f_user_input_bt_modify"
@@ -192,9 +192,9 @@
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:enabled="false"
-                    android:background="@color/colorActivityDisable"
+                    android:background="@color/colorWidgetDisable"
                     android:text="@string/f_user_input_bt_modify"
-                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+                    android:textColor="@color/colorTextPrimary"></Button>
 
                 <Button
                     android:id="@+id/f_user_input_bt_delete"
@@ -202,9 +202,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimaryBackground"
+                    android:background="@color/colorBackgroundPrimary"
                     android:text="@string/f_user_input_bt_delete"
-                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+                    android:textColor="@color/colorTextPrimary"></Button>
             </LinearLayout>
 
             <!-- End of content 4 -->

@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
-import com.skyman.billiarddata.management.projectblue.ProjectBlueDatabaseManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -65,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
 
                 // check : 나의 정보가 있을 때
                 if (userData != null) {
-                    // check : 친구 목록에 저장된 친구가 있을 때
+                    // check : friend 테이블에 저장 된 내용이 있다.
                     if (friendDataArrayList.size() != 0) {
                         // AlertDialog : Builder 로 생성
-                        DeveloperManager.displayLog("MainActivity", "모든 정보가 입력되어 친구를 선택합니다.");
-                        showAlert();
+                        DeveloperManager.displayLog("[Ac] MainActivity", "[inputData button] 모든 정보가 입력되어 친구를 선택합니다.");
+                        showAlertToFriendList();
                     } else {
-                        // 저장 된 친구가 없을 때
+                        // method : 저장 된 친구가 없다.
                         showAlertToFriendData();
                     }
                 } else {
-                    // 저장 된 나의 정보가 없을 때
+                    // method : 저장 된 나의 정보가 없을 때
                     showAlertToUserData();
                 }
             }
@@ -107,22 +106,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*
-         * 1. 유저 데이터가 있는지 확인
-         * 2. 없으면 일단 user 기본 정보 입력하는 activity 로 이동 */
-
-
-        // UserData :
-        if (userData == null) {
-            DeveloperManager.displayLog("MainActivity", "등록된 당신의 정보가 없습니다. 입력해주세요. 이동합니다.");
-        } else {
-            DeveloperManager.displayLog("MainActivity", "등록된 정보가 있습니다. 다음 단계로 넘어가 주세요.");
-        }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // UserData : 다시 userData 받아오기
+        userData = userDbManager.load_content();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userDbManager.closeUserDbHelper();
+        friendDbManager.closeFriendDbHelper();
+    }
+
+
+
+    /*                                      private method
+     *   ============================================================================================
+     *  */
+
     /* method : BilliardInputActivity 에 들어가기 전 player 선택 */
-    private void showAlert() {
+    private void showAlertToFriendList() {
 
 
         // ArrayList<String> : 친구 이름만 담길 배열
@@ -141,32 +150,32 @@ public class MainActivity extends AppCompatActivity {
 
         // AlertDialog.Builder : 다이어로그를 셋팅
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("친구 목록")
+        builder.setTitle(R.string.ad_main_friend_list_title)
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         selectedIndex[0] = which;
                     }
                 })
-                .setPositiveButton("시작", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ad_main_bt_friend_list_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // check : item 의 size 가 0 이상일때
-                        DeveloperManager.displayLog("MainActivity", "친구가 있는지 검사중");
+                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 친구가 있는지 검사합니다.");
                         if (items.length > 0) {
-                            Log.d("MainActivity", "item : " + items[selectedIndex[0]]);
-                            DeveloperManager.displayToFriendData("MainActivity", friendDataArrayList.get(selectedIndex[0]));
+                            DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 모든 친구를 출력합니다.");
+                            DeveloperManager.displayToFriendData("[Ac] MainActivity", friendDataArrayList.get(selectedIndex[0]));
+
+                            // Intent : 선택 된 친구 값을 Intent 에 포함하여 BilliardInputActivity 로 이동합니다.
                             Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
                             intent.putExtra("player", friendDataArrayList.get(selectedIndex[0]));
                             startActivityForResult(intent, 101);
                         } else {
-                            DeveloperManager.displayLog("MainActivity", "친구 목록이 없습니다. 친구를 입력해주세요.");
-
+                            DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 친구 목록이 없습니다.");
                         }
-
                     }
                 })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.ad_main_bt_friend_list_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -175,43 +184,25 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // UserData : 다시 userData 받아오기
-        userData = userDbManager.load_content();
-
-        DeveloperManager.displayLog("MainActivity", "화면이 없어졌다 back 키로 돌아왔습니다.");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        friendDbManager.closeFriendDbHelper();
-    }
-
     /* method : AlertDialog - 등록된 유저가 없어서 화면이동을 물어보는  */
     private void showAlertToUserData(){
         // AlertDialog.Builder :
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("다음 화면 이동")
-                .setMessage("유저 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?")
-                .setPositiveButton("다음화면", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.ad_main_user_data_title)
+                .setMessage(R.string.ad_main_user_data_message)
+                .setPositiveButton(R.string.ad_main_bt_user_data_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
                         intent.putExtra("pageNumber", 0);
-                        finish();
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("MainActivity", "나의 정보가 없어서 나의 정보를 저장하러 이동합니다.");
+                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToUserData] 나의 정보가 없어서 등록하러 이동합니다.");
                     }
                 })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.ad_main_bt_user_data_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 })
                 .show();
@@ -221,23 +212,21 @@ public class MainActivity extends AppCompatActivity {
     private void showAlertToFriendData(){
         // AlertDialog.Builder :
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("다음 화면 이동")
-                .setMessage("친구 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?")
-                .setPositiveButton("다음화면", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.ad_main_friend_data_title)
+                .setMessage(R.string.ad_main_friend_data_message)
+                .setPositiveButton(R.string.ad_main_bt_friend_data_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
                         intent.putExtra("pageNumber", 2);
-                        finish();
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("MainActivity", "등록된 친구가 없어서 추가하러 이동합니다.");
+                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendData] 등록된 친구가 없어서 추가하러 이동합니다.");
                     }
                 })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.ad_main_bt_friend_data_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 })
                 .show();

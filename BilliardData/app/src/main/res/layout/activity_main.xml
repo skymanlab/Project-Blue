@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorMainActivityBackground"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -18,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorActivityTitle"
             android:gravity="top"
             android:padding="10dp">
 
@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/colorActivityContent"
             android:gravity="top|center"
             android:orientation="vertical">
 
@@ -49,9 +50,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/colorPrimaryBackground"
+                android:background="@color/colorBackgroundPrimary"
                 android:text="@string/main_bt_billiard_input"
-                android:textColor="@color/colorTextPrimaryBackground"></Button>
+                android:textColor="@color/colorTextPrimary"></Button>
 
             <!-- content 3. viewData -->
             <Button
@@ -59,9 +60,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/colorPrimaryBackground"
+                android:background="@color/colorBackgroundPrimary"
                 android:text="@string/main_bt_billiard_display"
-                android:textColor="@color/colorTextPrimaryBackground"></Button>
+                android:textColor="@color/colorTextPrimary"></Button>
 
             <!-- content 4. userManager -->
             <Button
@@ -69,24 +70,25 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/colorPrimaryBackground"
+                android:background="@color/colorBackgroundPrimary"
                 android:text="@string/main_bt_user_manager"
-                android:textColor="@color/colorTextPrimaryBackground"></Button>
+                android:textColor="@color/colorTextPrimary"></Button>
 
             <!-- content 5. DevelopmentInfo -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="bottom|end">
+                android:gravity="bottom|end"
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/main_bt_app_info"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
-                    android:background="@color/colorPrimaryBackground"
+                    android:background="@color/colorBackgroundSecond"
                     android:text="@string/main_bt_development_info"
-                    android:textColor="@color/colorTextPrimaryBackground"></Button>
+                    android:textColor="@color/colorTextPrimary"></Button>
 
             </LinearLayout>
 
@@ -96,7 +98,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom">
+            android:background="@color/colorActivityFooter"
+            android:gravity="bottom"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="match_parent"

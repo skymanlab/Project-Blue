@@ -31,17 +31,6 @@ public class FriendTableSetting {
 
     }
 
-    // method : query
-    public static String mappingQueryFromId(String id) {
-        StringBuilder query = new StringBuilder();
-        query.append(SQL_SELECT_TABLE_WHERE_ID);
-        query.append("'");
-        query.append(id);
-        query.append("'");
-
-        return query.toString();
-    }
-
     // inner class : Entry, Table column name
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "friend";

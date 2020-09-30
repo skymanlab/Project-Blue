@@ -23,7 +23,7 @@ public class BilliardLvManager {
     /* method : list view adapter, 받아온 내용을 adapter를 통해 dataList 에 뿌려 준다.*/
     public void setListViewToAllBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
 
-        DeveloperManager.displayLog("BilliardDataManager", "setListViewToBilliardData 실행");
+        DeveloperManager.displayLog("[LvM] BilliardLvManager", "[setListViewToAllBilliardDat] The method is executing........");
 
         // cycle : Array List add, dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
         for (int position = 0; position < billiardDataArrayList.size(); position++) {
@@ -40,6 +40,6 @@ public class BilliardLvManager {
         }
         // set : set adapter, 읽어온 내용을 다 넣고, adapter를 dataList(ListView)에 연결 시키기
         activityTargetListView.setAdapter(billiardLvAdapter);
-        DeveloperManager.displayLog("BilliardDataManager", "setListViewToBilliardData 실행 완료");
+        DeveloperManager.displayLog("[LvM] BilliardDataManager", "[setListViewToAllBilliardDat] The method is complete.");
     }
 }

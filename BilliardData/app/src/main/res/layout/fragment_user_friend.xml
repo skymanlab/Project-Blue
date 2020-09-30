@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorSecondBackground"
+                android:background="@color/colorBackgroundSecond"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -78,7 +78,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorThirdBackground"
+                android:background="@color/colorBackgroundThird"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -128,9 +128,9 @@
                         android:id="@+id/f_user_friend_bt_friend_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/selectItemBackground"
+                        android:background="@color/colorBackgroundPrimary"
                         android:text="@string/f_user_friend_bt_add_friend"
-                        android:textColor="@color/selectItemTextColor"></Button>
+                        android:textColor="@color/colorTextPrimary"></Button>
                 </LinearLayout>
             </LinearLayout>
 

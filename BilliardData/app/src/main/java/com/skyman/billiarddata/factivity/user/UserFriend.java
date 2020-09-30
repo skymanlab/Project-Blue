@@ -130,7 +130,7 @@ public class UserFriend extends Fragment {
                         // check : name
                         if (!name.getText().toString().equals("")) {
 
-                            DeveloperManager.displayLog("UserFriend", "모든 조건이 통과되었습니다. : " + userData.getId());
+                            DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 모든 조건이 통과되었습니다. : " + userData.getId());
                             // FriendDbManager : save_content method executing
                             long newRowId = friendDbManager.save_content(
                                     userData.getId(),
@@ -146,29 +146,29 @@ public class UserFriend extends Fragment {
 
                             // check : newRowId 체크
                             if(newRowId == -2) {
-                                DeveloperManager.displayLog("UserFriend", "name 이 입력되지 않았습니다.");
+                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] name 이 입력되지 않았습니다.");
                             } else if(newRowId == -1) {
-                                DeveloperManager.displayLog("UserFriend", "데이터베이스 insert 를 실패하였습니다.");
+                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 데이터베이스 insert 를 실패하였습니다.");
                             } else if(newRowId == 0) {
-                                DeveloperManager.displayLog("UserFriend", "수행이 되지 않았습니다.");
+                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 수행이 되지 않았습니다.");
                             } else if(newRowId  == 1){
-                                DeveloperManager.displayLog("UserFriend", "첫 번째 친구를 입력했습니다.");
+                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 첫 번째 친구를 입력했습니다.");
                                 showAlertFirstFriendAdd();
                             } else if(newRowId >1) {
-                                DeveloperManager.displayLog("UserFriend", newRowId + " 번째 친구를 입력했습니다.");
+                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] " + newRowId + " 번째 친구를 입력했습니다.");
                             }
 
                             // FragmentTransaction : 추가 된 내용 갱신을 위한
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             transaction.detach(UserFriend.this).attach(UserFriend.this).commit();
                         } else {
-                            DeveloperManager.displayLog("UserFriend", "name 이 입력되지 않았습니다.");
+                            DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] name 이 입력되지 않았습니다.");
                         }
                     } else {
-                        DeveloperManager.displayLog("UserFriend", "userDbManager 가 없습니다.");
+                        DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] userDbManager 가 없습니다.");
                     }
                 } else {
-                    DeveloperManager.displayLog("UserFriend", "userData 가 없습니다.");
+                    DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] userData 가 없습니다.");
                 }
             }
         });
@@ -181,7 +181,7 @@ public class UserFriend extends Fragment {
         if(friendDataArrayList.size() != 0){
             friendLvManager.setListViewToAllFriendData(friendDataArrayList);
         } else {
-            DeveloperManager.displayLog("F UserFriend", "저장 된 친구가 없습니다.");
+            DeveloperManager.displayLog("[F] UserFriend", "[friendDataArrayList] 저장 된 친구가 없습니다.");
         }
     }
 
@@ -194,19 +194,19 @@ public class UserFriend extends Fragment {
     private void showAlertFirstFriendAdd(){
         // AlertDialog.Builder :
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("다음 화면 이동")
-                .setMessage("모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?")
-                .setPositiveButton("다음화면", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.ad_user_friend_first_friend_add_title)
+                .setMessage(R.string.ad_user_friend_first_friend_add_message)
+                .setPositiveButton(R.string.ad_user_friend_first_bt_friend_add_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DeveloperManager.displayLog("MainActivity", "게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
+                        DeveloperManager.displayLog("[F] UserFriend", "[showAlertFirstFriendAdd] 게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
                         // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         getActivity().finish();
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.ad_user_friend_first_bt_friend_add_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="30dp"
         android:layout_height="match_parent"
-        android:background="@color/selectItemBackground"
+        android:background="@color/colorCustomBackgroundPrimary"
         android:gravity="center">
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="1"
             android:textAlignment="gravity"
-            android:textColor="@color/selectItemTextColor"></TextView>
+            android:textColor="@color/colorCustomTextPrimary"></TextView>
     </LinearLayout><!-- End of content 1 -->
 
     <!-- content 2. information -->
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:gravity="center">
 
             <TextView
@@ -43,14 +43,14 @@
                 android:layout_height="wrap_content"
                 android:text="장동익"
                 android:textAlignment="textStart"
-                android:textColor="@color/selectItemTextColor"></TextView>
+                android:textColor="@color/colorCustomTextPrimary"></TextView>
         </LinearLayout><!-- End of content 2-1 -->
 
         <!-- content 2-2. game record, recent play date -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp">
 
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_game_record"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -74,7 +74,7 @@
                     android:id="@+id/c_lv_friend_data_game_record"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_game_record_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-1 -->
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_recent_play_date"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -100,7 +100,7 @@
                     android:id="@+id/c_lv_friend_data_recent_play_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_recent_play_date_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-2 -->
@@ -116,7 +116,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/selectItemBackground"
+            android:background="@color/colorCustomBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp">
 
@@ -131,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_total_play_time"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -140,7 +140,7 @@
                     android:id="@+id/c_lv_friend_data_total_play_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_total_play_time_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout> <!-- End of content 2-3-1 -->
@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/selectItemTableBar"
+                    android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_total_cost"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
@@ -166,7 +166,7 @@
                     android:id="@+id/c_lv_friend_data_total_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/selectItemTableColum"
+                    android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_total_cost_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-3-2 -->

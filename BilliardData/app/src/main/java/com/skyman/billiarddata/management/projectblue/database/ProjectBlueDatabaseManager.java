@@ -1,9 +1,8 @@
-package com.skyman.billiarddata.management.projectblue;
+package com.skyman.billiarddata.management.projectblue.database;
 
 import android.content.Context;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.user.database.UserDbHelper;
 
 public class ProjectBlueDatabaseManager {
 

@@ -2,14 +2,11 @@ package com.skyman.billiarddata.factivity.user;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,16 +148,14 @@ public class UserInput extends Fragment {
 
                 // check : 기존(userData)의 내용이 있는지 검사
                 if (userData == null) {
-                    DeveloperManager.displayLog("F UserInput", "** save click listener - method is executing.......");
-
                     // RadioButton : selectedSpeciality - userSpeciality 에서 선택 된 RadioButton 의 text 값을 가져온다.
                     RadioButton selectedSpeciality = (RadioButton) view.findViewById(speciality.getCheckedRadioButtonId());
                     String specialityContent = selectedSpeciality.getText().toString();
 
                     // check : name, targetScore, specialityContent 모든 데이터 입력 되었나요?
-                    if (checkedInputAllData(specialityContent)) {
+                    if (checkInputAllData(specialityContent)) {
                         // check : 0 < targetScore < 50
-                        if (checkTargetScore()) {
+                        if (checkTargetScoreRange()) {
                             // check : userDbManager
                             if (userDbManager != null) {
                                 // UserDbManager : save_content method execute - 입력 된 정보를 저장하기
@@ -171,7 +166,7 @@ public class UserInput extends Fragment {
                                         0,                                                   // 4. game record win
                                         0,                                                   // 5. game record loss
                                         0,                                                 // 6. recent game player id
-                                        "-1",                                                    // 7. recent play date
+                                        "-1",                                                  // 7. recent play date
                                         0,                                                      // 8. total play time
                                         0                                                          // 9. total cost
                                 );
@@ -180,18 +175,17 @@ public class UserInput extends Fragment {
                                 getActivity().finish();
                                 startActivity(intent);
                             } else {
-                                DeveloperManager.displayLog("F UserInput", "데이터베이스 준비가 되지 않았습니다.");
+                                DeveloperManager.displayLog("[F] UserInput", "[save button] 데이터베이스 준비가 되지 않았습니다.");
                             }
                         } else {
-                            DeveloperManager.displayLog("F UserInput", "0< targetScore <50 인 값을 입력해주세요.");
+                            DeveloperManager.displayLog("[F] UserInput", "[save button] 0< targetScore <50 인 값을 입력해주세요.");
                         }
                     } else {
-                        DeveloperManager.displayLog("F UserInput", "name, targetScore, speciality 의 모든 값을 입력해주세요.");
+                        DeveloperManager.displayLog("[F] UserInput", "[save button] name, targetScore, speciality 의 모든 값을 입력해주세요.");
                     }
                 } else {
-                    DeveloperManager.displayLog("F UserInput", "userData 가 있으므로 저장할 필요가 없습니다.");
+                    DeveloperManager.displayLog("[F] UserInput", "[save button] userData 가 있으므로 저장할 필요가 없습니다.");
                 }
-                DeveloperManager.displayLog("F UserInput", "** save click listener - method is complete.");
             }
         });
 
@@ -201,7 +195,6 @@ public class UserInput extends Fragment {
             public void onClick(View v) {
                 // check : 기존(userData)의 내용이 있는지 검사
                 if (userData != null) {
-
                     // check : userDbManager 객체가 생성되었는지 검사
                     if (userDbManager != null) {
                         // 변경 할 값 받아오기
@@ -215,9 +208,9 @@ public class UserInput extends Fragment {
 
                         // check : result 값으로 update 잘 되었는지 판다
                         if (result == 1) {
-                            DeveloperManager.displayLog("UserInput", "1번재 내용이 수정되었습니다.");
+                            DeveloperManager.displayLog("[F] UserInput", "[modify button] 1번재 내용이 수정되었습니다.");
                         } else {
-                            DeveloperManager.displayLog("UserInput", "1번째 내용을 수정하는데 실패하였습니다.");
+                            DeveloperManager.displayLog("[F] UserInput", "[modify button] 1번째 내용을 수정하는데 실패하였습니다.");
                         }
 
                         // move : activity move - 지금 activity 는 stack 에서 제거하고, 현재 페이지를 다시 road 한다.
@@ -225,12 +218,11 @@ public class UserInput extends Fragment {
                         getActivity().finish();
                         startActivity(intent);
                     } else {
-                        DeveloperManager.displayLog("UserInput", "userDbManager 가 없으므로 데이터베이스 메니저를 생성해주세요.");
+                        DeveloperManager.displayLog("[F] UserInput", "[modify button] userDbManager 가 없으므로 데이터베이스 메니저를 생성해주세요.");
                     }
                 } else {
-                    DeveloperManager.displayLog("UserInput", "userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
+                    DeveloperManager.displayLog("[F] UserInput", "[modify button] userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
                 }
-                DeveloperManager.displayLog("UserInput", "** update_content is complete. - result : ");
             }
         });
 
@@ -242,7 +234,7 @@ public class UserInput extends Fragment {
 
                 // check : 기존(userData)의 내용이 있는지 검사
                 if (userData != null) {
-                    DeveloperManager.displayLog("UserInput", "데이터가 있어서 삭제 시작");
+                    DeveloperManager.displayLog("[F] UserInput", "[delete button] 데이터가 있어서 삭제 시작");
 
                     // check : userDbManager 가 생성되었는지
                     if (userDbManager != null) {
@@ -261,10 +253,10 @@ public class UserInput extends Fragment {
                         startActivity(intent);
 
                     } else {
-                        DeveloperManager.displayLog("UserInput", "데이터를 가져올 DB를 가져오지 못했습니다.");
+                        DeveloperManager.displayLog("[F] UserInput", "[delete button] 데이터를 가져올 DB를 가져오지 못했습니다.");
                     }
                 } else {
-                    DeveloperManager.displayLog("UserInput", "데이터가 없어서 삭제 안함");
+                    DeveloperManager.displayLog("[F] UserInput", "[delete button] 데이터가 없어서 삭제 안함");
                 }
 
             }
@@ -291,22 +283,22 @@ public class UserInput extends Fragment {
         targetScore.setText(Integer.toString(userData.getTargetScore()));
 
         // RadioGroup : userData 에 저장된 값과 같은 RadioButton 선택
-        setCheckToRadioButton(view, userData.getSpeciality());
-        DeveloperManager.displayLog("UserInput", "선택 된 주종목 : " + userData.getSpeciality());
+        setCheckedRadioButton(view, userData.getSpeciality());
+        DeveloperManager.displayLog("[F] UserInput", "[setWidget] 선택 된 주종목 : " + userData.getSpeciality());
 
         // Button : save disable setting - background 와 enabled 를 true
-        save.setBackgroundResource(R.color.colorActivityDisable);
+        save.setBackgroundResource(R.color.colorWidgetDisable);
         save.setEnabled(false);
 
         // Button : modify enable setting - background 와 enabled 를 false
-        modify.setBackgroundResource(R.color.colorPrimaryBackground);
+        modify.setBackgroundResource(R.color.colorBackgroundPrimary);
         modify.setEnabled(true);
 
-        DeveloperManager.displayLog("F UserInput", "모든 셋팅이 완료 되었습니다.");
+        DeveloperManager.displayLog("[F] UserInput", "[setWidget] 모든 셋팅이 완료 되었습니다.");
     }
 
     /* method : targetScore 의 입력 값이 MIN_RANGE < targetScore < MAX_RANGE 사이인지 확인 */
-    private boolean checkTargetScore() {
+    private boolean checkTargetScoreRange() {
         // targetScore : 입력 된 값이  0 < targetScore < 50  확인하기 위한
         int targetScoreContent = Integer.parseInt(targetScore.getText().toString());
 
@@ -318,7 +310,7 @@ public class UserInput extends Fragment {
     }
 
     /* method : name, targetScore, speciality 에 모든 값이 입력 되었는지 확인 */
-    private boolean checkedInputAllData(String specialityContent) {
+    private boolean checkInputAllData(String specialityContent) {
         // check : 매개변수로 입력 되었는지 확인
         if (!name.getText().toString().equals("") && !targetScore.getText().toString().equals("") && !specialityContent.equals("")) {
             // return : 모든 값이 입력 되었으면
@@ -330,22 +322,22 @@ public class UserInput extends Fragment {
     }
 
     /* method : RadioGroup 에서 특정 RadioButton 에 setCheck(true) 로 만들기*/
-    private void setCheckToRadioButton(View view, String specialityContent) {
+    private void setCheckedRadioButton(View view, String specialityContent) {
         RadioButton specialityThreeCushion = (RadioButton) view.findViewById(R.id.f_user_input_speciality_three_cushion);
         RadioButton specialityFourBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_four_ball);
         RadioButton specialityPocketBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_pocket_ball);
 
         switch (specialityContent) {
             case "3구":
-                DeveloperManager.displayLog("F UserInput", "3구가 선택되었습니다.");
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 3구가 선택되었습니다.");
                 specialityThreeCushion.setChecked(true);
                 break;
             case "4구":
-                DeveloperManager.displayLog("F UserInput", "4구가 선택되었습니다.");
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 4구가 선택되었습니다.");
                 specialityFourBall.setChecked(true);
                 break;
             case "포켓볼":
-                DeveloperManager.displayLog("F UserInput", "포켓볼이 선택되었습니다.");
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 포켓볼이 선택되었습니다.");
                 specialityPocketBall.setChecked(true);
                 break;
         }
