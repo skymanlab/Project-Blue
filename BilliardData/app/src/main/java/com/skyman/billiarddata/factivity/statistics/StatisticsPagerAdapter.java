@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.factivity.user.UserInfo;
+import com.skyman.billiarddata.factivity.statistics.calendar.CalendarFragment;
 
 public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
 

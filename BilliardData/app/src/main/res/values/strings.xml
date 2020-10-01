@@ -127,7 +127,7 @@
     <string name="f_user_friend_add_title">친구 추가 ▼</string>
     <string name="f_user_friend_friend_name">이름</string>
     <string name="f_user_friend_bt_add_friend">친구 추가</string>
-        <!-- AlertDialog : user friend activity -->
+        <!-- AlertDialog : user friend Rragment -->
         <string name="ad_user_friend_first_friend_add_title">화면 이동</string>
         <string name="ad_user_friend_first_friend_add_message">모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?</string>
         <string name="ad_user_friend_first_bt_friend_add_positive">다음 화면</string>
@@ -138,6 +138,9 @@
     <string name="f_calendar_win">승리</string>
     <string name="f_calendar_loss">패배</string>
     <string name="f_calendar_"></string>
+        <!-- AlertDialog : calendar Fragment -->
+        <string name="ad_f_calendar_title">당구 정보</string>
+        <string name="ad_f_calendar_bt_positive">확인</string>
 
     <!-- Fragment : chart -->
     <string name="f_chart_title">차트로 확인해봐요.</string>

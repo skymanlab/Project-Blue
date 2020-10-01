@@ -33,10 +33,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserFriend#newInstance} factory method to
+ * Use the {@link UserFriendFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserFriend extends Fragment {
+public class UserFriendFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,13 +61,13 @@ public class UserFriend extends Fragment {
     private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserFriend(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager) {
+    public UserFriendFragment(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager) {
         this.userDbManager = userDbManager;
         this.userData = userData;
         this.friendDbManager = friendDbManager;
     }
 
-    public UserFriend() {
+    public UserFriendFragment() {
         // Required empty public constructor
     }
 
@@ -80,8 +80,8 @@ public class UserFriend extends Fragment {
      * @return A new instance of fragment UserFriend.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserFriend newInstance(String param1, String param2) {
-        UserFriend fragment = new UserFriend();
+    public static UserFriendFragment newInstance(String param1, String param2) {
+        UserFriendFragment fragment = new UserFriendFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -160,7 +160,7 @@ public class UserFriend extends Fragment {
 
                             // FragmentTransaction : 추가 된 내용 갱신을 위한
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.detach(UserFriend.this).attach(UserFriend.this).commit();
+                            transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
                         } else {
                             DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] name 이 입력되지 않았습니다.");
                         }

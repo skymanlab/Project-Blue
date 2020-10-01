@@ -37,11 +37,11 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new UserInput(userDbManager, userData, friendDbManager, friendDataArrayList);
+                return new UserInputFragment(userDbManager, userData, friendDbManager, friendDataArrayList);
             case 1:
-                return new UserInfo(userDbManager, userData, friendDbManager, friendDataArrayList);
+                return new UserInfoFragment(userDbManager, userData, friendDbManager, friendDataArrayList);
             case 2:
-                return new UserFriend(userDbManager, userData, friendDbManager);
+                return new UserFriendFragment(userDbManager, userData, friendDbManager);
             default:
                 return null;
         }

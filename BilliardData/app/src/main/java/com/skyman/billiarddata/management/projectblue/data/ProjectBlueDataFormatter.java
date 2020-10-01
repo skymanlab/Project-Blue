@@ -1,8 +1,13 @@
 package com.skyman.billiarddata.management.projectblue.data;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ProjectBlueDataFormatter {
+
+    // constant
+    public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
 
     /* method : formatter, 스코어 형태로 문자열 만들기 - #:# */
     public static String setFormatToScore(String score_1, String score_2) {
@@ -44,4 +49,9 @@ public class ProjectBlueDataFormatter {
         return costData.toString();
     }
 
+    /* method : formatter, DATE_FORMAT 형식으로 Date 만들기 */
+    public static String setFormatToDate(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        return  formatter.format(date);
+    }
 }

@@ -233,7 +233,6 @@ public class BilliardDbManager {
      * =============================================================================================
      * =============================================================================================
      * */
-
     /* method : display, toast 메시지 출력 */
     private void toastHandler(String content) {
         Toast myToast = Toast.makeText(targetContext, content, Toast.LENGTH_SHORT);

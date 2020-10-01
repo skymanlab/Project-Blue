@@ -11,7 +11,7 @@ import com.skyman.billiarddata.management.user.data.UserData;
  * 순전히 개발자의 입장을 표명하기 위한 클래스
  * ===================================================================================
  * */
-public class DeveloperManager {
+public final class DeveloperManager {
 
     public static final Display DISPLAY_POWER = Display.ON;
 

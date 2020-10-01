@@ -23,6 +23,9 @@ public  class BilliardTableSetting {
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
     // constant : sql query, select table setting - all item
+    /**
+     * @see
+     * */
     public static final String SQL_SELECT_TABLE_ALL_ITEM =
             "SELECT * FROM " + Entry.TABLE_NAME;
 

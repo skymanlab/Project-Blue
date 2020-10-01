@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -71,7 +73,11 @@ public class DateModify {
             @Override
             public void onClick(View v) {
                 // TextView : dialog 를 부른 BilliardInputActivity 의 'date'의 값을 spinner 에서 선택 된 값으로 셋팅
-                date.setText(setDate(year.getSelectedItem().toString(), month.getSelectedItem().toString(), day.getSelectedItem().toString()));
+                date.setText(
+                        setDate(Integer.parseInt(year.getSelectedItem().toString()),
+                                Integer.parseInt(month.getSelectedItem().toString()),
+                                Integer.parseInt(day.getSelectedItem().toString()))
+                );
 
                 // Dialog : 셋팅 과 함께 dialog 를 dismiss (종료) 한다.
                 dialog.dismiss();
@@ -83,10 +89,19 @@ public class DateModify {
     }
 
 
-    /* method : Spinner 에서 선택한 값을 'yyyy년 MM월 dd일'로 만들어 반환한다. */
+    /* method : Spinner 에서 선택한 값을 'yyyy년 ?M월 dd일'로 만들어 반환한다. */
     private String setDate(String year, String month, String day) {
         String[] arguments = {year, month, day};
         return MessageFormat.format(DATE_FORMAT, arguments);
+    }
+
+    /* method : Spinner 에서 선택한 값을 'yyyy년 MM월 dd일'로 만들어 반환한다. */
+    private String setDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month-1, day);
+        DeveloperManager.displayLog("DateModify", "[setDate] 변환 값은 : " + ProjectBlueDataFormatter.setFormatToDate(calendar.getTime()));
+
+        return  ProjectBlueDataFormatter.setFormatToDate(calendar.getTime());
     }
 
     /* method : 현재 날짜를 Date 클래스로 부터 받아오고 spinner 를 초기값 설정*/

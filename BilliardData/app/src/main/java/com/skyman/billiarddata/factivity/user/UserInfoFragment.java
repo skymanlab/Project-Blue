@@ -24,10 +24,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserInfo#newInstance} factory method to
+ * Use the {@link UserInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserInfo extends Fragment {
+public class UserInfoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,7 +57,7 @@ public class UserInfo extends Fragment {
     private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserInfo(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
+    public UserInfoFragment(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
         this.userDbManager = userDbManager;
         this.userData = userData;
         this.friendDbManager = friendDbManager;
@@ -65,7 +65,7 @@ public class UserInfo extends Fragment {
     }
 
     // constructor
-    public UserInfo() {
+    public UserInfoFragment() {
         // Required empty public constructor
     }
 
@@ -78,8 +78,8 @@ public class UserInfo extends Fragment {
      * @return A new instance of fragment UserInfo.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserInfo newInstance(String param1, String param2) {
-        UserInfo fragment = new UserInfo();
+    public static UserInfoFragment newInstance(String param1, String param2) {
+        UserInfoFragment fragment = new UserInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
