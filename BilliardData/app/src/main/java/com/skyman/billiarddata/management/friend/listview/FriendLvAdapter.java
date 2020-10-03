@@ -7,14 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.fragment.app.FragmentTransaction;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.factivity.user.UserFriend;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.data.FriendDataFormatter;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
@@ -23,7 +19,7 @@ import java.util.ArrayList;
 
 public class FriendLvAdapter extends BaseAdapter {
 
-    // ArrayList<FriendData> :
+    // variable :
     private ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
     private FriendDbManager friendDbManager = null;
 

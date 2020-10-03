@@ -47,7 +47,7 @@ public class UserInputFragment extends Fragment {
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 번위
 
-    // value : activity 의 widget 객체 선언
+    // variable : activity 의 widget 객체 선언
     private EditText name;
     private EditText targetScore;
     private RadioGroup speciality;
@@ -55,11 +55,11 @@ public class UserInputFragment extends Fragment {
     private Button modify;
     private Button delete;
 
-    // value : DbManager
+    // variable : DbManager
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
 
-    // value : Data
+    // variable : Data
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 

@@ -6,27 +6,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
-import androidx.cursoradapter.widget.CursorAdapter;
-
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
+import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 import java.util.ArrayList;
 
-/**
- * ===========================================================================================
- * BilliardDbHelper 를 관리하는 클래스
- * ===========================================================================================
- */
 public class BilliardDbManager {
 
-    // value : SQLite DB open helper 객체 선언
+    // variable : SQLite DB open helper 객체 선언
     private BilliardDbHelper billiardDbHelper;
 
-    // value : 생성 요청하는 activity 관련 된 객체 선언
+    // variable : 생성 요청하는 activity 관련 된 객체 선언
     private Context targetContext;
 
-    // value : init_db 실행 여부 확인
+    // variable : init_db 실행 여부 확인
     private boolean initDb;
 
     // constructor
@@ -91,7 +85,7 @@ public class BilliardDbManager {
          *      4. 0 보다 큰 수 : insert 된 곳의 행 번호
          * =====================================================
          * */
-        DeveloperManager.displayLog("[DbM] FriendDbManager", "[save_content] The method is executing ............");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] The method is executing ............");
 
         // int : 이 메소드의 결과를 저장하기 위한 변수 선언, 행 번호
         long newRowId = 0;
@@ -123,26 +117,26 @@ public class BilliardDbManager {
                                이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.*/
 
             // newRowId는 데이터베이스에 insert 가 실패하면 '-1'을 반환하고, 성공하면 해당 '행 번호'를 반환한다.
-            newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
+            newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
 
             // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
             if (newRowId == -1) {
                 // 데이터 insert 실패
-                DeveloperManager.displayLog("[DbM] BilliardDbManager", "[save_load] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_load] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
                 return newRowId;
             } else {
                 // 데이터 insert 성공
-                DeveloperManager.displayLog("[DbM] BilliardDbManager", "[save_load] " + newRowId + " 번째 입력이 성공하였습니다.");
+                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_load] " + newRowId + " 번째 입력이 성공하였습니다.");
             }
         } else {
-            DeveloperManager.displayLog("[DbM] BilliardDbManager", "[save_content] 입력 된 값이 조건에 만족하지 않습니다. : " + newRowId + " 값을 리턴합니다.");
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] 입력 된 값이 조건에 만족하지 않습니다. : " + newRowId + " 값을 리턴합니다.");
             return -2;
         }
 
         // SQLiteDatabase : close
         writeDb.close();
 
-        DeveloperManager.displayLog("[DbM] FriendDbManager", "[save_content] The method is complete");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] The method is complete");
         return newRowId;
     }
 
@@ -156,7 +150,7 @@ public class BilliardDbManager {
          * - return : 읽어온 내용이 담기 ArrayList<BilliardData>
          * =====================================================
          * */
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[load_contents] The method is executing........");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[load_contents] The method is executing........");
 
         // SQLiteDatabase : read database - billiardDbHelper 를 통해 read 용으로 가져오기
         SQLiteDatabase readDb = billiardDbHelper.getReadableDatabase();
@@ -187,7 +181,7 @@ public class BilliardDbManager {
         // SQLiteDatabase : close
         readDb.close();
 
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[load_contents] The method is complete!");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[load_contents] The method is complete!");
 
         // return : 모든 내용이 담김 billiardDataArrayList 를 반환한다. ArrayList 의 size 값으로 뿌려줄지 말지 check 한다.
         return billiardDataArrayList;
@@ -202,28 +196,28 @@ public class BilliardDbManager {
          *      project_blue.db 에서 billiard 테이블의 모든 내용을 delete 한다.
          * =========================================================================================
          * */
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[delete_contents] The method is executing............");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] The method is executing............");
 
         // SQLiteDatabase : write database - billiardDbHelper 를 write 용으로 가져오기
         SQLiteDatabase deleteDb = billiardDbHelper.getWritableDatabase();
 
         // SQLiteDatabase : 모든 내용 삭제
         int result = deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, null, null);
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[delete_contents] 데이터베이스 delete 실행 결과 : " + result);
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] 데이터베이스 delete 실행 결과 : " + result);
 
         // SQLiteDatabase : close
         deleteDb.close();
 
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[delete_contents] The method is complete.");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] The method is complete.");
     }
 
     /* method : billiardDbHelper close */
     public void closeBilliardDbHelper() {
         if (initDb) {
             billiardDbHelper.close();
-            DeveloperManager.displayLog("[DbM] BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper is closed.");
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper is closed.");
         } else {
-            DeveloperManager.displayLog("[DbM] BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper 가 초기화되지 않았습니다.");
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper 가 초기화되지 않았습니다.");
         }
 
     }

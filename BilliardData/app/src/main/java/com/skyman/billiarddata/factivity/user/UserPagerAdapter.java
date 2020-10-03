@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class UserPagerAdapter extends FragmentStatePagerAdapter {
 
-    // UserData : UserManager 로 부터 받은 UserData 객체를 담을 객체 선언\
+    // variable : UserManager 로 부터 받은 UserData 객체를 담을 객체 선언
     private UserDbManager userDbManager;
     private UserData userData;
     private FriendDbManager friendDbManager;

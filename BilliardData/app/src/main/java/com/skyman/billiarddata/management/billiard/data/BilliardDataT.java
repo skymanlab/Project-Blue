@@ -2,25 +2,28 @@ package com.skyman.billiarddata.management.billiard.data;
 
 import java.io.Serializable;
 
-public class BilliardData implements Serializable {
+/**
+ * [class] project_blue.db 의 billiard 테이블의 '한 행'을 담기위한 DTO 클래스이다.
+ * */
+public class BilliardDataT implements Serializable {
 
-    // variable : desc
-    private long id;                    // 0. id
+    // instance variable : desc
+    private long count;                 // 0. count
     private String date;                // 1. date
-    private String targetScore;         // 2. target score
+    private int targetScore;            // 2. target score
     private String speciality;          // 3. speciality
-    private String playTime;            // 4. play time
+    private int playTime;               // 4. play time
     private String winner;              // 5. winner
     private String score;               // 6. score
-    private String cost;                // 7. cost
+    private int cost;                   // 7. cost
 
     // method : getter, setter
-    public long getId() {
-        return id;
+    public long getCount() {
+        return count;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCount(long count) {
+        this.count = count;
     }
 
     public String getDate() {
@@ -31,11 +34,11 @@ public class BilliardData implements Serializable {
         this.date = date;
     }
 
-    public String getTargetScore() {
+    public int getTargetScore() {
         return targetScore;
     }
 
-    public void setTargetScore(String targetScore) {
+    public void setTargetScore(int targetScore) {
         this.targetScore = targetScore;
     }
 
@@ -47,11 +50,11 @@ public class BilliardData implements Serializable {
         this.speciality = speciality;
     }
 
-    public String getPlayTime() {
+    public int getPlayTime() {
         return playTime;
     }
 
-    public void setPlayTime(String playTime) {
+    public void setPlayTime(int playTime) {
         this.playTime = playTime;
     }
 
@@ -71,11 +74,11 @@ public class BilliardData implements Serializable {
         this.score = score;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 }

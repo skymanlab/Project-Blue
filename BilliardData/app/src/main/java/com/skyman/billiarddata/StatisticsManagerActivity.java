@@ -4,17 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.factivity.statistics.StatisticsPagerAdapter;
 
 public class StatisticsManagerActivity extends AppCompatActivity {
 
-    // value : tab layout 객체 선언
+    // variable : tab layout 객체 선언
     private TabLayout statisticsTabBar;
 
-    // value : view pager 객체 선언
+    // variable : view pager 객체 선언
     private ViewPager statisticsTabPager;
 
     @Override

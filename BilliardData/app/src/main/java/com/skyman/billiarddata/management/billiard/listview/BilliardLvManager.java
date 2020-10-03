@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class BilliardLvManager {
 
-    // value : list view adapter 객체 선언
+    // variable : list view adapter 객체 선언
     private BilliardLvAdapter billiardLvAdapter;
 
-    // value : target list view 객체 선언
+    // variable : target list view 객체 선언
     private ListView activityTargetListView;
 
     public BilliardLvManager(ListView activityTargetListView) {

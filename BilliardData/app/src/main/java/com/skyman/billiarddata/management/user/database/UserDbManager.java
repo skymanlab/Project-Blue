@@ -7,22 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbHelper;
-import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
 
 public class UserDbManager {
 
-    // value : SQLite DB open helper 객체 선언
+    // variable : SQLite DB open helper 객체 선언
     private UserDbHelper userDbHelper;
 
-    // value : 생성 요청하는 activity 관련 된 객체 선언
+    // variable : 생성 요청하는 activity 관련 된 객체 선언
     private Context targetContext;
 
-    // value : init_db 실행 여부 확인
+    // variable : init_db 실행 여부 확인
     private boolean initDb;
 
     // constructor

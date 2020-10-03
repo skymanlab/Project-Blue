@@ -1,6 +1,5 @@
 package com.skyman.billiarddata.factivity.user;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,7 +19,6 @@ import android.widget.ListView;
 
 import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
@@ -47,16 +44,16 @@ public class UserFriendFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    // value : widget
+    // variable : widget
     private ListView allFriendData;
     private EditText name;
     private Button friendAdd;
 
-    // value : DbManager
+    // variable : DbManager
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
 
-    // value : Data
+    // variable : Data
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 

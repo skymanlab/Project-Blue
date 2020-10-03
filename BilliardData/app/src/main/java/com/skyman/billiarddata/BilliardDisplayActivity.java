@@ -2,10 +2,8 @@ package com.skyman.billiarddata;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
@@ -16,10 +14,10 @@ import java.util.ArrayList;
 
 public class BilliardDisplayActivity extends AppCompatActivity {
 
-    // value : helper manager 객체 선언
+    // variable : helper manager 객체 선언
     private BilliardDbManager billiardDbManager = null;
 
-    // value : activity 에서 사용하는 객체 선언
+    // variable : activity 에서 사용하는 객체 선언
     private ListView allBilliardData;
 
     @Override

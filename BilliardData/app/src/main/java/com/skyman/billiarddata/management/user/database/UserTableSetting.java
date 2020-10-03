@@ -2,8 +2,6 @@ package com.skyman.billiarddata.management.user.database;
 
 import android.provider.BaseColumns;
 
-import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
-
 public class UserTableSetting {
 
     // constant : sql query, create table setting

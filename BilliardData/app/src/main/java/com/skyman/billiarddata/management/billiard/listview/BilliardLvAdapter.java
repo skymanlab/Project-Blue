@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class BilliardLvAdapter extends BaseAdapter {
 
-    // value : list View 에 뿌려줄 데이터가 담긴 array
+    // variable : list View 에 뿌려줄 데이터가 담긴 array
     private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
     @Override

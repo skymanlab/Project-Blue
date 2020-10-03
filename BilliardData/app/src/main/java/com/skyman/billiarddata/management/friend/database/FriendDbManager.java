@@ -7,23 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.user.database.UserDbHelper;
-import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 import java.util.ArrayList;
 
 public class FriendDbManager {
 
-    // value : SQLiteOpenHelper 를 extends 한 FriendDbHelper 객체 선언
+    // variable : SQLiteOpenHelper 를 extends 한 FriendDbHelper 객체 선언
     private FriendDbHelper friendDbHelper;
 
-    // value : FriendDbManager 를 생성한 activity 의 Context
+    // variable : FriendDbManager 를 생성한 activity 의 Context
     private Context targetContext;
 
-    // value : init_db 실행 여부 확인
+    // variable : init_db 실행 여부 확인
     private boolean initDb;
 
     // constructor

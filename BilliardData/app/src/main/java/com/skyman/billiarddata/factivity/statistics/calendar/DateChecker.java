@@ -2,7 +2,7 @@ package com.skyman.billiarddata.factivity.statistics.calendar;
 
 public class DateChecker {
 
-    // value
+    // variable
     private boolean[] checkedDate;
     private boolean[] standardDate;
     private int[] winCount;

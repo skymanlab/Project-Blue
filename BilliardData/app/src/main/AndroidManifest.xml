@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon_android_round_v1"
+        android:icon="@drawable/icon_noline"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icon_android_round_v1"
+        android:roundIcon="@drawable/icon_noline"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".StatisticsManagerActivity"></activity>

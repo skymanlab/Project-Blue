@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserData implements Serializable {
 
-    // value : desc
+    // variable : desc
     private long id;                         // 0. id
     private String  name;                   // 1. name
     private int targetScore;                // 2. target score

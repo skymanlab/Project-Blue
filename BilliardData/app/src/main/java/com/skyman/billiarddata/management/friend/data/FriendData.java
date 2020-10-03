@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FriendData implements Serializable {
 
-    // value : desc
+    // variable : desc
     private long id;                    // 0. id
     private long userId;                // 1. user id
     private String name;                // 2. name

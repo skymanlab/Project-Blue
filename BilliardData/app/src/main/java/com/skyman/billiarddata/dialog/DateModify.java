@@ -23,12 +23,13 @@ public class DateModify {
 
     // const : date format
     private final String DATE_FORMAT = "{0}년 {1}월 {2}일";
+
+    // variable
     private Spinner year;
     private Spinner month;
     private Spinner day;
 
-
-    // value : Dialog 를 생성하는 곳의 Activity context
+    // variable : Dialog 를 생성하는 곳의 Activity context
     private Context context;
 
     // constructor

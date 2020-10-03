@@ -1,9 +1,5 @@
 package com.skyman.billiarddata;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +12,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.DateModify;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
+import com.skyman.billiarddata.management.billiard.database.BilliardDBManagerT;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
@@ -31,14 +31,14 @@ import java.util.Date;
 
 public class BilliardInputActivity extends AppCompatActivity {
 
-    // value : helper manager 관련 객체 선언
+    // variable : helper manager 관련 객체 선언
     private BilliardDbManager billiardDbManager = null;
     private UserDbManager userDbManager = null;
     private UserData userData;
     private FriendDbManager friendDbManager = null;
     private FriendData friendData;
 
-    // value : activity 에서 사용하는 객체 선언
+    // variable : activity 에서 사용하는 객체 선언
     private Spinner player;
     private Spinner targetScore;
     private Spinner speciality;
@@ -151,21 +151,37 @@ public class BilliardInputActivity extends AppCompatActivity {
                     return;
                 }
 
-                // check : billiardDbManager 가 초기화가 되었다.
-                if (billiardDbManager.isInitDb()) {
-                    // BilliardDbManager : 입력 정보를 billiard 테이블에 저장
-                    billiardDbManager.save_content(
-                            date.getText().toString(),                                                                                      // 1. date
-                            targetScore.getSelectedItem().toString(),                                                                       // 2. target score
-                            speciality.getSelectedItem().toString(),                                                                        // 3. speciality
-                            playTime.getText().toString(),                                                                                  // 4. play time
-                            player.getSelectedItem().toString(),                                                                            // 5. winner
-                            BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),             // 6. score
-                            cost.getText().toString()                                                                                       // 7. cost
-                    );
-                } else {
-                    DeveloperManager.displayLog("[Ac] BilliardInputActivity", "[input button] billiardDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
-                }
+//                // check : billiardDbManager 가 초기화가 되었다.
+//                if (billiardDbManager.isInitDb()) {
+//                    // BilliardDbManager : 입력 정보를 billiard 테이블에 저장
+//                    billiardDbManager.save_content(
+//                            date.getText().toString(),                                                                                      // 1. date
+//                            targetScore.getSelectedItem().toString(),                                                                       // 2. target score
+//                            speciality.getSelectedItem().toString(),                                                                        // 3. speciality
+//                            playTime.getText().toString(),                                                                                  // 4. play time
+//                            player.getSelectedItem().toString(),                                                                            // 5. winner
+//                            BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),             // 6. score
+//                            cost.getText().toString()                                                                                       // 7. cost
+//                    );
+//                } else {
+//                    DeveloperManager.displayLog("[Ac] BilliardInputActivity", "[input button] billiardDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
+//                }
+
+                BilliardDBManagerT billiardDBManagerT = new BilliardDBManagerT(getApplicationContext());
+
+                billiardDBManagerT.initDb();
+
+                billiardDBManagerT.saveContent(
+                        date.getText().toString(),
+                        Integer.parseInt(targetScore.getSelectedItem().toString()),
+                        speciality.getSelectedItem().toString(),
+                        Integer.parseInt(playTime.getText().toString()),
+                        player.getSelectedItem().toString(),
+                        BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),
+                        Integer.parseInt(cost.getText().toString())
+                );
+                DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[input button] 입력 완료");
+
 
                 // check : userDbManager 가 생성 되었음?
                 if (userDbManager != null) {
@@ -359,4 +375,9 @@ public class BilliardInputActivity extends AppCompatActivity {
                 })
                 .show();
     }
+    
+    /**
+     * [method] player spinner 의 선택된   UserData 와 FriendData 의 name 과 비교하여
+     *
+     */
 }

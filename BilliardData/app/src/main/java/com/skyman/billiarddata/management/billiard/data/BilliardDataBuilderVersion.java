@@ -2,7 +2,7 @@ package com.skyman.billiarddata.management.billiard.data;
 
 public class BilliardDataBuilderVersion {
 
-    // value
+    // variable : table desc
     private long id;            // 0. id
     private String date;        // 1. date
     private int targetScore;    // 2. target score

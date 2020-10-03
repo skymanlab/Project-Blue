@@ -1,14 +1,10 @@
 package com.skyman.billiarddata;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
@@ -22,17 +18,17 @@ import java.util.ArrayList;
 
 public class UserManagerActivity extends AppCompatActivity {
 
-    // value : UserDbManager 객체 선언
+    // variable : UserDbManager 객체 선언
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
 
-    // value : view pager 객체 선언
+    // variable : view pager 객체 선언
     private ViewPager userTabPager;
 
-    // value : tab layout 객체 선언
+    // variable : tab layout 객체 선언
     private TabLayout userTabBar;
 
-    // value : activity widget 객체 선언
+    // variable : activity widget 객체 선언
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

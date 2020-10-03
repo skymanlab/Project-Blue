@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,15 +22,15 @@ public class MainActivity extends AppCompatActivity {
     /*
      * 용어 정리
      * 1. declaration = 선언
-     * 2. create = 생성성
+     * 2. create = 생성됨
      * 3. colon = :
      * */
 
-    // value : FriendDbManager
+    // variable : FriendDbManager
     private FriendDbManager friendDbManager;
     private ArrayList<FriendData> friendDataArrayList;
 
-    // value : UserDbManager
+    // variable : UserDbManager
     private UserDbManager userDbManager;
     private UserData userData;
 

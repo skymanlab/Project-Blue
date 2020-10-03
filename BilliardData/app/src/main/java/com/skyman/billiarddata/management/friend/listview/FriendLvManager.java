@@ -3,16 +3,15 @@ package com.skyman.billiarddata.management.friend.listview;
 import android.widget.ListView;
 
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 
 import java.util.ArrayList;
 
 public class FriendLvManager {
 
-    // value : ListView 와 연결하기 위한 Adapter
+    // variable : ListView 와 연결하기 위한 Adapter
     private FriendLvAdapter friendLvAdapter;
 
-    // value : 내용을 뿌려주기 위한 ListView
+    // variable : 내용을 뿌려주기 위한 ListView
     private ListView activityTargetListView;
 
     // constructor

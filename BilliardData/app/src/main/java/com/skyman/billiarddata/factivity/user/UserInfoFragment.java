@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +37,7 @@ public class UserInfoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    // value : activity 의 widget 객체 선언
+    // variable : activity 의 widget 객체 선언
     private TextView name;
     private TextView targetScore;
     private TextView speciality;
@@ -48,11 +47,11 @@ public class UserInfoFragment extends Fragment {
     private TextView recentGamePlayerId;
     private TextView recentPlayDate;
 
-    // value : DbManager
+    // variable : DbManager
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
 
-    // value : Data
+    // variable : Data
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 
