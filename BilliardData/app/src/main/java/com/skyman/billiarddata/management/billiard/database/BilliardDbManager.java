@@ -4,191 +4,206 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.user.database.UserTableSetting;
+import com.skyman.billiarddata.management.projectblue.database.ProjectBlueDBManager;
 
 import java.util.ArrayList;
 
-public class BilliardDbManager {
 
-    // variable : SQLite DB open helper 객체 선언
-    private BilliardDbHelper billiardDbHelper;
-
-    // variable : 생성 요청하는 activity 관련 된 객체 선언
-    private Context targetContext;
-
-    // variable : init_db 실행 여부 확인
-    private boolean initDb;
+/**
+ * [class] project_blue.db 의 billiard 테이블을 관리하기 위한 클래스이다.
+ *
+ * <p>
+ * ProjectBlueDBManger 를 상속 받아
+ * ProjectBlueDBHelper 를 생성한다.
+ * 이 openDBHelper 에서 readableDatabase 와 writeableDatabase 를 가져와서 query 문을 실행한다.
+ * </p>
+ */
+public class BilliardDBManager extends ProjectBlueDBManager {
 
     // constructor
-    public BilliardDbManager(Context targetContext) {
-        this.billiardDbHelper = null;                       // 직관성을 위해, 객체 생성은 init_db 에서 한다.
-        this.targetContext = targetContext;
-        this.initDb = false;
+    public BilliardDBManager(Context targetContext) {
+        super(targetContext);
     }
 
 
-    /*                                      public method
-     * =============================================================================================
-     * =============================================================================================
-     * */
+    /**
+     * [method] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 billiard 테이블에 데이터를 저장한다.
+     *
+     * <p>
+     * project_blue.db 의 billiard 테이블에 데이터를 insert query 문을 실행한다.
+     *
+     * <p>
+     * 반환값
+     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
+     * '-1' : 데이터베이스 문제 발생
+     * '0' : 코드들이 실행되지 안았다.
+     * 그 외의 값 : billiard 테이블에 입력 된 행 번호
+     *
+     * <p>
+     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
+     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
+     *
+     * @param dateContent        [1] date : 날짜
+     * @param targetScoreContent [2] target score : 수지
+     * @param specialityContent  [3] speciality : 주 종목
+     * @param playTimeContent    [4] play time : 게임 시간
+     * @param winnerContent      [5] winner id : 승자 id
+     * @param scoreContent       [6] score : 스코터
+     * @param costContent        [7] cost : 가격
+     * @return billiard 테이블에 데이터를 입력한 결과를 반환한다.
+     */
+    public long saveContent(String dateContent,
+                            int targetScoreContent,
+                            String specialityContent,
+                            int playTimeContent,
+                            String winnerContent,
+                            String scoreContent,
+                            int costContent) {
 
-    /* method : getter, setter */
-    public boolean isInitDb() {
-        return initDb;
-    }
+        DeveloperManager.displayLog("[DbM]BilliardDbManager", "[saveContent] The method is executing ............");
 
-    /* method : init, SQLite DB open helper 를 이용하여 초기화 */
-    public void init_db() {
-        /*
-         * =========================================================================================
-         * project_blue.db 에 billiard, user, friend 테이블의 존재 여부 확인한다.
-         * 없으면 project_blue.db 생성 후 billiard, user, friend 테이블을 생성하고,
-         * project_blue.db 를 open 한다.
-         * =========================================================================================
-         * */
-        billiardDbHelper = new BilliardDbHelper(targetContext);
-        initDb = true;
-        DeveloperManager.displayLog("[DbM] BilliardDbManager", "[init_db] The method is complete. - initDb : " + initDb);
-    }
+        // [iv/C]SQLiteDatabase : 이 method 에서 참조하기 위한 객체 선언
+        SQLiteDatabase writeDb = null;
 
-    /* method : insert, SQLite DB open helper 를 이용하여 해당 테이블에 정보를 insert 한다. */
-    public long save_content(String dateContent,
-                             String targetScoreContent,
-                             String specialityContent,
-                             String playTimeContent,
-                             String winnerContent,
-                             String scoreContent,
-                             String costContent) {
-        /*
-         * =====================================================
-         * billiard table insert query
-         * -    데이터를 매개변수로 받아서 모든 값을 입력 받은지 확인한다.
-         *      그리고 ContentValues 의 객체에 내용 setting 을 한다.
-         *      billiardDbHelper 를 통해 writeable 으로 받아온 SQLiteDatabase 를 이용하여
-         *      project_blue.db 의 billiard 테이블에 해당 내용을 insert 한다.
-         * - 입력 순서
-         *      1. date
-         *      2. target score
-         *      3. speciality
-         *      4. play time
-         *      5. winner
-         *      6. score
-         *      7. cost
-         * - return
-         *      1. '-2' : 입력 조건이 만족하지 않음
-         *      2. '-1' : 데이터베이스 insert 실패
-         *      3. '0' : 기본 값
-         *      4. 0 보다 큰 수 : insert 된 곳의 행 번호
-         * =====================================================
-         * */
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] The method is executing ............");
-
-        // int : 이 메소드의 결과를 저장하기 위한 변수 선언, 행 번호
+        // [iv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
 
-        // SQLiteDatabase : write database - billiardDbHelper 를 통해 write 용으로 가져오기
-        SQLiteDatabase writeDb = billiardDbHelper.getWritableDatabase();
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
 
-        // check : 매개변수의 내용 중에 빈 곳이 없나 검사
-        if (!dateContent.equals("")                             // date
-                && !targetScoreContent.equals("")               // target score
-                && !specialityContent.equals("")                // speciality
-                && !playTimeContent.equals("")                  // playtime
-                && !winnerContent.equals("")                    // winner
-                && !scoreContent.equals("")                     // score
-                && !costContent.equals("")) {                   // cost
+            // [iv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+            writeDb = super.getDbOpenHelper().getWritableDatabase();
 
-            // ContentValues : 매개변수의 내용을 insertValues 에 셋팅하기
-            ContentValues insertValues = new ContentValues();
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, dateContent);                           // 1. date
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);            // 2. target score
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SPECIALITY, specialityContent);               // 3. speciality
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTimeContent);                  // 4. play time
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER, winnerContent);                       // 5. winner
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                         // 6. score
-            insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                           // 7. cost
+            // [check 2] : 매개변수의 형식이 맞는 지 검사한다.
+            if (!dateContent.equals("")                             // 1. date
+                    && (targetScoreContent > 0)                     // 2. target score          -- 0 보다 큰
+                    && !specialityContent.equals("")                // 3. speciality
+                    && (playTimeContent > 0)                        // 4. playtime              -- 0 보다 큰
+                    && !winnerContent.equals("")                    // 5. winner
+                    && !scoreContent.equals("")                     // 6. score
+                    && (costContent > 0)) {                         // 7. cost                  -- 0 보다 큰
 
-            /*  해당 billiard 테이블에 내용 insert
-                nullColumnHack 이 'null'로 지정 되었다면?       values 객체의 어떤 열에 값이 없으면 지금 내용을 insert 안함.
-                               이 '열 이름'이 지정 되었다면?    해당 열에 값이 없으면 null 값을 넣는다.*/
+                // [iv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
+                ContentValues insertValues = new ContentValues();
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, dateContent);                             // 1. date
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);              // 2. target score
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SPECIALITY, specialityContent);                 // 3. speciality
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTimeContent);                    // 4. play time
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER, winnerContent);                         // 5. winner
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                           // 6. score
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                             // 7. cost
 
-            // newRowId는 데이터베이스에 insert 가 실패하면 '-1'을 반환하고, 성공하면 해당 '행 번호'를 반환한다.
-            newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
+                // [iv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.
+                newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
 
-            // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
-            if (newRowId == -1) {
-                // 데이터 insert 실패
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_load] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
-                return newRowId;
+                // [check 2] : newRowId 값이 어떤 값이진 구분하여 결과를 반환한다.
+                if (newRowId == -1) {
+
+                    // 데이터 insert 실패
+                    DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    return newRowId;
+
+                } else {
+                    // 데이터 insert 성공
+                    DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] 입력 성공했습니다. " + newRowId + " 값을 리턴합니다.");
+                } // End of [check 2]
+
             } else {
-                // 데이터 insert 성공
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_load] " + newRowId + " 번째 입력이 성공하였습니다.");
-            }
-        } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] 입력 된 값이 조건에 만족하지 않습니다. : " + newRowId + " 값을 리턴합니다.");
-            return -2;
-        }
+                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] 입력 된 값이 조건에 만족하지 않습니다. : " + newRowId + " 값을 리턴합니다.");
+                return -2;
+            } // [check 2]
 
-        // SQLiteDatabase : close
+        } else {
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        // [iv/C]SQLiteDatabase : close
         writeDb.close();
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[save_content] The method is complete");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] The method is complete");
         return newRowId;
-    }
+    } // End of method [saveContents]
 
+
+    /**
+     * [method] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 billiard 테이블에 저장된 데이터를 가져온다.
+     *
+     * <p>
+     * project_blue.db 의 billiard 테이블에 데이터를 select query 문을 실행한다.
+     *
+     * <p>
+     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
+     *
+     * @return billiard 테이블에 저장된 모든 데이터
+     */
     /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
-    public ArrayList<BilliardData> load_contents() {
-        /*
-         * =====================================================
-         * billiard table select query
-         * -    billiardDbHelper 를 통해 readable 으로 받아온 SQLiteDatabase 를 이용하여
-         *      project_blue.db 의 billiard 테이블의 모든 내용을 읽어온다.
-         * - return : 읽어온 내용이 담기 ArrayList<BilliardData>
-         * =====================================================
-         * */
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[load_contents] The method is executing........");
+    public ArrayList<BilliardData> loadAllContent() {
 
-        // SQLiteDatabase : read database - billiardDbHelper 를 통해 read 용으로 가져오기
-        SQLiteDatabase readDb = billiardDbHelper.getReadableDatabase();
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] The method is executing........");
 
-        // Cursor : 해당 쿼리문으로 읽어온 테이블 내용을 Cursor 객체를 통해 읽을 수 있도록 하기
-        Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
+        // [iv/C]SQLiteDatabase : 이 method 에서 참조하기 위한 객체 선언
+        SQLiteDatabase readDb = null;
 
-        // ArrayList<BilliardData> : BilliardData 객체를 담을 ArrayList 객체 생성 - 한 행을 BilliardData 객체에 담는다.
+        // [iv/C]ArrayList<BilliardDataT> : billiard 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
-        // cycle : Cursor 객체의 다음 내용이 있을 때 마다 체크하여 모두 billiardDataArrayList 에 담는다.
-        while (cursor.moveToNext()) {
-            // BilliardData : cursor 에서 읽어 온 내용(한 행)을 billiardData 에 담는다.
-            BilliardData billiardData = new BilliardData();
-            billiardData.setId(cursor.getLong(0));
-            billiardData.setDate(cursor.getString(1));
-            billiardData.setTargetScore(cursor.getString(2));
-            billiardData.setSpeciality(cursor.getString(3));
-            billiardData.setPlayTime(cursor.getString(4));
-            billiardData.setWinner(cursor.getString(5));
-            billiardData.setScore(cursor.getString(6));
-            billiardData.setCost(cursor.getString(7));
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
 
-            // ArrayList<BilliardData> : 위 의 내용을 배열 형태로 담아둔다.
-            billiardDataArrayList.add(billiardData);
-        }
+            // [iv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+            readDb = super.getDbOpenHelper().getReadableDatabase();
 
-        // SQLiteDatabase : close
+            // [iv/C]Cursor : select query 문의 실행 결과가 담길 Cursor
+            Cursor cursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_ALL_CONTENT, null);
+
+            // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
+            while (cursor.moveToNext()) {
+
+                // [iv/C]BilliardData : billiard 테이블의 '한 행'의 정보를 담는다.
+                BilliardData billiardData = new BilliardData();
+                billiardData.setCount(cursor.getLong(0));
+                billiardData.setDate(cursor.getString(1));
+                billiardData.setTargetScore(cursor.getInt(2));
+                billiardData.setSpeciality(cursor.getString(3));
+                billiardData.setPlayTime(cursor.getInt(4));
+                billiardData.setWinner(cursor.getString(5));
+                billiardData.setScore(cursor.getString(6));
+                billiardData.setCost(cursor.getInt(7));
+
+                // [iv/C]ArrayList<BilliardData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
+                billiardDataArrayList.add(billiardData);
+
+            } // [cycle 1]
+
+        } else {
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        // [iv/C]SQLiteDatabase : close
         readDb.close();
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] The method is complete!");
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[load_contents] The method is complete!");
-
-        // return : 모든 내용이 담김 billiardDataArrayList 를 반환한다. ArrayList 의 size 값으로 뿌려줄지 말지 check 한다.
         return billiardDataArrayList;
-    }
+    } // End of method [loadAllContent]
 
-    /* method : delete,  */
-    public void delete_contents() {
+
+    /**
+     * [method] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 billiard 테이블의 모든 내용을 삭제한다.
+     *
+     * <p>
+     * project_blue.db 의 billiard 테이블에 데이터를 delete query 문을 실행한다.
+     *
+     * <p>
+     * 반환 값
+     * '-1' : 데이터베이스 문재 발생
+     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
+     *
+     * @return billiard 테이블의 데이터를 삭제한 개수 or 실패
+     */
+    public int deleteAllContent() {
         /*
          * =========================================================================================
          * billiard table select query
@@ -196,41 +211,80 @@ public class BilliardDbManager {
          *      project_blue.db 에서 billiard 테이블의 모든 내용을 delete 한다.
          * =========================================================================================
          * */
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] The method is executing............");
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] The method is executing............");
 
-        // SQLiteDatabase : write database - billiardDbHelper 를 write 용으로 가져오기
-        SQLiteDatabase deleteDb = billiardDbHelper.getWritableDatabase();
+        // [iv/C]SQLiteDatabase : 이 method 에서 참조하기 위한 객체 선언
+        SQLiteDatabase deleteDb = null;
 
-        // SQLiteDatabase : 모든 내용 삭제
-        int result = deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, null, null);
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] 데이터베이스 delete 실행 결과 : " + result);
+        // [iv/l]methodResult : 이 메소드의 결과 값 저장
+        int methodResult = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [iv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+            deleteDb = super.getDbOpenHelper().getWritableDatabase();
+
+            // [iv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
+            methodResult = deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, null, null);
+
+        } else {
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
 
         // SQLiteDatabase : close
         deleteDb.close();
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] The method is complete.");
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[delete_contents] The method is complete.");
-    }
+        return methodResult;
+    } // End of method [deleteAllContent]
 
-    /* method : billiardDbHelper close */
-    public void closeBilliardDbHelper() {
-        if (initDb) {
-            billiardDbHelper.close();
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper is closed.");
+    /**
+     * [method] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 billiard 테이블의 count 행의 내용을 삭제한다.
+     *
+     * <p>
+     * project_blue.db 의 billiard 테이블에 데이터를 delete query 문을 실행한다.
+     *
+     * <p>
+     * 반환 값
+     * '-1' : 데이터베이스 문재 발생
+     * '1' : 데이터베이스 delete query 실행 성공 - 삭제한 데이터는 1개 이므로
+     *
+     * @return billiard 테이블의 count 행 데이터를 삭제한 결과
+     */
+    public int deleteContent(long count) {
+        /*
+         * =========================================================================================
+         * billiard table select query
+         * -    billiardDbHelper 를 통해 writable 으로 받아온 SQLiteDatabase 를 이용하여
+         *      project_blue.db 에서 billiard 테이블의 모든 내용을 delete 한다.
+         * =========================================================================================
+         * */
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] The method is executing............");
+
+        // [iv/C]SQLiteDatabase : 이 method 에서 참조하기 위한 객체 선언
+        SQLiteDatabase deleteDb = null;
+
+        // [iv/l]methodResult : 이 메소드의 결과 값 저장
+        int methodResult = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [iv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+            deleteDb = super.getDbOpenHelper().getWritableDatabase();
+
+            // [iv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
+            methodResult = deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, "count="+count, null);
+
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[closeBilliardDbHelper] billiardDbHelper 가 초기화되지 않았습니다.");
-        }
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
 
-    }
+        // SQLiteDatabase : close
+        deleteDb.close();
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] The method is complete.");
 
-
-    /*                                      private method
-     * =============================================================================================
-     * =============================================================================================
-     * */
-    /* method : display, toast 메시지 출력 */
-    private void toastHandler(String content) {
-        Toast myToast = Toast.makeText(targetContext, content, Toast.LENGTH_SHORT);
-        myToast.show();
-    }
+        return methodResult;
+    } // End of method [deleteAllContent]
 }
-

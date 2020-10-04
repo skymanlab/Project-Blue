@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
-import com.skyman.billiarddata.management.billiard.database.BilliardTableSettingT;
 import com.skyman.billiarddata.management.friend.database.FriendTableSetting;
 import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
@@ -28,7 +27,7 @@ import com.skyman.billiarddata.management.user.database.UserTableSetting;
  * - onCreate method 는 DATABASE_MAME 의 db 파일이 없을 때 불려지는 콜백 함수이다.
  * - onUpgrade method 는 DATABASE_VERSION 이 상위 버전으로 변경되면 불려지는 콜백 함수이다.
  * - onDowngrade method 는 DATABASE_VERSION 이 하위 버전으로 변경되면 불려지는 콜백 함수이다.
- * - onOpen method 는 DATABASE_NAME 의 db를 열었을 때 불려지는 콜백함수이다.
+ * - onOpen method 는 getWriteableDatabase 나 getReadableDatabase method 를 실행하여 SQLiteDatabase 객체를 생성했을 때 실행 되는 콜백 함수이다.
  * <p>
  * 이 클래스로 Open 한 db 는 getReadableDatabase 와 getWriteableDatabase method 를 이용하여 SQLiteDatabase 객체를 반환한다.
  * 위 의 SQLiteDatabase 객체를 이용하여 해당 db 의 테이블의 내용을 create, insert, select, update, delete 문을 이용하여 사용할 수 있다.
@@ -48,7 +47,7 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
         // project_blue.db 를 생성하면서 모든 테이블을 생성한다. billiard, user 테이블을 생성한다.
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The method is executing........");
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db is not exist.");
-        db.execSQL(BilliardTableSettingT.SQL_CREATE_TABLE);                // billiard
+        db.execSQL(BilliardTableSetting.SQL_CREATE_TABLE);                // billiard
         db.execSQL(UserTableSetting.SQL_CREATE_ENTRIES);                    // user
         db.execSQL(FriendTableSetting.SQL_CREATE_ENTRIES);                  // friend
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db has been created.");
@@ -65,7 +64,7 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
         // project_blue.db 버전 업그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 업그레이드 된 테이블을 생성한다.
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] The method is executing........");
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] The project_blue.db is upgrading.");
-        db.execSQL(BilliardTableSettingT.SQL_DROP_TABLE_IF_EXISTS);                // billiard
+        db.execSQL(BilliardTableSetting.SQL_DROP_TABLE_IF_EXISTS);                // billiard
         db.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);                    // user
         db.execSQL(FriendTableSetting.SQL_DELETE_ENTRIES);                  // friend
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] already existed table delete.");

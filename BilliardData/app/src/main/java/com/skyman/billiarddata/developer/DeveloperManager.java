@@ -22,7 +22,7 @@ public final class DeveloperManager {
     /* method : billiardData 보기 */
     public static void displayToBilliardData(String className, BilliardData billiardData) {
         if(billiardData != null) {
-            Log.d(className, "0. id : " + billiardData.getId());                                // 0. count
+            Log.d(className, "0. id : " + billiardData.getCount());                             // 0. count
             Log.d(className, "1. date : " + billiardData.getDate());                            // 1. date
             Log.d(className, "2. target score : " + billiardData.getTargetScore());             // 2. target score
             Log.d(className, "3. speciality : " + billiardData.getSpeciality());                // 3. speciality

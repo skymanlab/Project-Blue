@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class ProjectBlueDataFormatter {
 
-    // constant
+    // class constant
     public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
 
     /* method : formatter, 스코어 형태로 문자열 만들기 - #:# */
@@ -38,6 +38,14 @@ public class ProjectBlueDataFormatter {
         return playTimeData.toString();
     }
 
+    /* method : formatter, 게임 시간 형태로 문자열 만들기 - ## 분 */
+    public static String setFormatToPlayTime(int playTime) {
+        StringBuilder playTimeData = new StringBuilder();
+        playTimeData.append(playTime);
+        playTimeData.append(" 분");
+        return playTimeData.toString();
+    }
+
     /* method : formatter, 가격 형태로 문자열 만들기 - ###,### 원 */
     public static String setFormatToCost(String cost) {
         DecimalFormat wonFormat = new DecimalFormat("###,###");
@@ -45,6 +53,16 @@ public class ProjectBlueDataFormatter {
         long longCost = Long.parseLong(cost);
 
         costData.append(wonFormat.format(longCost));
+        costData.append(" 원");
+        return costData.toString();
+    }
+
+    /* method : formatter, 가격 형태로 문자열 만들기 - ###,### 원 */
+    public static String setFormatToCost(int cost) {
+        DecimalFormat wonFormat = new DecimalFormat("###,###");
+        StringBuilder costData = new StringBuilder();
+
+        costData.append(wonFormat.format(cost));
         costData.append(" 원");
         return costData.toString();
     }

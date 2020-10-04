@@ -9,26 +9,30 @@ import java.util.ArrayList;
 
 public class BilliardLvManager {
 
-    // variable : list view adapter 객체 선언
+    // instance variable : list view adapter 객체 선언
     private BilliardLvAdapter billiardLvAdapter;
 
-    // variable : target list view 객체 선언
+    // instance variable : target list view 객체 선언
     private ListView activityTargetListView;
 
+    // constructor
     public BilliardLvManager(ListView activityTargetListView) {
         this.billiardLvAdapter = new BilliardLvAdapter();
         this.activityTargetListView = activityTargetListView;
     }
 
-    /* method : list view adapter, 받아온 내용을 adapter를 통해 dataList 에 뿌려 준다.*/
-    public void setListViewToAllBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
 
-        DeveloperManager.displayLog("[LvM] BilliardLvManager", "[setListViewToAllBilliardDat] The method is executing........");
+    /**
+     * [method] adapter 를 통해 custom list view layout 과 모든 billiard 데이터와 연결하여 화면에 뿌려준다.
+     *
+     */
+    public void displayListViewOfBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
+        DeveloperManager.displayLog("[LvM]_BilliardLvManager", "[setListViewToAllBilliardDat] The method is executing........");
 
-        // cycle : Array List add, dataListAdapter 객체의 dataListItems 객체에 DB에서 읽어온 내용 넣기
+        // [cycle 1] : billiardDataArrayList 의 size 만큼 돌며, billiardLvAdapter 의 addItem method 로
         for (int position = 0; position < billiardDataArrayList.size(); position++) {
             billiardLvAdapter.addItem(
-                    billiardDataArrayList.get(position).getId(),                // 0. id
+                    billiardDataArrayList.get(position).getCount(),                // 0. count
                     billiardDataArrayList.get(position).getDate(),              // 1. date
                     billiardDataArrayList.get(position).getTargetScore(),       // 3. target score
                     billiardDataArrayList.get(position).getSpeciality(),        // 4. speciality
@@ -39,7 +43,11 @@ public class BilliardLvManager {
             );
         }
         // set : set adapter, 읽어온 내용을 다 넣고, adapter를 dataList(ListView)에 연결 시키기
+
+        // [iv/C]ListView : billiardLvAdapter 를 list view 에 연결하기
         activityTargetListView.setAdapter(billiardLvAdapter);
-        DeveloperManager.displayLog("[LvM] BilliardDataManager", "[setListViewToAllBilliardDat] The method is complete.");
-    }
+        DeveloperManager.displayLog("[LvM]_BilliardDataManager", "[setListViewToAllBilliardDat] The method is complete.");
+
+    } // End of method [displayListViewOfBilliardData]
+
 }

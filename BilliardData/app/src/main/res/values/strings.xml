@@ -164,19 +164,20 @@
     ===============================================================================================-
     -->
     <!-- Custom ListView : billiard data-->
-    <string name="c_lv_billiard_date_date">xxxx년 xx월 xx일</string>
-    <string name="c_lv_billiard_date_target_score">수지</string>
-    <string name="c_lv_billiard_date_target_score_default">xx</string>
-    <string name="c_lv_billiard_date_speciality">종목</string>
-    <string name="c_lv_billiard_date_speciality_default">3구</string>
-    <string name="c_lv_billiard_date_play_time">경기 시간</string>
-    <string name="c_lv_billiard_date_play_time_default">xxx분 </string>
-    <string name="c_lv_billiard_date_winner">승리자</string>
-    <string name="c_lv_billiard_date_winner_default">xxx</string>
-    <string name="c_lv_billiard_date_score">스코어</string>
-    <string name="c_lv_billiard_date_score_default">xx : xx</string>
-    <string name="c_lv_billiard_date_cost">비용</string>
-    <string name="c_lv_billiard_date_cost_default">xxx,xxx 원</string>
+    <string name="c_lv_billiard_data_count_default">1</string>
+    <string name="c_lv_billiard_data_date">xxxx년 xx월 xx일</string>
+    <string name="c_lv_billiard_data_target_score">수지</string>
+    <string name="c_lv_billiard_data_target_score_default">xx</string>
+    <string name="c_lv_billiard_data_speciality">종목</string>
+    <string name="c_lv_billiard_data_speciality_default">3구</string>
+    <string name="c_lv_billiard_data_play_time">경기 시간</string>
+    <string name="c_lv_billiard_data_play_time_default">xxx분 </string>
+    <string name="c_lv_billiard_data_winner">승리자</string>
+    <string name="c_lv_billiard_data_winner_default">xxx</string>
+    <string name="c_lv_billiard_data_score">스코어</string>
+    <string name="c_lv_billiard_data_score_default">xx : xx</string>
+    <string name="c_lv_billiard_data_cost">비용</string>
+    <string name="c_lv_billiard_data_cost_default">xxx,xxx 원</string>
     <string name="c_lv_billiard_date"></string>
 
     <!-- Custom ListView : friend data -->

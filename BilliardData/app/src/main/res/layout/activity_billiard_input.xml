@@ -233,35 +233,7 @@
                         android:inputType="text|numberDecimal"></EditText>
                 </LinearLayout><!-- End of content 1-4 -->
 
-                <!-- content 1-5. cost -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundSecond"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/billiard_input_cost"
-                        android:textAlignment="textStart"></TextView>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <EditText
-                        android:id="@+id/billiard_input_cost"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text|numberDecimal"></EditText>
-                </LinearLayout><!-- End of content 1-5 -->
-
-                <!-- content 1-6. play time -->
+                <!-- content 1-5. play time -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -287,7 +259,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text|numberDecimal"></EditText>
+                </LinearLayout><!-- End of content 1-5 -->
+
+                <!-- content 1-6. cost -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBackgroundSecond"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/billiard_input_cost"
+                        android:textAlignment="textStart"></TextView>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <EditText
+                        android:id="@+id/billiard_input_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text|numberDecimal"></EditText>
                 </LinearLayout><!-- End of content 1-6 -->
+
+
 
                 <!-- content 1-7. input button -->
                 <Button

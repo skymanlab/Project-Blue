@@ -5,49 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
 
-import java.util.ArrayList;
 
 public class BilliardDisplayActivity extends AppCompatActivity {
 
-    // variable : helper manager 객체 선언
-    private BilliardDbManager billiardDbManager = null;
-
-    // variable : activity 에서 사용하는 객체 선언
-    private ListView allBilliardData;
+    // instance variable
+    private BilliardDBManager billiardDbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
-        // ListView : allBilliardData setting
-        allBilliardData = (ListView) findViewById(R.id.billiard_display_lv_all_billiard_data);
+        // [rv/C]ListView : allBilliardData mapping
+        ListView allBilliardData = (ListView) findViewById(R.id.billiard_display_lv_all_billiard_data);
 
-        // BilliardDbManager : billiardDbManager setting - SQLiteOpenHelper 를 관리하는 클래스
-        billiardDbManager = new BilliardDbManager(this);
-        billiardDbManager.init_db();
+        // [iv/C]BilliardDBManager : billiard 테이블을 관리하는 메니저 생성과 초기화
+        this.billiardDbManager = new BilliardDBManager(this);
+        this.billiardDbManager.initDb();
 
-        // BilliardDbManager : load_contents method - 저장 되어 있는 billiard 데이터를 billiardDbManager 를 통해 가져온다.
-        ArrayList<BilliardData> billiardDataArrayList = billiardDbManager.load_contents();
+        // [rv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결하는 메니저 객체 생성
+        BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
 
-        // check : billiard 테이블에서 가져온 내용이 있다.
-        if(billiardDataArrayList.size() != 0) {
-            // BilliardLvManager : allBilliardData setting - 위에서 가져온 데이터를 allBilliardData 에 뿌려준다.
-            BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
-            billiardLvManager.setListViewToAllBilliardData(billiardDataArrayList);
-        } else {
-            DeveloperManager.displayLog("[Ac] BilliardDisplayActivity", "[billiardDataArrayList] billiardDataArrayList 의 size 가 0 입니다.");
-        }
+        // [rv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결
+        billiardLvManager.displayListViewOfBilliardData(this.billiardDbManager.loadAllContent());
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        billiardDbManager.closeBilliardDbHelper();
+        if (this.billiardDbManager != null) {
+            this.billiardDbManager.closeDb();
+        }
     }
 }

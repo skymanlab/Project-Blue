@@ -13,6 +13,9 @@ import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 
 import java.util.ArrayList;
 
+/**
+ * [class] billiard 테이블의 모든 데이터를 billiardDataArrayList 에 추가 하여 custom list view 에 뿌려주기 위한 작업을 하는 Adapter 이다.
+ */
 public class BilliardLvAdapter extends BaseAdapter {
 
     // variable : list View 에 뿌려줄 데이터가 담긴 array
@@ -53,12 +56,12 @@ public class BilliardLvAdapter extends BaseAdapter {
         * 6. score
         * 7. cost
         * */
-        TextView id = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_id);                              // 0. id
+        TextView count = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_count);                              // 0. count
         TextView date = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_date);                          // 1. date
         TextView target_score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_target_score);          // 2. target score
         TextView speciality = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_speciality);              // 3. speciality
         TextView play_time = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_play_time);                // 4. play time
-        TextView victoree = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner);                    // 5. winner
+        TextView winner = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner);                      // 5. winner
         TextView score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_score);                        // 6. score
         TextView cost = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_cost);                          // 7. cost
 
@@ -66,24 +69,24 @@ public class BilliardLvAdapter extends BaseAdapter {
         BilliardData billiardData = (BilliardData) getItem(position);
 
         /* 각 위젯에 셋팅된 아이템을 뿌려준다. */
-        id.setText(billiardData.getId() +"");                                                               // 0. id
-        date.setText(billiardData.getDate());                                                               // 1. date
-        target_score.setText(billiardData.getTargetScore());                                                // 2. target score
-        speciality.setText(billiardData.getSpeciality());                                                   // 3. speciality
-        play_time.setText(BilliardDataFormatter.setFormatToPlayTime(billiardData.getPlayTime()));           // 4. play time
-        victoree.setText(billiardData.getWinner());                                                         // 5. winner
-        score.setText(billiardData.getScore());                                                             // 6. score
-        cost.setText(BilliardDataFormatter.setFormatToCost(billiardData.getCost()));                        // 7. cost
+        count.setText(billiardData.getCount() +"");                                                                // 0. count
+        date.setText(billiardData.getDate());                                                                   // 1. date
+        target_score.setText(billiardData.getTargetScore()+"");                                                 // 2. target score
+        speciality.setText(billiardData.getSpeciality());                                                       // 3. speciality
+        play_time.setText(BilliardDataFormatter.setFormatToPlayTime(billiardData.getPlayTime()));               // 4. play time
+        winner.setText(billiardData.getWinner());                                                               // 5. winner
+        score.setText(billiardData.getScore());                                                                 // 6. score
+        cost.setText(BilliardDataFormatter.setFormatToCost(billiardData.getCost()));                            // 7. cost
 
         return convertView;
     }
 
     // method : billiard 테이블에서 읽어온 내용을 ArrayList<BilliardData> 에 추가한다.
-    public void addItem(long id, String date, String target_score, String speciality, String play_time, String winner, String score, String cost){
+    public void addItem(long count, String date, int target_score, String speciality, int play_time, String winner, String score, int cost){
         BilliardData billiardData = new BilliardData();
 
         /* DataListItem 에 아이템을 setting 한다.*/
-        billiardData.setId(id);
+        billiardData.setCount(count);
         billiardData.setDate(date);
 
         billiardData.setTargetScore(target_score);
