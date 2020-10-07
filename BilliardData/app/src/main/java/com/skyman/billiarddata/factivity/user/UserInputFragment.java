@@ -3,11 +3,6 @@ package com.skyman.billiarddata.factivity.user;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +11,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
@@ -38,30 +37,25 @@ public class UserInputFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     // constant
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 번위
-
-    // variable : activity 의 widget 객체 선언
+    // instance variable
     private EditText name;
     private EditText targetScore;
     private RadioGroup speciality;
     private Button save;
     private Button modify;
     private Button delete;
-
-    // variable : DbManager
+    // instance variable
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
-
-    // variable : Data
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
 
     // constructor
     public UserInputFragment(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
@@ -116,31 +110,16 @@ public class UserInputFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TextView : userName setting
-        name = (EditText) view.findViewById(R.id.f_user_input_name);
+        // [method]mappingOfWidget : fragment_user_input.xml layout 의 widget mapping
+        mappingOfWidget(view);
 
-        // TextView : userTargetScore setting
-        targetScore = (EditText) view.findViewById(R.id.f_user_input_target_score);
-
-        // RadioGroup : userSpeciality setting
-        speciality = (RadioGroup) view.findViewById(R.id.f_user_input_speciality);
-
-        // Button : save setting
-        save = (Button) view.findViewById(R.id.f_user_input_bt_save);
-
-        // Button : modify setting
-        modify = (Button) view.findViewById(R.id.f_user_input_bt_modify);
-
-        // Button : delete setting
-        delete = (Button) view.findViewById(R.id.f_user_input_bt_delete);
-
-        // check : 기존(userData)의 내용이 있는지 검사
+        // [check 1] : user 의 데이터가 있다.
         if (userData != null) {
-            // userData is exist.
-            setWidget(view);
+            setWidgetWithUserData(view);
         } else {
-            // userData is not exist.
-        }
+            DeveloperManager.displayLog("[F]_UserInputFragment", "[onViewCreated] 나의 userData 데이터가 없습니다.");
+        } // [check 1]
+
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,34 +247,111 @@ public class UserInputFragment extends Fragment {
      *   ============================================================================================
      *  */
 
-    /* method : display, toast 메시지 출력 */
-    private void toastHandler(View view, String content) {
-        Toast myToast = Toast.makeText(view.getContext(), content, Toast.LENGTH_SHORT);
-        myToast.show();
-    }
+    /**
+     * [method] activity_billiard_input.xml 의 widget 을 mapping(뜻: 하나의 값을 다른 값으로 대응시키는 것을 말한다.)
+     */
+    private void mappingOfWidget(View view) {
 
-    /* method : userData 이 null 이 아닐 때  */
-    private void setWidget(View view) {
-        // TextView : name - userData 의 name 으로 채우기
+        // [iv/C]TextView : name mapping
+        name = (EditText) view.findViewById(R.id.f_user_input_name);
+
+        // [iv/C]TextView : targetScore mapping
+        targetScore = (EditText) view.findViewById(R.id.f_user_input_target_score);
+
+        // [iv/c]RadioGroup : speciality mapping
+        speciality = (RadioGroup) view.findViewById(R.id.f_user_input_speciality);
+
+        // [iv/C]Button : save mapping
+        save = (Button) view.findViewById(R.id.f_user_input_bt_save);
+
+        // [iv/C]Button : modify mapping
+        modify = (Button) view.findViewById(R.id.f_user_input_bt_modify);
+
+        // [iv/C]Button : delete mapping
+        delete = (Button) view.findViewById(R.id.f_user_input_bt_delete);
+
+    } // End of method [mappingOfWidget]
+
+
+    /**
+     * [method] UserData 가 있어서 화면 재설정한다. 입력 값들은 userData 의 값으로, 버튼들은 비활성화 활성화
+     *
+     * <p>
+     * UserData 의 getName 을 name EditText 에 설정한다.
+     * UserData 의 getTargetScore 을 targetScore EditText 에 설정한다.
+     * UserData 의 getSpeciality 을 speciality Spinner 의 선택 값으로 설정한다.
+     * save Button 은 새로운 UserData 를 만들지 못하게 한다(버튼 비활성화). disable 로 만들고, R.color.colorWidgetDisable 색으로 변경한다.
+     * modify Button 은 UserData 의 값을 변경할 수 있도록 한다(버튼 활성화). enable 로 만들고, R.color.colorBackgroundPrimary 색으로 변경한다.
+     *
+     * <p>
+     *     버튼 활성화 색 : R.color.colorBackgroundPrimary
+     *     버튼 비활성화 색 : R.color.colorWidgetDisable
+     */
+    private void setWidgetWithUserData(View view) {
+
+        // [iv/C]Text : userData 의 getName 으로 셋팅
         name.setText(userData.getName());
 
-        // TextView : targetScore - userData 의 targetScore 으로 채우기
-        targetScore.setText(Integer.toString(userData.getTargetScore()));
+        // [iv/C]Text : userData 의 getTargetScore 으로 셋팅 / targetScore 의 variable type 는 int 이다. setText 는 String 으로 해야 하므로 +"" 으로 String 으로 변경한다.
+        targetScore.setText(userData.getTargetScore() +"");
 
-        // RadioGroup : userData 에 저장된 값과 같은 RadioButton 선택
-        setCheckedRadioButton(view, userData.getSpeciality());
-        DeveloperManager.displayLog("[F] UserInput", "[setWidget] 선택 된 주종목 : " + userData.getSpeciality());
+        // [iv/C]Text : userData 의 getSpeciality 로 셋팅
+        setCheckedRadioButtonWithUserData(view, userData.getSpeciality());
 
-        // Button : save disable setting - background 와 enabled 를 true
+        // [iv/C]Button : save 버튼을 disable 하고, R.color.colorWidgetDisable 로 비활성화 상태로 변경
         save.setBackgroundResource(R.color.colorWidgetDisable);
         save.setEnabled(false);
+        DeveloperManager.displayLog("[F]_UserInputFragment", "[setWidget] save button 을 비활성화 상태로 변경하였습니다.");
 
-        // Button : modify enable setting - background 와 enabled 를 false
+
+        // [iv/C]Button : modify 버튼을 enable 하고, R.color.colorBackgroundPrimary 로 활성화 상태로 변경
         modify.setBackgroundResource(R.color.colorBackgroundPrimary);
         modify.setEnabled(true);
+        DeveloperManager.displayLog("[F]_UserInputFragment", "[setWidget] modify button 을 활성화 상태로 변경하였습니다.");
 
-        DeveloperManager.displayLog("[F] UserInput", "[setWidget] 모든 셋팅이 완료 되었습니다.");
-    }
+    } // End of method [setWidget]
+
+
+    /**
+     * [method] userData 의 getSpeciality 값으로 RadioButton 을 찾아서 check 하기
+     *
+     * @param view onViewCreated 의 view 매개변수
+     * @param specialityContent userData 의 getSpeciality 값
+     *
+     */
+    private void setCheckedRadioButtonWithUserData(View view, String specialityContent) {
+
+        // [lv/C]RadioButton : RadioGroup 에 속해있는 RadioButton widget mapping 하기
+        RadioButton specialityThreeCushion = (RadioButton) view.findViewById(R.id.f_user_input_speciality_three_cushion);
+        RadioButton specialityFourBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_four_ball);
+        RadioButton specialityPocketBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_pocket_ball);
+
+        // [check 1] : specialityContent 를 구분하여 그에 맞는 RadioButton 을 체크된 상태로 바꾸기
+        switch (specialityContent) {
+            case "3구":
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 3구가 선택되었습니다.");
+                specialityThreeCushion.setChecked(true);
+                break;
+            case "4구":
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 4구가 선택되었습니다.");
+                specialityFourBall.setChecked(true);
+                break;
+            case "포켓볼":
+                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 포켓볼이 선택되었습니다.");
+                specialityPocketBall.setChecked(true);
+                break;
+        } // [check 1]
+        
+    } // End of method [setCheckedRadioButtonWithUserData]
+
+
+    /**
+     * [method] UserData 가 없을 때(=null) 모든 값을 입력 받아 user 테이블에 해당 userData 의 초기값으로 저장한다.
+     *
+     */
+    
+
+
 
     /* method : targetScore 의 입력 값이 MIN_RANGE < targetScore < MAX_RANGE 사이인지 확인 */
     private boolean checkTargetScoreRange() {
@@ -321,25 +377,13 @@ public class UserInputFragment extends Fragment {
         }
     }
 
-    /* method : RadioGroup 에서 특정 RadioButton 에 setCheck(true) 로 만들기*/
-    private void setCheckedRadioButton(View view, String specialityContent) {
-        RadioButton specialityThreeCushion = (RadioButton) view.findViewById(R.id.f_user_input_speciality_three_cushion);
-        RadioButton specialityFourBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_four_ball);
-        RadioButton specialityPocketBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_pocket_ball);
 
-        switch (specialityContent) {
-            case "3구":
-                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 3구가 선택되었습니다.");
-                specialityThreeCushion.setChecked(true);
-                break;
-            case "4구":
-                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 4구가 선택되었습니다.");
-                specialityFourBall.setChecked(true);
-                break;
-            case "포켓볼":
-                DeveloperManager.displayLog("[F] UserInput", "[setCheckedRadioButton] 포켓볼이 선택되었습니다.");
-                specialityPocketBall.setChecked(true);
-                break;
-        }
+
+
+    /* method : display, toast 메시지 출력 */
+    private void toastHandler(View view, String content) {
+        Toast myToast = Toast.makeText(view.getContext(), content, Toast.LENGTH_SHORT);
+        myToast.show();
     }
+
 }

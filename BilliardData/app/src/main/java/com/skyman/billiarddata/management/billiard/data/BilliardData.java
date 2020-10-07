@@ -9,13 +9,14 @@ public class BilliardData implements Serializable {
 
     // instance variable : desc
     private long count;                 // 0. count
-    private String date;                // 1. date
-    private int targetScore;            // 2. target score
-    private String speciality;          // 3. speciality
-    private int playTime;               // 4. play time
-    private String winner;              // 5. winner
-    private String score;               // 6. score
-    private int cost;                   // 7. cost
+    private long userId;                // 1. user id
+    private String date;                // 2. date
+    private int targetScore;            // 3. target score
+    private String speciality;          // 4. speciality
+    private int playTime;               // 5. play time
+    private String winner;              // 6. winner
+    private String score;               // 7. score
+    private int cost;                   // 8. cost
 
     // method : getter, setter
     public long getCount() {
@@ -24,6 +25,14 @@ public class BilliardData implements Serializable {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getDate() {

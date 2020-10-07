@@ -14,18 +14,18 @@ import java.util.ArrayList;
 
 public class UserPagerAdapter extends FragmentStatePagerAdapter {
 
-    // variable : UserManager 로 부터 받은 UserData 객체를 담을 객체 선언
+    // instance variable
     private UserDbManager userDbManager;
-    private UserData userData;
     private FriendDbManager friendDbManager;
+    private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
+    public UserPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, FriendDbManager friendDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
         super(fm);
         this.userDbManager = userDbManager;
-        this.userData = userData;
         this.friendDbManager = friendDbManager;
+        this.userData = userData;
         this.friendDataArrayList = friendDataArrayList;
     }
 
@@ -41,7 +41,7 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new UserInfoFragment(userDbManager, userData, friendDbManager, friendDataArrayList);
             case 2:
-                return new UserFriendFragment(userDbManager, userData, friendDbManager);
+                return new UserFriendFragment(friendDbManager, userData, friendDataArrayList);
             default:
                 return null;
         }

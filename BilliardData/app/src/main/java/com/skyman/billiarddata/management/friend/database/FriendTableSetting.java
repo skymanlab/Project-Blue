@@ -2,9 +2,11 @@ package com.skyman.billiarddata.management.friend.database;
 
 import android.provider.BaseColumns;
 
+import com.skyman.billiarddata.management.user.database.UserTableSetting;
+
 public class FriendTableSetting {
 
-    // constant : sql query, create table setting
+    // class constant : create table
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Entry.TABLE_NAME + " (" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +                      // 0. id                - integer
@@ -15,16 +17,22 @@ public class FriendTableSetting {
                     Entry.COLUMN_NAME_RECENT_PLAY_DATE + " TEXT, " +            // 5. recent play date  - text
                     Entry.COLUMN_NAME_TOTAL_PLAY_TIME + " INTEGER, " +          // 6. total play time   - integer
                     Entry.COLUMN_NAME_TOTAL_COST + " INTEGER )";                // 7. total cost        - integer
+
+    // class constant : if exists drop table
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME ;
 
-    // constant : sql query, select table setting
+    // class constant : select - all content
     public static final String SQL_SELECT_TABLE_ALL_ITEM =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
-    // constant : sql query, where select
-    public static final String SQL_SELECT_TABLE_WHERE_ID =
-            "SELECT * FROM " + Entry.TABLE_NAME + "WHERE ID=";
+    // class constant : select - where id
+    public static final String SQL_SELECT_WHERE_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + "=";
+
+    // class constant : select - where user id
+    public static final String SQL_SELECT_WHERE_USER_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_USER_ID + "=";
 
     // constructor : private
     private FriendTableSetting() {

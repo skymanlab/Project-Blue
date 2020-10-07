@@ -48,7 +48,7 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The method is executing........");
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db is not exist.");
         db.execSQL(BilliardTableSetting.SQL_CREATE_TABLE);                // billiard
-        db.execSQL(UserTableSetting.SQL_CREATE_ENTRIES);                    // user
+        db.execSQL(UserTableSetting.SQL_CREATE_TABLE);                    // user
         db.execSQL(FriendTableSetting.SQL_CREATE_ENTRIES);                  // friend
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db has been created.");
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onCreate] billiard table has been created.");
@@ -65,7 +65,7 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] The method is executing........");
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] The project_blue.db is upgrading.");
         db.execSQL(BilliardTableSetting.SQL_DROP_TABLE_IF_EXISTS);                // billiard
-        db.execSQL(UserTableSetting.SQL_DELETE_ENTRIES);                    // user
+        db.execSQL(UserTableSetting.SQL_DROP_TABLE_IF_EXISTS);                    // user
         db.execSQL(FriendTableSetting.SQL_DELETE_ENTRIES);                  // friend
         DeveloperManager.displayLog("[DbH] ProjectBlueDatabaseHelper", "[onUpgrade] already existed table delete.");
         onCreate(db);

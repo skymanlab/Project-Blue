@@ -17,9 +17,9 @@ public final class ProjectBlueDBInfo {
     // class variable = static variable = class member = static member = class filed = static filed = (keyword) static
 
     // class constant = static final variable = constant = (keyword) static final
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "project_blue.db";
-    public static final String TABLES_NAME = "billiard, user, friend";
+    public static final String TABLES_NAME = "billiard, user, friend, player";
 
     // class method = static method = (keyword) static
 

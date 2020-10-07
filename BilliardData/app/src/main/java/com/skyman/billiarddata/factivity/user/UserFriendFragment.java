@@ -35,6 +35,16 @@ import java.util.ArrayList;
  */
 public class UserFriendFragment extends Fragment {
 
+    // instance variable
+    private FriendDbManager friendDbManager;
+    private UserData userData;
+    private ArrayList<FriendData> friendDataArrayList;
+
+    // instance variable
+    private ListView allFriendData;
+    private EditText name;
+    private Button friendAdd;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,24 +54,13 @@ public class UserFriendFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    // variable : widget
-    private ListView allFriendData;
-    private EditText name;
-    private Button friendAdd;
 
-    // variable : DbManager
-    private UserDbManager userDbManager;
-    private FriendDbManager friendDbManager;
-
-    // variable : Data
-    private UserData userData;
-    private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserFriendFragment(UserDbManager userDbManager, UserData userData, FriendDbManager friendDbManager) {
-        this.userDbManager = userDbManager;
+    public UserFriendFragment( FriendDbManager friendDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
         this.userData = userData;
         this.friendDbManager = friendDbManager;
+        this.friendDataArrayList = friendDataArrayList;
     }
 
     public UserFriendFragment() {
@@ -171,12 +170,12 @@ public class UserFriendFragment extends Fragment {
         });
 
         // ListView : 받아온 내용을 FriendLvManager 를 이용하여
-        FriendLvManager friendLvManager = new FriendLvManager(allFriendData);
+        FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
         friendDataArrayList = friendDbManager.load_contents();
 
         // ArrayList<FriendData> : 내용을 넣기
         if(friendDataArrayList.size() != 0){
-            friendLvManager.setListViewToAllFriendData(friendDataArrayList);
+            friendLvManager.setListViewOfFriendData(friendDataArrayList);
         } else {
             DeveloperManager.displayLog("[F] UserFriend", "[friendDataArrayList] 저장 된 친구가 없습니다.");
         }

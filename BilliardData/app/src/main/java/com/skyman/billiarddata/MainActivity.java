@@ -1,13 +1,13 @@
 package com.skyman.billiarddata;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
@@ -19,68 +19,42 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    /*
-     * 용어 정리
-     * 1. declaration = 선언
-     * 2. create = 생성됨
-     * 3. colon = :
-     * */
-
-    // variable : FriendDbManager
-    private FriendDbManager friendDbManager;
-    private ArrayList<FriendData> friendDataArrayList;
-
-    // variable : UserDbManager
+    // instance variable
     private UserDbManager userDbManager;
+    private FriendDbManager friendDbManager;
     private UserData userData;
+    private ArrayList<FriendData> friendDataArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // FriendDbManager : 친구 목록을 가져오기 위한
-        friendDbManager = new FriendDbManager(this);
-        friendDbManager.init_db();
-
-        // UserDbManager : 입력된 정보가 있는지 검사
-        userDbManager = new UserDbManager(this);
-        userDbManager.init_db();
-        userData = userDbManager.load_content();
-
-        // Button : object declaration
+        // [lv/C]Button : billiardInput mapping
         Button billiardInput = (Button) findViewById(R.id.main_bt_billiard_input);
         Button billiardDisplay = (Button) findViewById(R.id.main_bt_billiard_display);
         Button userManager = (Button) findViewById(R.id.main_bt_user_manager);
         Button statisticsManager = (Button) findViewById(R.id.main_bt_statistics_manager);
         Button appInfo = (Button) findViewById(R.id.main_bt_app_info);
 
-        // Button 1 : inputData setting - '데이터 입력'
+        // [method]mappingOfWidget
+        mappingOfWidget();
+
+        // [iv/C]UserData : user 테이블에서 id 값으로 데이터 가져오기 / 현재는 혼자 이므로 id 는 1
+        this.userData = this.userDbManager.loadContent(1);
+        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(1);
+
+        // [lv/C]Button : billiardInput click listener setting
         billiardInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // FriendData : friendDbManager 에서 load_contents 로 불러온 내용이 담길 배열
-                friendDataArrayList = friendDbManager.load_contents();
 
-                // check : 나의 정보가 있을 때
-                if (userData != null) {
-                    // check : friend 테이블에 저장 된 내용이 있다.
-                    if (friendDataArrayList.size() != 0) {
-                        // AlertDialog : Builder 로 생성
-                        DeveloperManager.displayLog("[Ac] MainActivity", "[inputData button] 모든 정보가 입력되어 친구를 선택합니다.");
-                        showAlertToFriendList();
-                    } else {
-                        // method : 저장 된 친구가 없다.
-                        showAlertToFriendData();
-                    }
-                } else {
-                    // method : 저장 된 나의 정보가 없을 때
-                    showAlertToUserData();
-                }
+                // [method]showDialogOfCheckFriend : 유저 정보와 친구 목록이 있을 때, 친구를 선택해서 intent 에 저장하여 BilliardInputActivity 로 이동한다.
+                setClickListenerOfBilliardInputButton();
             }
         });
 
-        // Button 2 : viewDAta setting - '데이터 보기'
+        // [lv/C]Button : billiardDisplay click listener setting
         billiardDisplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Button 3 : userManager setting - '나의 정보'
+        // [lv/C]Button : userManager click listener setting
         userManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Button 5 : statistics setting - '통계 정보'
+        // [lv/C]Button : statistics click listener setting
         statisticsManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Button 4 : appInfo setting - '어플 정보'
+        // [lv/C]Button : appInfo click listener setting
         appInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,73 +89,171 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+    } // End of method [onCreate]
+
 
     @Override
     protected void onStart() {
         super.onStart();
+        DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] 메소드가 실행하였습니다.");
 
-        // UserData : 다시 userData 받아오기
-        userData = userDbManager.load_content();
+        // [check 1] : UserDbManager 가 생성되었다.
+        if (this.userDbManager != null) {
 
-    }
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] userData 를 가져올 준비가 되었습니다.");
+            // [iv/C]UserData : 뒤로 가기로 왔을 때 userData 다시 가져오기
+            this.userData = this.userDbManager.load_content();
+
+        } // [check 1]
+
+    } // End of method [onStart]
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        userDbManager.closeUserDbHelper();
-        friendDbManager.closeFriendDbHelper();
-    }
+
+        // [check 1] : userDbManager 가 생성되었다.
+        if (this.userDbManager != null) {
+            // [iv/C]UserDbManager : close
+            this.userDbManager.closeUserDbHelper();
+        } // [check 1]
+
+        // [check 2] : FriendDbManager 가 생성되었다.
+        if (this.friendDbManager != null) {
+            // [iv/C]FriendDbManager : close
+            this.friendDbManager.closeFriendDbHelper();
+        } // [check 2]
+
+    } // End of method [onDestroy]
 
 
+    /**
+     * [method] user, friend 테이블 관리하는 객체 생성
+     */
+    private void mappingOfWidget() {
 
-    /*                                      private method
-     *   ============================================================================================
-     *  */
+        // [iv/C]UserDbManager : user 테이블을 관리하는 매니저 생성 및 초기화
+        this.userDbManager = new UserDbManager(this);
+        this.userDbManager.initDb();
+        this.userDbManager.init_db();
 
-    /* method : BilliardInputActivity 에 들어가기 전 player 선택 */
-    private void showAlertToFriendList() {
+        // [iv/C]FriendDbManager : friend 테이블을 관리하느 매니저 생성 및 초기화
+        this.friendDbManager = new FriendDbManager(this);
+        this.friendDbManager.initDb();
+        this.friendDbManager.init_db();
+
+    } // End of method [mappingOfWidget]
 
 
-        // ArrayList<String> : 친구 이름만 담길 배열
-        final ArrayList<String> friendList = new ArrayList<>();
+    /**
+     * [method] userDate -> FriendData 의 데이터 유무를 확인하고 모두 존재할 경우만 친구목록을 선택하여 BilliardInputActivity 로 넘어간다.
+     *
+     */
+    private void  setClickListenerOfBilliardInputButton() {
 
-        // cycle : friendDataArrayList 의 size 만큼 돌며, 이름만 friendList 에 담기
+        // [check 1] : userData 가(나의 정보) 있다.
+        if (userData != null) {
+
+            // [iv/C]ArrayList<FriendData> : 나의 친구목록을 모두 받아오기
+            friendDataArrayList = friendDbManager.load_contents();
+
+            // [check 2] : 친구 목록이 있다.
+            if (friendDataArrayList.size() != 0) {
+
+                DeveloperManager.displayLog("[Ac] MainActivity", "[inputData button] 모든 정보가 입력되어 친구를 선택합니다.");
+
+                // [method]showAlertToFriendList : 모든 친구목록을 가져와서 RadioGroup 으로 띄우고, 선택된 친구의 정보를 FriendData 에 담아 intent 로 BilliardInputActivity 로 넘긴다.
+                showDialogOfCheckFriend();
+
+            } else {
+
+                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 친구 목록이 없습니다.");
+
+                // [method]showDialogToCheckWhetherToMoveUMAWithFriendData : 친구 목록이 없으므로 친구를 추가 하도록 UserManagerActivity 로 pageNumber=2(UserFriend) 를 intent 로 넘긴다.
+                showDialogToCheckWhetherToMoveUMAWithFriendData();
+
+            } // [check 2]
+
+        } else {
+
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 나의 정보가 등록되어 있지 않습니다.");
+
+            // [method]showDialogToCheckWhetherToMoveUMAWithUserData : 나의 정보가 없으므로 초기 나의 정보를 저장하도록 UserManagerActivity 로 pageNumber=0(UserInput) 를 intent 로 넘긴다.
+            showDialogToCheckWhetherToMoveUMAWithUserData();
+
+        } // [check 1]
+
+    } // End of method [ setClickListenerOfBilliardInputButton]
+
+
+    /**
+     * [method] 친구목록을 AlertDialog 의 setSingleChoiceItems 를 설정하고, 선택한 값을 intent 로 넘겨준다.
+     *
+     */
+    private void showDialogOfCheckFriend() {
+
+        // [lv/C]ArrayList<String> : 친구 이름만 담길 배열
+        final ArrayList<String> friendNameList = new ArrayList<>();
+
+        // [cycle 1] : friednDataArrayList 에 담긴 name 을 friendNameList 에 담는다.
         for (int position = 0; position < friendDataArrayList.size(); position++) {
-            friendList.add(friendDataArrayList.get(position).getName());
-        }
+            friendNameList.add(friendDataArrayList.get(position).getName());
+        } // [cycle 1]
 
-        // CharSequence[] : friendList 를 AlertDialog>Builder - setSingleChoiceItems 의 매개변수로 넣기 위해 변화
-        final CharSequence[] items = friendList.toArray(new String[friendList.size()]);
+        // [lv/C]CharSequence[] : friendNameList 를 AlertDialog 에 넘길 수 있도록 toArray 로 만들기
+        final CharSequence[] friendNameArray = friendNameList.toArray(new String[friendNameList.size()]);
 
-        // int[] : 선택된 친구의 index 를 받아오기 위한, 초기값은 0
+        // [lv/i]selectedIndex : 선택된 친구의 index 를 받아오기 위한 변수 생성 / 초기값은 0 으로
         final int[] selectedIndex = {0};
 
-        // AlertDialog.Builder : 다이어로그를 셋팅
+        // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
         builder.setTitle(R.string.ad_main_friend_list_title)
-                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(friendNameArray, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        // [lv/i]selectedIndex : 선택 된 RadioButton 의 위치를 담는다.
                         selectedIndex[0] = which;
+
                     }
                 })
                 .setPositiveButton(R.string.ad_main_bt_friend_list_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // check : item 의 size 가 0 이상일때
-                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 친구가 있는지 검사합니다.");
-                        if (items.length > 0) {
-                            DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 모든 친구를 출력합니다.");
-                            DeveloperManager.displayToFriendData("[Ac] MainActivity", friendDataArrayList.get(selectedIndex[0]));
 
-                            // Intent : 선택 된 친구 값을 Intent 에 포함하여 BilliardInputActivity 로 이동합니다.
-                            Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
-                            intent.putExtra("player", friendDataArrayList.get(selectedIndex[0]));
-                            startActivityForResult(intent, 101);
+                        // [check 1] : 유저 정보가 있다. / 다시 한 번 검사하는게 필요있니?
+                        if(userData != null) {
+
+                            // [check 2] : 친구 목록이 있다. / 다시 한 번 검사하는게 필요있니?
+                            if (friendNameArray.length != 0) {
+
+                                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 모든 친구를 출력합니다.");
+                                DeveloperManager.displayToFriendData("[Ac]_MainActivity", friendDataArrayList.get(selectedIndex[0]));
+
+                                // [lv/C]Intent : BilliardInputActivity 로 이동하기 위한 Intent 생성
+                                Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
+
+                                // [lv/C]Intent : selectedIndex 의 FriendData 값을 serialize 화여 Intent 로 넘겨주기
+                                intent.putExtra("player", friendDataArrayList.get(selectedIndex[0]));
+                                intent.putExtra("user", userData);
+                                intent.putExtra("friendDataList", friendDataArrayList);
+                                intent.putExtra("selectedPosition", selectedIndex[0]);
+
+                                // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
+                                startActivityForResult(intent, 101);
+
+                            } else {
+                                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 친구 목록이 없습니다.");
+                            } // [check 2]
+
                         } else {
-                            DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendList] 친구 목록이 없습니다.");
-                        }
+                            DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 나의 정보가 등록되어 있지 않습니다.");
+                        } // [check 1]
+
                     }
                 })
                 .setNegativeButton(R.string.ad_main_bt_friend_list_negative, new DialogInterface.OnClickListener() {
@@ -191,22 +263,36 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-    }
 
-    /* method : AlertDialog - 등록된 유저가 없어서 화면이동을 물어보는  */
-    private void showAlertToUserData(){
-        // AlertDialog.Builder :
+    } // End of method [showDialogOfCheckFriend]
+
+
+    /**
+     * [method] 유저 등록 화면으로 이동할 건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=0 값을 intent 로 넘긴다.
+     *
+     */
+    private void showDialogToCheckWhetherToMoveUMAWithUserData() {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
         builder.setTitle(R.string.ad_main_user_data_title)
                 .setMessage(R.string.ad_main_user_data_message)
                 .setPositiveButton(R.string.ad_main_bt_user_data_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
+
+                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 생성
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+
+                        // [lv/C]Intent : UserManagerActivity 에서 0번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
                         intent.putExtra("pageNumber", 0);
+
+                        // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
                         DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToUserData] 나의 정보가 없어서 등록하러 이동합니다.");
+
                     }
                 })
                 .setNegativeButton(R.string.ad_main_bt_user_data_negative, new DialogInterface.OnClickListener() {
@@ -215,22 +301,36 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-    }
 
-    /* method : AlertDialog - 등록된 친구가 없어서 화면이동을 물어보는  */
-    private void showAlertToFriendData(){
-        // AlertDialog.Builder :
+    } // End of method [showDialogToCheckWhetherToMoveUMAWithUserData]
+
+
+    /**
+     * [method] 친구를 등록 할건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=2 값을 intent 로 넘겨준다.
+     *
+     */
+    private void showDialogToCheckWhetherToMoveUMAWithFriendData() {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
         builder.setTitle(R.string.ad_main_friend_data_title)
                 .setMessage(R.string.ad_main_friend_data_message)
                 .setPositiveButton(R.string.ad_main_bt_friend_data_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
+
+                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 생성
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+
+                        // [lv/C]Intent : UserManagerActivity 에서 2번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
                         intent.putExtra("pageNumber", 2);
+
+                        // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
                         DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendData] 등록된 친구가 없어서 추가하러 이동합니다.");
+
                     }
                 })
                 .setNegativeButton(R.string.ad_main_bt_friend_data_negative, new DialogInterface.OnClickListener() {
@@ -239,5 +339,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-    }
+
+    } // End of method [showDialogToCheckWhetherToMoveUMAWithFriendData]\
+
 }

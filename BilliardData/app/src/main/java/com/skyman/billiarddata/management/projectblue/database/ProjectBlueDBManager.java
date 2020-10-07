@@ -5,7 +5,7 @@ import android.content.Context;
 import com.skyman.billiarddata.developer.DeveloperManager;
 
 /**
- * project_blue.db 의 billiard, user, friend 테이블의 Query 문을 처리하는 메소드들이 있는 관리자 클래스들의 부모 클래스이다.
+ * project_blue.db 의 billiard, user, friend, player 테이블의 Query 문을 처리하는 메소드들이 있는 관리자 클래스들의 부모 클래스이다.
  * 즉, ProjectBlueDBHelper 클래스를 component 의 Context 를 받아 생성하는 역할을 한다.
  *
  * <p>
@@ -28,6 +28,9 @@ public class ProjectBlueDBManager {
         this.isInitializedDB = false;
     }
 
+    public Context getTargetContext() {
+        return targetContext;
+    }
 
     /**
      * [method] isInitializedDB 의 값을 반환한다.

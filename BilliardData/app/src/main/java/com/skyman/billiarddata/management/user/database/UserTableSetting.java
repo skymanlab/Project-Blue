@@ -4,8 +4,8 @@ import android.provider.BaseColumns;
 
 public class UserTableSetting {
 
-    // constant : sql query, create table setting
-    public static final String SQL_CREATE_ENTRIES =
+    // class constant : create table
+    public static final String SQL_CREATE_TABLE =
             "CREATE TABLE  " + Entry.TABLE_NAME + "(" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +                              // 0. id
                     Entry.COLUMN_NAME_NAME + " TEXT NOT NULL, " +                       // 1. name
@@ -17,15 +17,21 @@ public class UserTableSetting {
                     Entry.COLUMN_NAME_RECENT_PLAY_DATE + " TEXT, " +                    // 7. recent play date
                     Entry.COLUMN_NAME_TOTAL_PLAY_TIME + " INTEGER, " +                  // 8. total play time
                     Entry.COLUMN_NAME_TOTAL_COST + " INTEGER )";                        // 9. total cost
-    public static final String SQL_DELETE_ENTRIES =
+
+    // class constant : if exists drop table
+    public static final String SQL_DROP_TABLE_IF_EXISTS =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
-    // constant : sql query,  table setting
-    public static final String SQL_SELECT_TABLE_ALL_ITEM =
+    // class constant : select - all content
+    public static final String SQL_SELECT_ALL_CONTENT =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
-    // constant : sql query, delete table setting - all item
-    public static final String SQL_DELETE_TABLE_ALL_ITEM =
+    // class constant : select - where id
+    public static final String SQL_SELECT_WHERE_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + "=";
+
+    // class constant : delete - all content
+    public static final String SQL_DELETE_ALL_CONTENT =
             "DELETE FROM " + Entry.TABLE_NAME;
 
     // constructor : private
