@@ -12,12 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    // constant
+    private final int TEMP_ID = 1;
 
     // instance variable
     private UserDbManager userDbManager;
@@ -41,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         mappingOfWidget();
 
         // [iv/C]UserData : user 테이블에서 id 값으로 데이터 가져오기 / 현재는 혼자 이므로 id 는 1
-        this.userData = this.userDbManager.loadContent(1);
-        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(1);
+        this.userData = this.userDbManager.loadContent(TEMP_ID);
+        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(TEMP_ID);
 
         // [lv/C]Button : billiardInput click listener setting
         billiardInput.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
         billiardDisplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                 Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+                SessionManager.setIntentOfUserData(intent, userData);
                 startActivity(intent);
+
             }
         });
 
@@ -67,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
         userManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 intent 생성
                 Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                SessionManager.setIntentOfUserData(intent, userData);
                 startActivity(intent);
+
             }
         });
 
@@ -76,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
         statisticsManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                 Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
+                SessionManager.setIntentOfUserData(intent, userData);
                 startActivity(intent);
+
             }
         });
 
@@ -85,8 +101,11 @@ public class MainActivity extends AppCompatActivity {
         appInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
                 Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
                 startActivity(intent);
+
             }
         });
     } // End of method [onCreate]
@@ -100,10 +119,11 @@ public class MainActivity extends AppCompatActivity {
         // [check 1] : UserDbManager 가 생성되었다.
         if (this.userDbManager != null) {
 
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] userData 를 가져올 준비가 되었습니다.");
-            // [iv/C]UserData : 뒤로 가기로 왔을 때 userData 다시 가져오기
-            this.userData = this.userDbManager.load_content();
+            // [iv/C]UserData : 뒤로 가기로 왔을 때 해당 userId 로 userData 다시 가져오기
+            this.userData = this.userDbManager.loadContent(TEMP_ID);
 
+        } else {
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
     } // End of method [onStart]
@@ -116,13 +136,17 @@ public class MainActivity extends AppCompatActivity {
         // [check 1] : userDbManager 가 생성되었다.
         if (this.userDbManager != null) {
             // [iv/C]UserDbManager : close
-            this.userDbManager.closeUserDbHelper();
+            this.userDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : FriendDbManager 가 생성되었다.
         if (this.friendDbManager != null) {
             // [iv/C]FriendDbManager : close
-            this.friendDbManager.closeFriendDbHelper();
+            this.friendDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
     } // End of method [onDestroy]
@@ -136,12 +160,10 @@ public class MainActivity extends AppCompatActivity {
         // [iv/C]UserDbManager : user 테이블을 관리하는 매니저 생성 및 초기화
         this.userDbManager = new UserDbManager(this);
         this.userDbManager.initDb();
-        this.userDbManager.init_db();
 
         // [iv/C]FriendDbManager : friend 테이블을 관리하느 매니저 생성 및 초기화
         this.friendDbManager = new FriendDbManager(this);
         this.friendDbManager.initDb();
-        this.friendDbManager.init_db();
 
     } // End of method [mappingOfWidget]
 
@@ -155,20 +177,20 @@ public class MainActivity extends AppCompatActivity {
         // [check 1] : userData 가(나의 정보) 있다.
         if (userData != null) {
 
-            // [iv/C]ArrayList<FriendData> : 나의 친구목록을 모두 받아오기
-            friendDataArrayList = friendDbManager.load_contents();
+            // [iv/C]ArrayList<FriendData> : 나의 친구목록을 해당 userId 로 모두 받아오기
+            friendDataArrayList = friendDbManager.loadAllContentByUserId(TEMP_ID);
 
             // [check 2] : 친구 목록이 있다.
             if (friendDataArrayList.size() != 0) {
 
-                DeveloperManager.displayLog("[Ac] MainActivity", "[inputData button] 모든 정보가 입력되어 친구를 선택합니다.");
+                DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 모든 정보가 입력되어 친구를 선택합니다.");
 
                 // [method]showAlertToFriendList : 모든 친구목록을 가져와서 RadioGroup 으로 띄우고, 선택된 친구의 정보를 FriendData 에 담아 intent 로 BilliardInputActivity 로 넘긴다.
                 showDialogOfCheckFriend();
 
             } else {
 
-                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 친구 목록이 없습니다.");
+                DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 친구 목록이 없습니다.");
 
                 // [method]showDialogToCheckWhetherToMoveUMAWithFriendData : 친구 목록이 없으므로 친구를 추가 하도록 UserManagerActivity 로 pageNumber=2(UserFriend) 를 intent 로 넘긴다.
                 showDialogToCheckWhetherToMoveUMAWithFriendData();
@@ -177,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 나의 정보가 등록되어 있지 않습니다.");
+            DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 나의 정보가 등록되어 있지 않습니다.");
 
             // [method]showDialogToCheckWhetherToMoveUMAWithUserData : 나의 정보가 없으므로 초기 나의 정보를 저장하도록 UserManagerActivity 로 pageNumber=0(UserInput) 를 intent 로 넘긴다.
             showDialogToCheckWhetherToMoveUMAWithUserData();
@@ -196,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         // [lv/C]ArrayList<String> : 친구 이름만 담길 배열
         final ArrayList<String> friendNameList = new ArrayList<>();
 
-        // [cycle 1] : friednDataArrayList 에 담긴 name 을 friendNameList 에 담는다.
+        // [cycle 1] : friendDataArrayList 에 담긴 name 을 friendNameList 에 담는다.
         for (int position = 0; position < friendDataArrayList.size(); position++) {
             friendNameList.add(friendDataArrayList.get(position).getName());
         } // [cycle 1]
@@ -238,10 +260,10 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
 
                                 // [lv/C]Intent : selectedIndex 의 FriendData 값을 serialize 화여 Intent 로 넘겨주기
-                                intent.putExtra("player", friendDataArrayList.get(selectedIndex[0]));
-                                intent.putExtra("user", userData);
-                                intent.putExtra("friendDataList", friendDataArrayList);
-                                intent.putExtra("selectedPosition", selectedIndex[0]);
+                                SessionManager.setIntentOfUserData(intent, userData);
+                                SessionManager.setIntentOfPlayer(intent, friendDataArrayList.get(selectedIndex[0]));
+                                SessionManager.setIntentOfPlayerList(intent, friendDataArrayList);
+                                SessionManager.setIntentOfSelectedPlayerPosition(intent, selectedIndex[0]);
 
                                 // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                                 startActivityForResult(intent, 101);
@@ -291,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToUserData] 나의 정보가 없어서 등록하러 이동합니다.");
+                        DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogToCheckWhetherToMoveUMAWithUserData] 나의 정보가 없어서 등록하러 이동합니다.");
 
                     }
                 })
@@ -329,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("[Ac] MainActivity", "[showAlertToFriendData] 등록된 친구가 없어서 추가하러 이동합니다.");
+                        DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogToCheckWhetherToMoveUMAWithFriendData] 등록된 친구가 없어서 추가하러 이동합니다.");
 
                     }
                 })

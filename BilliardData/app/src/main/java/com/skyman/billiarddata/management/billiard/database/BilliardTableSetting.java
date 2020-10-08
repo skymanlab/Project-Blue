@@ -2,6 +2,8 @@ package com.skyman.billiarddata.management.billiard.database;
 
 import android.provider.BaseColumns;
 
+import com.skyman.billiarddata.management.friend.database.FriendTableSetting;
+
 /**
  * [class] project_blue.db 의 billiard 테이블의 셋팅하기 위한 정보가 담겨 있는 클래스이다.
  *
@@ -13,7 +15,7 @@ import android.provider.BaseColumns;
  */
 public class BilliardTableSetting {
 
-    // class constant 1 : create table
+    // class constant : create table
     public static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + Entry.TABLE_NAME + " (" +
                     Entry._COUNT + " INTEGER PRIMARY KEY, " +               // 0. count
@@ -26,15 +28,19 @@ public class BilliardTableSetting {
                     Entry.COLUMN_NAME_SCORE + " TEXT, " +                   // 7. score
                     Entry.COLUMN_NAME_COST + " INTEGER)";                   // 8. cost
 
-    // class constant 2 : if exists drop table
+    // class constant : if exists drop table
     public static final String SQL_DROP_TABLE_IF_EXISTS =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
-    // class constant 3 : select - all content
+    // class constant : select - all content
     public static final String SQL_SELECT_ALL_CONTENT =
             "SELECT * FROM " + Entry.TABLE_NAME;
 
-    // class constant 4 : delete - all content
+    // class constant : select - where id
+    public static final String SQL_SELECT_WHERE_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_USER_ID + "=";
+
+    // class constant : delete - all content
     public static final String SQL_DELETE_ALL_CONTENT =
             "DELETE FROM " + Entry.TABLE_NAME;
 

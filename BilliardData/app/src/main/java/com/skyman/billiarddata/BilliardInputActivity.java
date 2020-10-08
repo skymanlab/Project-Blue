@@ -32,16 +32,16 @@ import java.util.Date;
 
 public class BilliardInputActivity extends AppCompatActivity {
 
-    // instant variable : DB 관련 객체 선언
+    // instant variable
     private BilliardDBManager billiardDbManager = null;
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
     private UserData userData = null;
     private FriendData friendData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
-    private int selectedPosition = -1;
+    private int selectedPlayerPosition = -1;
 
-    // instant variable : activity 에서 사용하는 객체 선언
+    // instant variable
     private Spinner player;
     private Spinner targetScore;
     private Spinner speciality;
@@ -69,7 +69,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         this.userData = getUserDataInIntent();
 
         // [iv/long]selectedPosition : 나의 모든 친구목록이 있는 friendDataArrayList 에서의 position 값
-        this.selectedPosition = getSelectedPositionInIntent();
+        this.selectedPlayerPosition = getSelectedPositionInIntent();
 
         // [iv/C]FriendData : Intent 에서 가져온 값으로 셋팅
         this.friendData = getFriendDataBySelectedPositionInIntent();
@@ -94,8 +94,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [method] : player, targetScore, speciality spinner widget 을 초기 설정합니다.
         setSpinnerWidget();
 
-
-        // Button 1 : input setting - '데이터 입력' 버튼
+        // [iv/C]Button : input click listener
         this.input = (Button) findViewById(R.id.billiard_input_bt_input);
         this.input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,23 +106,30 @@ public class BilliardInputActivity extends AppCompatActivity {
             }
         });
 
-        // Button 2 : display setting - '데이터 보기' 버튼
+        // [iv/C]Button : display click listener
         this.display = (Button) findViewById(R.id.billiard_input_bt_display);
         this.display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [method]displayBilliardData : 해당 userId 로 billiard 데이터를 가져와서 화면에 출력한다.
                 displayBilliardData();
+
             }
         });
 
-        // button 3 : delete setting - '데이터 삭제' 버튼
+        // [iv/C]Button : delete click listener
         this.delete = (Button) findViewById(R.id.billiard_input_bt_delete);
         this.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [method]deleteAllBilliardData : 해당 userId 로 billiard 데이터를 모두 삭제 / user 테이블을 내용을 초기화 / friend 테이블의 나의 친구들의 내용을 초기화한다.
                 deleteAllBilliardData();
+
             }
         });
+
     } // End of method [onCreate]
 
 
@@ -134,16 +140,22 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [check 1] : billiardDbManager 가 생성되었을 때만 closeDb method 실행
         if (this.billiardDbManager != null) {
             this.billiardDbManager.closeDb();
+        } else  {
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] billiard 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : userDbManager 가 생성되었을 때만 closeDB method 실행
         if (this.userDbManager != null) {
             this.userDbManager.closeDb();
+        } else  {
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
         // [check 3] : friendDbManager 가 생성되었을 때만 closeDB method 실행
         if (this.friendDbManager != null) {
             this.friendDbManager.closeDb();
+        } else  {
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
         } // [check 3]
 
     } // End of method [onDestroy]
@@ -153,6 +165,26 @@ public class BilliardInputActivity extends AppCompatActivity {
     /*                                      private method
      *   ============================================================================================
      *  */
+
+
+
+    /**
+     * [method] 전 단계에서 선택한 친구의 데이터가 담긴 FriendData 를 Intent 를 통해 "playerList" 값으로 가져오기
+     *
+     * @return Intent 에서 가져온 FriendData 값
+     */
+    private UserData getUserDataInIntent() {
+
+        // [lv/C]Intent : getIntent 로 전 Activity 에서 보낸 Intent 가져오기
+        Intent user = getIntent();
+
+        // [lv/C]UserData : Intent 에서 "user" 로 UserData 가져오기
+        UserData userData = (UserData) user.getSerializableExtra("userData");
+        DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", userData);
+
+        return userData;
+
+    } // End of method [getUserDataListInIntent]
 
 
     /**
@@ -169,43 +201,6 @@ public class BilliardInputActivity extends AppCompatActivity {
         long userId = user.getIntExtra("userId", -1);
 
         return userId;
-
-    } // End of method [getUserDataListInIntent]
-
-
-    /**
-     * [method] 전 단계에서 선택한 친구의 데이터가 담긴 FriendData 를 Intent 를 통해 "playerList" 값으로 가져오기
-     *
-     * @return Intent 에서 가져온 FriendData 값
-     */
-    private UserData getUserDataInIntent() {
-
-        // [lv/C]Intent : getIntent 로 전 Activity 에서 보낸 Intent 가져오기
-        Intent user = getIntent();
-
-        // [lv/C]UserData : Intent 에서 "user" 로 UserData 가져오기
-        UserData userData = (UserData) user.getSerializableExtra("user");
-        DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", userData);
-
-        return userData;
-
-    } // End of method [getUserDataListInIntent]
-
-
-    /**
-     * [method] 전 단계에서 선택한 친구의 데이터가 담긴 FriendData 를 Intent 를 통해 "playerList" 값으로 가져오기
-     *
-     * @return Intent 에서 가져온 FriendData 값
-     */
-    private int getSelectedPositionInIntent() {
-
-        // [lv/C]Intent : getIntent 로 전 Activity 에서 보낸 Intent 가져오기
-        Intent player = getIntent();
-
-        // [lv/i]selectedPosition : Intent 에서 "selectedPosition" 로 UserData 가져오기
-        int selectedPosition = player.getIntExtra("selectedPosition", -1);
-
-        return selectedPosition;
 
     } // End of method [getUserDataListInIntent]
 
@@ -240,12 +235,30 @@ public class BilliardInputActivity extends AppCompatActivity {
         Intent player = getIntent();
 
         // [lv/C]ArrayList<FriendData> : Intent 에서 "playerList" 로 모든 FriendData 가져오기
-        ArrayList<FriendData> friendDataArrayList = (ArrayList<FriendData>) player.getSerializableExtra("friendDataList");
+        ArrayList<FriendData> friendDataArrayList = (ArrayList<FriendData>) player.getSerializableExtra("playerList");
         DeveloperManager.displayToFriendData("[Ac]_BilliardInputActivity", friendDataArrayList);
 
         return friendDataArrayList;
 
     } // End of method [getFriendDataToIntent]
+
+
+    /**
+     * [method] 전 단계에서 선택한 친구의 데이터가 담긴 FriendData 를 Intent 를 통해 "playerList" 값으로 가져오기
+     *
+     * @return Intent 에서 가져온 FriendData 값
+     */
+    private int getSelectedPositionInIntent() {
+
+        // [lv/C]Intent : getIntent 로 전 Activity 에서 보낸 Intent 가져오기
+        Intent player = getIntent();
+
+        // [lv/i]selectedPosition : Intent 에서 "selectedPosition" 로 UserData 가져오기
+        int selectedPlayerPosition = player.getIntExtra("selectedPlayerPosition", -1);
+
+        return selectedPlayerPosition;
+
+    } // End of method [getUserDataListInIntent]
 
 
     /**
@@ -259,16 +272,16 @@ public class BilliardInputActivity extends AppCompatActivity {
         Intent player = getIntent();
 
         // [lv/i]selectedPosition : Intent 에서 "selectedPosition" 로 선택한 친구의 위치를 가져오기
-        int selectedPosition = player.getIntExtra("selectedPosition", -1);
-        DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[setSpinnerWidget] 서택된 위치 : " + selectedPosition);
+        int selectedPlayerPosition = player.getIntExtra("selectedPlayerPosition", -1);
+        DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[getFriendDataBySelectedPositionInIntent] 서택된 위치 : " + selectedPlayerPosition);
 
 
         // [lv/C]ArrayList<FriendData> : Intent 에서 "playerList" 로 모든 FriendData 가져오기
-        ArrayList<FriendData> friendDataArrayList = (ArrayList<FriendData>) player.getSerializableExtra("friendDataList");
+        ArrayList<FriendData> friendDataArrayList = (ArrayList<FriendData>) player.getSerializableExtra("playerList");
         DeveloperManager.displayToFriendData("[Ac]_BilliardInputActivity", friendDataArrayList);
 
         // [lv/C]FriendData : 위 의 2개의 변수를 통해서 FriendData 초기 데이터 만들기
-        FriendData friendData = friendDataArrayList.get(selectedPosition);
+        FriendData friendData = friendDataArrayList.get(selectedPlayerPosition);
 
         return friendData;
 
@@ -494,7 +507,7 @@ public class BilliardInputActivity extends AppCompatActivity {
                 speciality.getSelectedItem().toString(),
                 Integer.parseInt(playTime.getText().toString()),
                 player.getSelectedItem().toString(),
-                BilliardDataFormatter.setFormatToScore(score_1.getText().toString(), score_2.getText().toString()),
+                BilliardDataFormatter.getFormatOfScore(score_1.getText().toString(), score_2.getText().toString()),
                 Integer.parseInt(cost.getText().toString())
         );
         DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[setClickListenerOfInputButton] billiard 테이블에 저장을 완료했습니다.");
@@ -542,7 +555,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
             DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", this.userData.getId(), gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost);
 
-            // [iv/C]UserDbManager : 위에서 셋팅된 값들을 이용하여 userData 갱신하기
+            // [iv/C]UserDbManager : 위에서 셋팅된 값들을 이용하여 해당 userId 의 user 데이터를 갱신하기
             this.userDbManager.updateContent(this.userData.getId(),
                     gameRecordWin,
                     gameRecordLoss,
@@ -551,7 +564,7 @@ public class BilliardInputActivity extends AppCompatActivity {
                     totalPlayTime,
                     totalCost);
 
-            // [iv/C]UserData : 위에서 변경된 데이터를 가져오기
+            // [iv/C]UserData : 위에서 변경된 데이터를 해당 userId 로 가져오기
             this.userData = this.userDbManager.loadContent(this.userData.getId());
             DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", this.userData);
 
@@ -599,7 +612,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
             DeveloperManager.displayToFriendData("[Ac]_BilliardInputActivity", this.friendData.getId(), gameRecordWin, gameRecordLoss, recentPlayDate, totalPlayTime, totalCost);
 
-            // [iv/C]FriendDbManager : 위에서 셋팅된 값들을 이용해서 FriendData 갱신하기
+            // [iv/C]FriendDbManager : 위에서 셋팅된 값들을 이용해서 해당 id 로 Friend 데이터 갱신하기 / 해당 userId 로 가져온 친구목록이기 때문에 userId 는 필요없이 friend 의 id 값으로 찾으면 된다.
             this.friendDbManager.updateContentById(
                     this.friendData.getId(),
                     gameRecordWin,
@@ -609,12 +622,12 @@ public class BilliardInputActivity extends AppCompatActivity {
                     totalCost
             );
 
-            // [iv/C]FriendData : 위에서 갱신된 데이터를 가져오기
+            // [iv/C]FriendData : 위에서 갱신된 데이터를 해당 id 로 가져오기
             this.friendData = this.friendDbManager.loadContentById(this.friendData.getId());
             DeveloperManager.displayToFriendData("[Ac]_BilliardInputActivity", this.friendData);
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[input button] friendDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[setClickListenerOfInputButton] friendDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
         }// [check 3]
 
         // [method]showDialogToCheckWhetherToMoveBDA : 다음 BilliardDisplayActivity 로 이동할 지 묻는 dialog 를 보여준다.
@@ -641,11 +654,11 @@ public class BilliardInputActivity extends AppCompatActivity {
                 !this.cost.getText().toString().equals("")
         ) {
             // 모두 입력 받았으면
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[checkAllInputData] 모든 값을 입력 받았습니다.");
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[checkInputAllEditText] 모든 값을 입력 받았습니다.");
             return true;
         } else {
             // 하나라도 입력 안 받았으면
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[checkAllInputData] 모든 값을 입력해주세요!");
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[checkInputAllEditText] 모든 값을 입력해주세요!");
             return false;
         } // End of method [ch]
 
@@ -690,8 +703,8 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
         BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData);
 
-        // [iv/C]BilliardLvManager : 모든 데이터를 billiardLvManager 에 연결하기
-        billiardLvManager.setListViewOfBilliardData(this.billiardDbManager.loadAllContent());
+        // [iv/C]BilliardLvManager : 해당 userId 로 모든 데이터를 billiardLvManager 에 연결하기
+        billiardLvManager.setListViewOfBilliardData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()));
 
     } // End of method [displayBilliardData]
 
@@ -701,8 +714,8 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void deleteAllBilliardData() {
 
-        // [lv/i]methodResult : billiard 테이블의 모든 내용을 삭제하고 그 결과 값을 받는다.
-        int deleteBilliard = this.billiardDbManager.deleteAllContent();
+        // [lv/i]methodResult : 해당 userId 로 billiard 테이블의 모든 내용을 삭제하고 그 결과 값을 받는다.
+        int deleteBilliard = this.billiardDbManager.deleteAllContentByUserId(this.userData.getId());
 
         // [check 1] : 삭제 결과가 성공이다.
         if (deleteBilliard >= 0) {
@@ -716,7 +729,7 @@ public class BilliardInputActivity extends AppCompatActivity {
             DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] 뭘까요? : " + deleteBilliard);
         }
 
-        // [lv/i]initDataOfUser : 해당 user 의 데이터를 초기화한다.
+        // [lv/i]initDataOfUser : 해당 userId 로 user 의 데이터를 초기화한다.
         int initDataOfUser = this.userDbManager.updateContent(this.userData.getId(),
                 0,
                 0,
@@ -726,11 +739,11 @@ public class BilliardInputActivity extends AppCompatActivity {
                 0);
         DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
 
-        // [iv/C]UserData : 위에서 갱신된 user 의 데이터를 가져온다.
+        // [iv/C]UserData : 위에서 갱신된 user 의 데이터를 userId 로 가져온다.
         this.userData = this.userDbManager.loadContent(this.userData.getId());
         DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", this.userData);
 
-        // [lv/i] : 모든 FriendData 를 초기값으로 변경 - 친구와 했던 모든 BilliardData 가 삭제되므로 모두 초기값으로 변경해야 한다.
+        // [lv/i] : 해당 userId 로 모든 Friend 데이터를 초기값으로 변경 - 친구와 했던 모든 BilliardData 가 삭제되므로 모두 초기값으로 변경해야 한다.
         int initDataOfFriend = this.friendDbManager.updateContentByUserId(this.userData.getId(),
                 0,
                 0,
@@ -739,15 +752,25 @@ public class BilliardInputActivity extends AppCompatActivity {
                 0);
         DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] 모든 friend 의 데이터가 초기화 되었습니다. : " + initDataOfFriend);
 
-        // [iv/C]ArrayList<FriendData> : 위에서 갱신된 친구 목록이 담긴 데이터를 가져온다.
+        // [iv/C]ArrayList<FriendData> : 위에서 갱신된 친구 목록이 담긴 데이터를 userId 로 가져온다.
         this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
         DeveloperManager.displayToFriendData("[Ac]_BilliardInputActivity", this.friendDataArrayList);
 
     }
 
-    /* method : display, toast 메시지 형태로 화면 출력*/
+
+    /**
+     * [method] 해당 문자열을 toast 로 보여준다.
+     *
+     */
     private void toastHandler(String content) {
+
+        // [lv/C]Toast : toast 객체 생성
         Toast myToast = Toast.makeText(this.getApplicationContext(), content, Toast.LENGTH_SHORT);
+
+        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
         myToast.show();
-    }
+
+    } // End of method [toastHandler]
+
 }

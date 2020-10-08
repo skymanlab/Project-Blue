@@ -2,7 +2,7 @@ package com.skyman.billiarddata.factivity.statistics.calendar;
 
 public class DateChecker {
 
-    // variable
+    // instance variable
     private boolean[] checkedDate;
     private boolean[] standardDate;
     private int[] winCount;
@@ -18,7 +18,7 @@ public class DateChecker {
         this.arraySize = billiardDataArrayListSize;
     }
 
-    /* method : getter, setter */
+    // method : getter, setter
     public boolean[] getCheckedDate() {
         return checkedDate;
     }

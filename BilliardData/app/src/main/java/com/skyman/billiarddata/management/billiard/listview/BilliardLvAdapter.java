@@ -71,10 +71,10 @@ public class BilliardLvAdapter extends BaseAdapter {
         date.setText(billiardData.getDate());                                                                       // 1. date
         targetScore.setText(billiardData.getTargetScore()+"");                                                      // 2. target score
         speciality.setText(billiardData.getSpeciality());                                                           // 3. speciality
-        playTime.setText(BilliardDataFormatter.setFormatToPlayTime(billiardData.getPlayTime()));                    // 4. play time
+        playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 4. play time
         winner.setText(billiardData.getWinner());                                                                   // 5. winner
         score.setText(billiardData.getScore());                                                                     // 6. score
-        cost.setText(BilliardDataFormatter.setFormatToCost(billiardData.getCost()));                                // 7. cost
+        cost.setText(BilliardDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 7. cost
 
         return convertView;
     }

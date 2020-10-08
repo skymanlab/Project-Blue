@@ -100,9 +100,9 @@ public class DateModify {
     private String setDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month-1, day);
-        DeveloperManager.displayLog("DateModify", "[setDate] 변환 값은 : " + ProjectBlueDataFormatter.setFormatToDate(calendar.getTime()));
+        DeveloperManager.displayLog("DateModify", "[setDate] 변환 값은 : " + ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime()));
 
-        return  ProjectBlueDataFormatter.setFormatToDate(calendar.getTime());
+        return  ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime());
     }
 
     /* method : 현재 날짜를 Date 클래스로 부터 받아오고 spinner 를 초기값 설정*/

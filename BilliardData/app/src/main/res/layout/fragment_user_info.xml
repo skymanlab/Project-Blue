@@ -40,11 +40,40 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- content 1-1. name-->
+                <!-- content 1-0. id-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/f_user_info_id"
+                        android:textAlignment="textStart"></TextView>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/f_user_info_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/f_user_info_id_default"></TextView>
+                </LinearLayout><!-- End of content 1-0 -->
+
+
+                <!-- content 1-1. name-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBackgroundThird"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -78,7 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundThird"
+                    android:background="@color/colorBackgroundSecond"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -112,7 +141,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundSecond"
+                    android:background="@color/colorBackgroundThird"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -146,7 +175,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundThird"
+                    android:background="@color/colorBackgroundSecond"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -180,7 +209,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundSecond"
+                    android:background="@color/colorBackgroundThird"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -214,7 +243,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundThird"
+                    android:background="@color/colorBackgroundSecond"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -248,7 +277,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundSecond"
+                    android:background="@color/colorBackgroundThird"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -282,7 +311,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundThird"
+                    android:background="@color/colorBackgroundSecond"
                     android:orientation="horizontal"
                     android:padding="10dp">
 

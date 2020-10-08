@@ -3,19 +3,18 @@ package com.skyman.billiarddata.factivity.user;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
@@ -24,7 +23,6 @@ import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.friend.listview.FriendLvManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 
@@ -35,31 +33,26 @@ import java.util.ArrayList;
  */
 public class UserFriendFragment extends Fragment {
 
-    // instance variable
-    private FriendDbManager friendDbManager;
-    private UserData userData;
-    private ArrayList<FriendData> friendDataArrayList;
-
-    // instance variable
-    private ListView allFriendData;
-    private EditText name;
-    private Button friendAdd;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    // instance variable
+    private FriendDbManager friendDbManager;
+    private UserData userData;
+    private ArrayList<FriendData> friendDataArrayList;
+    // instance variable
+    private ListView allFriendData;
+    private EditText name;
+    private Button friendAdd;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-
-
     // constructor
-    public UserFriendFragment( FriendDbManager friendDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
-        this.userData = userData;
+    public UserFriendFragment(FriendDbManager friendDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
         this.friendDbManager = friendDbManager;
+        this.userData = userData;
         this.friendDataArrayList = friendDataArrayList;
     }
 
@@ -103,99 +96,136 @@ public class UserFriendFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // FriendDbManager :
-        friendDbManager = new FriendDbManager(view.getContext());
-        if (friendDbManager != null) {
-            friendDbManager.init_db();
-        }
-        // ListView : allFriendData setting
-        allFriendData = (ListView) view.findViewById(R.id.f_user_friend_lv_list);
 
-        // EditText : name setting
-        name = (EditText) view.findViewById(R.id.f_user_friend_friend_name);
+        // [method]mappingOfWidget : fragment_user_friend layout 의 widget mapping
+        mappingOfWidget(view);
 
-        // Button : friendAdd setting
-        friendAdd = (Button) view.findViewById(R.id.f_user_friend_bt_friend_add);
-        friendAdd.setOnClickListener(new View.OnClickListener() {
+        // [iv/C]Button : friendAdd button click listener
+        this.friendAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (userData != null) {
-                    // check : friendDbManager  null?
-                    if (friendDbManager != null) {
-                        // check : name
-                        if (!name.getText().toString().equals("")) {
+                // [method]setClickListenerOfFriendAddButton : 입력 받은 값으로 friend 데이터를 저장한다.
+                setClickListenerOfFriendAddButton();
 
-                            DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 모든 조건이 통과되었습니다. : " + userData.getId());
-                            // FriendDbManager : save_content method executing
-                            long newRowId = friendDbManager.save_content(
-                                    userData.getId(),
-                                    name.getText().toString(),
-                                    0,
-                                    0,
-                                    "-1",
-                                    0,
-                                    0);
-
-                            // reset : name 리셋
-                            resetWidget();
-
-                            // check : newRowId 체크
-                            if(newRowId == -2) {
-                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] name 이 입력되지 않았습니다.");
-                            } else if(newRowId == -1) {
-                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 데이터베이스 insert 를 실패하였습니다.");
-                            } else if(newRowId == 0) {
-                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 수행이 되지 않았습니다.");
-                            } else if(newRowId  == 1){
-                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] 첫 번째 친구를 입력했습니다.");
-                                showAlertFirstFriendAdd();
-                            } else if(newRowId >1) {
-                                DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] " + newRowId + " 번째 친구를 입력했습니다.");
-                            }
-
-                            // FragmentTransaction : 추가 된 내용 갱신을 위한
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
-                        } else {
-                            DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] name 이 입력되지 않았습니다.");
-                        }
-                    } else {
-                        DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] userDbManager 가 없습니다.");
-                    }
-                } else {
-                    DeveloperManager.displayLog("[F] UserFriend", "[friendAdd button] userData 가 없습니다.");
-                }
             }
         });
 
         // ListView : 받아온 내용을 FriendLvManager 를 이용하여
         FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
-        friendDataArrayList = friendDbManager.load_contents();
+
+        // [iv/C]ArrayList<FriendData> : 해당 userId 로 모든 친구들의 데이터를 가져오기
+        friendDataArrayList = friendDbManager.loadAllContentByUserId(this.userData.getId());
 
         // ArrayList<FriendData> : 내용을 넣기
-        if(friendDataArrayList.size() != 0){
+        if (friendDataArrayList.size() != 0) {
             friendLvManager.setListViewOfFriendData(friendDataArrayList);
         } else {
-            DeveloperManager.displayLog("[F] UserFriend", "[friendDataArrayList] 저장 된 친구가 없습니다.");
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] 저장 된 친구가 없습니다.");
         }
     }
 
-    /* method : reset */
-    private void resetWidget() {
-        name.setText("");
-    }
+
+    /**
+     * [method] widget mapping
+     */
+    private void mappingOfWidget(View view) {
+
+        // [iv/C]ListView : allFriendData mapping
+        this.allFriendData = (ListView) view.findViewById(R.id.f_user_friend_lv_list);
+
+        // [iv/C]EditText : name mapping
+        this.name = (EditText) view.findViewById(R.id.f_user_friend_friend_name);
+
+        // [iv/C]Button : friendAdd mapping
+        this.friendAdd = (Button) view.findViewById(R.id.f_user_friend_bt_friend_add);
+
+    } // End of method [mappingOfWidget]
+
+
+    /**
+     * [method] friendAdd button 의 click listener
+     */
+    private void setClickListenerOfFriendAddButton() {
+
+        // [check 1] : 입력한 user 데이터가 있다.
+        if (this.userData != null) {
+
+            // [check 2] : name EditText 에 입력한 값이 있다.
+            if (!name.getText().toString().equals("")) {
+
+                // [lv/l]newRowId : friend 테이블에 친구를 추가 하고, 결과값을 받는다.
+                long newRowId = friendDbManager.saveContent(
+                        userData.getId(),
+                        name.getText().toString(),
+                        0,
+                        0,
+                        "-1",
+                        0,
+                        0);
+
+                // [method]checkNewRowId : newRowId 를 확인하여 역할 수행
+                checkNewRowId(newRowId);
+
+                // [iv/C]EditText : name 을 없앤다.
+                this.name.setText("");
+
+                // [lv/C]FragmentTransaction : Fragment 화면을 갱신하기 위한 방법
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
+
+            } else {
+                DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] name 이 입력되지 않았습니다.");
+            } // [check 2]
+
+        } else {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] 저장된 user 데이터가 없습니다.");
+        } // [check 1]
+        
+    } // End of method [setClickListenerOfFriendAddButton]
+
+    
+    /**
+     * [method] friend 를 추가하고 나온 결과값 newRowId 확인
+     *
+     */
+    private void checkNewRowId (long newRowId) {
+
+        // [check 1] : newRowId 는 어떤 값일까?
+        if (newRowId == -2) {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] name 이 입력되지 않았습니다.");
+        } else if (newRowId == -1) {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 데이터베이스 insert 를 실패하였습니다.");
+        } else if (newRowId == 0) {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 수행이 되지 않았습니다.");
+        } else if (newRowId == 1) {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 첫 번째 친구를 입력했습니다.");
+            showDialogToCheckWhetherFirstGameDataInput();
+        } else if (newRowId > 1) {
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] " + newRowId + " 번째 친구를 입력했습니다.");
+        } // [check 1]
+
+    } // End of method [checkNewRowId]
 
     /* method : AlertDialog - 등록된 친구가 없어서 화면이동을 물어보는  */
-    private void showAlertFirstFriendAdd(){
-        // AlertDialog.Builder :
+    /**
+     * [method] 첫 friend 를 추가하였으므로 게임 데이터 입력을 할 건지 물어보는 dialog 를 보여준다.
+     *
+     */
+    private void showDialogToCheckWhetherFirstGameDataInput() {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        // [lv/C]AlertDialog : 초기값 셋팅
         builder.setTitle(R.string.ad_user_friend_first_friend_add_title)
                 .setMessage(R.string.ad_user_friend_first_friend_add_message)
                 .setPositiveButton(R.string.ad_user_friend_first_bt_friend_add_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DeveloperManager.displayLog("[F] UserFriend", "[showAlertFirstFriendAdd] 게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
+
+                        DeveloperManager.displayLog("[F]_UserFriendFragment", "[showDialogToCheckWhetherFirstGameDataInput] 게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
+
                         // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         getActivity().finish();
@@ -209,6 +239,7 @@ public class UserFriendFragment extends Fragment {
                     }
                 })
                 .show();
-    }
+
+    } // End of method [showDialogToCheckWhetherFirstGameDataInput]
 
 }

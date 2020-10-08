@@ -67,7 +67,7 @@ public class ProjectBlueDBManager {
 
         // [iv/b]isInitializedDB : dbOpenHelper 가 생성되었음을 알려준다.
         this.isInitializedDB = true;
-        DeveloperManager.displayLog("[Db M] ProjectBlueDBManager", "[init_db] project_blue.db 의 " + ProjectBlueDBInfo.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
+        DeveloperManager.displayLog("[DbM]_ProjectBlueDBManager", "[initDb] project_blue.db 의 " + ProjectBlueDBInfo.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
 
     } // End of method [init_db]
 
@@ -82,7 +82,7 @@ public class ProjectBlueDBManager {
             // [iv/C]ProjectBlueDBHelper : close
             this.dbOpenHelper.close();
         } else {
-            DeveloperManager.displayLog("[Db M]ProjectBlueDBManager", "[$methodName] dbOpenHelper 가 초기화되지 않았습니다.");
+            DeveloperManager.displayLog("[DbM]_ProjectBlueDBManager", "[closeDb] dbOpenHelper 가 초기화되지 않았습니다.");
         } // [check]
     } // End of method [closeDb]
 

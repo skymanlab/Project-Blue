@@ -9,8 +9,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
+import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -21,6 +23,7 @@ public class UserManagerActivity extends AppCompatActivity {
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
+    private BilliardDBManager billiardDBManager = null;
     private UserData userData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
 
@@ -36,27 +39,49 @@ public class UserManagerActivity extends AppCompatActivity {
         // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
         createDBManager();
 
+        // [lv/C]Intent : 저 Activity 에서 보내온 데이터를 담을 intent 가져오기
+        Intent intent = getIntent();
+
         // [lv/C]UserData : user 정보가 담길 객체
-        this.userData = this.userDbManager.loadContent(1);
-
+        this.userData = SessionManager.getUserDataInIntent(intent);
+        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
+        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
+        DeveloperManager.displayToUserData("[Ac]_UserManagerActivity", this.userData);
+        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
         // [lv/C]ArrayList<FriendData> : 위 의 user 의 id 로 friend 테이블의 모든 친구목록 가져오기
-        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(1);
+        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
+        DeveloperManager.displayToFriendData("[Ac]_UserManagerActivity", this.friendDataArrayList);
+        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
 
-        // TabLayout : tab setting
+        // [iv/C]TabLayout : userTabBar mapping
         this.userTabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
+
+        // [iv/C]ViewPager : userTabPager mapping
+        this.userTabPager = (ViewPager) findViewById(R.id.user_manager_pg_user_pager);
+
+        // [iv/C]TabLayout : userTabBar 의 메뉴 설정
         this.userTabBar.addTab(this.userTabBar.newTab().setText("기본 정보 입력"));
         this.userTabBar.addTab(this.userTabBar.newTab().setText("정보 확인"));
         this.userTabBar.addTab(this.userTabBar.newTab().setText("친구 목록"));
         this.userTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // ViewPager : tabPager setting - pager 를 fragment 로 연결하고, tab layout 형식으로 fragment 이동
-        this.userTabPager = (ViewPager) findViewById(R.id.user_manager_pg_user_pager);
-        this.userTabPager.setAdapter(new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.userData, this.friendDataArrayList));
+        // [lv/C]UserPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기
+        UserPagerAdapter userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.billiardDBManager, this.userData, this.friendDataArrayList);
+
+        // [iv/C]ViewPager : 위 의 adapter 와 연결하기
+        this.userTabPager.setAdapter(userPagerAdapter);
+
+        // [iv/C]ViewPager  : 위 의 TabLayout 을 page change listener 와 연결하기
         this.userTabPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.userTabBar));
+
+        // [iv/C]TabLayout : userTabBar 의 메뉴를 클릭 했을 때 Pager 의 몇 번째 fragment 로 움직일지 설정하기
         this.userTabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
+                // [iv/C]ViewPager : userTabPager 를 userTabBar 에서 선택한 메뉴의 위치 값을 이용하여 해당 fragment 로 이동하기
                 userTabPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -80,19 +105,26 @@ public class UserManagerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // [check 1] : UserDbManager 가 있다.
+        // [check 1] : user 메니저가 생성되었다.
         if(this.userDbManager != null) {
-            // UserDbManager : close
-            userDbManager.closeUserDbHelper();
-        } else {
 
+            // [iv/C]UserDbManager : user 메니저를 close
+            this.userDbManager.closeDb();
+
+        } else {
+            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
-        // [check 2] : FriendDbManager 가 있다.
+        // [check 2] : friend 메니저가 생성되었다.
         if (this.friendDbManager != null) {
-            // FriendDbManager : close
-            friendDbManager.closeFriendDbHelper();
-        }
+
+            // [iv/C]UserDbManager : friend 메니저를 close
+            this.friendDbManager.closeDb();
+
+        } else {
+            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
+        } // [check 2]
+
     } // End of method [onDestroy]
 
 
@@ -107,13 +139,15 @@ public class UserManagerActivity extends AppCompatActivity {
 
         // [iv/C]UserDbManager : user 테이블을 관리하는 매니저 생성과 초기화
         this.userDbManager = new UserDbManager(this);
-        this.userDbManager.init_db();
         this.userDbManager.initDb();
 
         // [iv/C]FriendDbManager : friend 테이블을 관리하는 매니저 생성과 초기화
         this.friendDbManager = new FriendDbManager(this);
-        this.friendDbManager.init_db();
         this.friendDbManager.initDb();
+
+        // [iv/C]BilliardDbManager : billiard 테이블을 관리하는 매니저 생성과 초기화
+        this.billiardDBManager = new BilliardDBManager(this);
+        this.billiardDBManager.initDb();
     }
 
 
@@ -129,7 +163,7 @@ public class UserManagerActivity extends AppCompatActivity {
         // [lv/i]pageNumber : 위 의 intent 에서 pageNumber 값으로 가져오기 - 기본 값은 '-1' 이다.
         int pageNumber = pageNumberIntent.getIntExtra("pageNumber", -1);
 
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[getPageNumberToIntent] pageNumber : " + pageNumber + " 입니다.");
+        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[moveFragmentPage] pageNumber : " + pageNumber + " 입니다.");
         switch (pageNumber) {
             case 0:
                 // [iv/C]ViewPager : pageNumber 값으로 페이지 이동하기

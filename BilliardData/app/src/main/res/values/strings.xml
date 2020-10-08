@@ -104,6 +104,8 @@
 
     <!-- Fragment : user info -->
     <string name="f_user_info_title">입력된 정보 확인해봐!</string>
+    <string name="f_user_info_id">아이디</string>
+    <string name="f_user_info_id_default">너의 아이디는?</string>
     <string name="f_user_info_name">이름</string>
     <string name="f_user_info_name_default">이름이 뭐예요?</string>
     <string name="f_user_info_target_score">수지</string>

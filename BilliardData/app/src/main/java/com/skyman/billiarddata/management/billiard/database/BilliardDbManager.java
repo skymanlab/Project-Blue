@@ -215,10 +215,7 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
 
                 // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
-                Cursor readCursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_ALL_CONTENT, null);
-
-                // [lv/C]SQLiteDatabase : close / end
-                readDb.close();
+                Cursor readCursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_WHERE_ID + userId, null);
 
                 // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
                 while (readCursor.moveToNext()) {
@@ -239,6 +236,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                     billiardDataArrayList.add(billiardData);
 
                 } // [cycle 1]
+
+                // [lv/C]SQLiteDatabase : close / end
+                readDb.close();
 
             } else {
                 DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContentByUserID] 매개변수 userId 가 형식에 맞지 않아요.");

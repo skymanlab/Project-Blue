@@ -74,9 +74,9 @@ public class FriendLvAdapter extends BaseAdapter {
         // [lv/C]TextView : 매핑된 count, data, targetScore, speciality, playTime, winner, score, cost 값 셋팅
         id.setText(Long.toString(friendData.getId()));
         name.setText(friendData.getName());
-        gameRecord.setText(FriendDataFormatter.setFormatToGameRecord(friendData.getGameRecordWin(), friendData.getGameRecordLoss()));
-        totalPlayTime.setText(FriendDataFormatter.setFormatToPlayTime(Integer.toString(friendData.getTotalPlayTime())));
-        totalCost.setText(FriendDataFormatter.setFormatToCost(Integer.toString(friendData.getTotalCost())));
+        gameRecord.setText(FriendDataFormatter.getFormatOfGameRecord(friendData.getGameRecordWin(), friendData.getGameRecordLoss()));
+        totalPlayTime.setText(FriendDataFormatter.getFormatOfPlayTime(Integer.toString(friendData.getTotalPlayTime())));
+        totalCost.setText(FriendDataFormatter.getFormatOfCost(Integer.toString(friendData.getTotalCost())));
 
         // check : recentPlayDate 가 '-1' 이면, '최근 경기 없음'
 
@@ -145,7 +145,7 @@ public class FriendLvAdapter extends BaseAdapter {
      * [method] 삭제 버튼을 눌렀을 때 해당 id 의 friend 데이터를 삭제할지 물어보는 dialog 를 보여준다.
      *
      */
-    private void showAlert(final Context context, final long id) {
+    private void showDialogToCheckWhetherToDeleteFriendData(final Context context, final long id) {
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -156,9 +156,9 @@ public class FriendLvAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // [method]createDbManager : firne
-                        friendDbManager.delete_content(id);
-                        DeveloperManager.displayLog("[LvA] FriendLvAdapter", "[showAlert] " + id + " 번 친구를 삭제하였습니다.");
+                        // [iv/C]FriendDbManager : 해당 id 의 friend 의 데이터를 삭제한다.
+                        friendDbManager.deleteContentById(id);
+                        DeveloperManager.displayLog("[LvA]_FriendLvAdapter", "[showDialogToCheckWhetherToDeleteFriendData] " + id + " 번 친구를 삭제하였습니다.");
                     }
                 })
                 .setNegativeButton("돌아가기", new DialogInterface.OnClickListener() {
@@ -168,7 +168,7 @@ public class FriendLvAdapter extends BaseAdapter {
                     }
                 })
                 .show();
-    }
+    } // End of method [showAlert]
 
 
 }
