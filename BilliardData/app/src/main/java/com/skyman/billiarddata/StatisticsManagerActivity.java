@@ -3,14 +3,19 @@ package com.skyman.billiarddata;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.statistics.StatisticsPagerAdapter;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+
+import java.util.ArrayList;
 
 public class StatisticsManagerActivity extends AppCompatActivity {
 
@@ -18,6 +23,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
     private UserDbManager userDbManager = null;
     private BilliardDBManager billiardDBManager = null;
     private UserData userData = null;
+    private ArrayList<BilliardData> billiardDataArrayList = null;
 
     // instance variable
     private TabLayout statisticsTabBar;
@@ -28,8 +34,18 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_manager);
 
+        // [lv/C]Intent : 전 Activity 에서 보낸 intent 가져오기
+        Intent intent = getIntent();
+
+        // [iv/C]UserData : 위 의 intent 로 "userData" 가져오기
+        this.userData = SessionManager.getUserDataInIntent(intent);
+        DeveloperManager.displayToUserData("[Ac]_StatisticsManagerActivity", this.userData);
+
         // [method]createDbManager : user, billiard 메니저 생성 및 초기화
         createDbManager();
+
+        // [iv/C]ArrayList<BilliardData> : userData 의 userId 으로 billiard 테이블에서 모든 billiard 데이터를 가져오기
+        this.billiardDataArrayList = getBilliardDataByUserId();
 
         // [method]mappingOfWidget : activity_statistics_manager layout 의 widget 을 mapping
         mappingOfWidget();
@@ -40,7 +56,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         this.statisticsTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // [lv/C]StatisticsPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기 / userDbManager 와 billiardDbManager 을 넘겨준다.
-        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), userDbManager, billiardDBManager);
+        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.billiardDBManager, this.userData, this.billiardDataArrayList);
 
         // [iv/C]ViewPager : 위 의 adapter 와 연결하기
         this.statisticsTabPager.setAdapter(statisticsPagerAdapter);
@@ -106,6 +122,32 @@ public class StatisticsManagerActivity extends AppCompatActivity {
          this.billiardDBManager.initDb();
 
      } // End of method [createDbManager]
+
+
+
+    /**
+     * [method] 해당 userId 값으로 billiard 테이블에서 데이터를 가져오기
+     *
+     */
+    private ArrayList<BilliardData> getBilliardDataByUserId() {
+
+        // [lv/C]ArrayList<BilliardData> : billiardData 를 담을 배열 객체 선언
+        ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
+
+        // [check 1] : userData 가 있다.
+        if (userData != null){
+
+            // [iv/C]ArrayList<BilliardData> : 해당 userId 로 모든 billiard 데이터를 가져온다.
+            billiardDataArrayList = billiardDBManager.loadAllContentByUserID(this.userData.getId());
+
+        } else {
+            DeveloperManager.displayLog("[F]_CalendarFragment", "[calendarView button] 전 Activity 에서 보내준 userData 가 없습니다.");
+        } // [check 1]
+
+        return billiardDataArrayList;
+
+    } // End of method [getBilliardDataByUserId]
+
 
 
     /**

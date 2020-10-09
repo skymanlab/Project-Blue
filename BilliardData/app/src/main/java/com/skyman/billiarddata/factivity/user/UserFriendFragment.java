@@ -112,16 +112,20 @@ public class UserFriendFragment extends Fragment {
         });
 
         // ListView : 받아온 내용을 FriendLvManager 를 이용하여
+        // [lv/C]FriendLvManager : ListView 와 Adapter 를 관리하는 ListView 메니저 생성
         FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
 
         // [iv/C]ArrayList<FriendData> : 해당 userId 로 모든 친구들의 데이터를 가져오기
         friendDataArrayList = friendDbManager.loadAllContentByUserId(this.userData.getId());
 
-        // ArrayList<FriendData> : 내용을 넣기
+        // [check 1] : friendDataArrayList 에 데이터가 있다.
         if (friendDataArrayList.size() != 0) {
+
+            // [lv/C]FriendLvManager : 위에서 받은 friendDataArrayList 를 adapter 에 멤버 변수에 mapping
             friendLvManager.setListViewOfFriendData(friendDataArrayList);
+
         } else {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] 저장 된 친구가 없습니다.");
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] friendDataArrayList 에 있는 친구 데이터가 없습니다.");
         }
     }
 
@@ -181,15 +185,14 @@ public class UserFriendFragment extends Fragment {
         } else {
             DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] 저장된 user 데이터가 없습니다.");
         } // [check 1]
-        
+
     } // End of method [setClickListenerOfFriendAddButton]
 
-    
+
     /**
      * [method] friend 를 추가하고 나온 결과값 newRowId 확인
-     *
      */
-    private void checkNewRowId (long newRowId) {
+    private void checkNewRowId(long newRowId) {
 
         // [check 1] : newRowId 는 어떤 값일까?
         if (newRowId == -2) {
@@ -208,9 +211,9 @@ public class UserFriendFragment extends Fragment {
     } // End of method [checkNewRowId]
 
     /* method : AlertDialog - 등록된 친구가 없어서 화면이동을 물어보는  */
+
     /**
      * [method] 첫 friend 를 추가하였으므로 게임 데이터 입력을 할 건지 물어보는 dialog 를 보여준다.
-     *
      */
     private void showDialogToCheckWhetherFirstGameDataInput() {
 

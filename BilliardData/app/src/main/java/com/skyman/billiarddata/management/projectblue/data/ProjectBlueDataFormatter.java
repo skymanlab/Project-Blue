@@ -3,13 +3,35 @@ package com.skyman.billiarddata.management.projectblue.data;
 import com.skyman.billiarddata.developer.DeveloperManager;
 
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ProjectBlueDataFormatter {
 
     // class constant
     public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
+    public static final String DATE_DASH_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_2 = "{0}년 {1}월 {2}일";
+
+
+    /**
+     * [method] [Date] date 를 받아서 날짜 형태로 문자열 만들기
+     *          [format] ####년 ##월 ##일
+     *
+     * @param date      날짜
+     * @return '####년 ##월 ##일' 형태로 반환된 문자열
+     */
+    public static String getDashFormatOfDate(Date date){
+
+        // [lv/C]SimpleDateFormat : 특정 날짜 형태로 만들 문자열을 가지고 객체 생성
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_DASH_FORMAT);
+        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfDate] 결과 : " + formatter.format(date));
+
+        return  formatter.format(date);
+
+    } // End of method [getFormatOfDate]
 
 
     /**
@@ -28,6 +50,53 @@ public class ProjectBlueDataFormatter {
         return  formatter.format(date);
 
     } // End of method [getFormatOfDate]
+
+
+
+    /**
+     * [method] year, month, day 값을 받아서 MessageFormat 을 이용하여
+     *          '####년 ?#월 ##일'로 만들어 반환한다.
+     *
+     * (주의) 해당 변환은 '2020년 8월 9일' 형태로 변환됨. 즉, 08월이 아니라, 8월로 09일이 아니라 9일로 변환된다.
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @return 해당 포맷으로 변환된 문자열
+     */
+    public static String getFormatOfDate(String year, String month, String day) {
+
+        // [lv/C]String : year, month, day 를 배열로 만든다.
+        String[] arguments = {year, month, day};
+
+        return MessageFormat.format(DATE_FORMAT_2, arguments);
+
+    } // End of method [setDate]
+
+
+
+    /**
+     * [method]  year, month, day 값을 받아서 MessageFormat 을 이용하여
+     *          '####년 ##월 ##일'로 만들어 반환한다.
+     * <p>
+     *     위 의 method 와는 다르게 '2020년 08월 09일'의 형태로 변환된다.
+     * @param year
+     * @param month
+     * @param day
+     * @return 해당 포맷으로 변환된 문자열
+     */
+    public static String getFormatOfDate(int year, int month, int day) {
+
+        // [lv/C]Calendar : Calendar 객체 가져오기
+        Calendar calendar = Calendar.getInstance();
+
+        // [lv/C]Calendar : 위 의 객체에 매개변수로 세팅하여 날짜 만들기
+        calendar.set(year, month-1, day);
+        DeveloperManager.displayLog("DateModify", "[setDate] 변환 값은 : " + ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime()));
+
+        return  ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime());
+
+    } // End of method [setDate]
 
 
 
@@ -178,5 +247,8 @@ public class ProjectBlueDataFormatter {
         DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfCost] 결과 : " + costData.toString());
         return costData.toString();
     } // End of method [getFormatOfCost]
-    
+
+
+
+
 }

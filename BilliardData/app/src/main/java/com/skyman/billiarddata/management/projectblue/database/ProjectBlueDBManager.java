@@ -28,9 +28,6 @@ public class ProjectBlueDBManager {
         this.isInitializedDB = false;
     }
 
-    public Context getTargetContext() {
-        return targetContext;
-    }
 
     /**
      * [method] isInitializedDB 의 값을 반환한다.

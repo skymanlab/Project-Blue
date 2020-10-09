@@ -7,19 +7,27 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.statistics.calendar.CalendarFragment;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+
+import java.util.ArrayList;
 
 public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
 
     // instance variable
     private UserDbManager userDbManager;
     private BilliardDBManager billiardDBManager;
+    private UserData userData;
+    private ArrayList<BilliardData> billiardDataArrayList;
 
-    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDBManager billiardDBManager) {
+    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDBManager billiardDBManager, UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
         super(fm);
         this.userDbManager = userDbManager;
         this.billiardDBManager = billiardDBManager;
+        this.userData = userData;
+        this.billiardDataArrayList = billiardDataArrayList;
     }
 
     @NonNull
@@ -28,7 +36,7 @@ public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position){
             case 0:
-                return new CalendarFragment(userDbManager, billiardDBManager);
+                return new CalendarFragment(userDbManager, billiardDBManager, userData, billiardDataArrayList);
             case 1:
                 return new ChartFragment();
             default:
