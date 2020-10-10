@@ -103,7 +103,7 @@ public class UserManagerActivity extends AppCompatActivity {
         });
 
         // [method]moveFragmentPage : intent 값에서 pageNumber 값을 가져와서 해당 pageNumber 로 Fragment 페이지 이동을 한다. / 위 의 pager 가 셋팅되어야지만 이동할 수 있다.
-        moveFragmentPage();
+        moveFragmentPage(intent);
 
 
     } // End of method [onCreate]
@@ -162,13 +162,10 @@ public class UserManagerActivity extends AppCompatActivity {
      * [method] intent 에서 "pageNumber"로 값을 받아와서 해당 pageNumber 값으로 fragment 페이지로 이동
      *
      */
-    private void moveFragmentPage(){
-
-        // [lv/C]Intent : 그 전 activity 에서 보낸 intent 가져오기
-        Intent pageNumberIntent = getIntent();
+    private void moveFragmentPage(Intent intent){
 
         // [lv/i]pageNumber : 위 의 intent 에서 pageNumber 값으로 가져오기 - 기본 값은 '-1' 이다.
-        int pageNumber = pageNumberIntent.getIntExtra("pageNumber", -1);
+        int pageNumber = SessionManager.getPageNumberInIntent(intent);
 
         DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[moveFragmentPage] pageNumber : " + pageNumber + " 입니다.");
         switch (pageNumber) {

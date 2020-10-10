@@ -21,6 +21,7 @@ import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -302,6 +303,8 @@ public class UserInputFragment extends Fragment {
                 } // [check 3]
 
             } else {
+                // [method]toastHandler : 모든 값을 입력해달라고 사용자에게 요구한다.
+                toastHandler(view, "모든 값을 입력해주세요.");
                 DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfSaveButton] name, targetScore, speciality 의 모든 값을 입력해주세요.");
             } // [check 2]
 
@@ -374,6 +377,9 @@ public class UserInputFragment extends Fragment {
         // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 를 생성
         Intent intent = new Intent(view.getContext(), UserManagerActivity.class);
 
+        // [lv/C]Intent : SessionManager 를 통해 intent 에 'userData' 담는다.
+        SessionManager.setIntentOfUserData(intent, this.userData);
+
         // [method]getActivity : 해당 activity 를 stack 에서 삭제하기
         getActivity().finish();
 
@@ -408,6 +414,9 @@ public class UserInputFragment extends Fragment {
             } else {
                 DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfModifyButton] 1번째 내용을 수정하는데 실패하였습니다.");
             } // [check 2]
+
+            // [iv/C]UserData : 위에서 갱신된 userData 를 user 메니저를 통해서 가져오기
+            this.userData = this.userDbManager.loadContent(this.userData.getId());
 
             // [method]moveUserManagerActivity : UserManagerActivity 로 이동
             moveUserManagerActivity(view);

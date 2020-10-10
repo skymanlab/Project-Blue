@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -111,7 +112,6 @@ public class UserFriendFragment extends Fragment {
             }
         });
 
-        // ListView : 받아온 내용을 FriendLvManager 를 이용하여
         // [lv/C]FriendLvManager : ListView 와 Adapter 를 관리하는 ListView 메니저 생성
         FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
 
@@ -185,6 +185,9 @@ public class UserFriendFragment extends Fragment {
                 transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
 
             } else {
+
+                // [method]
+                toastHandler("이름을 입력해주세요.");
                 DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] name 이 입력되지 않았습니다.");
             } // [check 2]
 
@@ -250,5 +253,20 @@ public class UserFriendFragment extends Fragment {
                 .show();
 
     } // End of method [showDialogToCheckWhetherFirstGameDataInput]
+
+
+    /**
+     * [method] 해당 문자열을 toast 로 보여준다.
+     *
+     */
+    private void toastHandler(String content) {
+
+        // [lv/C]Toast : toast 객체 생성
+        Toast myToast = Toast.makeText(getContext(), content, Toast.LENGTH_SHORT);
+
+        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
+        myToast.show();
+
+    } // End of method [toastHandler]
 
 }

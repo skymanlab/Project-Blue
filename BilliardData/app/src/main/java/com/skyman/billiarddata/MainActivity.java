@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                                 SessionManager.setIntentOfUserData(intent, userData);
                                 SessionManager.setIntentOfPlayer(intent, friendDataArrayList.get(selectedIndex[0]));
                                 SessionManager.setIntentOfPlayerList(intent, friendDataArrayList);
-                                SessionManager.setIntentOfSelectedPlayerPosition(intent, selectedIndex[0]);
+                                SessionManager.setIntentOfSelectedPlayerIndex(intent, selectedIndex[0]);
 
                                 // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                                 startActivityForResult(intent, 101);
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
                         // [lv/C]Intent : UserManagerActivity 에서 0번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
-                        intent.putExtra("pageNumber", 0);
+                        SessionManager.setIntentOfPageNumber(intent, 0);
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
@@ -347,7 +347,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
                         // [lv/C]Intent : UserManagerActivity 에서 2번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
-                        intent.putExtra("pageNumber", 2);
+                        SessionManager.setIntentOfPageNumber(intent, 2);
+
+                        // [lv/C]Intent : SessionManager 를 통해서 이미 user 정보는 입력되었으므로, intent 에 user 정보를 추가하여 보낸다.
+                        SessionManager.setIntentOfUserData(intent, userData);
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);

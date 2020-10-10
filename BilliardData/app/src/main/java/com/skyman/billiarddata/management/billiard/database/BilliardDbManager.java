@@ -74,12 +74,12 @@ public class BilliardDBManager extends ProjectBlueDBManager {
             // [check 2] : 매개변수의 형식이 맞는 지 검사한다.
             if ((userId > 0)                                        // 1. user id               -- 0 보다 큰
                     && !dateContent.equals("")                      // 2. date
-                    && (targetScoreContent > 0)                     // 3. target score          -- 0 보다 큰
+                    && (targetScoreContent >= 0)                    // 3. target score          -- 0 보다 큰
                     && !specialityContent.equals("")                // 4. speciality
-                    && (playTimeContent > 0)                        // 5. playtime              -- 0 보다 큰
+                    && (playTimeContent >= 0)                       // 5. playtime              -- 0 보다 큰
                     && !winnerContent.equals("")                    // 6. winner
                     && !scoreContent.equals("")                     // 7. score
-                    && (costContent > 0)) {                         // 8. cost                  -- 0 보다 큰
+                    && (costContent >= 0)) {                        // 8. cost                  -- 0 보다 큰
 
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기            ==> SQLiteDatabase 는 모든 조건이 만족 했을 때 가져와서
                 SQLiteDatabase writeDb = super.getDbOpenHelper().getWritableDatabase();
