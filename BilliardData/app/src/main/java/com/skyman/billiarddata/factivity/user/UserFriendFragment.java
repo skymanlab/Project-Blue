@@ -115,18 +115,24 @@ public class UserFriendFragment extends Fragment {
         // [lv/C]FriendLvManager : ListView 와 Adapter 를 관리하는 ListView 메니저 생성
         FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
 
-        // [iv/C]ArrayList<FriendData> : 해당 userId 로 모든 친구들의 데이터를 가져오기
-        friendDataArrayList = friendDbManager.loadAllContentByUserId(this.userData.getId());
+        // [check 1] : user 정보가 있다.
+        if (this.userData != null) {
+            // [iv/C]ArrayList<FriendData> : 해당 userId 로 모든 친구들의 데이터를 가져오기
+            friendDataArrayList = friendDbManager.loadAllContentByUserId(this.userData.getId());
 
-        // [check 1] : friendDataArrayList 에 데이터가 있다.
-        if (friendDataArrayList.size() != 0) {
+            // [check 2] : friendDataArrayList 에 데이터가 있다.
+            if (friendDataArrayList.size() != 0) {
 
-            // [lv/C]FriendLvManager : 위에서 받은 friendDataArrayList 를 adapter 에 멤버 변수에 mapping
-            friendLvManager.setListViewOfFriendData(friendDataArrayList);
+                // [lv/C]FriendLvManager : 위에서 받은 friendDataArrayList 를 adapter 에 멤버 변수에 mapping
+                friendLvManager.setListViewOfFriendData(friendDataArrayList);
+
+            } else {
+                DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] friendDataArrayList 에 있는 친구 데이터가 없습니다.");
+            } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] friendDataArrayList 에 있는 친구 데이터가 없습니다.");
-        }
+            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] user 정보가 저장되어 있지 않으므로 친구목록을 가져올 수 없습니다.");
+        } // [check 1]
     }
 
 

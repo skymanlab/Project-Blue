@@ -48,10 +48,17 @@ public class UserManagerActivity extends AppCompatActivity {
         DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
         DeveloperManager.displayToUserData("[Ac]_UserManagerActivity", this.userData);
         DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
-        // [lv/C]ArrayList<FriendData> : 위 의 user 의 id 로 friend 테이블의 모든 친구목록 가져오기
-        this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
-        DeveloperManager.displayToFriendData("[Ac]_UserManagerActivity", this.friendDataArrayList);
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
+
+        // [check 1] : user 정보가 있다.
+        if (this.userData != null) {
+            // [lv/C]ArrayList<FriendData> : 위 의 user 의 id 로 friend 테이블의 모든 친구목록 가져오기
+            this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
+            DeveloperManager.displayToFriendData("[Ac]_UserManagerActivity", this.friendDataArrayList);
+            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
+        } else {
+            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] user 정보가 입력되지 않아 친구목록을 받아오지 못합니다.");
+        } // [check 1]
+
 
         // [iv/C]TabLayout : userTabBar mapping
         this.userTabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
