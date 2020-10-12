@@ -42,7 +42,7 @@ public class DateModify {
     public void setDialog(final TextView date) {
 
         // [lv/C]Dialog : 객체 생성
-        final Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(this.context);
 
         // [lv/C]Dialog : activity 의 타이틀을 숨긴다.
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -72,6 +72,13 @@
 
     <!-- Activity : billiard display -->
     <string name="billiard_display_title">당신의 입력데이터를 봅시다.</string>
+    <string name="billiard_display_bt_delete">모든 내용 삭제</string>
+    <!-- AlertDialog : billiard display activity -->
+    <string name="ad_billiard_display_delete_title">삭제 확인</string>
+    <string name="ad_billiard_display_delete_message">정말 삭제하겠습니까?</string>
+    <string name="ad_billiard_display_delete_bt_positive">삭제</string>
+    <string name="ad_billiard_display_delete_bt_negative">취소</string>
+
 
     <!-- Activity : user manager -->
     <string name="user_manager_title">당신은 자신의 데이터를 입력합니다.</string>
@@ -159,6 +166,23 @@
     <string name="c_di_re_date_month">월</string>
     <string name="c_di_re_date_day">일</string>
     <string name="c_di_re_date_bt_modify">변경</string>
+
+
+    <!-- Dialog : billiard info -->
+    <string name="c_di_billiard_info_date">날짜</string>
+    <string name="c_di_billiard_info_date_default">####년 ##월 ##일</string>
+    <string name="c_di_billiard_info_speciality">종목</string>
+    <string name="c_di_billiard_info_speciality_default">3구, 4구, 포켓볼 중 하나</string>
+    <string name="c_di_billiard_info_play_time">게임 시간</string>
+    <string name="c_di_billiard_info_play_time_default">## 분</string>
+    <string name="c_di_billiard_info_winner">승리자</string>
+    <string name="c_di_billiard_info_winner_default">### 님입니다.</string>
+    <string name="c_di_billiard_info_score">스코어</string>
+    <string name="c_di_billiard_info_score_default"># : #</string>
+    <string name="c_di_billiard_info_cost">비용</string>
+    <string name="c_di_billiard_info_cost_default">###,### 원</string>
+    <string name="c_di_billiard_info_bt_close">종료</string>
+
 
 
 

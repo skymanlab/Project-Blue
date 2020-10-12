@@ -3,7 +3,6 @@ package com.skyman.billiarddata;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,14 +48,11 @@ public class BilliardInputActivity extends AppCompatActivity {
     private Spinner speciality;
     private TextView date;
     private TextView reDate;
-    private TextView comment;
     private EditText score_1;
     private EditText score_2;
     private EditText cost;
     private EditText playTime;
     private Button input;
-    private Button display;
-    private Button delete;
     private ListView allBilliardData;
 
     @Override
@@ -73,6 +69,9 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]UserData : userDbManager 에서 받아온 데이터 셋팅
         this.userData = SessionManager.getUserDataInIntent(intent);
 
+        DeveloperManager.displayLog("[Ac]_BilliardInputActivity",  "intent 로 넘어온 userData 가 있어요.");
+        DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", this.userData);
+
         // [iv/long]selectedPosition : 나의 모든 친구목록이 있는 friendDataArrayList 에서의 position 값
         this.selectedPlayerIndex = SessionManager.getSelectedPlayerIndexInIntent(intent);
 
@@ -84,6 +83,9 @@ public class BilliardInputActivity extends AppCompatActivity {
 
         // [method]setDateFormat : 오늘 날짜를 특정 형태로 만들어서 date widget 에 setText
         setTextToTodayDate();
+
+        // [method]displayBilliardData : 현재 billiard 테이블에 있는 모든 값들을 화면에 출력한다.
+        displayBilliardData();
 
         // [iv/C]TextView : reDate widget 의 클릭 이벤트를 셋팅한다.
         this.reDate.setOnClickListener(new View.OnClickListener() {
@@ -111,30 +113,6 @@ public class BilliardInputActivity extends AppCompatActivity {
             }
         });
 
-        // [iv/C]Button : display click listener
-        this.display = (Button) findViewById(R.id.billiard_input_bt_display);
-        this.display.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // [method]displayBilliardData : 해당 userId 로 billiard 데이터를 가져와서 화면에 출력한다.
-                displayBilliardData();
-
-            }
-        });
-
-        // [iv/C]Button : delete click listener
-        this.delete = (Button) findViewById(R.id.billiard_input_bt_delete);
-        this.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // [method]deleteAllBilliardData : 해당 userId 로 billiard 데이터를 모두 삭제 / user 테이블을 내용을 초기화 / friend 테이블의 나의 친구들의 내용을 초기화한다.
-                deleteAllBilliardData();
-
-            }
-        });
-
     } // End of method [onCreate]
 
 
@@ -145,21 +123,21 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [check 1] : billiardDbManager 가 생성되었을 때만 closeDb method 실행
         if (this.billiardDbManager != null) {
             this.billiardDbManager.closeDb();
-        } else  {
+        } else {
             DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] billiard 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : userDbManager 가 생성되었을 때만 closeDB method 실행
         if (this.userDbManager != null) {
             this.userDbManager.closeDb();
-        } else  {
+        } else {
             DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
         // [check 3] : friendDbManager 가 생성되었을 때만 closeDB method 실행
         if (this.friendDbManager != null) {
             this.friendDbManager.closeDb();
-        } else  {
+        } else {
             DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
         } // [check 3]
 
@@ -170,7 +148,6 @@ public class BilliardInputActivity extends AppCompatActivity {
     /*                                      private method
      *   ============================================================================================
      *  */
-
 
 
     /**
@@ -218,9 +195,6 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]TextView : reDate mapping
         this.reDate = (TextView) findViewById(R.id.billiard_input_re_date);
 
-        // [iv/C]TextView : comment mapping
-        this.comment = (TextView) findViewById(R.id.billiard_input_comment);
-
         // [iv/C]EditText : score_1 mapping
         this.score_1 = (EditText) findViewById(R.id.billiard_input_score_1);
 
@@ -244,12 +218,6 @@ public class BilliardInputActivity extends AppCompatActivity {
 
         // [iv/C]Button : input mapping
         this.input = (Button) findViewById(R.id.billiard_input_bt_input);
-
-        // [iv/C]Button : display mapping
-        this.display = (Button) findViewById(R.id.billiard_input_bt_display);
-
-        // [iv/C]Button : delete mapping
-        this.delete = (Button) findViewById(R.id.billiard_input_bt_delete);
 
         // [iv/C]Button : allBilliardData mapping
         this.allBilliardData = (ListView) findViewById(R.id.billiard_input_lv_all_billiard_data);
@@ -568,6 +536,9 @@ public class BilliardInputActivity extends AppCompatActivity {
                         // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
+                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
+                        SessionManager.setIntentOfUserData(intent, userData);
+
                         // [method]finish : 이 BilliardInputActivity 화면 종료
                         finish();
 
@@ -585,11 +556,18 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void displayBilliardData() {
 
-        // [iv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
-        BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData);
+        // [check 1] : userData 가 있다.
+        if (this.userData != null) {
 
-        // [iv/C]BilliardLvManager : 해당 userId 로 모든 데이터를 billiardLvManager 에 연결하기
-        billiardLvManager.setListViewOfBilliardData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()));
+            // [iv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
+            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData);
+
+            // [iv/C]BilliardLvManager : 해당 userId 로 모든 데이터를 billiardLvManager 에 연결하기
+            billiardLvManager.setListViewOfBilliardData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()));
+
+        } else {
+            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] ");
+        } // [check 1]
 
     } // End of method [displayBilliardData]
 
@@ -650,7 +628,6 @@ public class BilliardInputActivity extends AppCompatActivity {
 
     /**
      * [method] 해당 문자열을 toast 로 보여준다.
-     *
      */
     private void toastHandler(String content) {
 

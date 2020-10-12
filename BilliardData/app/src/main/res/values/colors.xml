@@ -30,4 +30,8 @@
 
     <!-- widget -->
     <color name="colorWidgetDisable">#8a96a8</color>
+
+    <!-- ETC -->
+    <color name="colorRed">#ffcc0000</color>
+    <color name="colorBlue">#ff0099cc</color>
 </resources>

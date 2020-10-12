@@ -68,6 +68,11 @@
                         android:text="@string/f_user_info_id_default"></TextView>
                 </LinearLayout><!-- End of content 1-0 -->
 
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" /><!-- End of divider -->
 
                 <!-- content 1-1. name-->
                 <LinearLayout

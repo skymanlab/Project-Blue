@@ -35,22 +35,37 @@
             android:background="@color/colorActivityContent"
             android:orientation="vertical">
 
+            <!-- content 1. view -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <!-- content 1. input data-->
+            </LinearLayout><!-- End of content 1 -->
+
+            <!-- divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" /> <!-- End of divider -->
+
+            <!-- content 2. input data-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <!-- content 1-1. default data (targetScore, speciality) -->
+                <!-- content 2-1. default data (targetScore, speciality) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
                     android:orientation="horizontal">
 
-                    <!-- content 1-1-1. targetScore -->
+                    <!-- content 2-1-1. targetScore -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -79,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"></Spinner>
-                    </LinearLayout><!-- End of content 1-1-1 -->
+                    </LinearLayout><!-- End of content 2-1-1 -->
 
                     <!-- divider -->
                     <View
@@ -90,7 +105,7 @@
                         android:layout_marginBottom="10dp"
                         android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                    <!-- content 1-1-2. speciality -->
+                    <!-- content 2-1-2. speciality -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -119,10 +134,10 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"></Spinner>
-                    </LinearLayout><!-- End of content 1-1-2 -->
-                </LinearLayout><!-- End of content 1-1 -->
+                    </LinearLayout><!-- End of content 2-1-2 -->
+                </LinearLayout><!-- End of content 2-1 -->
 
-                <!-- content 1-2. date -->
+                <!-- content 2-2. date -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -160,9 +175,9 @@
                         android:paddingRight="5dp"
                         android:text="@string/billiard_input_date_re"
                         android:textColor="@color/colorBackgroundThird"></TextView>
-                </LinearLayout><!-- End of content 1-2 -->
+                </LinearLayout><!-- End of content 2-2 -->
 
-                <!-- content 1-3. winner -->
+                <!-- content 2-3. winner -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,9 +202,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"></Spinner>
-                </LinearLayout><!-- End of content 1-3 -->
+                </LinearLayout><!-- End of content 2-3 -->
 
-                <!-- content 1-4. score -->
+                <!-- content 2-4. score -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -231,9 +246,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="text|numberDecimal"></EditText>
-                </LinearLayout><!-- End of content 1-4 -->
+                </LinearLayout><!-- End of content 2-4 -->
 
-                <!-- content 1-5. play time -->
+                <!-- content 2-5. play time -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -259,9 +274,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text|numberDecimal"></EditText>
-                </LinearLayout><!-- End of content 1-5 -->
+                </LinearLayout><!-- End of content 2-5 -->
 
-                <!-- content 1-6. cost -->
+                <!-- content 2-6. cost -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -287,54 +302,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text|numberDecimal"></EditText>
-                </LinearLayout><!-- End of content 1-6 -->
+                </LinearLayout><!-- End of content 2-6 -->
 
-
-
-                <!-- content 1-7. input button -->
+                <!-- content 2-7. input button -->
                 <Button
                     android:id="@+id/billiard_input_bt_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundPrimary"
                     android:text="@string/billiard_input_bt_input"
-                    android:textColor="@color/colorTextPrimary"></Button><!-- End of content 1-7 -->
-            </LinearLayout><!-- End of content 1 -->
+                    android:textColor="@color/colorTextPrimary">
+                </Button><!-- End of content 2-7 -->
 
-            <!-- divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /> <!-- End of divider -->
-
-            <!-- content 2. view -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <!-- content 2-1. all billiard data -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorBackgroundSecond">
-
-                    <ListView
-                        android:id="@+id/billiard_input_lv_all_billiard_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"></ListView>
-                </LinearLayout><!-- End of content 2-1 -->
             </LinearLayout><!-- End of content 2 -->
 
-            <!-- divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /> <!-- End of divider -->
-
-        </LinearLayout>
+        </LinearLayout><!-- End of content -->
     </LinearLayout><!-- End of main -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,14 +34,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorActivityContent"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:orientation="vertical">
 
             <!-- content 1. all billiard data -->
-            <ListView
-                android:id="@+id/billiard_display_lv_all_billiard_data"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorBackgroundSecond"></ListView><!-- End of content 1 -->
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ListView
+                    android:id="@+id/billiard_display_lv_all_billiard_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBackgroundSecond"></ListView>
+            </LinearLayout><!-- End of content 1 -->
+
+
+            <!-- content 2. button -->
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/billiard_display_bt_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/billiard_display_bt_delete"
+                    android:textColor="@color/colorTextPrimary"
+                    android:background="@color/colorBackgroundPrimary"></Button>
+            </LinearLayout><!-- End of content 2 -->
+
         </LinearLayout><!-- End of content -->
     </LinearLayout><!-- End of main -->
 
