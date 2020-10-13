@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 
@@ -18,8 +20,12 @@ import java.util.ArrayList;
  */
 public class BilliardLvAdapter extends BaseAdapter {
 
+    // constant
+    private final String CLASS_NAME_LOG = "[LvM]_BilliardLvAdapter";
+
     // instance variable
     private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
+    private String userName = new String();
 
     @Override
     public int getCount() {
@@ -39,11 +45,14 @@ public class BilliardLvAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[getView] ";
+
         // [lv/C]Context : context 가져오기
         Context context = parent.getContext();
 
         // [check 1] : convertView 가 있을 때
-        if(convertView == null){
+        if (convertView == null) {
 
             // [lv/C]LayoutInflater : ????
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,6 +63,7 @@ public class BilliardLvAdapter extends BaseAdapter {
         } // [check 1]
 
         // [lv/C]TextView : count, data, targetScore, speciality, playTime, winner, score, cost mapping
+        LinearLayout countLinearLayout = (LinearLayout) convertView.findViewById(R.id.c_lv_billiard_data_ll_count);
         TextView count = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_count);                            // 0. count
         TextView date = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_date);                              // 1. date
         TextView targetScore = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_target_score);               // 2. target score
@@ -66,15 +76,40 @@ public class BilliardLvAdapter extends BaseAdapter {
         // [lv/C]BilliardData : 각 리스트에 뿌려줄 아이템을 받아오는데 BilliardData 재활용
         BilliardData billiardData = (BilliardData) getItem(position);
 
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userName : " + userName);
+
+        // [check 1] : userName 과 winner 으로 승리여부 확인
+        if (userName.equals(billiardData.getWinner())) {
+
+            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
+            countLinearLayout.setBackgroundResource(R.color.colorBlue);
+
+        } else {
+
+            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
+            countLinearLayout.setBackgroundResource(R.color.colorRed);
+
+        } // [check 1]
+
+
         // [lv/C]TextView : 매핑된 count, data, targetScore, speciality, playTime, winner, score, cost 값 셋팅
-        count.setText(billiardData.getCount() +"");                                                                 // 0. count
+        count.setText(billiardData.getCount() + "");                                                                 // 0. count
         date.setText(billiardData.getDate());                                                                       // 1. date
-        targetScore.setText(billiardData.getTargetScore()+"");                                                      // 2. target score
+        targetScore.setText(billiardData.getTargetScore() + "");                                                      // 2. target score
         speciality.setText(billiardData.getSpeciality());                                                           // 3. speciality
         playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 4. play time
         winner.setText(billiardData.getWinner());                                                                   // 5. winner
         score.setText(billiardData.getScore());                                                                     // 6. score
         cost.setText(BilliardDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 7. cost
+
+        // [lv/C]LinearLayout : countLinearLayout 의 click listener
+        countLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return convertView;
     }
@@ -82,17 +117,16 @@ public class BilliardLvAdapter extends BaseAdapter {
     /**
      * [method] 매개 변수로 받은 값을 BilliardData 로 만들어 billiardDataArrayList 에 추가한다.
      *
-     * @param cost [0] count : primary key
-     * @param date [1] 날짜
+     * @param cost        [0] count : primary key
+     * @param date        [1] 날짜
      * @param targetScore [2] 수지
-     * @param speciality [3] 종목
-     * @param playTime [4] 게임 시간
-     * @param winner [5] 승리자 이름
-     * @param score [6] 스코어
-     * @param cost [7] 비용
-     *
+     * @param speciality  [3] 종목
+     * @param playTime    [4] 게임 시간
+     * @param winner      [5] 승리자 이름
+     * @param score       [6] 스코어
+     * @param cost        [7] 비용
      */
-    public void addItem(long count, String date, int targetScore, String speciality, int playTime, String winner, String score, int cost){
+    public void addItem(long count, String date, int targetScore, String speciality, int playTime, String winner, String score, int cost) {
 
         // [lv/C]BilliardData : 매개변수로 받은 데이터를 BilliardData 담는다.
         BilliardData billiardData = new BilliardData();
@@ -122,4 +156,12 @@ public class BilliardLvAdapter extends BaseAdapter {
         this.billiardDataArrayList.add(billiardData);
 
     } // End of method [addItem]
+
+
+    /**
+     * [method] userName 을 추가한다.
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

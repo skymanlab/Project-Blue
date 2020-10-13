@@ -34,6 +34,9 @@ import com.skyman.billiarddata.management.user.database.UserTableSetting;
  */
 public class ProjectBlueDBHelper extends SQLiteOpenHelper {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // constructor
     public ProjectBlueDBHelper(Context context) {
         super(context, ProjectBlueDBInfo.DATABASE_NAME, null, ProjectBlueDBInfo.DATABASE_VERSION);

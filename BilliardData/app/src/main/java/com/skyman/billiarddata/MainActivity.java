@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     // constant
+    private final String CLASS_NAME_LOG = "";
     private final int TEMP_ID = 1;
 
     // instance variable

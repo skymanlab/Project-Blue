@@ -7,10 +7,12 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 public class ProjectBlueDataFormatter {
 
-    // class constant
+    // constant
+    private final String CLASS_NAME_LOG = "";
     public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
     public static final String DATE_DASH_FORMAT = "yyyy-MM-dd";
     public static final String DATE_FORMAT_2 = "{0}년 {1}월 {2}일";
@@ -247,8 +249,6 @@ public class ProjectBlueDataFormatter {
         DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfCost] 결과 : " + costData.toString());
         return costData.toString();
     } // End of method [getFormatOfCost]
-
-
 
 
 }

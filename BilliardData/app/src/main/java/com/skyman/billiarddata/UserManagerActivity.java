@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 public class UserManagerActivity extends AppCompatActivity {
 
+    // constant
+    private final String CLASS_NAME_LOG = "[Ac]_UserManagerActivity";
+
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;

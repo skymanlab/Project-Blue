@@ -37,6 +37,7 @@ public class UserInputFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     // constant
+    private final String CLASS_NAME_LOG = "";
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 번위
     // instance variable

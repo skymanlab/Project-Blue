@@ -28,6 +28,9 @@ import java.util.ArrayList;
  */
 public class UserInfoFragment extends Fragment {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable
     private TextView id;
     private TextView name;

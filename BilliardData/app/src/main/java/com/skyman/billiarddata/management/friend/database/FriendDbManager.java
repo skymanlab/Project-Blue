@@ -22,6 +22,9 @@ import java.util.ArrayList;
  */
 public class FriendDbManager extends ProjectBlueDBManager {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable
     private FriendDbHelper friendDbHelper;
     private boolean initDb;

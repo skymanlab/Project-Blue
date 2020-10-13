@@ -19,6 +19,9 @@ import java.util.ArrayList;
 
 public class FriendLvAdapter extends BaseAdapter {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable
     private FriendDbManager friendDbManager;
     private ArrayList<FriendData> friendDataArrayList = new ArrayList<>();

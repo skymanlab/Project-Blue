@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -14,12 +13,15 @@ import android.widget.Toast;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.factivity.statistics.calendar.DateChecker;
+import com.skyman.billiarddata.management.calendar.SameDateChecker;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 
 import java.util.ArrayList;
 
 public class BilliardInfo {
+
+    // constant
+    private final String CLASS_NAME_LOG = "";
 
     // instance variable
     private HorizontalScrollView winOrLoss;
@@ -36,14 +38,14 @@ public class BilliardInfo {
     private Context context;
 
     // instance variable
-    private DateChecker dateChecker;
+    private SameDateChecker sameDateChecker;
     private ArrayList<BilliardData> billiardDataArrayList;
     private int index;
 
     // constructor
-    public BilliardInfo(Context context, DateChecker dateChecker, ArrayList<BilliardData> billiardDataArrayList, int index) {
+    public BilliardInfo(Context context, SameDateChecker sameDateChecker, ArrayList<BilliardData> billiardDataArrayList, int index) {
         this.context = context;
-        this.dateChecker = dateChecker;
+        this.sameDateChecker = sameDateChecker;
         this.billiardDataArrayList = billiardDataArrayList;
         this.index = index;
     }
@@ -75,19 +77,19 @@ public class BilliardInfo {
         });
 
         // [check 1] : dateChecker 의 size 가 0 보다 크다.
-        if (this.dateChecker.getArraySize() != 0) {
+        if (this.sameDateChecker.getArraySize() != 0) {
 
             // [lv/C]ArrayList<DateChecker.WinLoss> : billiardDataArrayList 에서 index 번째의 billiardData 와 같은 날짜의 index 를 모두 표시하기
-            ArrayList<DateChecker.BilliardCounter> winLossArrayList = this.dateChecker.getWinLossToIndex(this.index);
+            ArrayList<SameDateChecker.SameDateItem> sameDateItemArrayList = this.sameDateChecker.getSameDateItemToIndex(this.index);
 
             // LinearLayout 에 들어가는 Button 의 설정
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(110, 110);
             params.setMargins(10,10,10,10);
 
             // [cycle 1] : dataChecker 의 getArraySize 만큼 순환하며
-            for (int position=0 ; position < winLossArrayList.size() ; position++){
+            for (int position=0 ; position < sameDateItemArrayList.size() ; position++){
 
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog]Win or loss : " + winLossArrayList.get(position).getWinOrLoss()  + " // billiard count : " + winLossArrayList.get(position).getBilliardCount());
+                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog]Win or loss : " + sameDateItemArrayList.get(position).isWinner()  + " // billiard count : " + sameDateItemArrayList.get(position).getBilliardCountNumber());
 
                 // [lv/C]Button : 버튼 동적으로 생성
                 Button winOrLossButton = new Button(dialog.getContext());
@@ -97,22 +99,22 @@ public class BilliardInfo {
                 winOrLossButton.setId(position);
                 winOrLossButton.setTextColor(Color.parseColor("#FFFFFF"));
 
-
-                // [check 2] : WinLoss 의 winOrLoss 가 'W'인지 'L' 인지
-                if (winLossArrayList.get(position).getWinOrLoss() == 'W') {
-
+                // [check 2] : sameDateItemArrayList 의 isWinner 가 true 이다. 즉 승리이다.
+                if (sameDateItemArrayList.get(position).isWinner()){
+                    // 승리
                     // [lv/C]Button : 승리한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
                     winOrLossButton.setText("승리");
                     winOrLossButton.setBackgroundResource(R.color.colorBlue);
-                } else if (winLossArrayList.get(position).getWinOrLoss() == 'L') {
 
+                } else {
+                    // 패배
                     // [lv/C]Button : 패배한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
                     winOrLossButton.setText("패배");
                     winOrLossButton.setBackgroundResource(R.color.colorRed);
                 } // [check 2]
 
                 // [lv/i]billiardCount : winLossArrayList 에서 가져온 billiard 의 count 값을 index 의 값으로 만들기 위해 -1
-                int billiardCount = (int)( winLossArrayList.get(position).getBilliardCount() -1);
+                int billiardCount = (int)( sameDateItemArrayList.get(position).getBilliardCountNumber() -1);
 
                 DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] billiard count : " + billiardCount);
 

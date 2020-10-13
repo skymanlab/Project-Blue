@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.factivity.statistics.calendar.CalendarFragment;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.calendar.SameDateChecker;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -21,13 +20,15 @@ public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
     private BilliardDBManager billiardDBManager;
     private UserData userData;
     private ArrayList<BilliardData> billiardDataArrayList;
+    private SameDateChecker sameDateChecker;
 
-    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDBManager billiardDBManager, UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
+    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDBManager billiardDBManager, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDateChecker sameDateChecker) {
         super(fm);
         this.userDbManager = userDbManager;
         this.billiardDBManager = billiardDBManager;
         this.userData = userData;
         this.billiardDataArrayList = billiardDataArrayList;
+        this.sameDateChecker = sameDateChecker;
     }
 
     @NonNull
@@ -36,7 +37,7 @@ public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position){
             case 0:
-                return new CalendarFragment(userDbManager, billiardDBManager, userData, billiardDataArrayList);
+                return new CalendarFragment(userData, billiardDataArrayList, sameDateChecker);
             case 1:
                 return new ChartFragment();
             default:

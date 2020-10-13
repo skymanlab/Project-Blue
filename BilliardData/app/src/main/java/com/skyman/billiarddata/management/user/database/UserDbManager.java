@@ -21,6 +21,9 @@ import java.util.ArrayList;
  */
 public class UserDbManager extends ProjectBlueDBManager {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable : 그 전 class
     private UserDbHelper userDbHelper;
     private boolean initDb;

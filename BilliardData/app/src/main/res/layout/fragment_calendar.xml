@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".factivity.statistics.calendar.CalendarFragment">
+    tools:context=".factivity.statistics.CalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

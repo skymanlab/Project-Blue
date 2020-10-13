@@ -22,6 +22,9 @@ import java.util.ArrayList;
  */
 public class BilliardDBManager extends ProjectBlueDBManager {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // constructor
     public BilliardDBManager(Context targetContext) {
         super(targetContext);

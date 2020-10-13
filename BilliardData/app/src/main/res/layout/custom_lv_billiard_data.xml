@@ -9,6 +9,7 @@
 
     <!-- content 1. id -->
     <LinearLayout
+        android:id="@+id/c_lv_billiard_data_ll_count"
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:background="@color/colorCustomBackgroundPrimary"

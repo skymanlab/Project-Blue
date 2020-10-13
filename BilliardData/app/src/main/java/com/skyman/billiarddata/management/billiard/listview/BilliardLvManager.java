@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public class BilliardLvManager {
 
+    // constant
+    private final String CLASS_NAME_LOG = "[LvM]_BilliardLvAdapter";
+
     // instance variable
     private BilliardLvAdapter billiardLvAdapter;
     private ListView targetListView;
@@ -25,7 +28,11 @@ public class BilliardLvManager {
      * [method] adapter 를 통해 custom list view layout 과 모든 billiard 데이터와 연결하여 화면에 뿌려준다.
      */
     public void setListViewOfBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
-        DeveloperManager.displayLog("[LvM]_BilliardLvManager", "[setListViewToAllBilliardDat] The method is executing........");
+
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[setListViewOfBilliardData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " The method is executing........");
 
         // [cycle 1] : billiardDataArrayList 의 size 만큼 돌며, billiardLvAdapter 의 addItem method 로
         for (int position = 0; position < billiardDataArrayList.size(); position++) {
@@ -46,8 +53,40 @@ public class BilliardLvManager {
 
         // [iv/C]ListView : billiardLvAdapter 를 list view 에 연결하기
         this.targetListView.setAdapter(this.billiardLvAdapter);
-        DeveloperManager.displayLog("[LvM]_BilliardDataManager", "[setListViewToAllBilliardDat] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
 
     } // End of method [setListViewOfBilliardData]
 
+    /**
+     * [method] BilliardData 를 add 하기
+     *
+     */
+    public void addData(ArrayList<BilliardData> billiardDataArrayList, String userName) {
+
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[addData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userName : " + userName);
+
+        // [cycle 1] : billiardDataArrayList 의 size 만큼
+        for(int index=0 ; index < billiardDataArrayList.size(); index++) {
+
+            // [iv/C]BilliardLvAdapter : 해당 billiardDataArrayList 넣기
+            this.billiardLvAdapter.addItem(billiardDataArrayList.get(index));
+
+        } // [cycle 1]
+
+        // [iv/C]BilliardLvArrayList : 해당 userName 을 넣기
+        this.billiardLvAdapter.setUserName(userName);
+
+    } // End of method [addBilliardData]
+
+
+    /**
+     * [method] targetListView 에 billiardLvAdapter 를 연결하기
+     *
+     */
+    public void setListViewToAdapter() {
+        this.targetListView.setAdapter(this.billiardLvAdapter);
+    }
 }

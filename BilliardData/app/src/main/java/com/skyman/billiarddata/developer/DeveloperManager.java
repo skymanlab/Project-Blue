@@ -26,8 +26,6 @@ public final class DeveloperManager {
 
             Log.d(className, logMessage);
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayLog]
@@ -61,8 +59,6 @@ public final class DeveloperManager {
                 Log.d(className, "billiardData 데이터가 없습니다.");
             } // [check 2]
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToBilliardData]
@@ -98,8 +94,6 @@ public final class DeveloperManager {
                 Log.d(className, "billiardDataArrayList 데이터가 없습니다.");
             } // [check 2]
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
     }
 
@@ -133,8 +127,6 @@ public final class DeveloperManager {
                 Log.d(className, "UserData 데이터가 없습니다.");
             } // [check 2]
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToUserData]
@@ -156,8 +148,6 @@ public final class DeveloperManager {
             Log.d(className, "userData / 8. totalPlayTime : " + totalPlayTime);             // 8. total play time
             Log.d(className, "userData / 9. totalCost : " + totalCost);                     // 9. total cost
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToUserData]
@@ -190,8 +180,6 @@ public final class DeveloperManager {
                 Log.d(className, "FriendData 데이터가 없습니다.");
             } // [check 2]
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToFriendData]
@@ -226,8 +214,6 @@ public final class DeveloperManager {
                 Log.d(className, "FriendDataArrayList 데이터가 없습니다.");
             } // [check 2]
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToFriendData]
@@ -248,8 +234,6 @@ public final class DeveloperManager {
             Log.d(className, "friendData / 6. totalPlayTime : " + totalPlayTime);           // 6. total play time
             Log.d(className, "friendData / 7. totalCost : " + totalCost);                   // 7. total cost
 
-        } else {
-            Log.d(className, "Log 출력이 OFF 되었습니다.");
         } // [check 1]
 
     } // End of method [displayToFriendData]

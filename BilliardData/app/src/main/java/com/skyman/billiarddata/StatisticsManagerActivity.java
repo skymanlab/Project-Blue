@@ -11,6 +11,8 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.statistics.StatisticsPagerAdapter;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.calendar.SameDateChecker;
+import com.skyman.billiarddata.management.calendar.SameDateCheckerMake;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -19,11 +21,15 @@ import java.util.ArrayList;
 
 public class StatisticsManagerActivity extends AppCompatActivity {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable
     private UserDbManager userDbManager = null;
     private BilliardDBManager billiardDBManager = null;
     private UserData userData = null;
     private ArrayList<BilliardData> billiardDataArrayList = null;
+    private SameDateChecker sameDateChecker = null;
 
     // instance variable
     private TabLayout statisticsTabBar;
@@ -47,6 +53,12 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         // [iv/C]ArrayList<BilliardData> : userData 의 userId 으로 billiard 테이블에서 모든 billiard 데이터를 가져오기
         this.billiardDataArrayList = getBilliardDataByUserId();
 
+        // [lv/C]SameDateCheckerMake : sameDateChecker 를 만들기 위한 객체 생성
+        SameDateCheckerMake sameDateCheckerMake = new SameDateCheckerMake();
+
+        // [iv/C]SameDateChecker : userData 와 billiardDataArrayList 로 SameDateChecker 만들기
+        this.sameDateChecker = sameDateCheckerMake.makeSameDateCheckerWithUserDataAndAllBilliardData(this.userData, this.billiardDataArrayList);
+
         // [method]mappingOfWidget : activity_statistics_manager layout 의 widget 을 mapping
         mappingOfWidget();
 
@@ -56,7 +68,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         this.statisticsTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // [lv/C]StatisticsPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기 / userDbManager 와 billiardDbManager 을 넘겨준다.
-        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.billiardDBManager, this.userData, this.billiardDataArrayList);
+        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.billiardDBManager, this.userData, this.billiardDataArrayList, this.sameDateChecker);
 
         // [iv/C]ViewPager : 위 의 adapter 와 연결하기
         this.statisticsTabPager.setAdapter(statisticsPagerAdapter);

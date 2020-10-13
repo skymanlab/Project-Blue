@@ -16,6 +16,9 @@ import com.skyman.billiarddata.developer.DeveloperManager;
  */
 public class ProjectBlueDBManager {
 
+    // constant
+    private final String CLASS_NAME_LOG = "";
+
     // instance variable
     private ProjectBlueDBHelper dbOpenHelper;
     private Context targetContext;

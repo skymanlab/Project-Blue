@@ -22,6 +22,9 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 public class BilliardDisplayActivity extends AppCompatActivity {
 
+    // constant
+    private final String CLASS_NAME_LOG ="[Ac]_BilliardDisplayActivity";
+
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
@@ -37,13 +40,16 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[onCreate] ";
+
         // [lv/C]Intent : 전 Activity 에서 전달 된 Intent 가져오기
         Intent intent = getIntent();
 
         // [iv/C]UserData : 저장된 user 로 이 화면에 들어왔다.
         this.userData = SessionManager.getUserDataInIntent(intent);
-        DeveloperManager.displayLog("[Ac]_BilliardDisplayActivity", "[onCreate] Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
-        DeveloperManager.displayToUserData("[Ac]_BilliardDisplayActivity", this.userData);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME +"Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
 
         // [method]createDbManager : user, friend, billiard 테이블 메니저 생성 및 초기화
         createDbManager();
@@ -58,7 +64,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             mappingAllBilliardDataToListView();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardDisplayActivity", "[onCreate] userData 가 없으므로 가져올 billiardData 도 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME +"userData 가 없으므로 가져올 billiardData 도 없습니다.");
         } // [check 1]
 
         // [lv/C]Button : delete click listener
@@ -78,6 +84,9 @@ public class BilliardDisplayActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[onDestroy] ";
+
         // [check 1] : user 테이블 메니저가 생성되었다.
         if (this.userDbManager != null) {
 
@@ -85,7 +94,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             this.userDbManager.closeDb();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardDisplayActivity", "[onDestroy] user 테이블 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 테이블 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : friend 테이블 메니저가 생성되었다.
@@ -94,7 +103,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             // [iv/C]FriendDbManager : friend 테이블 메니저를 종료한다.
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardDisplayActivity", "[onDestroy] billiard 테이블 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
         // [check 3] : billiard 테이블 메니저가 생성되었다.
@@ -104,7 +113,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             this.billiardDbManager.closeDb();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardDisplayActivity", "[onDestroy] billiard 테이블 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블 메니저가 생성되지 않았습니다.");
         } // [check 3]
 
     } // End of method [onDestroy]
@@ -149,11 +158,22 @@ public class BilliardDisplayActivity extends AppCompatActivity {
      */
     private void mappingAllBilliardDataToListView() {
 
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[mappingAllBilliardDataToListView] ";
+
         // [lv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결하는 메니저 객체 생성
         BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
 
-        // [lv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결
-        billiardLvManager.setListViewOfBilliardData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()));
+        // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
+        billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
+
+        // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
+        billiardLvManager.setListViewToAdapter();
+
+        // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
+        this.allBilliardData.setSelection(this.allBilliardData.getCount());
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
 
     } // End of method [mappingAllBilliardDataToListView]
 
@@ -194,6 +214,9 @@ public class BilliardDisplayActivity extends AppCompatActivity {
      */
     private void setClickListenerOfDeleteButton() {
 
+        // [lv/C]String : method name constant
+        final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
+
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
 
@@ -203,13 +226,13 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             // [check 2] : 삭제 결과가 성공이다.
             if (deleteBilliard >= 0) {
                 toastHandler("모든 내용이 삭제되었습니다.");
-                DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] billiard 테이블에서 모든 내용이 삭제 성공하였습니다. 삭제 개수 : " + deleteBilliard);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블에서 모든 내용이 삭제 성공하였습니다. 삭제 개수 : " + deleteBilliard);
             } else if (deleteBilliard == -1) {
                 toastHandler("삭제 실패하였습니다.");
-                DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] billiard 테이블에서 삭제가 실패하였습니다. : " + deleteBilliard);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블에서 삭제가 실패하였습니다. : " + deleteBilliard);
             } else {
                 toastHandler("모든 내용이 삭제되었습니다. 뭐지요? ");
-                DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] 뭘까요? : " + deleteBilliard);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "뭘까요? : " + deleteBilliard);
             } // [check 2]
 
             // [lv/i]initDataOfUser : 해당 userId 로 user 의 데이터를 초기화한다.
@@ -220,11 +243,11 @@ public class BilliardDisplayActivity extends AppCompatActivity {
                     "-1",
                     0,
                     0);
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
 
             // [iv/C]UserData : 위에서 갱신된 user 의 데이터를 userId 로 가져온다.
             this.userData = this.userDbManager.loadContent(this.userData.getId());
-            DeveloperManager.displayToUserData("[Ac]_BilliardInputActivity", this.userData);
+            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
 
             // [lv/i] : 해당 userId 로 모든 Friend 데이터를 초기값으로 변경 - 친구와 했던 모든 BilliardData 가 삭제되므로 모두 초기값으로 변경해야 한다.
             int initDataOfFriend = this.friendDbManager.updateContentByUserId(this.userData.getId(),
@@ -233,13 +256,13 @@ public class BilliardDisplayActivity extends AppCompatActivity {
                     "-1",
                     0,
                     0);
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] 모든 friend 의 데이터가 초기화 되었습니다. : " + initDataOfFriend);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 friend 의 데이터가 초기화 되었습니다. : " + initDataOfFriend);
 
             // [method]mappingAllBilliardDataToListView : billiard 테이블에서 가져온 모든 데이터를 ListView 에 뿌려준다.
             mappingAllBilliardDataToListView();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_BilliardInputActivity", "[deleteAllBilliardData] userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
         } // [check 1]
 
     } // End of method [setClickListenerOfDeleteButton]
