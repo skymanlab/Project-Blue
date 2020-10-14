@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.dialog.BilliardModify;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
+import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,12 @@ public class BilliardLvAdapter extends BaseAdapter {
     // instance variable
     private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
     private String userName = new String();
+    private BilliardDBManager billiardDBManager;
+
+    // constructor
+    public BilliardLvAdapter(BilliardDBManager billiardDBManager){
+        this.billiardDBManager = billiardDBManager;
+    }
 
     @Override
     public int getCount() {
@@ -107,6 +115,12 @@ public class BilliardLvAdapter extends BaseAdapter {
         countLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
+                BilliardModify billiardModify = new BilliardModify(context, billiardDBManager, billiardData);
+
+                // [lv/C]BilliardModify : dialog 보여주기
+                billiardModify.setDialog();
 
             }
         });

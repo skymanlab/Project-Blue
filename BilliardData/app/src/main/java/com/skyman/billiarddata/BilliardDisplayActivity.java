@@ -162,7 +162,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         final String METHOD_NAME= "[mappingAllBilliardDataToListView] ";
 
         // [lv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결하는 메니저 객체 생성
-        BilliardLvManager billiardLvManager = new BilliardLvManager(allBilliardData);
+        BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
 
         // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
         billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());

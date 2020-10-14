@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.projectblue.database.ProjectBlueDBManager;
+import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 import java.util.ArrayList;
 
@@ -255,6 +256,75 @@ public class BilliardDBManager extends ProjectBlueDBManager {
 
         return billiardDataArrayList;
     } // End of method [loadAllContentByUserID]
+
+
+
+    /**
+     * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
+     *
+     * @return update query 문을 실행한 결과
+     */
+    public int updateContentByCount(long count,
+                                    long userId,
+                                    String dateContent,
+                                    int targetScoreContent,
+                                    String specialityContent,
+                                    int playTimeContent,
+                                    String winnerContent,
+                                    String scoreContent,
+                                    int costContent) {
+
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] The method is executing ............");
+
+        // [lv/l]methodResult : 이 메소드의 결과 값 저장
+        int methodResult = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [check 2] : 매개변수의 형식이 맞는 지 검사한다.
+            if ((count > 0)                                        // 0. count
+                    && (userId > 0)                                 // 1. user id               -- 0 와 같거나 크다
+                    && !dateContent.equals("")                      // 2. date
+                    && (targetScoreContent >= 0)                    // 3. target score          -- 0 와 같거나 크다
+                    && !specialityContent.equals("")                // 4. speciality
+                    && (playTimeContent >= 0)                       // 5. playtime              -- 0 와 같거나 크다
+                    && !winnerContent.equals("")                    // 6. winner
+                    && !scoreContent.equals("")                     // 7. score
+                    && (costContent >= 0)) {                        // 8. cost                  -- 0 와 같거나 크다
+
+                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+                SQLiteDatabase updateDb = this.getDbOpenHelper().getWritableDatabase();
+
+                // [lv/C]ContentValues : 위 의 매개변수 값을 담을 객체 생성과 초기화
+                ContentValues updateValues = new ContentValues();
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_USER_ID, userId);                               // 1. user id
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, dateContent);                             // 2. date
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScoreContent);              // 3. target score
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SPECIALITY, specialityContent);                 // 4. speciality
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTimeContent);                    // 5. play time
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER, winnerContent);                         // 6. winner
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, scoreContent);                           // 7. score
+                updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, costContent);                             // 8. cost
+
+                // [lv/i]methodResult : update query 문을 실행한 결과
+                methodResult = updateDb.update(BilliardTableSetting.Entry.TABLE_NAME, updateValues, BilliardTableSetting.Entry._COUNT + "=" + count, null);
+
+                // [lv/C]SQLiteDatabase : close
+                updateDb.close();
+
+            } else {
+                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] 매개변수들이 형식에 맞지 않아요.");
+            } // [check 2]
+
+        } else {
+            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] The method is complete!");
+        return methodResult;
+    } // End of method [updateContentByCount]
+
 
 
     /**

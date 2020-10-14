@@ -12,7 +12,8 @@ import java.util.StringTokenizer;
 public class ProjectBlueDataFormatter {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    public static final String CLASS_NAME_LOG = "";
+    public static final String DATE_DELIMITER = "년월일 ";
     public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
     public static final String DATE_DASH_FORMAT = "yyyy-MM-dd";
     public static final String DATE_FORMAT_2 = "{0}년 {1}월 {2}일";
@@ -99,6 +100,34 @@ public class ProjectBlueDataFormatter {
         return  ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime());
 
     } // End of method [setDate]
+
+
+
+    /**
+     * [method] date 문자열을 StringTokenizer 로 구분한 뒤, 각 문자열을 int 로 parse 한 다음 배열에 담아 반환한다.
+     *
+     * @param date 날짜 문자열
+     * @return 분할 된 날짜가 integer 로 변환되어 담긴 배열
+     */
+    public static int[] changeDateToIntArrayType(String date) {
+
+        // [lv/i]dateTokenList : 매개변수 문자열이 분할되어 integer 로 parsing 된 다음 저장될 변수
+        int[] dateTokenList = new int[3];
+
+        // [lv/C]StringTokenizer : 매개변수 문자열을 '년월일 ' 로 나누기 / DATE_DELIMITER : '년월일 ' / delimiter : 구분자
+        StringTokenizer tokenizer = new StringTokenizer(date, DATE_DELIMITER);
+
+        // [cycle 1] : 구분된 값들이 있을 때까지 해당 값을 배열에 넣기
+        for (int index = 0; tokenizer.hasMoreTokens(); index++) {
+
+            // [lv/i]dateTokenList : 분할 된 토큰을 year, month, day 순으로 integer 로 parsing 한 값을 담는다.
+            dateTokenList[index] = Integer.parseInt(tokenizer.nextToken());
+
+        } // [cycle 1]
+
+        return dateTokenList;
+
+    } // End of method [changeDateToIntArrayType]
 
 
 

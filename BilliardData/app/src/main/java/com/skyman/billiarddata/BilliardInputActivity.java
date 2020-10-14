@@ -585,7 +585,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         if (this.userData != null) {
 
             // [lv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
-            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData);
+            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
 
             // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
             billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());

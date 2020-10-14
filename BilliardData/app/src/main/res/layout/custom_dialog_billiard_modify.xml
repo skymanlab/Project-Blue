@@ -1,321 +1,362 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<?xml version="1.0" encoding="utf-8"?><!-- main -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- main -->
+    <!-- title -->
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorActivityTitle"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="10dp">
 
-        <!-- content -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/c_di_billiard_modify_title"
+            android:textAlignment="center">
+
+        </TextView>
+    </LinearLayout>
+
+
+    <!-- content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- content 0. count -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/colorBackgroundSecond"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-            <!-- content 0. count -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:text="@string/c_di_billiard_modify_count"></TextView>
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_count"></TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"></EditText>
-            </LinearLayout><!-- End of content 0 -->
-
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 1. user id-->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="numberDecimal"></EditText>
+        </LinearLayout><!-- End of content 0 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_user_id"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 1. user id-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal">
-                </EditText>
-            </LinearLayout><!-- End of content 1 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_user_id"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 2. date -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_user_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="numberDecimal"></EditText>
+        </LinearLayout><!-- End of content 1 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_date"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 2. date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text">
-                </EditText>
-            </LinearLayout><!-- End of content 2 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_date"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 3. target score -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/c_di_billiard_modify_date_year"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:layout_weight="1"></Spinner>
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_target_score"></TextView>
+            <Spinner
+                android:id="@+id/c_di_billiard_modify_date_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"></Spinner>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+            <Spinner
+                android:id="@+id/c_di_billiard_modify_date_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"></Spinner>
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal">
-                </EditText>
-            </LinearLayout><!-- End of content 3 -->
+        </LinearLayout><!-- End of content 2 -->
 
-            <!-- divider -->
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+        <!-- content 3. target score -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_target_score"></TextView>
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 4. speciality -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_target_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="numberDecimal"></EditText>
+        </LinearLayout><!-- End of content 3 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_speciality"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 4. speciality -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text">
-                </EditText>
-            </LinearLayout><!-- End of content 4 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_speciality"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 5. play time -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_speciality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="text"></EditText>
+        </LinearLayout><!-- End of content 4 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_play_time"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 5. play time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal">
-                </EditText>
-            </LinearLayout><!-- End of content 5 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_play_time"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 6. cost -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_play_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="numberDecimal"></EditText>
+        </LinearLayout><!-- End of content 5 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_winner"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 6. cost -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </EditText>
-            </LinearLayout><!-- End of content 6 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_winner"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 7. score -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_winner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="text"></EditText>
+        </LinearLayout><!-- End of content 6 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_score"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 7. score -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal">
-                </EditText>
-            </LinearLayout><!-- End of content 7 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_score"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 8. cost -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:inputType="text"></EditText>
+        </LinearLayout><!-- End of content 7 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/c_di_billiard_modify_cost"></TextView>
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
+        <!-- content 8. cost -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal">
-                </EditText>
-            </LinearLayout><!-- End of content 8 -->
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c_di_billiard_modify_cost"></TextView>
 
-            <!-- divider -->
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?android:attr/listDivider" />
 
-            <!-- content 9. button -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/c_di_billiard_modify_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:background="@color/colorBackgroundThird">
+                android:inputType="numberDecimal"></EditText>
+        </LinearLayout><!-- End of content 8 -->
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundPrimary"
-                    android:text="@string/c_di_billiard_modify_bt_modify"
-                    android:textColor="@color/colorTextPrimary">
-                </Button>
-            </LinearLayout><!-- End of content 9 -->
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
 
-        </LinearLayout><!-- End of content -->
+        <!-- content 9. button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-    </LinearLayout><!-- End of main -->
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/c_di_billiard_modify_bt_modify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundPrimary"
+                android:text="@string/c_di_billiard_modify_bt_modify"
+                android:textColor="@color/colorTextPrimary"></Button>
+        </LinearLayout><!-- End of content 9 -->
+
+    </LinearLayout><!-- End of content -->
+
+</LinearLayout><!-- End of main -->
