@@ -184,6 +184,18 @@
     <string name="c_di_billiard_info_bt_close">종료</string>
 
 
+    <!-- Dialog : billiard modify -->
+    <string name="c_di_billiard_modify_count">번호</string>
+    <string name="c_di_billiard_modify_user_id">유저 아이디</string>
+    <string name="c_di_billiard_modify_date">날짜</string>
+    <string name="c_di_billiard_modify_target_score">수지</string>
+    <string name="c_di_billiard_modify_speciality">종목</string>
+    <string name="c_di_billiard_modify_play_time">게임 시간</string>
+    <string name="c_di_billiard_modify_winner">승리자</string>
+    <string name="c_di_billiard_modify_score">스코어</string>
+    <string name="c_di_billiard_modify_cost">비용</string>
+    <string name="c_di_billiard_modify_bt_modify">수정</string>
+
 
 
     <!--                                Custom Layout
