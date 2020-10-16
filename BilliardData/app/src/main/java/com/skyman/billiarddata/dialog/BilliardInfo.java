@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class BilliardInfo {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[Di]_BilliardInfo";
 
     // instance variable
     private HorizontalScrollView winOrLoss;
@@ -56,6 +56,8 @@ public class BilliardInfo {
      */
     public void setDialog() {
 
+        final String METHOD_NAME= "[setDialog] ";
+
         // [lv/C]Dialog : 객체 생성
         final Dialog dialog = new Dialog(this.context);
 
@@ -89,7 +91,7 @@ public class BilliardInfo {
             // [cycle 1] : dataChecker 의 getArraySize 만큼 순환하며
             for (int position=0 ; position < sameDateItemArrayList.size() ; position++){
 
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog]Win or loss : " + sameDateItemArrayList.get(position).isWinner()  + " // billiard count : " + sameDateItemArrayList.get(position).getBilliardCountNumber());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Win or loss : " + sameDateItemArrayList.get(position).isWinner()  + " // billiard count : " + sameDateItemArrayList.get(position).getBilliardCountNumber());
 
                 // [lv/C]Button : 버튼 동적으로 생성
                 Button winOrLossButton = new Button(dialog.getContext());
@@ -116,7 +118,7 @@ public class BilliardInfo {
                 // [lv/i]billiardCount : winLossArrayList 에서 가져온 billiard 의 count 값을 index 의 값으로 만들기 위해 -1
                 int billiardCount = (int)( sameDateItemArrayList.get(position).getBilliardCountNumber() -1);
 
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] billiard count : " + billiardCount);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard count : " + billiardCount);
 
                 // [lv/C]Button : winOrLossButton click listener
                 winOrLossButton.setOnClickListener(new View.OnClickListener() {
@@ -133,12 +135,12 @@ public class BilliardInfo {
 
                     }
                 });
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] date : " + billiardDataArrayList.get(billiardCount).getDate());
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] speciality : " + billiardDataArrayList.get(billiardCount).getSpeciality());
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] playTime : " + billiardDataArrayList.get(billiardCount).getPlayTime());
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] winner : " + billiardDataArrayList.get(billiardCount).getWinner());
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] score : " + billiardDataArrayList.get(billiardCount).getScore());
-                DeveloperManager.displayLog("[Di]_BilliardInfo", "[setDialog] cost : " + billiardDataArrayList.get(billiardCount).getCost());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "date : " + billiardDataArrayList.get(billiardCount).getDate());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "speciality : " + billiardDataArrayList.get(billiardCount).getSpeciality());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playTime : " + billiardDataArrayList.get(billiardCount).getPlayTime());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "winner : " + billiardDataArrayList.get(billiardCount).getWinner());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "score : " + billiardDataArrayList.get(billiardCount).getScore());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "cost : " + billiardDataArrayList.get(billiardCount).getCost());
 
 
 

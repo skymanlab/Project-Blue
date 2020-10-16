@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class FriendDbManager extends ProjectBlueDBManager {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[DbM]_FriendDbManager";
 
     // instance variable
     private FriendDbHelper friendDbHelper;
@@ -65,7 +65,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public long saveContent(long userId, String name, int gameRecordWin, int gameRecordLoss, String recentPlayDate, int totalPlayTime, int totalCost) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] The method is executing ............");
+        final String METHOD_NAME= "[saveContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -106,22 +108,22 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
                 if (newRowId == -1) {
                     // 데이터 insert 실패
-                    DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
                 } else {
                     // 데이터 insert 성공
-                    DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] " + newRowId + " 번째 입력이 성공하였습니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + newRowId + " 번째 입력이 성공하였습니다.");
                 }
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
                 newRowId = -2;
             }
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[saveContent] The method is complete");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return newRowId;
 
     } // End of method [saveContent]
@@ -140,7 +142,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public ArrayList<FriendData> loadAllContent() {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContent] The method is executing ............");
+        final String METHOD_NAME= "[loadAllContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
@@ -176,10 +180,10 @@ public class FriendDbManager extends ProjectBlueDBManager {
             readDb.close();
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContent] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return friendDataArrayList;
 
     } // End of method [loadAllContent]
@@ -199,7 +203,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public ArrayList<FriendData> loadAllContentByUserId(long userId) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContentByUserId] The method is executing ............");
+        final String METHOD_NAME= "[loadAllContentByUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
@@ -213,7 +219,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
                 SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
 
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContentByUserId] Query 문은 : " + FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Query 문은 : " + FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId);
 
                 // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
                 Cursor cursor = readDb.rawQuery(FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId, null);
@@ -241,14 +247,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 readDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContentByUserId] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContentByUserId] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadAllContentByUserId] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return friendDataArrayList;
 
     } // End of method [loadAllContentByUserId]
@@ -268,7 +274,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public FriendData loadContentById(long id) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentById] The method is executing ............");
+        final String METHOD_NAME= "[loadContentById] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         // [lv/C]FriendData : friend 테이블에 저장된 특정 userId 의 특정 친구의 id 로 데이터를 가져와 담을 객체
@@ -310,14 +318,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 readDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentById] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentById] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentById] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return friendData;
 
     } // End of method [loadContentById]
@@ -338,7 +346,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public FriendData loadContentByIdAndUserId(long id, long userId) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentByIdAndUserId] The method is executing ............");
+        final String METHOD_NAME= "[loadContentByIdAndUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         // [lv/C]FriendData : friend 테이블에 저장된 특정 userId 의 특정 친구의 id 로 데이터를 가져와 담을 객체
@@ -380,14 +390,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 readDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentByIdAndUserId] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentByIdAndUserId] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[loadContentByIdAndUserId] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return friendData;
 
     } // End of method [loadContentByIdAndUserId]
@@ -406,7 +416,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public int updateContentById(long id, int gameRecordWin, int gameRecordLoss, String recentPlayDate, int totalPlayTime, int totalCost) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentById] The method is executing ............");
+        final String METHOD_NAME= "[updateContentById] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -440,14 +452,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 updateDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentById] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentById] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentById] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return methodResult;
 
     } // End of method [updateContentById]
@@ -466,7 +478,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public int updateContentByUserId(long userId, int gameRecordWin, int gameRecordLoss, String recentPlayDate, int totalPlayTime, int totalCost) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentByUserId] The method is executing ............");
+        final String METHOD_NAME= "[updateContentByUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -500,14 +514,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 updateDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentByUserId] 매개변수들의 형식이 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentByUserId] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[updateContentByUserId] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return methodResult;
 
     } // End of method [updateContentByUserId]
@@ -528,7 +542,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public int deleteContent() {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContent] The method is executing ............");
+        final String METHOD_NAME= "[deleteContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -546,10 +562,10 @@ public class FriendDbManager extends ProjectBlueDBManager {
             deleteDb.close();
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContent] The method is complete");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return methodResult;
 
     } // End of method [deleteContent]
@@ -571,7 +587,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public int deleteContentById(long id) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentById] The method is executing ............");
+        final String METHOD_NAME= "[deleteContentById] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -592,14 +610,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 deleteDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentById] 매개변수의 형식에 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수의 형식에 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentById] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM] _FriendDbManager", "[deleteContentById] The method is complete");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return methodResult;
 
     } // End of method [deleteContentById]
@@ -621,7 +639,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
      */
     public int deleteContentByUserId(long userId) {
 
-        DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentByUserId] The method is executing ............");
+        final String METHOD_NAME= "[deleteContentByUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -642,14 +662,14 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 deleteDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentByUserId] 매개변수의 형식에 맞지 않습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수의 형식에 맞지 않습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_FriendDbManager", "[deleteContentByUserId] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM] _FriendDbManager", "[deleteContentByUserId] The method is complete");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return methodResult;
 
     } // End of method [deleteContentByUserId]

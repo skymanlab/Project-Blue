@@ -63,8 +63,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_input);
 
-        // [lv/C]String : method name constant
-        final String METHOD_NAME= "[onDestroy] ";
+        final String METHOD_NAME= "[onCreate] ";
 
         // [method]createDBManager : billiard, user, friend 테이블 메니저 생성
         createDBManager();
@@ -113,8 +112,8 @@ public class BilliardInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // [method]setClickListenerOfInputButton : 입력 받은 값으로 billiardData 를 저장하고, userData 와 friendData 의 내용을 갱신한다.
-                setClickListenerOfInputButton();
+                // [method]showDialogToCheckWhetherSave : 입력 받은 값으로 billiardData 를 저장할 건지 dialog 띄워 물어본 뒤 진행한다.
+                showDialogToCheckWhetherSave();
 
             }
         });
@@ -126,7 +125,6 @@ public class BilliardInputActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[onDestroy] ";
 
         // [check 1] : billiardDbManager 가 생성되었을 때만 closeDb method 실행
@@ -279,7 +277,6 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void setSpinnerWidget() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[setSpinnerWidget] ";
 
         // [check 1] : UserData 가 있어야 한다.
@@ -334,7 +331,6 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private int getSelectedIdFromUserSpeciality(String speciality) {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[getSelectedIdFromUserSpeciality] ";
 
         // [check 1] : "3구" 이면 0, "4구" 이면 1, "포켓볼" 이면 2  - java version 7 이후로 switch 문에서 String 을 지원한다.
@@ -353,6 +349,39 @@ public class BilliardInputActivity extends AppCompatActivity {
     } // End of method [getSelectedIdFromUserSpeciality]
 
 
+
+    /**
+     * [method] 입력을 진행할 건지 물어보는 dialog 를 보여준다.
+     *
+     */
+    public void showDialogToCheckWhetherSave() {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : Builder 초기화
+        builder.setTitle(R.string.ad_billiard_input_check_input_title)
+                .setMessage(R.string.ad_billiard_input_check_input_message)
+                .setPositiveButton(R.string.ad_billiard_input_bt_check_input_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [method]setClickListenerOfInputButton : 입력 받은 값으로 billiardData 를 저장하고, userData 와 friendData 의 내용을 갱신한다.
+                        setClickListenerOfInputButton();
+
+                    }
+                })
+                .setNegativeButton(R.string.ad_billiard_input_bt_check_input_negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+
+    }
+
+
     /**
      * [method] 모든 값을 입력 받아 billiard 테이블에 데이터를 저장하고,
      * 승리자, 패배자를 구분하여 UserData 와 FriendData 의 'id' 값을 이용하여
@@ -360,7 +389,6 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void setClickListenerOfInputButton() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[setClickListenerOfInputButton] ";
 
         // [check 1] : EditText 의 모든 값을 입력 받지 않았다.
@@ -519,7 +547,6 @@ public class BilliardInputActivity extends AppCompatActivity {
     /* method : 모든 값을 입력 받았나요?*/
     private boolean checkInputAllEditText() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[checkInputAllEditText] ";
 
         // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다. 
@@ -578,7 +605,6 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void displayBilliardData() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[displayBilliardData] ";
 
         // [check 1] : userData 가 있다.

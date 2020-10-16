@@ -35,12 +35,11 @@ import com.skyman.billiarddata.management.user.database.UserTableSetting;
 public class ProjectBlueDBHelper extends SQLiteOpenHelper {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[DbH]_ProjectBlueDatabaseHelper";
 
     // constructor
     public ProjectBlueDBHelper(Context context) {
         super(context, ProjectBlueDBInfo.DATABASE_NAME, null, ProjectBlueDBInfo.DATABASE_VERSION);
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[constructor] The project_blue.db is ready to create table");
     }
 
     @Override
@@ -48,45 +47,58 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
         // onCreate 는 project_blue.db 가 없을 때 실행되는 메소드이다.
         // 즉, constructor 의 매개변수 값으로 들어간 데이터베이스 이름으로 project_blue.db 가 있는지 검사하는 것이다.
         // project_blue.db 를 생성하면서 모든 테이블을 생성한다. billiard, user 테이블을 생성한다.
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] The method is executing........");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db is not exist.");
-        db.execSQL(BilliardTableSetting.SQL_CREATE_TABLE);                // billiard
-        db.execSQL(UserTableSetting.SQL_CREATE_TABLE);                    // user
+
+        final String METHOD_NAME= "[onCreate] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", METHOD_NAME + "[onCreate] The project_blue.db is not exist.");
+        db.execSQL(BilliardTableSetting.SQL_CREATE_TABLE);                  // billiard
+        db.execSQL(UserTableSetting.SQL_CREATE_TABLE);                      // user
         db.execSQL(FriendTableSetting.SQL_CREATE_ENTRIES);                  // friend
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] The project_blue.db has been created.");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] billiard table has been created.");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] user table has been created.");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] friend table has been created.");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] All tables must be created when creating a project_blue.db. ");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onCreate] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The project_blue.db has been created.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard table has been created.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user table has been created.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend table has been created.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "All tables must be created when creating a project_blue.db. ");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // project_blue.db 버전 업그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 업그레이드 된 테이블을 생성한다.
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onUpgrade] The method is executing........");
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onUpgrade] The project_blue.db is upgrading.");
-        db.execSQL(BilliardTableSetting.SQL_DROP_TABLE_IF_EXISTS);                // billiard
-        db.execSQL(UserTableSetting.SQL_DROP_TABLE_IF_EXISTS);                    // user
-        db.execSQL(FriendTableSetting.SQL_DELETE_ENTRIES);                  // friend
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onUpgrade] already existed table delete.");
+
+        final String METHOD_NAME= "[onUpgrade] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The project_blue.db is upgrading.");
+        db.execSQL(BilliardTableSetting.SQL_DROP_TABLE_IF_EXISTS);                  // billiard
+        db.execSQL(UserTableSetting.SQL_DROP_TABLE_IF_EXISTS);                      // user
+        db.execSQL(FriendTableSetting.SQL_DELETE_ENTRIES);                          // friend
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "already existed table delete.");
         onCreate(db);
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onUpgrade] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
     }
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // project_blue.db 버전 다운그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 다운그레이드 된 테이블을 생성한다.
+
+        final String METHOD_NAME= "[onDowngrade] ";
+
         onUpgrade(db, oldVersion, newVersion);
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onDowngrade] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
     }
 
     @Override
     public void onOpen(SQLiteDatabase db) {
         // project_blue.db 에 billiard, user 테이블이 생성되면(존재하면), onOpen method 가 실행 된다.
+
         super.onOpen(db);
-        DeveloperManager.displayLog("[DbH]_ProjectBlueDatabaseHelper", "[onOpen] The method is complete.");
+
+        final String METHOD_NAME= "[onOpen] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
     }
 
     @Override

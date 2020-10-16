@@ -37,7 +37,7 @@ public class UserInputFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[F]_UserInputFragment";
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 번위
     // instance variable
@@ -110,6 +110,8 @@ public class UserInputFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final String METHOD_NAME= "[onViewCreated] ";
+
         // [method]mappingOfWidget : fragment_user_input.xml layout 의 widget mapping
         mappingOfWidget(view);
 
@@ -120,7 +122,7 @@ public class UserInputFragment extends Fragment {
             setWidgetWithUserData(view);
 
         } else {
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[onViewCreated] 나의 userData 데이터가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 userData 데이터가 없습니다.");
         } // [check 1]
 
         // [iv/C]Button : save button click listener
@@ -203,6 +205,8 @@ public class UserInputFragment extends Fragment {
      */
     private void setWidgetWithUserData(View view) {
 
+        final String METHOD_NAME= "[setWidgetWithUserData] ";
+
         // [iv/C]Text : userData 의 getName 으로 셋팅
         this.name.setText(this.userData.getName());
 
@@ -215,13 +219,13 @@ public class UserInputFragment extends Fragment {
         // [iv/C]Button : save 버튼을 disable 하고, R.color.colorWidgetDisable 로 비활성화 상태로 변경
         this.save.setBackgroundResource(R.color.colorWidgetDisable);
         this.save.setEnabled(false);
-        DeveloperManager.displayLog("[F]_UserInputFragment", "[setWidgetWithUserData] save button 을 비활성화 상태로 변경하였습니다.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "save button 을 비활성화 상태로 변경하였습니다.");
 
 
         // [iv/C]Button : modify 버튼을 enable 하고, R.color.colorBackgroundPrimary 로 활성화 상태로 변경
         this.modify.setBackgroundResource(R.color.colorBackgroundPrimary);
         this.modify.setEnabled(true);
-        DeveloperManager.displayLog("[F]_UserInputFragment", "[setWidgetWithUserData] modify button 을 활성화 상태로 변경하였습니다.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "modify button 을 활성화 상태로 변경하였습니다.");
 
     } // End of method [setWidget]
 
@@ -234,6 +238,8 @@ public class UserInputFragment extends Fragment {
      */
     private void setCheckedRadioButtonWithUserData(View view, String specialityContent) {
 
+        final String METHOD_NAME= "[setCheckedRadioButtonWithUserData] ";
+
         // [lv/C]RadioButton : RadioGroup 에 속해있는 RadioButton widget mapping 하기
         RadioButton specialityThreeCushion = (RadioButton) view.findViewById(R.id.f_user_input_speciality_three_cushion);
         RadioButton specialityFourBall = (RadioButton) view.findViewById(R.id.f_user_input_speciality_four_ball);
@@ -242,15 +248,15 @@ public class UserInputFragment extends Fragment {
         // [check 1] : specialityContent 를 구분하여 그에 맞는 RadioButton 을 체크된 상태로 바꾸기
         switch (specialityContent) {
             case "3구":
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setCheckedRadioButtonWithUserData] 3구가 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "3구가 선택되었습니다.");
                 specialityThreeCushion.setChecked(true);
                 break;
             case "4구":
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setCheckedRadioButtonWithUserData] 4구가 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "4구가 선택되었습니다.");
                 specialityFourBall.setChecked(true);
                 break;
             case "포켓볼":
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setCheckedRadioButtonWithUserData] 포켓볼이 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "포켓볼이 선택되었습니다.");
                 specialityPocketBall.setChecked(true);
                 break;
         } // [check 1]
@@ -263,6 +269,8 @@ public class UserInputFragment extends Fragment {
      *
      */
     private void setClickListenerOfSaveButton (View view){
+
+        final String METHOD_NAME= "[setClickListenerOfSaveButton] ";
 
         // [check 1] : userData 가 없다.
         if (userData == null) {
@@ -289,28 +297,28 @@ public class UserInputFragment extends Fragment {
                             0                                                          // 9. total cost
                     );
 
-                    DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfSaveButton] 저장이 완료 되었습니다. 해당 유저의 id 는 " + resultSave + " 입니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장이 완료 되었습니다. 해당 유저의 id 는 " + resultSave + " 입니다.");
                     toastHandler(view, "당신의 아이디는 <" + resultSave + "> 입니다.");
 
                     // [iv/C]UserData : 위에서 갱신한 데이터를 가져오기
                     userData = userDbManager.loadContent(resultSave);
-                    DeveloperManager.displayToUserData("[F]_UserInputFragment", userData);
+                    DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
 
                     // [method]moveUserManagerActivity : UserManagerActivity 로 이동
                     moveUserManagerActivity(view);
 
                 } else {
-                    DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfSaveButton] 0< targetScore <50 인 값을 입력해주세요.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "0< targetScore <50 인 값을 입력해주세요.");
                 } // [check 3]
 
             } else {
                 // [method]toastHandler : 모든 값을 입력해달라고 사용자에게 요구한다.
                 toastHandler(view, "모든 값을 입력해주세요.");
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfSaveButton] name, targetScore, speciality 의 모든 값을 입력해주세요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name, targetScore, speciality 의 모든 값을 입력해주세요.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfSaveButton] userData 가 있으므로 저장할 필요가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 있으므로 저장할 필요가 없습니다.");
         } // [check 1]
 
     } // End of method [setClickListenerOfSaveButton]
@@ -323,18 +331,20 @@ public class UserInputFragment extends Fragment {
      */
     private boolean checkInputAllData(String speciality) {
 
+        final String METHOD_NAME= "[checkInputAllData] ";
+
         // [check 1] : name, targetScore, specialityContent 가 모두 입력되었다.
         if (!this.name.getText().toString().equals("")
                 && !this.targetScore.getText().toString().equals("")
                 && !speciality.equals("")) {
 
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[checkInputAllData] 모든 값이 입력되었습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값이 입력되었습니다.");
             return true;
 
         } else {
 
             // return : 모든 값이 입력 안 되었으면
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[checkInputAllData] 모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
             return false;
 
         } // [check 1]
@@ -351,18 +361,20 @@ public class UserInputFragment extends Fragment {
     private boolean checkTargetScoreRange(View view) {
         // targetScore : 입력 된 값이  0 < targetScore < 50  확인하기 위한
 
+        final String METHOD_NAME= "[checkTargetScoreRange] ";
+
         int targetScoreContent = Integer.parseInt(this.targetScore.getText().toString());
 
         // [check 1] : MIN_RANGE < targetScore < MAX_RANGE 안에 있다.
         if ((MIN_RANGE < targetScoreContent) && (targetScoreContent < MAX_RANGE)) {
 
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[checkTargetScoreRange] targetScore 가 범위 안에 있습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "targetScore 가 범위 안에 있습니다.");
             return true;
 
         } else {
 
             toastHandler(view, MIN_RANGE + " < 수지 < " + MAX_RANGE + " 의 값을 입력해주세요.");
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[checkTargetScoreRange] targetScore 가 범위 밖의 값입니다. ");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "targetScore 가 범위 밖의 값입니다. ");
             return false;
 
         } // [check 1]
@@ -396,6 +408,8 @@ public class UserInputFragment extends Fragment {
      */
     private void setClickListenerOfModifyButton(View view) {
 
+        final String METHOD_NAME= "[setClickListenerOfModifyButton] ";
+
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
 
@@ -411,9 +425,9 @@ public class UserInputFragment extends Fragment {
 
             // [check 2] : result 값으로 update 잘 되었는지 판다
             if (resultUpdate == 1) {
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfModifyButton] 1번재 내용이 수정되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번재 내용이 수정되었습니다.");
             } else {
-                DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfModifyButton] 1번째 내용을 수정하는데 실패하였습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번째 내용을 수정하는데 실패하였습니다.");
             } // [check 2]
 
             // [iv/C]UserData : 위에서 갱신된 userData 를 user 메니저를 통해서 가져오기
@@ -423,7 +437,7 @@ public class UserInputFragment extends Fragment {
             moveUserManagerActivity(view);
 
         } else {
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfModifyButton] userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
         } // [check 1]
 
     } // End of method [setClickListenerOfModifyButton]
@@ -435,9 +449,11 @@ public class UserInputFragment extends Fragment {
      */
     private void setClickListenerOfDeleteButton(View view) {
 
+        final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
+
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfDeleteButton] 데이터가 있어서 삭제 시작");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 있어서 삭제 시작");
 
             // UserDbManager : 테이블의 모든 내용 삭제
             // [lv/i]resultDeleteOfUser : 해당 userId 의 user 데이터를 삭제한 결과
@@ -457,7 +473,7 @@ public class UserInputFragment extends Fragment {
             moveUserManagerActivity(view);
 
         } else {
-            DeveloperManager.displayLog("[F]_UserInputFragment", "[setClickListenerOfDeleteButton] 데이터가 없어서 삭제 안함");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 없어서 삭제 안함");
         } // [check 1]
 
     } // End of method [setClickListenerOfDeleteButton]

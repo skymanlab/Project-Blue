@@ -1,7 +1,9 @@
 package com.skyman.billiarddata.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -37,6 +39,7 @@ public class BilliardModify  {
     private Spinner dateMonth;          // 2. date - month
     private Spinner dateDay;            // 2. date - day
     private Button modify;
+    private Button cancel;
 
     // instance variable
     private BilliardDBManager billiardDBManager;
@@ -94,6 +97,17 @@ public class BilliardModify  {
 
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
 
+                // [lv/C]Dialog : dialog 종료
+                dialog.dismiss();
+            }
+        });
+
+        // [iv/C]Button : cancel click listener
+        this.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // [lv/C]Dialog : dialog 종료
                 dialog.dismiss();
             }
         });
@@ -109,9 +123,6 @@ public class BilliardModify  {
      *
      */
     public void mappingOfWidget(Dialog dialog) {
-
-        // [lv/C]String : method name log
-        final String METHOD_NAME_LOG = "[mappingOfWidget] ";
 
         // [iv/C]EditText : count mapping
         this.count  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_count);
@@ -148,6 +159,9 @@ public class BilliardModify  {
 
         // [iv/C]Button : modify mapping
         this.modify = (Button) dialog.findViewById(R.id.c_di_billiard_modify_bt_modify);
+
+        // [iv/C]Button : cancel mapping
+        this.cancel = (Button) dialog.findViewById(R.id.c_di_billiard_modify_bt_cancel);
 
     } // End of method [mappingOfWidget]
 
@@ -212,4 +226,48 @@ public class BilliardModify  {
         this.dateDay.setSelection(classificationDate[2]-1);
 
     } // End of method [setTextWithBilliardData]
+
+
+    /**
+     * [method] 정말 수정할 건지 물어보는 alert dialog 를 보여준다.
+     *
+     */
+    private void showDialogToCheckWhetherModify(Dialog dialog) {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialog.getContext());
+
+        // [lv/C]AlertDialog : Builder 초기값 설정
+        builder.setTitle(R.string.ad_billiard_modify_check_modify_title)
+                .setMessage(R.string.ad_billiard_modify_check_modify_message)
+                .setPositiveButton(R.string.ad_billiard_modify_bt_check_modify_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [lv/C]Dialog : dialog 종료
+                        dialog.dismiss();
+
+                    }
+                })
+                .setNegativeButton(R.string.ad_billiard_modify_bt_check_modify_negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [lv/C]Dialog : dialog 종료
+                        dialog.dismiss();
+
+                    }
+                })
+                .show();
+
+    } // End of method [showDialogToCheckWhetherModify]
+    
+    
+    /**
+     * [method] 수정 된 값을 이용하여 해당 count 로 billiard 테이블을 수정한다.
+     *
+     */
+    private void updateAllData() {
+
+    }
 }

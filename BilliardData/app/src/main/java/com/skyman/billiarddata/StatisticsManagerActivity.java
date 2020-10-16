@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class StatisticsManagerActivity extends AppCompatActivity {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[Ac]_StatisticsManagerActivity";
 
     // instance variable
     private UserDbManager userDbManager = null;
@@ -45,7 +45,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
         // [iv/C]UserData : 위 의 intent 로 "userData" 가져오기
         this.userData = SessionManager.getUserDataInIntent(intent);
-        DeveloperManager.displayToUserData("[Ac]_StatisticsManagerActivity", this.userData);
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
 
         // [method]createDbManager : user, billiard 메니저 생성 및 초기화
         createDbManager();
@@ -102,18 +102,20 @@ public class StatisticsManagerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        final String METHOD_NAME= "[onDestroy] ";
+
         // [check 1] : user 메니저가 생성되었다.
         if (this.userDbManager != null){
             this.userDbManager.closeDb();
         } else {
-            DeveloperManager.displayLog("[Ac]_StatisticsManagerActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : billiard 메니저가 생성되었다.
         if (this.billiardDBManager != null) {
             this.billiardDBManager.closeDb();
         } else {
-            DeveloperManager.displayLog("[Ac]_StatisticsManagerActivity", "[onDestroy] billiard 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
     }
@@ -143,6 +145,8 @@ public class StatisticsManagerActivity extends AppCompatActivity {
      */
     private ArrayList<BilliardData> getBilliardDataByUserId() {
 
+        final String METHOD_NAME= "[getBilliardDataByUserId] ";
+
         // [lv/C]ArrayList<BilliardData> : billiardData 를 담을 배열 객체 선언
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
@@ -153,7 +157,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
             billiardDataArrayList = billiardDBManager.loadAllContentByUserID(this.userData.getId());
 
         } else {
-            DeveloperManager.displayLog("[F]_CalendarFragment", "[calendarView button] 전 Activity 에서 보내준 userData 가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "전 Activity 에서 보내준 userData 가 없습니다.");
         } // [check 1]
 
         return billiardDataArrayList;

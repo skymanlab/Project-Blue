@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.projectblue.database.ProjectBlueDBManager;
-import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 public class BilliardDBManager extends ProjectBlueDBManager {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[DbM]_BilliardDbManager";
 
     // constructor
     public BilliardDBManager(Context targetContext) {
@@ -67,7 +66,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                             String scoreContent,
                             int costContent) {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] The method is executing ............");
+        final String METHOD_NAME= "[saveContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -108,22 +109,22 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 // [check 3] : newRowId 값이 어떤 값이진 구분하여 결과를 반환한다.
                 if (newRowId == -1) {
                     // 데이터 insert 실패
-                    DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
                 } else {
                     // 데이터 insert 성공
-                    DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] 입력 성공했습니다. " + newRowId + " 값을 리턴합니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "입력 성공했습니다. " + newRowId + " 값을 리턴합니다.");
                 } // [check 3]
 
             } else {
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] 매개변수들의 형식이 맞지 않아요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않아요.");
                 newRowId = -2;
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[saveContent] The method is complete");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return newRowId;
     } // End of method [saveContents]
 
@@ -142,7 +143,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
     /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
     public ArrayList<BilliardData> loadAllContent() {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] The method is executing........");
+        final String METHOD_NAME= "[loadAllContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
 
         // [lv/C]ArrayList<BilliardDataT> : billiard 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
@@ -180,10 +183,10 @@ public class BilliardDBManager extends ProjectBlueDBManager {
             readDb.close();
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContent] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
 
         return billiardDataArrayList;
     } // End of method [loadAllContent]
@@ -204,7 +207,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
     /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
     public ArrayList<BilliardData> loadAllContentByUserID(long userId) {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContentByUserID] The method is executing........");
+        final String METHOD_NAME= "[loadAllContentByUserID] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
 
         // [lv/C]ArrayList<BilliardDataT> : billiard 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
@@ -245,14 +250,14 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 readDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContentByUserID] 매개변수 userId 가 형식에 맞지 않아요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 userId 가 형식에 맞지 않아요.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContentByUserID] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[loadAllContentByUserID] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
 
         return billiardDataArrayList;
     } // End of method [loadAllContentByUserID]
@@ -274,7 +279,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                                     String scoreContent,
                                     int costContent) {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] The method is executing ............");
+        final String METHOD_NAME= "[updateContentByCount] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -314,14 +321,14 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 updateDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] 매개변수들이 형식에 맞지 않아요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들이 형식에 맞지 않아요.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[updateContentByCount] The method is complete!");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
         return methodResult;
     } // End of method [updateContentByCount]
 
@@ -342,7 +349,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
      */
     public int deleteAllContent() {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] The method is executing............");
+        final String METHOD_NAME= "[deleteAllContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -360,10 +369,10 @@ public class BilliardDBManager extends ProjectBlueDBManager {
             deleteDb.close();
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContent] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
 
         return methodResult;
     } // End of method [deleteAllContent]
@@ -384,7 +393,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
      */
     public int deleteContent(long count) {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] The method is executing............");
+        final String METHOD_NAME= "[deleteContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -405,15 +416,15 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 deleteDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] 매개변수 count 가 형식에 맞지 않아요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 count 가 형식에 맞지 않아요.");
                 methodResult = -2;
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteContent] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
 
         return methodResult;
     } // End of method [deleteAllContent]
@@ -435,7 +446,9 @@ public class BilliardDBManager extends ProjectBlueDBManager {
      */
     public int deleteAllContentByUserId(long userId) {
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContentByUserId] The method is executing............");
+        final String METHOD_NAME= "[deleteAllContentByUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -456,15 +469,15 @@ public class BilliardDBManager extends ProjectBlueDBManager {
                 deleteDb.close();
 
             } else {
-                DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContentByUserId] 매개변수 userId 가 형식에 맞지 않아요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 userId 가 형식에 맞지 않아요.");
                 methodResult = -2;
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContentByUserId] openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
         } // [check 1]
 
-        DeveloperManager.displayLog("[DbM]_BilliardDbManager", "[deleteAllContentByUserId] The method is complete.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
 
         return methodResult;
     } // End of method [deleteAllContent]

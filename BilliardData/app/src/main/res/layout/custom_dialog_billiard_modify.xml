@@ -345,16 +345,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackgroundThird"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/c_di_billiard_modify_bt_modify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:background="@color/colorBackgroundPrimary"
                 android:text="@string/c_di_billiard_modify_bt_modify"
                 android:textColor="@color/colorTextPrimary"></Button>
+
+            <Button
+                android:id="@+id/c_di_billiard_modify_bt_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorBackgroundPrimary"
+                android:text="@string/c_di_billiard_modify_bt_cancel"
+                android:textColor="@color/colorTextPrimary"></Button>
+
         </LinearLayout><!-- End of content 9 -->
 
     </LinearLayout><!-- End of content -->

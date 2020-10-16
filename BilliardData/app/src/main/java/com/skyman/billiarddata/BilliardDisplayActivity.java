@@ -40,7 +40,6 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[onCreate] ";
 
         // [lv/C]Intent : 전 Activity 에서 전달 된 Intent 가져오기
@@ -84,7 +83,6 @@ public class BilliardDisplayActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[onDestroy] ";
 
         // [check 1] : user 테이블 메니저가 생성되었다.
@@ -158,7 +156,6 @@ public class BilliardDisplayActivity extends AppCompatActivity {
      */
     private void mappingAllBilliardDataToListView() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[mappingAllBilliardDataToListView] ";
 
         // [lv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결하는 메니저 객체 생성
@@ -214,7 +211,6 @@ public class BilliardDisplayActivity extends AppCompatActivity {
      */
     private void setClickListenerOfDeleteButton() {
 
-        // [lv/C]String : method name constant
         final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
 
         // [check 1] : userData 가 있다.

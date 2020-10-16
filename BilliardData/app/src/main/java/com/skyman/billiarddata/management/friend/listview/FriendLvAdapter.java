@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class FriendLvAdapter extends BaseAdapter {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[LvA]_FriendLvAdapter";
 
     // instance variable
     private FriendDbManager friendDbManager;
@@ -150,6 +150,8 @@ public class FriendLvAdapter extends BaseAdapter {
      */
     private void showDialogToCheckWhetherToDeleteFriendData(final Context context, final long id) {
 
+        final String METHOD_NAME= "[showDialogToCheckWhetherToDeleteFriendData] ";
+
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -161,7 +163,7 @@ public class FriendLvAdapter extends BaseAdapter {
 
                         // [iv/C]FriendDbManager : 해당 id 의 friend 의 데이터를 삭제한다.
                         friendDbManager.deleteContentById(id);
-                        DeveloperManager.displayLog("[LvA]_FriendLvAdapter", "[showDialogToCheckWhetherToDeleteFriendData] " + id + " 번 친구를 삭제하였습니다.");
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + id + " 번 친구를 삭제하였습니다.");
                     }
                 })
                 .setNegativeButton("돌아가기", new DialogInterface.OnClickListener() {

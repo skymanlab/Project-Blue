@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class UserInfoFragment extends Fragment {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[F]_UserInfoFragment";
 
     // instance variable
     private TextView id;
@@ -104,6 +104,8 @@ public class UserInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final String METHOD_NAME= "[getFormatOfCost] ";
+
         // [method]mappingOfWidget : fragment_user_info layout 의 widget 을 mapping
         mappingOfWidget(view);
 
@@ -114,7 +116,7 @@ public class UserInfoFragment extends Fragment {
             displayUserData();
 
         } else {
-            DeveloperManager.displayLog("[F]_UserInfoFragment", "[onViewCreated] userData 가 없으므로 초기 세팅으로");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 초기 세팅으로");
         } // [check 1]
 
     } // End of method [onViewCreated]
@@ -160,7 +162,7 @@ public class UserInfoFragment extends Fragment {
      */
     private void displayUserData() {
 
-        DeveloperManager.displayToUserData("[F]_UserInfoFragment", userData);
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
         // [iv/C]TextView : id 를 userData 의 getId 으로
         id.setText(userData.getId()+"");
 

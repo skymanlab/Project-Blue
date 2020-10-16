@@ -20,7 +20,7 @@ import java.util.StringTokenizer;
 public class DateModify {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[Di]_DateModify";
     private final String DATE_FORMAT = "{0}년 {1}월 {2}일";
 
     // instance variable
@@ -118,6 +118,8 @@ public class DateModify {
      */
     private void setNowDate() {
 
+        final String METHOD_NAME= "[setNowDate] ";
+
         // [lv/C]SimpleDateFormat : '####-##-##' 형태의 포맷 만들기
         SimpleDateFormat nowDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -126,7 +128,7 @@ public class DateModify {
 
         // [lv/C]StringTokenizer : 위 에서 만든 날짜를 '-' 로 나누기
         StringTokenizer nowDateToken = new StringTokenizer(nowDate, "-");
-        DeveloperManager.displayLog("[Di]_DateModify", "[setNowDate] 현재 날짜 : " + nowDate);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " 현재 날짜 : " + nowDate);
 
 
         // [cycle 1] : nowDateToken 에 값이 있을 때까지
@@ -134,7 +136,7 @@ public class DateModify {
 
             // [lv/C]String : nowDateToken 에서 받아온 값을 담는 임시 변수
             String temp = nowDateToken.nextToken();
-            DeveloperManager.displayLog("DateModify", position + " = " + temp);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + position + " = " + temp);
 
             // [check 1] : position 의 값에 따라 다른 spinner widget 설정
             if (position == 0) {

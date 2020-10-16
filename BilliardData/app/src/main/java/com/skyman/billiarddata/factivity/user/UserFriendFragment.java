@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class UserFriendFragment extends Fragment {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[F]_UserFriendFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,6 +101,8 @@ public class UserFriendFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final String METHOD_NAME= "[onViewCreated] ";
+
         // [method]mappingOfWidget : fragment_user_friend layout 의 widget mapping
         mappingOfWidget(view);
 
@@ -130,11 +132,11 @@ public class UserFriendFragment extends Fragment {
                 friendLvManager.setListViewOfFriendData(friendDataArrayList);
 
             } else {
-                DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] friendDataArrayList 에 있는 친구 데이터가 없습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friendDataArrayList 에 있는 친구 데이터가 없습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[onViewCreated] user 정보가 저장되어 있지 않으므로 친구목록을 가져올 수 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 정보가 저장되어 있지 않으므로 친구목록을 가져올 수 없습니다.");
         } // [check 1]
     }
 
@@ -160,6 +162,8 @@ public class UserFriendFragment extends Fragment {
      * [method] friendAdd button 의 click listener
      */
     private void setClickListenerOfFriendAddButton() {
+
+        final String METHOD_NAME= "[setClickListenerOfFriendAddButton] ";
 
         // [check 1] : 입력한 user 데이터가 있다.
         if (this.userData != null) {
@@ -191,11 +195,11 @@ public class UserFriendFragment extends Fragment {
 
                 // [method]
                 toastHandler("이름을 입력해주세요.");
-                DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] name 이 입력되지 않았습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name 이 입력되지 않았습니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[setClickListenerOfFriendAddButton] 저장된 user 데이터가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장된 user 데이터가 없습니다.");
         } // [check 1]
 
     } // End of method [setClickListenerOfFriendAddButton]
@@ -206,18 +210,20 @@ public class UserFriendFragment extends Fragment {
      */
     private void checkNewRowId(long newRowId) {
 
+        final String METHOD_NAME= "[checkNewRowId] ";
+
         // [check 1] : newRowId 는 어떤 값일까?
         if (newRowId == -2) {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] name 이 입력되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name 이 입력되지 않았습니다.");
         } else if (newRowId == -1) {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 데이터베이스 insert 를 실패하였습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터베이스 insert 를 실패하였습니다.");
         } else if (newRowId == 0) {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 수행이 되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "수행이 되지 않았습니다.");
         } else if (newRowId == 1) {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] 첫 번째 친구를 입력했습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "첫 번째 친구를 입력했습니다.");
             showDialogToCheckWhetherFirstGameDataInput();
         } else if (newRowId > 1) {
-            DeveloperManager.displayLog("[F]_UserFriendFragment", "[checkNewRowId] " + newRowId + " 번째 친구를 입력했습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + newRowId + " 번째 친구를 입력했습니다.");
         } // [check 1]
 
     } // End of method [checkNewRowId]
@@ -229,6 +235,8 @@ public class UserFriendFragment extends Fragment {
      */
     private void showDialogToCheckWhetherFirstGameDataInput() {
 
+        final String METHOD_NAME= "[showDialogToCheckWhetherFirstGameDataInput] ";
+
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -239,7 +247,7 @@ public class UserFriendFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        DeveloperManager.displayLog("[F]_UserFriendFragment", "[showDialogToCheckWhetherFirstGameDataInput] 게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
 
                         // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
                         Intent intent = new Intent(getActivity(), MainActivity.class);

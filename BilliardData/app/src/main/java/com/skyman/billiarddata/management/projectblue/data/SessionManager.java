@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public class SessionManager {
 
+    // constant
+    private static final String CLASS_NAME_LOG = "[Se]_SessionManager";
+
     /**
      * [method] userData 를 Intent 에 포함하기 / userData
      *
@@ -106,7 +109,7 @@ public class SessionManager {
 
         // [lv/C]UserData : Intent 에서 "user" 로 UserData 가져오기
         UserData userData = (UserData) user.getSerializableExtra("userData");
-        DeveloperManager.displayToUserData("[Se]_SessionManager", userData);
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
 
         return userData;
 
@@ -137,7 +140,7 @@ public class SessionManager {
 
         // [lv/C]FriendData : Intent 에서 "player" 로 FriendData 가져오기
         FriendData friendData = (FriendData) player.getSerializableExtra("player");
-        DeveloperManager.displayToFriendData("[Se]_SessionManager", friendData);
+        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendData);
 
         return friendData;
 
@@ -154,7 +157,7 @@ public class SessionManager {
 
         // [lv/C]ArrayList<FriendData> : Intent 에서 "playerList" 로 모든 FriendData 가져오기
         ArrayList<FriendData> playerList = (ArrayList<FriendData>) player.getSerializableExtra("playerList");
-        DeveloperManager.displayToFriendData("[Se]_SessionManager", playerList);
+        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, playerList);
 
         return playerList;
 

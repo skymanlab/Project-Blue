@@ -17,7 +17,7 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 public class ProjectBlueDBManager {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[DbM]_ProjectBlueDBManager";
 
     // instance variable
     private ProjectBlueDBHelper dbOpenHelper;
@@ -62,12 +62,15 @@ public class ProjectBlueDBManager {
      * </p>
      */
     public void initDb() {
+
+        final String METHOD_NAME= "[initDb] ";
+
         // [iv/C]ProjectBlueDBHelper : 이 클래스를 생성한 Component 의 context 를 받아 생성한다.
         this.dbOpenHelper = new ProjectBlueDBHelper(this.targetContext);
 
         // [iv/b]isInitializedDB : dbOpenHelper 가 생성되었음을 알려준다.
         this.isInitializedDB = true;
-        DeveloperManager.displayLog("[DbM]_ProjectBlueDBManager", "[initDb] project_blue.db 의 " + ProjectBlueDBInfo.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "project_blue.db 의 " + ProjectBlueDBInfo.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
 
     } // End of method [init_db]
 
@@ -77,12 +80,15 @@ public class ProjectBlueDBManager {
      *
      */
     public void closeDb() {
+
+        final String METHOD_NAME= "[closeDb] ";
+
         // [check] : inInitializedDB 를 통해 dbOpenHelper 가 초기화 되었다.
         if(this.isInitializedDB == true) {
             // [iv/C]ProjectBlueDBHelper : close
             this.dbOpenHelper.close();
         } else {
-            DeveloperManager.displayLog("[DbM]_ProjectBlueDBManager", "[closeDb] dbOpenHelper 가 초기화되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "dbOpenHelper 가 초기화되지 않았습니다.");
         } // [check]
     } // End of method [closeDb]
 

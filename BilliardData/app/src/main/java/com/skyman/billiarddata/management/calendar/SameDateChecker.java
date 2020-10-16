@@ -1,15 +1,8 @@
 package com.skyman.billiarddata.management.calendar;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.user.data.UserData;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.StringTokenizer;
 
 public class SameDateChecker {
-
 
     // instance variable
     private boolean[] isCheckedDate;

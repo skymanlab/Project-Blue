@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 public class ProjectBlueDataFormatter {
 
     // constant
-    public static final String CLASS_NAME_LOG = "";
+    public static final String CLASS_NAME_LOG = "[DF]_ProjectBlueDataFormatter";
     public static final String DATE_DELIMITER = "년월일 ";
     public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
     public static final String DATE_DASH_FORMAT = "yyyy-MM-dd";
@@ -28,9 +28,11 @@ public class ProjectBlueDataFormatter {
      */
     public static String getDashFormatOfDate(Date date){
 
+        final String METHOD_NAME= "[getDashFormatOfDate] ";
+
         // [lv/C]SimpleDateFormat : 특정 날짜 형태로 만들 문자열을 가지고 객체 생성
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_DASH_FORMAT);
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfDate] 결과 : " + formatter.format(date));
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + formatter.format(date));
 
         return  formatter.format(date);
 
@@ -46,9 +48,11 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfDate(Date date){
 
+        final String METHOD_NAME= "[getFormatOfDate] ";
+
         // [lv/C]SimpleDateFormat : 특정 날짜 형태로 만들 문자열을 가지고 객체 생성
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfDate] 결과 : " + formatter.format(date));
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + formatter.format(date));
 
         return  formatter.format(date);
 
@@ -90,12 +94,14 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfDate(int year, int month, int day) {
 
+        final String METHOD_NAME= "[getFormatOfDate] ";
+
         // [lv/C]Calendar : Calendar 객체 가져오기
         Calendar calendar = Calendar.getInstance();
 
         // [lv/C]Calendar : 위 의 객체에 매개변수로 세팅하여 날짜 만들기
         calendar.set(year, month-1, day);
-        DeveloperManager.displayLog("DateModify", "[setDate] 변환 값은 : " + ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime()));
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변환 값은 : " + ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime()));
 
         return  ProjectBlueDataFormatter.getFormatOfDate(calendar.getTime());
 
@@ -141,6 +147,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfScore(String score_1, String score_2) {
 
+        final String METHOD_NAME= "[getFormatOfScore] ";
+
         // [lv/C]StringBuilder : 문자열을 더하기 위한 객체 생성
         StringBuilder scoreData = new StringBuilder();
 
@@ -148,7 +156,7 @@ public class ProjectBlueDataFormatter {
         scoreData.append(" : ");
         scoreData.append(score_2);
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfScore] 결과 : " + scoreData.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + scoreData.toString());
         return scoreData.toString();
 
     } // End of method [getFormatOfScore]
@@ -165,6 +173,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfGameRecord(int gameRecordWin, int gameRecordLoss){
 
+        final String METHOD_NAME= "[getFormatOfGameRecord] ";
+
         // [lv/C]StringBuilder : 문자열을 더하기 위한 객체 생성
         StringBuilder temp = new StringBuilder();
 
@@ -180,7 +190,7 @@ public class ProjectBlueDataFormatter {
         temp.append(gameRecordLoss);
         temp.append("패");
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfGameRecord] 결과 : " + temp.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + temp.toString());
         return temp.toString();
 
     } // End of method [getFormatOfGameRecord]
@@ -196,6 +206,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfPlayTime(String playTime) {
 
+        final String METHOD_NAME= "[getFormatOfPlayTime] ";
+
         // [lv/C]StringBuilder : 문자열을 더하기 위한 객체 생성
         StringBuilder temp = new StringBuilder();
 
@@ -203,7 +215,7 @@ public class ProjectBlueDataFormatter {
         temp.append(playTime);
         temp.append(" 분");
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfPlayTime] 결과 : " + temp.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + temp.toString());
         return temp.toString();
 
     } // End of method [getFormatOfPlayTime]
@@ -219,6 +231,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfPlayTime(int playTime) {
 
+        final String METHOD_NAME= "[getFormatOfPlayTime] ";
+
         // [lv/C]StringBuilder : 문자열을 더하기 위한 객체 생성
         StringBuilder temp = new StringBuilder();
 
@@ -226,7 +240,7 @@ public class ProjectBlueDataFormatter {
         temp.append(playTime);
         temp.append(" 분");
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfPlayTime] 결과 : " + temp.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + temp.toString());
         return temp.toString();
 
     } // End of method [getFormatOfPlayTime]
@@ -242,6 +256,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfCost(String cost) {
 
+        final String METHOD_NAME= "[getFormatOfCost] ";
+
         // [lv/C]DecimalFormat : 숫자를 특정형태로 만들기 위한 객체 생성
         DecimalFormat wonFormat = new DecimalFormat("###,###");
 
@@ -251,7 +267,7 @@ public class ProjectBlueDataFormatter {
         costData.append(wonFormat.format(Long.parseLong(cost)));
         costData.append(" 원");
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfCost] 결과 : " + costData.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + costData.toString());
         return costData.toString();
     } // End of method [getFormatOfCost]
 
@@ -266,6 +282,8 @@ public class ProjectBlueDataFormatter {
      */
     public static String getFormatOfCost(int cost) {
 
+        final String METHOD_NAME= "[getFormatOfCost] ";
+
         // [lv/C]DecimalFormat : 숫자를 특정형태로 만들기 위한 객체 생성
         DecimalFormat wonFormat = new DecimalFormat("###,###");
 
@@ -275,7 +293,7 @@ public class ProjectBlueDataFormatter {
         costData.append(wonFormat.format(cost));
         costData.append(" 원");
 
-        DeveloperManager.displayLog("[DF]_ProjectBlueDataFormatter", "[getFormatOfCost] 결과 : " + costData.toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + costData.toString());
         return costData.toString();
     } // End of method [getFormatOfCost]
 

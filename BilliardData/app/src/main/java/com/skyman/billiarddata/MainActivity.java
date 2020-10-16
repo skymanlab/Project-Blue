@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     // constant
-    private final String CLASS_NAME_LOG = "";
+    private final String CLASS_NAME_LOG = "[Ac]_MainActivity";
     private final int TEMP_ID = 1;
 
     // instance variable
@@ -115,7 +115,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] 메소드가 실행하였습니다.");
+
+        final String METHOD_NAME= "[onStart] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "메소드가 실행하였습니다.");
 
         // [check 1] : UserDbManager 가 생성되었다.
         if (this.userDbManager != null) {
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             this.userData = this.userDbManager.loadContent(TEMP_ID);
 
         } else {
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[onStart] user 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
     } // End of method [onStart]
@@ -134,12 +137,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        final String METHOD_NAME= "[onDestroy] ";
+
         // [check 1] : userDbManager 가 생성되었다.
         if (this.userDbManager != null) {
             // [iv/C]UserDbManager : close
             this.userDbManager.closeDb();
         } else {
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : FriendDbManager 가 생성되었다.
@@ -147,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             // [iv/C]FriendDbManager : close
             this.friendDbManager.closeDb();
         } else {
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
     } // End of method [onDestroy]
@@ -175,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void  setClickListenerOfBilliardInputButton() {
 
+        final String METHOD_NAME= "[setClickListenerOfBilliardInputButton] ";
+
         // [check 1] : userData 가(나의 정보) 있다.
         if (userData != null) {
 
@@ -184,14 +191,14 @@ public class MainActivity extends AppCompatActivity {
             // [check 2] : 친구 목록이 있다.
             if (friendDataArrayList.size() != 0) {
 
-                DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 모든 정보가 입력되어 친구를 선택합니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
 
                 // [method]showAlertToFriendList : 모든 친구목록을 가져와서 RadioGroup 으로 띄우고, 선택된 친구의 정보를 FriendData 에 담아 intent 로 BilliardInputActivity 로 넘긴다.
                 showDialogOfCheckFriend();
 
             } else {
 
-                DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 친구 목록이 없습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "친구 목록이 없습니다.");
 
                 // [method]showDialogToCheckWhetherToMoveUMAWithFriendData : 친구 목록이 없으므로 친구를 추가 하도록 UserManagerActivity 로 pageNumber=2(UserFriend) 를 intent 로 넘긴다.
                 showDialogToCheckWhetherToMoveUMAWithFriendData();
@@ -200,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            DeveloperManager.displayLog("[Ac]_MainActivity", "[setClickListenerOfBilliardInputButton] 나의 정보가 등록되어 있지 않습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
 
             // [method]showDialogToCheckWhetherToMoveUMAWithUserData : 나의 정보가 없으므로 초기 나의 정보를 저장하도록 UserManagerActivity 로 pageNumber=0(UserInput) 를 intent 로 넘긴다.
             showDialogToCheckWhetherToMoveUMAWithUserData();
@@ -215,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     private void showDialogOfCheckFriend() {
+
+        final String METHOD_NAME= "[showDialogOfCheckFriend] ";
 
         // [lv/C]ArrayList<String> : 친구 이름만 담길 배열
         final ArrayList<String> friendNameList = new ArrayList<>();
@@ -254,8 +263,8 @@ public class MainActivity extends AppCompatActivity {
                             // [check 2] : 친구 목록이 있다. / 다시 한 번 검사하는게 필요있니?
                             if (friendNameArray.length != 0) {
 
-                                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 모든 친구를 출력합니다.");
-                                DeveloperManager.displayToFriendData("[Ac]_MainActivity", friendDataArrayList.get(selectedIndex[0]));
+                                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 친구를 출력합니다.");
+                                DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList.get(selectedIndex[0]));
 
                                 // [lv/C]Intent : BilliardInputActivity 로 이동하기 위한 Intent 생성
                                 Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
@@ -270,11 +279,11 @@ public class MainActivity extends AppCompatActivity {
                                 startActivityForResult(intent, 101);
 
                             } else {
-                                DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 친구 목록이 없습니다.");
+                                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "친구 목록이 없습니다.");
                             } // [check 2]
 
                         } else {
-                            DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogOfCheckFriend] 나의 정보가 등록되어 있지 않습니다.");
+                            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
                         } // [check 1]
 
                     }
@@ -296,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showDialogToCheckWhetherToMoveUMAWithUserData() {
 
+        final String METHOD_NAME= "[showDialogToCheckWhetherToMoveUMAWithUserData] ";
+
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -314,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogToCheckWhetherToMoveUMAWithUserData] 나의 정보가 없어서 등록하러 이동합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
 
                     }
                 })
@@ -333,6 +344,8 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     private void showDialogToCheckWhetherToMoveUMAWithFriendData() {
+
+        final String METHOD_NAME= "[showDialogToCheckWhetherToMoveUMAWithFriendData] ";
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -355,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog("[Ac]_MainActivity", "[showDialogToCheckWhetherToMoveUMAWithFriendData] 등록된 친구가 없어서 추가하러 이동합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
 
                     }
                 })

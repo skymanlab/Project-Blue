@@ -39,6 +39,8 @@ public class UserManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manager);
 
+        final String METHOD_NAME= "[onCreate] ";
+
         // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
         createDBManager();
 
@@ -47,19 +49,19 @@ public class UserManagerActivity extends AppCompatActivity {
 
         // [lv/C]UserData : user 정보가 담길 객체
         this.userData = SessionManager.getUserDataInIntent(intent);
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
-        DeveloperManager.displayToUserData("[Ac]_UserManagerActivity", this.userData);
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
 
         // [check 1] : user 정보가 있다.
         if (this.userData != null) {
             // [lv/C]ArrayList<FriendData> : 위 의 user 의 id 로 friend 테이블의 모든 친구목록 가져오기
             this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
-            DeveloperManager.displayToFriendData("[Ac]_UserManagerActivity", this.friendDataArrayList);
-            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] =====================================================================================");
+            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.friendDataArrayList);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
         } else {
-            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] user 정보가 입력되지 않아 친구목록을 받아오지 못합니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 정보가 입력되지 않아 친구목록을 받아오지 못합니다.");
         } // [check 1]
 
 
@@ -115,6 +117,8 @@ public class UserManagerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        final String METHOD_NAME= "[onDestroy] ";
+
         // [check 1] : user 메니저가 생성되었다.
         if(this.userDbManager != null) {
 
@@ -122,7 +126,7 @@ public class UserManagerActivity extends AppCompatActivity {
             this.userDbManager.closeDb();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] user 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
         } // [check 1]
 
         // [check 2] : friend 메니저가 생성되었다.
@@ -132,7 +136,7 @@ public class UserManagerActivity extends AppCompatActivity {
             this.friendDbManager.closeDb();
 
         } else {
-            DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[onDestroy] friend 메니저가 생성되지 않았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
     } // End of method [onDestroy]
@@ -167,10 +171,13 @@ public class UserManagerActivity extends AppCompatActivity {
      */
     private void moveFragmentPage(Intent intent){
 
+
+        final String METHOD_NAME= "[moveFragmentPage] ";
+
         // [lv/i]pageNumber : 위 의 intent 에서 pageNumber 값으로 가져오기 - 기본 값은 '-1' 이다.
         int pageNumber = SessionManager.getPageNumberInIntent(intent);
 
-        DeveloperManager.displayLog("[Ac]_UserManagerActivity", "[moveFragmentPage] pageNumber : " + pageNumber + " 입니다.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "pageNumber : " + pageNumber + " 입니다.");
         switch (pageNumber) {
             case 0:
                 // [iv/C]ViewPager : pageNumber 값으로 페이지 이동하기
