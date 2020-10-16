@@ -82,23 +82,9 @@ public class BilliardModify  {
             @Override
             public void onClick(View v) {
 
-                // [lv/i]resultMethod : billiardDBManager 에서 updateContentByCount 실행한 결과
-                int resultMethod = billiardDBManager.updateContentByCount(
-                        Long.parseLong(count.getText().toString()),
-                        Long.parseLong(userId.getText().toString()),
-                        ProjectBlueDataFormatter.getFormatOfDate(dateYear.getSelectedItem().toString(), dateMonth.getSelectedItem().toString(), dateDay.getSelectedItem().toString()),
-                        Integer.parseInt(targetScore.getText().toString()),
-                        speciality.getText().toString(),
-                        Integer.parseInt(playTime.getText().toString()),
-                        winner.getText().toString(),
-                        score.getText().toString(),
-                        Integer.parseInt(cost.getText().toString())
-                        );
+                // [method]showDialogToCheckWhetherModify : 수정을 정말 진행할 건지 물어보는 AlertDialog 를 보여준다.
+                showDialogToCheckWhetherModify();
 
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
-
-                // [lv/C]Dialog : dialog 종료
-                dialog.dismiss();
             }
         });
 
@@ -172,7 +158,6 @@ public class BilliardModify  {
      */
     private void setTextWithBilliardData(Dialog dialog) {
 
-        // [lv/C]String : method name log
         final String METHOD_NAME_LOG = "[setTextWithBilliardData] ";
 
         // [iv/C]EditText : count set text
@@ -232,10 +217,10 @@ public class BilliardModify  {
      * [method] 정말 수정할 건지 물어보는 alert dialog 를 보여준다.
      *
      */
-    private void showDialogToCheckWhetherModify(Dialog dialog) {
+    private void showDialogToCheckWhetherModify() {
 
         // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(dialog.getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
 
         // [lv/C]AlertDialog : Builder 초기값 설정
         builder.setTitle(R.string.ad_billiard_modify_check_modify_title)
@@ -243,6 +228,9 @@ public class BilliardModify  {
                 .setPositiveButton(R.string.ad_billiard_modify_bt_check_modify_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        // [method]updateAllData : 해당 count 로 billiard 테이블을 수정한다.
+                        updateAllData();
 
                         // [lv/C]Dialog : dialog 종료
                         dialog.dismiss();
@@ -269,5 +257,22 @@ public class BilliardModify  {
      */
     private void updateAllData() {
 
-    }
+        final String METHOD_NAME_LOG = "[updateAllData] ";
+
+        // [lv/i]resultMethod : billiardDBManager 에서 updateContentByCount 실행한 결과
+        int resultMethod = billiardDBManager.updateContentByCount(
+                Long.parseLong(count.getText().toString()),
+                Long.parseLong(userId.getText().toString()),
+                ProjectBlueDataFormatter.getFormatOfDate(dateYear.getSelectedItem().toString(), dateMonth.getSelectedItem().toString(), dateDay.getSelectedItem().toString()),
+                Integer.parseInt(targetScore.getText().toString()),
+                speciality.getText().toString(),
+                Integer.parseInt(playTime.getText().toString()),
+                winner.getText().toString(),
+                score.getText().toString(),
+                Integer.parseInt(cost.getText().toString())
+        );
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
+
+    } // End of method [updateAllData]
 }

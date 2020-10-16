@@ -1,6 +1,9 @@
 package com.skyman.billiarddata.management.billiard.listview;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,11 +119,8 @@ public class BilliardLvAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
-                BilliardModify billiardModify = new BilliardModify(context, billiardDBManager, billiardData);
-
-                // [lv/C]BilliardModify : dialog 보여주기
-                billiardModify.setDialog();
+                // [method]showDialogToCheckWhetherModify : 수정을 하는 과정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
+                showDialogToCheckWhetherProgressNextStep(context, billiardData);
 
             }
         });
@@ -178,4 +178,37 @@ public class BilliardLvAdapter extends BaseAdapter {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    /**
+     * [method] 다음 단계로 데이터 수정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
+     *
+     */
+    private void showDialogToCheckWhetherProgressNextStep (Context context, BilliardData billiardData) {
+
+        // [lv/C]AlertDialog : Builder 객체 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // [lv/C]AlertDialog : Builder 초기값 설정
+        builder.setTitle(R.string.at_billiard_lv_adapter_check_modify_title)
+                .setMessage(R.string.at_billiard_lv_adapter_check_modify_message)
+                .setPositiveButton(R.string.at_billiard_lv_adapter_bt_check_modify_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
+                        BilliardModify billiardModify = new BilliardModify(context, billiardDBManager, billiardData);
+
+                        // [lv/C]BilliardModify : dialog 보여주기
+                        billiardModify.setDialog();
+                    }
+                })
+                .setNegativeButton(R.string.at_billiard_lv_adapter_bt_check_modify_negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+
+    } // End of method [showDialogToCheckWhetherProgressNextStep]
 }

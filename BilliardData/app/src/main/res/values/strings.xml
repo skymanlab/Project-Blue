@@ -241,6 +241,16 @@
     <string name="c_lv_friend_data_bt_delete">삭제</string>
 
 
+    <!--                                    Adapter
+   ===============================================================================================-
+   -->
+    <!-- ListView Adapter : BilliardLvAdapter -->
+    <string name="at_billiard_lv_adapter_check_modify_title">다음 진행 절차</string>
+    <string name="at_billiard_lv_adapter_check_modify_message">데이터 수정을 진행하시겠습니까?</string>
+    <string name="at_billiard_lv_adapter_bt_check_modify_positive">수정</string>
+    <string name="at_billiard_lv_adapter_bt_check_modify_negative">취소</string>
+
+
 
     <!--                        Applandeo Material Calendar View
     ===============================================================================================-
