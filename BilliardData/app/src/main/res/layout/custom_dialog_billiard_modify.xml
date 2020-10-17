@@ -48,11 +48,11 @@
                 android:layout_marginRight="5dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
+
+            <TextView
                 android:id="@+id/c_di_billiard_modify_count"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"></EditText>
+                android:layout_height="wrap_content"></TextView>
         </LinearLayout><!-- End of content 0 -->
 
         <!-- divider -->
@@ -81,11 +81,11 @@
                 android:layout_marginRight="5dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
+            <TextView
                 android:id="@+id/c_di_billiard_modify_user_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"></EditText>
+                android:layout_height="wrap_content"></TextView>
+
         </LinearLayout><!-- End of content 1 -->
 
         <!-- divider -->
@@ -114,25 +114,37 @@
                 android:layout_marginRight="5dp"
                 android:background="?android:attr/listDivider" />
 
-            <Spinner
-                android:id="@+id/c_di_billiard_modify_date_year"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"></Spinner>
+                android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/c_di_billiard_modify_sp_date_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></Spinner>
 
-            <Spinner
-                android:id="@+id/c_di_billiard_modify_date_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"></Spinner>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Spinner
+                        android:id="@+id/c_di_billiard_modify_sp_date_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"></Spinner>
 
-            <Spinner
-                android:id="@+id/c_di_billiard_modify_date_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"></Spinner>
+                    <Spinner
+                        android:id="@+id/c_di_billiard_modify_sp_date_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></Spinner>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout><!-- End of content 2 -->
 
@@ -195,11 +207,10 @@
                 android:layout_marginRight="5dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
-                android:id="@+id/c_di_billiard_modify_speciality"
+            <Spinner
+                android:id="@+id/c_di_billiard_modify_sp_speciality"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"></EditText>
+                android:layout_height="wrap_content"></Spinner>
         </LinearLayout><!-- End of content 4 -->
 
         <!-- divider -->
@@ -294,11 +305,18 @@
                 android:layout_marginRight="5dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
-                android:id="@+id/c_di_billiard_modify_score"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"></EditText>
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/c_di_billiard_modify_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"></EditText>
+            </LinearLayout>
+
         </LinearLayout><!-- End of content 7 -->
 
         <!-- divider -->

@@ -198,6 +198,7 @@
     <string name="c_di_billiard_modify_play_time">게임 시간</string>
     <string name="c_di_billiard_modify_winner">승리자</string>
     <string name="c_di_billiard_modify_score">스코어</string>
+    <string name="c_di_billiard_modify_score_vs">:</string>
     <string name="c_di_billiard_modify_cost">비용</string>
     <string name="c_di_billiard_modify_bt_modify">수정</string>
     <string name="c_di_billiard_modify_bt_cancel">취소</string>

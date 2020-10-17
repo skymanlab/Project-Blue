@@ -24,15 +24,9 @@ public class UserDbManager extends ProjectBlueDBManager {
     // constant
     private final String CLASS_NAME_LOG = "[DbM]_userDbManager";
 
-    // instance variable : 그 전 class
-    private UserDbHelper userDbHelper;
-    private boolean initDb;
-
     // constructor
     public UserDbManager(Context targetContext) {
         super(targetContext);
-        this.userDbHelper = null;
-        this.initDb = false;
     }
 
 

@@ -25,15 +25,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
     // constant
     private final String CLASS_NAME_LOG = "[DbM]_FriendDbManager";
 
-    // instance variable
-    private FriendDbHelper friendDbHelper;
-    private boolean initDb;
-
     // constructor
     public FriendDbManager(Context targetContext) {
         super(targetContext);
-        this.friendDbHelper = null;
-        this.initDb = false;
     }
 
 

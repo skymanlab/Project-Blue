@@ -7,7 +7,7 @@ import com.skyman.billiarddata.management.user.database.UserTableSetting;
 public class FriendTableSetting {
 
     // class constant : create table
-    public static final String SQL_CREATE_ENTRIES =
+    public static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + Entry.TABLE_NAME + " (" +
                     Entry._ID + " INTEGER PRIMARY KEY, " +                      // 0. id                - integer
                     Entry.COLUMN_NAME_USER_ID + " INTEGER, " +                  // 1. user id           - integer
@@ -19,7 +19,7 @@ public class FriendTableSetting {
                     Entry.COLUMN_NAME_TOTAL_COST + " INTEGER )";                // 7. total cost        - integer
 
     // class constant : if exists drop table
-    public static final String SQL_DELETE_ENTRIES =
+    public static final String SQL_DROP_TABLE_IF_EXISTS =
             "DROP TABLE IF EXISTS " + Entry.TABLE_NAME ;
 
     // class constant : select - all content

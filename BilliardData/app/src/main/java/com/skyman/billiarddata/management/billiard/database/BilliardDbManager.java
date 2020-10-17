@@ -126,7 +126,7 @@ public class BilliardDBManager extends ProjectBlueDBManager {
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
         return newRowId;
-    } // End of method [saveContents]
+    } // End of method [saveContent]
 
 
     /**

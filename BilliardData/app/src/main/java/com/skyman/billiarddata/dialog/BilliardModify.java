@@ -10,12 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
+import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 
 public class BilliardModify  {
@@ -27,14 +30,14 @@ public class BilliardModify  {
     private Context context;
 
     // instance variable
-    private EditText count;             // 0. count
-    private EditText userId;            // 1. user id
+    private TextView count;             // 0. count
+    private TextView userId;            // 1. user id
     private EditText targetScore;       // 3. target score
-    private EditText speciality;        // 4. speciality
     private EditText playTime;          // 5. play time
     private EditText winner;            // 6. winner
     private EditText score;             // 7. score
     private EditText cost;              // 8. cost
+    private Spinner speciality;         // 4. speciality
     private Spinner dateYear;           // 2. date - year
     private Spinner dateMonth;          // 2. date - month
     private Spinner dateDay;            // 2. date - day
@@ -42,8 +45,12 @@ public class BilliardModify  {
     private Button cancel;
 
     // instance variable
+    private UserDbManager userDbManager;
     private BilliardDBManager billiardDBManager;
+    private UserData userData;
     private BilliardData billiardData;
+
+
 
     // constructor
     public BilliardModify(Context context, BilliardDBManager billiardDBManager, BilliardData billiardData){
@@ -83,7 +90,7 @@ public class BilliardModify  {
             public void onClick(View v) {
 
                 // [method]showDialogToCheckWhetherModify : 수정을 정말 진행할 건지 물어보는 AlertDialog 를 보여준다.
-                showDialogToCheckWhetherModify();
+                showDialogToCheckWhetherModify(dialog);
 
             }
         });
@@ -111,16 +118,16 @@ public class BilliardModify  {
     public void mappingOfWidget(Dialog dialog) {
 
         // [iv/C]EditText : count mapping
-        this.count  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_count);
+        this.count  = (TextView) dialog.findViewById(R.id.c_di_billiard_modify_count);
 
         // [iv/C]EditText : userId mapping
-        this.userId  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_user_id);
+        this.userId  = (TextView) dialog.findViewById(R.id.c_di_billiard_modify_user_id);
 
         // [iv/C]EditText : targetScore mapping
         this.targetScore  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_target_score);
 
         // [iv/C]EditText : speciality mapping
-        this.speciality  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_speciality);
+        this.speciality  = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_sp_speciality);
 
         // [iv/C]EditText : playTime mapping
         this.playTime  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_play_time);
@@ -135,13 +142,13 @@ public class BilliardModify  {
         this.cost  = (EditText) dialog.findViewById(R.id.c_di_billiard_modify_cost);
 
         // [iv/C]Spinner : dateYear mapping
-        this.dateYear = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_date_year);
+        this.dateYear = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_sp_date_year);
 
         // [iv/C]Spinner : dateMonth mapping
-        this.dateMonth = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_date_month);
+        this.dateMonth = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_sp_date_month);
 
         // [iv/C]Spinner : dateDay mapping
-        this.dateDay = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_date_day);
+        this.dateDay = (Spinner) dialog.findViewById(R.id.c_di_billiard_modify_sp_date_day);
 
         // [iv/C]Button : modify mapping
         this.modify = (Button) dialog.findViewById(R.id.c_di_billiard_modify_bt_modify);
@@ -169,9 +176,6 @@ public class BilliardModify  {
         // [iv/C]EditText : targetScore set text
         this.targetScore.setText(this.billiardData.getTargetScore()+"");
 
-        // [iv/C]EditText : speciality set text
-        this.speciality.setText(this.billiardData.getSpeciality());
-
         // [iv/C]EditText : playTime set text
         this.playTime.setText(this.billiardData.getPlayTime()+"");
 
@@ -183,6 +187,14 @@ public class BilliardModify  {
 
         // [iv/C]EditText : cost set text
         this.cost.setText(this.billiardData.getCost()+"");
+
+        // [lv/C]ArrayAdapter : R.array.year 을 값을 spinner 에 연결하기 위한 Adapter 생성
+        ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
+
+        // [iv/C]EditText : speciality select / 위에서 만든 dateYearAdapter 연결하기 / 초기값 선택
+        this.speciality.setAdapter(specialityAdapter);
+        this.speciality.setSelection(getSelectionToSpeciality(this.billiardData.getSpeciality()));
+
 
         // [lv/i]classificationDate : '####년 ##월 ##일' 형태의 날짜를 숫자만 구분하기
         int[] classificationDate = ProjectBlueDataFormatter.changeDateToIntArrayType(this.billiardData.getDate());
@@ -217,7 +229,7 @@ public class BilliardModify  {
      * [method] 정말 수정할 건지 물어보는 alert dialog 를 보여준다.
      *
      */
-    private void showDialogToCheckWhetherModify() {
+    private void showDialogToCheckWhetherModify(Dialog parentDialog) {
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
@@ -233,7 +245,7 @@ public class BilliardModify  {
                         updateAllData();
 
                         // [lv/C]Dialog : dialog 종료
-                        dialog.dismiss();
+                        parentDialog.dismiss();
 
                     }
                 })
@@ -242,7 +254,7 @@ public class BilliardModify  {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // [lv/C]Dialog : dialog 종료
-                        dialog.dismiss();
+                        parentDialog.dismiss();
 
                     }
                 })
@@ -265,7 +277,7 @@ public class BilliardModify  {
                 Long.parseLong(userId.getText().toString()),
                 ProjectBlueDataFormatter.getFormatOfDate(dateYear.getSelectedItem().toString(), dateMonth.getSelectedItem().toString(), dateDay.getSelectedItem().toString()),
                 Integer.parseInt(targetScore.getText().toString()),
-                speciality.getText().toString(),
+                speciality.getSelectedItem().toString(),
                 Integer.parseInt(playTime.getText().toString()),
                 winner.getText().toString(),
                 score.getText().toString(),
@@ -275,4 +287,42 @@ public class BilliardModify  {
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
 
     } // End of method [updateAllData]
+
+
+    /**
+     * [method] 수정 된 값이 영향을 미치는 해당 userId 의 데이터를 수정한다.
+     *          gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost 가 바뀔 수 있다.
+     *
+     */
+    private void updateUserDataWithBilliardData (int gameRecordWin, int gameRecordLoss, long recentGamePlayerId, String recentPlayDate, int totalPlayTime, int totalCost) {
+
+        int gameRecordWinContent;
+        int gameRecordLossContent;
+        long recentGamePlayerIdContent;
+        String recentPlayDateContent;
+        int totalPlayTimeContent;
+        int totalCostContent;
+
+    }
+
+
+    /**
+     * [method] speciality 값으로 spinner 의 selection 값 리턴하기
+     *
+     */
+    private int getSelectionToSpeciality (String speciality) {
+
+        // [check 1] : speciality 값이 어떤 경우인지 확인하다.
+        switch (speciality) {
+            case "3구":
+                return 0;
+            case "4구":
+                return 1;
+            case "포켓볼":
+                return 2;
+            default:
+                return -1;
+        } // [check 1]
+        
+    } // End of method [getSelectionToSpeciality]
 }
