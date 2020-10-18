@@ -1,7 +1,6 @@
 package com.skyman.billiarddata.management.billiard.listview;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -16,7 +15,9 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.BilliardModify;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
 
@@ -30,12 +31,16 @@ public class BilliardLvAdapter extends BaseAdapter {
 
     // instance variable
     private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
+    private ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
+    private UserData userData;
+    private BilliardDbManager billiardDbManager;
+
+
     private String userName = new String();
-    private BilliardDBManager billiardDBManager;
 
     // constructor
-    public BilliardLvAdapter(BilliardDBManager billiardDBManager){
-        this.billiardDBManager = billiardDBManager;
+    public BilliardLvAdapter(BilliardDbManager billiardDbManager){
+        this.billiardDbManager = billiardDbManager;
     }
 
     @Override
@@ -73,14 +78,14 @@ public class BilliardLvAdapter extends BaseAdapter {
 
         } // [check 1]
 
-        // [lv/C]TextView : count, data, targetScore, speciality, playTime, winner, score, cost mapping
+        // [lv/C]TextView : count, data, gameMode, playerCount, winnerName, playTime, score, cost mapping
         LinearLayout countLinearLayout = (LinearLayout) convertView.findViewById(R.id.c_lv_billiard_data_ll_count);
         TextView count = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_count);                            // 0. count
         TextView date = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_date);                              // 1. date
-        TextView targetScore = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_target_score);               // 2. target score
-        TextView speciality = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_speciality);                  // 3. speciality
-        TextView playTime = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_play_time);                     // 4. play time
-        TextView winner = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner);                          // 5. winner
+        TextView gameMode = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_game_mode);                     // 2. game mode
+        TextView playerCount = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_player_count);               // 3. player count
+        TextView winnerName = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner_name);                 // 4. winner name
+        TextView playTime = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_play_time);                     // 5. play time
         TextView score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_score);                            // 6. score
         TextView cost = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_cost);                              // 7. cost
 
@@ -91,26 +96,25 @@ public class BilliardLvAdapter extends BaseAdapter {
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userName : " + userName);
 
         // [check 1] : userName 과 winner 으로 승리여부 확인
-        if (userName.equals(billiardData.getWinner())) {
-
-            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
-            countLinearLayout.setBackgroundResource(R.color.colorBlue);
-
-        } else {
-
-            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
-            countLinearLayout.setBackgroundResource(R.color.colorRed);
-
-        } // [check 1]
+//        if (userName.equals(billiardData.getWinner())) {
+//
+//            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
+//            countLinearLayout.setBackgroundResource(R.color.colorBlue);
+//
+//        } else {
+//
+//            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
+//            countLinearLayout.setBackgroundResource(R.color.colorRed);
+//
+//        } // [check 1]
 
 
         // [lv/C]TextView : 매핑된 count, data, targetScore, speciality, playTime, winner, score, cost 값 셋팅
-        count.setText(billiardData.getCount() + "");                                                                 // 0. count
+        count.setText(billiardData.getCount() + "");                                                                // 0. count
         date.setText(billiardData.getDate());                                                                       // 1. date
-        targetScore.setText(billiardData.getTargetScore() + "");                                                      // 2. target score
-        speciality.setText(billiardData.getSpeciality());                                                           // 3. speciality
-        playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 4. play time
-        winner.setText(billiardData.getWinner());                                                                   // 5. winner
+        gameMode.setText(billiardData.getGameMode());                                                               // 2. game mode
+        playerCount.setText(billiardData.getPlayerCount());                                                         // 3. player count
+        playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 5. play time
         score.setText(billiardData.getScore());                                                                     // 6. score
         cost.setText(BilliardDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 7. cost
 
@@ -131,27 +135,34 @@ public class BilliardLvAdapter extends BaseAdapter {
     /**
      * [method] 매개 변수로 받은 값을 BilliardData 로 만들어 billiardDataArrayList 에 추가한다.
      *
-     * @param cost        [0] count : primary key
-     * @param date        [1] 날짜
-     * @param targetScore [2] 수지
-     * @param speciality  [3] 종목
-     * @param playTime    [4] 게임 시간
-     * @param winner      [5] 승리자 이름
-     * @param score       [6] 스코어
-     * @param cost        [7] 비용
+     * @param cost          [0] count : primary key
+     * @param date          [1] 날짜
+     * @param gameMode      [2] 종목
+     * @param playerCount   [3] 참가인원
+     * @param winnerId      [4] 승리자 아이디
+     * @param playTime      [5] 게임 시간
+     * @param score         [6] 스코어
+     * @param cost          [7] 비용
      */
-    public void addItem(long count, String date, int targetScore, String speciality, int playTime, String winner, String score, int cost) {
+    public void addItem(long count,         // 0. count
+                        String date,        // 1. date
+                        String gameMode,    // 2. game mode
+                        int playerCount,    // 3. player count
+                        long winnerId,      // 4. winner id
+                        int playTime,       // 5. play time
+                        String score,       // 6. score
+                        int cost) {         // 7. cost
 
         // [lv/C]BilliardData : 매개변수로 받은 데이터를 BilliardData 담는다.
         BilliardData billiardData = new BilliardData();
-        billiardData.setCount(count);
-        billiardData.setDate(date);
-        billiardData.setTargetScore(targetScore);
-        billiardData.setSpeciality(speciality);
-        billiardData.setPlayTime(playTime);
-        billiardData.setWinner(winner);
-        billiardData.setScore(score);
-        billiardData.setCost(cost);
+        billiardData.setCount(count);                       // 0. count
+        billiardData.setDate(date);                         // 1. date
+        billiardData.setGameMode(gameMode);                 // 2. game mode
+        billiardData.setPlayerCount(playerCount);           // 3. player count
+        billiardData.setWinnerId(winnerId);                 // 4. winner id
+        billiardData.setPlayTime(playTime);                 // 5. play time
+        billiardData.setScore(score);                       // 6. score
+        billiardData.setCost(cost);                         // 7. cost
 
         // [iv/C]ArrayList<BilliardData> : 위 에서 만든 데이터를 배열에 담는다.
         this.billiardDataArrayList.add(billiardData);
@@ -196,7 +207,7 @@ public class BilliardLvAdapter extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
-                        BilliardModify billiardModify = new BilliardModify(context, billiardDBManager, billiardData);
+                        BilliardModify billiardModify = new BilliardModify(context, billiardDbManager, billiardData);
 
                         // [lv/C]BilliardModify : dialog 보여주기
                         billiardModify.setDialog();

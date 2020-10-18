@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -46,16 +46,16 @@ public class BilliardModify  {
 
     // instance variable
     private UserDbManager userDbManager;
-    private BilliardDBManager billiardDBManager;
+    private BilliardDbManager billiardDbManager;
     private UserData userData;
     private BilliardData billiardData;
 
 
 
     // constructor
-    public BilliardModify(Context context, BilliardDBManager billiardDBManager, BilliardData billiardData){
+    public BilliardModify(Context context, BilliardDbManager billiardDbManager, BilliardData billiardData){
         this.context = context;
-        this.billiardDBManager = billiardDBManager;
+        this.billiardDbManager = billiardDbManager;
         this.billiardData = billiardData;
     }
 
@@ -171,16 +171,16 @@ public class BilliardModify  {
         this.count.setText(this.billiardData.getCount()+"");
 
         // [iv/C]EditText : userId set text
-        this.userId.setText(this.billiardData.getUserId()+"");
+//        this.userId.setText(this.billiardData.getUserId()+"");
 
         // [iv/C]EditText : targetScore set text
-        this.targetScore.setText(this.billiardData.getTargetScore()+"");
+//        this.targetScore.setText(this.billiardData.getTargetScore()+"");
 
         // [iv/C]EditText : playTime set text
         this.playTime.setText(this.billiardData.getPlayTime()+"");
 
         // [iv/C]EditText : winner set text
-        this.winner.setText(this.billiardData.getWinner());
+//        this.winner.setText(this.billiardData.getWinner());
 
         // [iv/C]EditText : score set text
         this.score.setText(this.billiardData.getScore()+"");
@@ -189,11 +189,11 @@ public class BilliardModify  {
         this.cost.setText(this.billiardData.getCost()+"");
 
         // [lv/C]ArrayAdapter : R.array.year 을 값을 spinner 에 연결하기 위한 Adapter 생성
-        ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(dialog.getContext(), R.array.gameMode, android.R.layout.simple_spinner_dropdown_item);
 
         // [iv/C]EditText : speciality select / 위에서 만든 dateYearAdapter 연결하기 / 초기값 선택
         this.speciality.setAdapter(specialityAdapter);
-        this.speciality.setSelection(getSelectionToSpeciality(this.billiardData.getSpeciality()));
+//        this.speciality.setSelection(getSelectionToSpeciality(this.billiardData.getSpeciality()));
 
 
         // [lv/i]classificationDate : '####년 ##월 ##일' 형태의 날짜를 숫자만 구분하기
@@ -272,19 +272,19 @@ public class BilliardModify  {
         final String METHOD_NAME_LOG = "[updateAllData] ";
 
         // [lv/i]resultMethod : billiardDBManager 에서 updateContentByCount 실행한 결과
-        int resultMethod = billiardDBManager.updateContentByCount(
-                Long.parseLong(count.getText().toString()),
-                Long.parseLong(userId.getText().toString()),
-                ProjectBlueDataFormatter.getFormatOfDate(dateYear.getSelectedItem().toString(), dateMonth.getSelectedItem().toString(), dateDay.getSelectedItem().toString()),
-                Integer.parseInt(targetScore.getText().toString()),
-                speciality.getSelectedItem().toString(),
-                Integer.parseInt(playTime.getText().toString()),
-                winner.getText().toString(),
-                score.getText().toString(),
-                Integer.parseInt(cost.getText().toString())
-        );
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
+//        int resultMethod = this.billiardDbManager.updateContentByCount(
+//                Long.parseLong(this.count.getText().toString()),
+//                Long.parseLong(this.userId.getText().toString()),
+//                ProjectBlueDataFormatter.getFormatOfDate(this.dateYear.getSelectedItem().toString(), this.dateMonth.getSelectedItem().toString(), this.dateDay.getSelectedItem().toString()),
+//                Integer.parseInt(this.targetScore.getText().toString()),
+//                this.speciality.getSelectedItem().toString(),
+//                Integer.parseInt(this.playTime.getText().toString()),
+//                this.winner.getText().toString(),
+//                this.score.getText().toString(),
+//                Integer.parseInt(this.cost.getText().toString())
+//        );
+//
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "입력을 성공하였습니다. 결과값은 " + resultMethod);
 
     } // End of method [updateAllData]
 

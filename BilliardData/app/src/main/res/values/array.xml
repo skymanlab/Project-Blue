@@ -56,7 +56,7 @@
     </string-array>
 
     <!-- 나의 주 종목(게임 종목) -->
-    <string-array name="speciality">
+    <string-array name="gameMode">
         <item>3구</item>
         <item>4구</item>
         <item>포켓볼</item>

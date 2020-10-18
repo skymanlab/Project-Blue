@@ -26,12 +26,13 @@ public class BilliardInfo {
     // instance variable
     private HorizontalScrollView winOrLoss;
     private LinearLayout linearLayout;
-    private TextView date;
-    private TextView speciality;
-    private TextView playTime;
-    private TextView winner;
-    private TextView score;
-    private TextView cost;
+    private TextView date;                      // 1. date
+    private TextView gameMode;                  // 2. game mode
+    private TextView playerCount;               // 3. player count
+    private TextView winnerName;                // 4. winner id -> userData -> getName
+    private TextView playTime;                  // 5. play time
+    private TextView score;                     // 6. score
+    private TextView cost;                      // 7. cost
     private Button close;
 
     // instance variable
@@ -125,20 +126,20 @@ public class BilliardInfo {
                     @Override
                     public void onClick(View v) {
                         
-                        // [iv/C]TextView : date, speciality, playTime, winner, score, cost 를 billiardData 값으로 
+                        // [iv/C]TextView : date, gameMode, playTime, winner, score, cost 를 billiardData 값으로
                         date.setText(billiardDataArrayList.get(billiardCount).getDate());
-                        speciality.setText(billiardDataArrayList.get(billiardCount).getSpeciality());
+                        gameMode.setText(billiardDataArrayList.get(billiardCount).getGameMode());
                         playTime.setText(billiardDataArrayList.get(billiardCount).getPlayTime() + "");
-                        winner.setText(billiardDataArrayList.get(billiardCount).getWinner());
+                        winnerName.setText(billiardDataArrayList.get(billiardCount).getWinnerId() +"");
                         score.setText(billiardDataArrayList.get(billiardCount).getScore() +"");
                         cost.setText(billiardDataArrayList.get(billiardCount).getCost()+"");
 
                     }
                 });
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "date : " + billiardDataArrayList.get(billiardCount).getDate());
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "speciality : " + billiardDataArrayList.get(billiardCount).getSpeciality());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "gameMode : " + billiardDataArrayList.get(billiardCount).getGameMode());
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playTime : " + billiardDataArrayList.get(billiardCount).getPlayTime());
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "winner : " + billiardDataArrayList.get(billiardCount).getWinner());
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "winnerId : " + billiardDataArrayList.get(billiardCount).getWinnerId());
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "score : " + billiardDataArrayList.get(billiardCount).getScore());
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "cost : " + billiardDataArrayList.get(billiardCount).getCost());
 
@@ -175,13 +176,13 @@ public class BilliardInfo {
         this.date = (TextView) dialog.findViewById(R.id.c_di_billiard_info_date);
 
         // [iv/C]TextView : speciality mapping
-        this.speciality = (TextView) dialog.findViewById(R.id.c_di_billiard_info_speciality);
+        this.gameMode = (TextView) dialog.findViewById(R.id.c_di_billiard_info_speciality);
 
         // [iv/C]TextView : playTime mapping
         this.playTime = (TextView) dialog.findViewById(R.id.c_di_billiard_info_play_time);
 
         // [iv/C]TextView : winner mapping
-        this.winner = (TextView) dialog.findViewById(R.id.c_di_billiard_info_winner);
+        this.winnerName = (TextView) dialog.findViewById(R.id.c_di_billiard_info_winner);
 
         // [iv/C]TextView : score mapping
         this.score = (TextView) dialog.findViewById(R.id.c_di_billiard_info_score);

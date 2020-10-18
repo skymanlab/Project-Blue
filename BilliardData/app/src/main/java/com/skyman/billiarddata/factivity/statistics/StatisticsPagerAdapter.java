@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.calendar.SameDateChecker;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -17,15 +17,15 @@ public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
 
     // instance variable
     private UserDbManager userDbManager;
-    private BilliardDBManager billiardDBManager;
+    private BilliardDbManager billiardDbManager;
     private UserData userData;
     private ArrayList<BilliardData> billiardDataArrayList;
     private SameDateChecker sameDateChecker;
 
-    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDBManager billiardDBManager, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDateChecker sameDateChecker) {
+    public StatisticsPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, BilliardDbManager billiardDbManager, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDateChecker sameDateChecker) {
         super(fm);
         this.userDbManager = userDbManager;
-        this.billiardDBManager = billiardDBManager;
+        this.billiardDbManager = billiardDbManager;
         this.userData = userData;
         this.billiardDataArrayList = billiardDataArrayList;
         this.sameDateChecker = sameDateChecker;

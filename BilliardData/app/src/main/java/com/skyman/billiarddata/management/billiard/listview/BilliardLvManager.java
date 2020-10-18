@@ -4,9 +4,7 @@ import android.widget.ListView;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbHelper;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 
 import java.util.ArrayList;
 
@@ -20,11 +18,11 @@ public class BilliardLvManager {
     private ListView targetListView;
 
     // instance variable
-    private BilliardDBManager billiardDBManager;
+    private BilliardDbManager billiardDbManager;
 
     // constructor
-    public BilliardLvManager(ListView targetListView, BilliardDBManager billiardDBManager) {
-        this.billiardLvAdapter = new BilliardLvAdapter(billiardDBManager);
+    public BilliardLvManager(ListView targetListView, BilliardDbManager billiardDbManager) {
+        this.billiardLvAdapter = new BilliardLvAdapter(billiardDbManager);
         this.targetListView = targetListView;
     }
 

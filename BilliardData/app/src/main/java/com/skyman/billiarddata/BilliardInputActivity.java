@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,80 +17,92 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.DateModify;
-import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
-import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class BilliardInputActivity extends AppCompatActivity {
 
     // constant
-    private final String CLASS_NAME_LOG ="[Ac]_BilliardInputActivity";
+    private final String CLASS_NAME_LOG = "[Ac]_BilliardInputActivity";
 
     // instant variable
-    private BilliardDBManager billiardDbManager = null;
+    private BilliardDbManager billiardDbManager = null;
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
+    private PlayerDbManager playerDbManager = null;
     private UserData userData = null;
-    private FriendData playerData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
-    private int selectedPlayerIndex = -1;
+    private ArrayList<PlayerData> playerDataArrayList = null;
+    private ArrayList<String> playerNameList = null;
 
     // instant variable
-    private Spinner player;
-    private Spinner targetScore;
-    private Spinner speciality;
+    private TextView playerName_1;
+    private Spinner playerTargetScore_1;
+    private EditText playerScore_1;
+
+    private TextView playerName_2;
+    private Spinner playerTargetScore_2;
+    private EditText playerScore_2;
+
+    private LinearLayout player3;
+    private TextView playerName_3;
+    private Spinner playerTargetScore_3;
+    private EditText playerScore_3;
+
+    private LinearLayout player4;
+    private TextView playerName_4;
+    private Spinner playerTargetScore_4;
+    private EditText playerScore_4;
+
     private TextView date;
     private TextView reDate;
-    private EditText score_1;
-    private EditText score_2;
-    private EditText cost;
+
+    private Spinner gameMode;
+
+    private Spinner winnerName;
     private EditText playTime;
+    private EditText cost;
+
     private Button input;
-    private ListView allBilliardData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_input);
 
-        final String METHOD_NAME= "[onCreate] ";
+        final String METHOD_NAME = "[onCreate] ";
 
-        // [method]createDBManager : billiard, user, friend 테이블 메니저 생성
+        // [method]createDBManager : billiard, user, friend, player 테이블 메니저 생성
         createDBManager();
 
         // [lv/C]Intent : 전 Activity 에서 보낸 Intent 가져오기
         Intent intent = getIntent();
 
-        // [iv/C]UserData : userDbManager 에서 받아온 데이터 셋팅
+        // [iv/C]UserData : 세션에서 userData 를 가져온다. / "userData"
         this.userData = SessionManager.getUserDataInIntent(intent);
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG,  METHOD_NAME + "intent 로 넘어온 userData 가 있어요.");
-        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "intent 로 넘어온 userData 가 있어요.");
 
-        // [iv/long]selectedPosition : 나의 모든 친구목록이 있는 friendDataArrayList 에서의 position 값
-        this.selectedPlayerIndex = SessionManager.getSelectedPlayerIndexInIntent(intent);
+        // [iv/C]ArrayList<FriendData> : 세션에서 friendDataArrayList 를 가져온다. / "playerList"
+        this.friendDataArrayList = SessionManager.getPlayerListInIntent(intent);
 
-        // [iv/C]FriendData : Intent 에서 가져온 값으로 셋팅
-        this.playerData = SessionManager.getPlayerInIntent(intent);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "intent 로 넘어온 friendDataArrayList 가 있어요.");
 
-        // [method]mappingOfWidget : activity_billiard_input.xml 의 widget 과 매핑한다.
+        // [method]mappingOfWidget : activity_billiard_input layout 의 widget 과 매핑한다.
         mappingOfWidget();
 
-        // [method]setDateFormat : 오늘 날짜를 특정 형태로 만들어서 date widget 에 setText
-        setTextToTodayDate();
-
-        // [method]displayBilliardData : 현재 billiard 테이블에 있는 모든 값들을 화면에 출력한다.
-        displayBilliardData();
+        // [iv/C]TextView : date 의 오늘 날짜를 특정 형태로 만들어서 보여주기
+        this.date.setText(ProjectBlueDataFormatter.getFormatOfDate(new Date()));
 
         // [iv/C]TextView : reDate widget 의 클릭 이벤트를 셋팅한다.
         this.reDate.setOnClickListener(new View.OnClickListener() {
@@ -102,9 +114,6 @@ public class BilliardInputActivity extends AppCompatActivity {
 
             }
         });
-
-        // [method] : player, targetScore, speciality spinner widget 을 초기 설정합니다.
-        setSpinnerWidget();
 
         // [iv/C]Button : input click listener
         this.input = (Button) findViewById(R.id.billiard_input_bt_input);
@@ -118,6 +127,33 @@ public class BilliardInputActivity extends AppCompatActivity {
             }
         });
 
+        // [check 1] : userData, friendDataArrayList 의 내용이 있다.
+        if ((this.userData != null) && (friendDataArrayList.size() > 0)) {
+
+            // [iv/C]ArrayList<PlayerData> : player 를 담기 위한 객체 생성
+            this.playerDataArrayList = new ArrayList<>();
+
+            // [iv/C]ArrayList<String> : playerName 을 담기 위한 객체 생성
+            this.playerNameList = new ArrayList<>();
+
+            // [method] : player 의 수에 따라 화면에 보여주기
+            setPlayerList(this.userData, this.friendDataArrayList);
+
+            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
+
+            for (int index = 0; index < this.playerNameList.size(); index++) {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 name : " + this.playerNameList.get(index));
+            }
+
+            // [method]setSpinnerWidgetOfWinnerNameAndGameMode : winnerName, gameMode spinner 의 초기값 설정
+            setSpinnerWidgetOfWinnerNameAndGameMode(this.playerNameList);
+
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "셋팅할 userData 와 friendDataArrayList 가 없습니다.");
+        } // [check 1]
+
+
     } // End of method [onCreate]
 
 
@@ -125,7 +161,7 @@ public class BilliardInputActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        final String METHOD_NAME= "[onDestroy] ";
+        final String METHOD_NAME = "[onDestroy] ";
 
         // [check 1] : billiardDbManager 가 생성되었을 때만 closeDb method 실행
         if (this.billiardDbManager != null) {
@@ -148,6 +184,13 @@ public class BilliardInputActivity extends AppCompatActivity {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
         } // [check 3]
 
+        // [check 4] : playerDbManager 가 생성되었을 때만 closeDB method 실행
+        if (this.playerDbManager != null) {
+            this.playerDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 메니저가 생성되지 않았습니다.");
+        } // [check 4]
+
     } // End of method [onDestroy]
 
 
@@ -158,26 +201,12 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
     /**
-     * [method] 갱신된 userData 와 ArrayList<FriendData> 를 가져온다.
-     */
-    private void getUpdatedUserDataAndFriendDataList(long userId, long selectedPosition) {
-
-        // [iv/C]UserData : 갱신된 UserData 가져오기
-        this.userData = userDbManager.loadContent(userId);
-
-        // [iv/C]ArrayList<FriendData> : 갱신된 FriendData 목록 가져오기
-        this.playerData = friendDbManager.loadContentById(selectedPosition);
-
-    } // End of method [getUpdatedUserDataAndFriendDataList]
-
-
-    /**
      * [method] project_blue.db 의 billiard, user, friend 테이블을 관리하는 메니저를 생성한다.
      */
     private void createDBManager() {
 
         // [iv/C]BilliardDBManager : billiard 테이블을 관리하는 메니저 생성과 초기화
-        this.billiardDbManager = new BilliardDBManager(this);
+        this.billiardDbManager = new BilliardDbManager(this);
         this.billiardDbManager.initDb();
 
         // [iv/C]UserDbManager : user 테이블을 관리하는 메니저 생성과 초기화
@@ -188,6 +217,10 @@ public class BilliardInputActivity extends AppCompatActivity {
         this.friendDbManager = new FriendDbManager(this);
         this.friendDbManager.initDb();
 
+        // [iv/C]PlayerDbManager : player 테이블을 관리하는 메니저 생성과 초기화
+        this.playerDbManager = new PlayerDbManager(this);
+        this.playerDbManager.initDb();
+
     } // End of method [createDBManager]
 
 
@@ -196,54 +229,75 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void mappingOfWidget() {
 
-        // [iv/C]TextView : date mapping
+        // [iv/C]TextView : player 1 name mapping
+        this.playerName_1 = (TextView) findViewById(R.id.billiard_input_player_name_1);
+
+        // [iv/C]Spinner : player 1 target score mapping
+        this.playerTargetScore_1 = (Spinner) findViewById(R.id.billiard_input_player_target_score_1);
+
+        // [iv/C]EditText : player 1 score mapping
+        this.playerScore_1 = (EditText) findViewById(R.id.billiard_input_player_score_1);
+
+
+        // [iv/C]TextView : player 2 name mapping
+        this.playerName_2 = (TextView) findViewById(R.id.billiard_input_player_name_2);
+
+        // [iv/C]Spinner : player 2 target score mapping
+        this.playerTargetScore_2 = (Spinner) findViewById(R.id.billiard_input_player_target_score_2);
+
+        // [iv/C]EditText : player 2 score mapping
+        this.playerScore_2 = (EditText) findViewById(R.id.billiard_input_player_score_2);
+
+
+        // [iv/C]LinearLayout : player 3 mapping
+        this.player3 = (LinearLayout) findViewById(R.id.billiard_input_ll_player_3);
+
+        // [iv/C]TextView : player 3 name mapping
+        this.playerName_3 = (TextView) findViewById(R.id.billiard_input_player_name_3);
+
+        // [iv/C]Spinner : player 3 target score mapping
+        this.playerTargetScore_3 = (Spinner) findViewById(R.id.billiard_input_player_target_score_3);
+
+        // [iv/C]EditText : player 3 score mapping
+        this.playerScore_3 = (EditText) findViewById(R.id.billiard_input_player_score_3);
+
+
+        // [iv/C]LinearLayout : player 4 mapping
+        this.player4 = (LinearLayout) findViewById(R.id.billiard_input_ll_player_4);
+
+        // [iv/C]TextView : player 4 name mapping
+        this.playerName_4 = (TextView) findViewById(R.id.billiard_input_player_name_4);
+
+        // [iv/C]Spinner : player 4 target score mapping
+        this.playerTargetScore_4 = (Spinner) findViewById(R.id.billiard_input_player_target_score_4);
+
+        // [iv/C]EditText : player 4 score mapping
+        this.playerScore_4 = (EditText) findViewById(R.id.billiard_input_player_score_4);
+
+
+        // [iv/C]TextView : date mapping / 날짜
         this.date = (TextView) findViewById(R.id.billiard_input_date);
 
-        // [iv/C]TextView : reDate mapping
+        // [iv/C]TextView : reDate mapping / 날짜 다시
         this.reDate = (TextView) findViewById(R.id.billiard_input_re_date);
 
-        // [iv/C]EditText : score_1 mapping
-        this.score_1 = (EditText) findViewById(R.id.billiard_input_score_1);
+        // [iv/C]Spinner : gameMode mapping / 종목
+        this.gameMode = (Spinner) findViewById(R.id.billiard_input_sp_game_mode);
 
-        // [iv/C]EditText : score_2 mapping
-        this.score_2 = (EditText) findViewById(R.id.billiard_input_score_2);
+        // [iv/C]Spinner : winnerName mapping / 승자
+        this.winnerName = (Spinner) findViewById(R.id.billiard_input_sp_winner);
 
-        // [iv/C]EditText : cost mapping
-        this.cost = (EditText) findViewById(R.id.billiard_input_cost);
-
-        // [iv/C]EditText : playTime mapping
+        // [iv/C]EditText : playTime mapping / 게임 시간
         this.playTime = (EditText) findViewById(R.id.billiard_input_play_time);
 
-        // [iv/C]Spinner : player mapping
-        this.player = (Spinner) findViewById(R.id.billiard_input_sp_player);
+        // [iv/C]EditText : cost mapping / 비용
+        this.cost = (EditText) findViewById(R.id.billiard_input_cost);
 
-        // [iv/C]Spinner : targetScore mapping
-        this.targetScore = (Spinner) findViewById(R.id.billiard_input_sp_target_score);
 
-        // [iv/C]Spinner : speciality mapping
-        this.speciality = (Spinner) findViewById(R.id.billiard_input_sp_speciality);
-
-        // [iv/C]Button : input mapping
+        // [iv/C]Button : input mapping / 입력 버튼
         this.input = (Button) findViewById(R.id.billiard_input_bt_input);
 
-        // [iv/C]Button : allBilliardData mapping
-        this.allBilliardData = (ListView) findViewById(R.id.billiard_input_lv_all_billiard_data);
-
     } // End of method [mappingOfWidget]
-
-
-    /**
-     * [method] 오늘 날짜를 특정 형태로 만들어서 date widget 에 setText
-     */
-    private void setTextToTodayDate() {
-
-        // [lv/C]SimpleDateFormat : 'yyyy년 MM월 dd일' 형태로 format 을 만든다.
-        SimpleDateFormat format = new SimpleDateFormat(ProjectBlueDataFormatter.DATE_FORMAT);
-
-        // [iv/C]TextView : 위 의 날짜로 date widget 을 setText
-        this.date.setText(format.format(new Date()));
-
-    } // End of method [set]
 
 
     /**
@@ -261,65 +315,205 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
     /**
+     * [method] userData 의 player 1 등록
+     */
+    private void addPlayerListOfUserData(UserData userData, ArrayAdapter adapter) {
+
+        final String METHOD_NAME = "[addPlayerListOfUserData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 를 player 에 등록합니다.");
+
+        // [iv/C]TextView : player 1 name
+        this.playerName_1.setText(userData.getName());
+
+        // [iv/C]Spinner : player 1 target score 및 초기값 설정
+        this.playerTargetScore_1.setAdapter(adapter);
+        this.playerTargetScore_1.setSelection(userData.getTargetScore() - 1);
+
+        // [lv/C]PlayerData : userData 를 첫번째 player 로 만들기
+        PlayerData playerData = new PlayerData();
+        playerData.setPlayerId(userData.getId());
+
+        // [iv/C]ArrayList<PlayerData> : 위 의 내용을 첫번째 player 을 등록 / player 1
+        this.playerDataArrayList.add(playerData);
+
+        // [iv/C]ArrayList<String> : 첫번째 player 의 name 을 등록 / player 1
+        this.playerNameList.add(userData.getName());
+
+    } // End of method [addPlayerListOfUserData]
+
+
+    /**
+     * [method] 첫번째 friend 데이터를 의 player 2 등록
+     */
+    private void addPlayerListOfFirstFriendData(FriendData friendData, ArrayAdapter adapter) {
+
+        final String METHOD_NAME = "[addPlayerListOfUserData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 를 player 에 등록합니다.");
+
+        // [iv/C]TextView : player 2 name
+        this.playerName_2.setText(friendData.getName());
+
+        // [iv/C]Spinner : player 2 target score
+        this.playerTargetScore_2.setAdapter(adapter);
+
+        // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
+        PlayerData playerData = new PlayerData();
+        playerData.setPlayerId(friendData.getId());
+
+        // [iv/C]ArrayList<PlayerData> : 위 의 내용을 두번째 player 을 등록 / player 2
+        this.playerDataArrayList.add(playerData);
+
+        // [iv/C]ArrayList<String> : 두번째 player 의 name 을 등록 / player 2
+        this.playerNameList.add(friendData.getName());
+
+    } // End of method [addPlayerListOfFirstFriendData]
+
+
+    /**
+     * [method] 두번째 friend 데이터를 의 player 3 등록
+     */
+    private void addPlayerListOfSecondFriendData(FriendData friendData, ArrayAdapter adapter) {
+
+        final String METHOD_NAME = "[addPlayerListOfSecondFriendData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 를 player 에 등록합니다.");
+
+        // [iv/C]TextView : player 3 name
+        this.playerName_3.setText(friendData.getName());
+
+        // [iv/C]Spinner : player 3 target score
+        this.playerTargetScore_3.setAdapter(adapter);
+
+        // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
+        PlayerData playerData = new PlayerData();
+        playerData.setPlayerId(friendData.getId());
+
+        // [iv/C]ArrayList<PlayerData> : 위 의 내용을 세번째 player 을 등록 / player 3
+        this.playerDataArrayList.add(playerData);
+
+        // [iv/C]ArrayList<String> : 세번째 player 의 name 을 등록 / player 3
+        this.playerNameList.add(friendData.getName());
+
+    } // End of method [addPlayerListOfSecondFriendData]
+
+
+    /**
+     * [method] 세번째 friend 데이터를 의 player 4 등록
+     */
+    private void addPlayerListOfThirdFriendData(FriendData friendData, ArrayAdapter adapter) {
+
+        final String METHOD_NAME = "[addPlayerListOfThirdFriendData] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 를 player 에 등록합니다.");
+
+        // [iv/C]TextView : player 4 name
+        this.playerName_4.setText(friendData.getName());
+
+        // [iv/C]Spinner : player 4 target score
+        this.playerTargetScore_4.setAdapter(adapter);
+
+        // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
+        PlayerData playerData = new PlayerData();
+        playerData.setPlayerId(friendData.getId());
+
+        // [iv/C]ArrayList<PlayerData> : 위 의 내용을 네번째 player 을 등록 / player 4
+        this.playerDataArrayList.add(playerData);
+
+        // [iv/C]ArrayList<String> : 네번째 player 의 name 을 등록 / player 4
+        this.playerNameList.add(userData.getName());
+
+    } // End of method [addPlayerListOfThirdFriendData]
+
+
+    /**
+     * [method] player 의 목록을 만들기
+     */
+    private void setPlayerList(UserData userData, ArrayList<FriendData> friendDataArrayList) {
+
+        final String METHOD_NAME = "[setPlayerList] ";
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "메소드를 실행 합니다.");
+
+        // [lv/C]ArrayAdapter : target score 의 초기값을 설정
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.targetScore, android.R.layout.simple_spinner_dropdown_item);
+
+        // [method]addPlayerListOfUserData : 첫번째 player 등록 / userData
+        addPlayerListOfUserData(userData, adapter);
+
+
+        // [check 1] : friendDataArrayList 의 size 값으로 player 의 수 알아내기
+        if (friendDataArrayList.size() == 1) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 1 입니다.");
+
+            // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
+            addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
+
+            // [iv/C]LinearLayout : player3, player4 숨기다.
+            this.player3.setVisibility(LinearLayout.GONE);
+            this.player4.setVisibility(LinearLayout.GONE);
+
+        } else if (friendDataArrayList.size() == 2) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 2 입니다.");
+
+            // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
+            addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
+
+            // [method]addPlayerListOfFirstFriendData : 세번째 player 등록 / friendData, index=1
+            addPlayerListOfSecondFriendData(friendDataArrayList.get(1), adapter);
+
+            // [iv/C]LinearLayout : player4 숨기다.
+            this.player4.setVisibility(LinearLayout.GONE);
+
+        } else if (friendDataArrayList.size() == 3) {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 3 입니다.");
+
+            // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
+            addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
+
+            // [method]addPlayerListOfFirstFriendData : 세번째 player 등록 / friendData, index=1
+            addPlayerListOfSecondFriendData(friendDataArrayList.get(1), adapter);
+
+            // [method]addPlayerListOfFirstFriendData : 네번째 player 등록 / friendData, index=2
+            addPlayerListOfThirdFriendData(friendDataArrayList.get(2), adapter);
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "선택한 친구 목록이 없어요.");
+        }
+
+    } // End of method [setPlayList]
+
+
+    /**
      * [method] player, targetScore, speciality spinner widget 의 초기값을 설정한다.
      *
      * <p>
-     * player 는 UserDate 와 FriendData 의 name 을 추가한 adapter 를 이용하여 화면에 뿌려준다.
-     * UserData 와 FriendData 는 먼저 받아온 다음 수행되어야 한다.
+     * player 는 UserDate 와 ArrayList<FriendData> 의 name 을 모두 추가한 adapter 를 이용하여 화면에 뿌려준다.
      *
      * <p>
-     * targetScore 는 R.array.targetScore 을 adapter 를 이용하여 화면에 뿌려준다.
-     * 그리고 UserData 의 targetScore 값을 초기값으로 설정한다.
-     *
-     * <p>
-     * speciality 는 R.array.speciality 을 adapter 를 이용하여 화면에 뿌려준다.
-     * 그리고 UserData 의 speciality 값을 초기값으로 설정한다.
+     * gameMode 는 R.array.gameMode 을 adapter 로 연결하여 화면에 뿌려준다.
+     * 그리고 UserData 의 gameMode 로 초기값으로 설정한다.
      */
-    private void setSpinnerWidget() {
+    private void setSpinnerWidgetOfWinnerNameAndGameMode(ArrayList<String> playerNameList) {
 
-        final String METHOD_NAME= "[setSpinnerWidget] ";
+        final String METHOD_NAME = "[setSpinnerWidget] ";
 
-        // [check 1] : UserData 가 있어야 한다.
-        if (this.userData != null && this.playerData != null) {
+        // [lv/C]ArrayAdapter<String> : 일반적인 방법이 아니라 동적으로 받은 String 값을 셋팅해서 만들어야 하므로 아래의 생성자로 생성하고 add method 를 이용하여 문자열(player name)을 추가한다.
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, this.playerNameList);
 
-            // [lv/C]ArrayAdapter<String> : 일반적인 방법이 아니라 동적으로 받은 String 값을 셋팅해서 만들어야 하므로 아래의 생성자로 생성하고 add method 를 이용하여 문자열(player name)을 추가한다.
-            ArrayAdapter<String> userAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
+        // [iv/C]Spinner : 위 에서 만들어진 adapter 와 연결하기
+        this.winnerName.setAdapter(adapter);
 
-            // [lv/C]ArrayAdapter<String> : add method 를 이용하여 UserData 의 name 문자열을 추가한다.
-            userAdapter.add(this.userData.getName());
+        // [lv/C]ArrayAdapter : R.array.speciality 값을 speciality spinner 에 연결하는 adapter 를 생성한다.
+        ArrayAdapter gameModeAdapter = ArrayAdapter.createFromResource(this, R.array.gameMode, android.R.layout.simple_spinner_dropdown_item);
 
-            // [check 2] : playerData 가 있어야 한다.
-            if (this.playerData != null) {
+        // [iv/C]Spinner : 위 의 adapter 를 이용하여 speciality spinner 의 목록을 만든다.
+        this.gameMode.setAdapter(gameModeAdapter);
 
-                // [lv/C]ArrayAdapter<String> : add method 를 이용하여 FriendData 의 name 문자열을 추가한다.
-                userAdapter.add(this.playerData.getName());
-
-            } // [check 2]
-
-            // [iv/C]Spinner : 위 에서 만들어진 adapter 와 연결하기
-            this.player.setAdapter(userAdapter);
-
-            // [lv/C]ArrayAdapter : R.array.targetScore 값을 targetScore spinner 에 연결하는 adapter 를 생성한다.
-            ArrayAdapter targetScoreAdapter = ArrayAdapter.createFromResource(this, R.array.targetScore, android.R.layout.simple_spinner_dropdown_item);
-
-            // [iv/C]Spinner : 위 의 adapter 를 이용하여 targetScore spinner 의 목록을 만든다.
-            this.targetScore.setAdapter(targetScoreAdapter);
-
-            // [iv/C]Spinner : targetScore spinner 의 초기값을 UserData 의 targetScore-1 값으로 셋팅한다.
-            this.targetScore.setSelection(this.userData.getTargetScore() - 1);
-
-            // [lv/C]ArrayAdapter : R.array.speciality 값을 speciality spinner 에 연결하는 adapter 를 생성한다.
-            ArrayAdapter specialityAdapter = ArrayAdapter.createFromResource(this, R.array.speciality, android.R.layout.simple_spinner_dropdown_item);
-
-            // [iv/C]Spinner : 위 의 adapter 를 이용하여 speciality spinner 의 목록을 만든다.
-            this.speciality.setAdapter(specialityAdapter);
-
-            // [iv/C]Spinner : speciality spinner 의 초기값을 UserData 의 speciality 값으로 셋팅한다.
-            this.speciality.setSelection(getSelectedIdFromUserSpeciality(this.userData.getSpeciality()));
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "어플의 수행 단계에 어긋나는 접급입니다. 당신의 UserData 가 없다는 것이 말이 안 되요!");
-        } // [check 1]
+        // [iv/C]Spinner : speciality spinner 의 초기값을 UserData 의 speciality 값으로 셋팅한다.
+        this.gameMode.setSelection(getSelectedIdFromUserSpeciality(this.userData.getSpeciality()));
 
     } // End of method [setSpinnerWidget]
 
@@ -331,7 +525,7 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private int getSelectedIdFromUserSpeciality(String speciality) {
 
-        final String METHOD_NAME= "[getSelectedIdFromUserSpeciality] ";
+        final String METHOD_NAME = "[getSelectedIdFromUserSpeciality] ";
 
         // [check 1] : "3구" 이면 0, "4구" 이면 1, "포켓볼" 이면 2  - java version 7 이후로 switch 문에서 String 을 지원한다.
         switch (speciality) {
@@ -349,10 +543,8 @@ public class BilliardInputActivity extends AppCompatActivity {
     } // End of method [getSelectedIdFromUserSpeciality]
 
 
-
     /**
      * [method] 입력을 진행할 건지 물어보는 dialog 를 보여준다.
-     *
      */
     public void showDialogToCheckWhetherSave() {
 
@@ -367,7 +559,7 @@ public class BilliardInputActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // [method]setClickListenerOfInputButton : 입력 받은 값으로 billiardData 를 저장하고, userData 와 friendData 의 내용을 갱신한다.
-                        setClickListenerOfInputButton();
+//                        setClickListenerOfInputButton();
 
                     }
                 })
@@ -389,154 +581,159 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void setClickListenerOfInputButton() {
 
-        final String METHOD_NAME= "[setClickListenerOfInputButton] ";
-
-        // [check 1] : EditText 의 모든 값을 입력 받지 않았다.
-        if (!checkInputAllEditText()) {
-            Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-            // 버튼 이벤트 종료
-            return;
-        } // [check 1]
-
-        // [iv/C]BilliardDBManager : billiardData 값을 받아서 billiard 테이블에 저장한다.
-        this.billiardDbManager.saveContent(
-                userData.getId(),
-                date.getText().toString(),
-                Integer.parseInt(targetScore.getSelectedItem().toString()),
-                speciality.getSelectedItem().toString(),
-                Integer.parseInt(playTime.getText().toString()),
-                player.getSelectedItem().toString(),
-                BilliardDataFormatter.getFormatOfScore(score_1.getText().toString(), score_2.getText().toString()),
-                Integer.parseInt(cost.getText().toString())
-        );
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블에 저장을 완료했습니다.");
+        final String METHOD_NAME = "[setClickListenerOfInputButton] ";
 
 
-        // [check 2] : userData 데이터가 있다.
-        if (this.userData != null) {
-            // [lv/i]gameRecordWin : userData 가 승리했을 시, 그 값이 저장될 변수
-            int gameRecordWin = 0;
 
-            // [lv/i]gameRecordLoss : userData 가 패배했을 시, 그 값이 저장될 변수
-            int gameRecordLoss = 0;
-
-            // [check 2-1] : 승리자 이름과 userData 의 name 이 같다. 즉, userData 가 승리
-            if (this.player.getSelectedItem().equals(this.userData.getName())) {
-
-                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordWin 값에 +1
-                gameRecordWin = this.userData.getGameRecordWin() + 1;
-
-                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
-                gameRecordLoss = this.userData.getGameRecordLoss();
-
-            } else {
-                // friendDAta 가 승리
-
-                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
-                gameRecordWin = this.userData.getGameRecordWin();
-
-                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
-                gameRecordLoss = this.userData.getGameRecordLoss() + 1;
-
-            } // [check 2-1]
-
-            // [lv/l]recentGamePlayerID : userData 와 최근에 게임한 플레이어의 id. 즉, playerData 의 id 이다.
-            long recentGamePlayerId = this.playerData.getId();
-
-            // [lv/S]recentPlayData : userData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
-            String recentPlayDate = this.date.getText().toString();
-
-            // [lv/i]totalPlayTime : 기존의 userData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
-            int totalPlayTime = this.userData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
-
-            // [lv/i]totalCost : 기존의 userData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
-            int totalCost = this.userData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
-
-            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData.getId(), gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost);
-
-            // [iv/C]UserDbManager : 위에서 셋팅된 값들을 이용하여 해당 userId 의 user 데이터를 갱신하기
-            this.userDbManager.updateContent(this.userData.getId(),
-                    gameRecordWin,
-                    gameRecordLoss,
-                    recentGamePlayerId,
-                    recentPlayDate,
-                    totalPlayTime,
-                    totalCost);
-
-            // [iv/C]UserData : 위에서 변경된 데이터를 해당 userId 로 가져오기
-            this.userData = this.userDbManager.loadContent(this.userData.getId());
-            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "어플의 이번 단계에서 userData 가 없다는 것이 말이 안됩니다. 이 데이터를 기반으로 업데이트를 진행해야 합니다.");
-        }
-
-
-        // [check 3] : friendData 데이터가 있다.
-        if (this.playerData != null) {
-
-            // [iv/i]gameRecordWin : FriendData 가 승리했을 시, 그 값이 저장될 변수
-            int gameRecordWin = 0;
-
-            // [lv/i]gameRecordLoss : FriendData 가 패배했을 시, 그 값이 저장될 변수
-            int gameRecordLoss = 0;
-
-            // [check 3-1] : 승리자 이름과 FriendData 의 name 이 같다. 즉, FriendData 가 승리
-            if (this.player.getSelectedItem().equals(this.playerData.getName())) {
-
-                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordWin 값에 +1
-                gameRecordWin = this.playerData.getGameRecordWin() + 1;
-
-                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
-                gameRecordLoss = this.playerData.getGameRecordLoss();
-
-            } else {
-
-                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
-                gameRecordWin = this.playerData.getGameRecordWin();
-
-                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
-                gameRecordLoss = this.playerData.getGameRecordLoss() + 1;
-
-            } // [check 3-1]
-
-            // [lv/S]recentPlayData : friendData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
-            String recentPlayDate = this.date.getText().toString();
-
-            // [lv/i]totalPlayTime : 기존의 friendData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
-            int totalPlayTime = this.playerData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
-
-            // [lv/i]totalCost : 기존의 friendData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
-            int totalCost = this.playerData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
-
-            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData.getId(), gameRecordWin, gameRecordLoss, recentPlayDate, totalPlayTime, totalCost);
-
-            // [iv/C]FriendDbManager : 위에서 셋팅된 값들을 이용해서 해당 id 로 Friend 데이터 갱신하기 / 해당 userId 로 가져온 친구목록이기 때문에 userId 는 필요없이 friend 의 id 값으로 찾으면 된다.
-            this.friendDbManager.updateContentById(
-                    this.playerData.getId(),
-                    gameRecordWin,
-                    gameRecordLoss,
-                    recentPlayDate,
-                    totalPlayTime,
-                    totalCost
-            );
-
-            // [iv/C]FriendData : 위에서 갱신된 데이터를 해당 id 로 가져오기
-            this.playerData = this.friendDbManager.loadContentById(this.playerData.getId());
-            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData);
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friendDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
-        }// [check 3]
-
-        // [method]showDialogToCheckWhetherToMoveBDA : 다음 BilliardDisplayActivity 로 이동할 지 묻는 dialog 를 보여준다.
-        showDialogToCheckWhetherToMoveBDA();
-
-        // [iv/C]Button : input disable, background color exchange
-        this.input.setEnabled(false);
-        this.input.setBackgroundResource(R.color.colorWidgetDisable);
+//        // [check 1] : EditText 의 모든 값을 입력 받지 않았다.
+//        if (!checkInputAllEditText()) {
+//            Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+//            // 버튼 이벤트 종료
+//            return;
+//        } // [check 1]
+//
+//        // [iv/C]BilliardDBManager : billiardData 값을 받아서 billiard 테이블에 저장한다.
+//        this.billiardDbManager.saveContent(
+//                userData.getId(),
+//                date.getText().toString(),
+//                Integer.parseInt(targetScore.getSelectedItem().toString()),
+//                speciality.getSelectedItem().toString(),
+//                Integer.parseInt(playTime.getText().toString()),
+//                player.getSelectedItem().toString(),
+//                BilliardDataFormatter.getFormatOfScore(score_1.getText().toString(), score_2.getText().toString()),
+//                Integer.parseInt(cost.getText().toString())
+//        );
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블에 저장을 완료했습니다.");
+//
+//
+//        // [check 2] : userData 데이터가 있다.
+//        if (this.userData != null) {
+//            // [lv/i]gameRecordWin : userData 가 승리했을 시, 그 값이 저장될 변수
+//            int gameRecordWin = 0;
+//
+//            // [lv/i]gameRecordLoss : userData 가 패배했을 시, 그 값이 저장될 변수
+//            int gameRecordLoss = 0;
+//
+//            // [check 2-1] : 승리자 이름과 userData 의 name 이 같다. 즉, userData 가 승리
+//            if (this.player.getSelectedItem().equals(this.userData.getName())) {
+//
+//                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordWin 값에 +1
+//                gameRecordWin = this.userData.getGameRecordWin() + 1;
+//
+//                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
+//                gameRecordLoss = this.userData.getGameRecordLoss();
+//
+//            } else {
+//                // friendDAta 가 승리
+//
+//                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
+//                gameRecordWin = this.userData.getGameRecordWin();
+//
+//                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
+//                gameRecordLoss = this.userData.getGameRecordLoss() + 1;
+//
+//            } // [check 2-1]
+//
+//            // [lv/l]recentGamePlayerID : userData 와 최근에 게임한 플레이어의 id. 즉, playerData 의 id 이다.
+//            long recentGamePlayerId = this.playerData.getId();
+//
+//            // [lv/S]recentPlayData : userData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
+//            String recentPlayDate = this.date.getText().toString();
+//
+//            // [lv/i]totalPlayTime : 기존의 userData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
+//            int totalPlayTime = this.userData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
+//
+//            // [lv/i]totalCost : 기존의 userData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
+//            int totalCost = this.userData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
+//
+//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData.getId(), gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost);
+//
+//            // [iv/C]UserDbManager : 위에서 셋팅된 값들을 이용하여 해당 userId 의 user 데이터를 갱신하기
+//            this.userDbManager.updateContent(this.userData.getId(),
+//                    gameRecordWin,
+//                    gameRecordLoss,
+//                    recentGamePlayerId,
+//                    recentPlayDate,
+//                    totalPlayTime,
+//                    totalCost);
+//
+//            // [iv/C]UserData : 위에서 변경된 데이터를 해당 userId 로 가져오기
+//            this.userData = this.userDbManager.loadContent(this.userData.getId());
+//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+//
+//        } else {
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "어플의 이번 단계에서 userData 가 없다는 것이 말이 안됩니다. 이 데이터를 기반으로 업데이트를 진행해야 합니다.");
+//        }
+//
+//
+//        // [check 3] : friendData 데이터가 있다.
+//        if (this.playerData != null) {
+//
+//            // [iv/i]gameRecordWin : FriendData 가 승리했을 시, 그 값이 저장될 변수
+//            int gameRecordWin = 0;
+//
+//            // [lv/i]gameRecordLoss : FriendData 가 패배했을 시, 그 값이 저장될 변수
+//            int gameRecordLoss = 0;
+//
+//            // [check 3-1] : 승리자 이름과 FriendData 의 name 이 같다. 즉, FriendData 가 승리
+//            if (this.player.getSelectedItem().equals(this.playerData.getName())) {
+//
+//                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordWin 값에 +1
+//                gameRecordWin = this.playerData.getGameRecordWin() + 1;
+//
+//                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
+//                gameRecordLoss = this.playerData.getGameRecordLoss();
+//
+//            } else {
+//
+//                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
+//                gameRecordWin = this.playerData.getGameRecordWin();
+//
+//                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
+//                gameRecordLoss = this.playerData.getGameRecordLoss() + 1;
+//
+//            } // [check 3-1]
+//
+//            // [lv/S]recentPlayData : friendData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
+//            String recentPlayDate = this.date.getText().toString();
+//
+//            // [lv/i]totalPlayTime : 기존의 friendData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
+//            int totalPlayTime = this.playerData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
+//
+//            // [lv/i]totalCost : 기존의 friendData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
+//            int totalCost = this.playerData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
+//
+//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData.getId(), gameRecordWin, gameRecordLoss, recentPlayDate, totalPlayTime, totalCost);
+//
+//            // [iv/C]FriendDbManager : 위에서 셋팅된 값들을 이용해서 해당 id 로 Friend 데이터 갱신하기 / 해당 userId 로 가져온 친구목록이기 때문에 userId 는 필요없이 friend 의 id 값으로 찾으면 된다.
+//            this.friendDbManager.updateContentById(
+//                    this.playerData.getId(),
+//                    gameRecordWin,
+//                    gameRecordLoss,
+//                    recentPlayDate,
+//                    totalPlayTime,
+//                    totalCost
+//            );
+//
+//            // [iv/C]FriendData : 위에서 갱신된 데이터를 해당 id 로 가져오기
+//            this.playerData = this.friendDbManager.loadContentById(this.playerData.getId());
+//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData);
+//
+//        } else {
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friendDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
+//        }// [check 3]
+//
+//        // [method]showDialogToCheckWhetherToMoveBDA : 다음 BilliardDisplayActivity 로 이동할 지 묻는 dialog 를 보여준다.
+//        showDialogToCheckWhetherToMoveBDA();
+//
+//        // [iv/C]Button : input disable, background color exchange
+//        this.input.setEnabled(false);
+//        this.input.setBackgroundResource(R.color.colorWidgetDisable);
 
     } // End of method [setClickListenerOfInputButton]
+
+
+
 
 
     /**
@@ -545,26 +742,26 @@ public class BilliardInputActivity extends AppCompatActivity {
      * @return 모두 입력하였을 시 true, 하나라도 입력 안 받았을 시 false 를 반환한다.
      */
     /* method : 모든 값을 입력 받았나요?*/
-    private boolean checkInputAllEditText() {
-
-        final String METHOD_NAME= "[checkInputAllEditText] ";
-
-        // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다. 
-        if (!this.score_1.getText().toString().equals("") &&
-                !this.score_2.getText().toString().equals("") &&
-                !this.playTime.getText().toString().equals("") &&
-                !this.cost.getText().toString().equals("")
-        ) {
-            // 모두 입력 받았으면
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력 받았습니다.");
-            return true;
-        } else {
-            // 하나라도 입력 안 받았으면
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력해주세요!");
-            return false;
-        } // End of method [ch]
-
-    } // End of method [checkInputAllEditText]
+//    private boolean checkInputAllEditText() {
+//
+//        final String METHOD_NAME= "[checkInputAllEditText] ";
+//
+//        // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다.
+//        if (!this.score_1.getText().toString().equals("") &&
+//                !this.score_2.getText().toString().equals("") &&
+//                !this.playTime.getText().toString().equals("") &&
+//                !this.cost.getText().toString().equals("")
+//        ) {
+//            // 모두 입력 받았으면
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력 받았습니다.");
+//            return true;
+//        } else {
+//            // 하나라도 입력 안 받았으면
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력해주세요!");
+//            return false;
+//        } // End of method [ch]
+//
+//    } // End of method [checkInputAllEditText]
 
 
     /**
@@ -572,30 +769,30 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void showDialogToCheckWhetherToMoveBDA() {
 
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-        builder.setTitle(R.string.ad_billiard_input_complete_input_title)
-                .setMessage(R.string.ad_billiard_input_complete_input_message)
-                .setPositiveButton(R.string.ad_billiard_input_bt_complete_input_positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
-                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-
-                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
-                        SessionManager.setIntentOfUserData(intent, userData);
-
-                        // [method]finish : 이 BilliardInputActivity 화면 종료
-                        finish();
-
-                        // [method]startActivity : intent 설정 값으로 화면이동
-                        startActivity(intent);
-                    }
-                })
-                .show();
+//        // [lv/C]AlertDialog : Builder 객체 생성
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
+//        builder.setTitle(R.string.ad_billiard_input_complete_input_title)
+//                .setMessage(R.string.ad_billiard_input_complete_input_message)
+//                .setPositiveButton(R.string.ad_billiard_input_bt_complete_input_positive, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
+//                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+//
+//                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
+//                        SessionManager.setIntentOfUserData(intent, userData);
+//
+//                        // [method]finish : 이 BilliardInputActivity 화면 종료
+//                        finish();
+//
+//                        // [method]startActivity : intent 설정 값으로 화면이동
+//                        startActivity(intent);
+//                    }
+//                })
+//                .show();
 
     }
 
@@ -605,32 +802,31 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void displayBilliardData() {
 
-        final String METHOD_NAME= "[displayBilliardData] ";
+        final String METHOD_NAME = "[displayBilliardData] ";
 
-        // [check 1] : userData 가 있다.
-        if (this.userData != null) {
-
-            // [lv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
-            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
-
-            // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
-            billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
-
-            // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
-            billiardLvManager.setListViewToAdapter();
-
-            // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
-            this.allBilliardData.setSelection(this.allBilliardData.getCount());
-
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
-
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없습니다.");
-        } // [check 1]
+//        // [check 1] : userData 가 있다.
+//        if (this.userData != null) {
+//
+//            // [lv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
+//            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
+//
+//            // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
+////            billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
+//
+//            // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
+//            billiardLvManager.setListViewToAdapter();
+//
+//            // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
+//            this.allBilliardData.setSelection(this.allBilliardData.getCount());
+//
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
+//
+//
+//        } else {
+//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없습니다.");
+//        } // [check 1]
 
     } // End of method [displayBilliardData]
-
 
 
     /**

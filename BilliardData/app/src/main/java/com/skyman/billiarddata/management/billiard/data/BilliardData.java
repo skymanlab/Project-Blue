@@ -1,38 +1,32 @@
 package com.skyman.billiarddata.management.billiard.data;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
- * [class] project_blue.db 의 billiard 테이블의 '한 행'을 담기위한 DTO 클래스이다.
+ * [class] project_blue.db 의 billiard 테이블의 '한 행(레코드)'을 담기위한 DTO 클래스이다.
  */
 public class BilliardData implements Serializable {
 
     // instance variable : desc
     private long count;                 // 0. count
-    private long userId;                // 1. user id
-    private String date;                // 2. date
-    private int targetScore;            // 3. target score
-    private String speciality;          // 4. speciality
+    private String date;                // 1. date
+    private String gameMode;            // 2. game mode
+    private int playerCount;            // 3. player count
+    private long winnerId;              // 4. winner id
     private int playTime;               // 5. play time
-    private String winner;              // 6. winner
-    private String score;               // 7. score
-    private int cost;                   // 8. cost
+    private String score;               // 6. score
+    private int cost;                   // 7. cost
 
     // method : getter, setter
+
     public long getCount() {
         return count;
     }
 
     public void setCount(long count) {
         this.count = count;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getDate() {
@@ -43,20 +37,28 @@ public class BilliardData implements Serializable {
         this.date = date;
     }
 
-    public int getTargetScore() {
-        return targetScore;
+    public String getGameMode() {
+        return gameMode;
     }
 
-    public void setTargetScore(int targetScore) {
-        this.targetScore = targetScore;
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public int getPlayerCount() {
+        return playerCount;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
+    }
+
+    public long getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(long winnerId) {
+        this.winnerId = winnerId;
     }
 
     public int getPlayTime() {
@@ -65,14 +67,6 @@ public class BilliardData implements Serializable {
 
     public void setPlayTime(int playTime) {
         this.playTime = playTime;
-    }
-
-    public String getWinner() {
-        return winner;
-    }
-
-    public void setWinner(String winner) {
-        this.winner = winner;
     }
 
     public String getScore() {
@@ -90,4 +84,6 @@ public class BilliardData implements Serializable {
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+
 }

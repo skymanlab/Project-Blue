@@ -7,19 +7,19 @@
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <!-- content 1. id -->
+    <!-- content 1. count -->
     <LinearLayout
         android:id="@+id/c_lv_billiard_data_ll_count"
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:background="@color/colorCustomBackgroundPrimary"
+        android:background="@color/colorBlue"
         android:gravity="center">
 
         <TextView
             android:id="@+id/c_lv_billiard_data_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@string/c_lv_billiard_data_count_default"
             android:textAlignment="gravity"
             android:textColor="@color/colorCustomTextPrimary"></TextView>
     </LinearLayout><!-- End of content 1 -->
@@ -28,15 +28,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:orientation="vertical">
 
         <!-- content 2-1. date -->
         <LinearLayout
+            android:id="@+id/c_lv_billiard_data_ll_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="@color/colorCustomBackgroundPrimary"
+            android:background="@color/colorBlue"
             android:gravity="center">
 
             <TextView
@@ -46,17 +47,19 @@
                 android:text="@string/c_lv_billiard_data_date"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorCustomTextPrimary"></TextView>
-        </LinearLayout><!-- End of content 2 -->
+        </LinearLayout><!-- End of content 2-1 -->
 
-        <!-- content 2-2. target score, speciality, play time -->
+        <!-- content 2-2. game mode, player count, winner name -->
         <LinearLayout
+            android:id="@+id/c_lv_billiard_data_ll_section_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorCustomBackgroundPrimary"
+            android:background="@color/colorBlue"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:padding="2dp"
+            android:baselineAligned="false">
 
-            <!-- content 2-2-1. target score -->
+            <!-- content 2-2-1. game mode -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -68,20 +71,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
                     android:background="@color/colorCustomTableColumnName"
-                    android:text="@string/c_lv_billiard_data_target_score"
+                    android:text="@string/c_lv_billiard_data_game_mode"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/c_lv_billiard_data_target_score"
+                    android:id="@+id/c_lv_billiard_data_game_mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
-                    android:text="@string/c_lv_billiard_data_target_score_default"
+                    android:text="@string/c_lv_billiard_data_game_mode_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-1 -->
 
-            <!-- content 2-2-2. speciality -->
+            <!-- content 2-2-2. player count -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -95,20 +98,62 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
                     android:background="@color/colorCustomTableColumnName"
-                    android:text="@string/c_lv_billiard_data_speciality"
+                    android:text="@string/c_lv_billiard_data_player_count"
                     android:textAlignment="center"
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/c_lv_billiard_data_speciality"
+                    android:id="@+id/c_lv_billiard_data_player_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
-                    android:text="@string/c_lv_billiard_data_speciality_default"
+                    android:text="@string/c_lv_billiard_data_player_count_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of content 2-2-2 -->
 
             <!-- content 2-2-3. play time-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/colorCustomTableColumnName"
+                    android:text="@string/c_lv_billiard_data_winner_name"
+                    android:textAlignment="center"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/c_lv_billiard_data_winner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorCustomTableColumn"
+                    android:text="@string/c_lv_billiard_data_winner_name_default"
+                    android:textAlignment="center"></TextView>
+            </LinearLayout><!-- End of content 2-2-3 -->
+        </LinearLayout><!-- End of content 2-2 -->
+
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" /><!-- End of divider -->
+
+        <!-- content 2-3. play time, score, cost -->
+        <LinearLayout
+            android:id="@+id/c_lv_billiard_data_ll_section_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlue"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            android:baselineAligned="false">
+
+            <!-- content 2-3-1. play time -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -130,46 +175,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_billiard_data_play_time_default"
-                    android:textAlignment="center"></TextView>
-            </LinearLayout><!-- End of content 2-2-3 -->
-        </LinearLayout><!-- End of content 2-2 -->
-
-        <!-- divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" /><!-- End of divider -->
-
-        <!-- content 2-3. winner, score, cost -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorCustomBackgroundPrimary"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <!-- content 2-3-1. winner -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:background="@color/colorCustomTableColumnName"
-                    android:text="@string/c_lv_billiard_data_winner"
-                    android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:id="@+id/c_lv_billiard_data_winner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorCustomTableColumn"
-                    android:text="@string/c_lv_billiard_data_winner_default"
                     android:textAlignment="center"></TextView>
             </LinearLayout> <!-- End of content 2-3-1 -->
 

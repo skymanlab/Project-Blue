@@ -19,14 +19,13 @@ public class BilliardTableSetting {
     public static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + Entry.TABLE_NAME + " (" +
                     Entry._COUNT + " INTEGER PRIMARY KEY, " +               // 0. count
-                    Entry.COLUMN_NAME_USER_ID + " INTEGER, " +              // 1. user id
-                    Entry.COLUMN_NAME_DATE + " TEXT, " +                    // 2. date
-                    Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER, " +         // 3. target score
-                    Entry.COLUMN_NAME_SPECIALITY + " TEXT, " +              // 4. speciality
+                    Entry.COLUMN_NAME_DATE + " TEXT, " +                    // 1. date
+                    Entry.COLUMN_NAME_GAME_MODE + " TEXT, " +               // 2. game mode
+                    Entry.COLUMN_NAME_PLAYER_COUNT + " INTEGER, " +         // 3. player count
+                    Entry.COLUMN_NAME_WINNER_ID + " INTEGER, " +            // 4. winner id
                     Entry.COLUMN_NAME_PLAY_TIME + " INTEGER," +             // 5. play time
-                    Entry.COLUMN_NAME_WINNER + " TEXT, " +                  // 6. winner
-                    Entry.COLUMN_NAME_SCORE + " TEXT, " +                   // 7. score
-                    Entry.COLUMN_NAME_COST + " INTEGER)";                   // 8. cost
+                    Entry.COLUMN_NAME_SCORE + " TEXT, " +                   // 6. score
+                    Entry.COLUMN_NAME_COST + " INTEGER)";                   // 7. cost
 
     // class constant : if exists drop table
     public static final String SQL_DROP_TABLE_IF_EXISTS =
@@ -37,8 +36,8 @@ public class BilliardTableSetting {
             "SELECT * FROM " + Entry.TABLE_NAME;
 
     // class constant : select - where id
-    public static final String SQL_SELECT_WHERE_ID =
-            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_USER_ID + "=";
+//    public static final String SQL_SELECT_WHERE_ID =
+//            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_USER_ID + "=";
 
     // class constant : delete - all content
     public static final String SQL_DELETE_ALL_CONTENT =
@@ -53,12 +52,11 @@ public class BilliardTableSetting {
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "billiard";
         public static final String COLUMN_NAME_DATE = "date";                           // 1. date
-        public static final String COLUMN_NAME_USER_ID = "userId";                      // 2. user id
-        public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";            // 3. target score
-        public static final String COLUMN_NAME_SPECIALITY = "speciality";               // 4. speciality
+        public static final String COLUMN_NAME_GAME_MODE = "gameMode";                  // 2. game mode
+        public static final String COLUMN_NAME_PLAYER_COUNT = "playerCount";            // 3. player count
+        public static final String COLUMN_NAME_WINNER_ID = "winnerId";                  // 4. winner id
         public static final String COLUMN_NAME_PLAY_TIME = "playTime";                  // 5. play time
-        public static final String COLUMN_NAME_WINNER = "winner";                       // 6. winner
-        public static final String COLUMN_NAME_SCORE = "score";                         // 7. score
-        public static final String COLUMN_NAME_COST = "cost";                           // 8. cost
+        public static final String COLUMN_NAME_SCORE = "score";                         // 6. score
+        public static final String COLUMN_NAME_COST = "cost";                           // 7. cost
     }
 }

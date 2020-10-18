@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.statistics.StatisticsPagerAdapter;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.calendar.SameDateChecker;
 import com.skyman.billiarddata.management.calendar.SameDateCheckerMake;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
@@ -26,7 +26,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
     // instance variable
     private UserDbManager userDbManager = null;
-    private BilliardDBManager billiardDBManager = null;
+    private BilliardDbManager billiardDbManager = null;
     private UserData userData = null;
     private ArrayList<BilliardData> billiardDataArrayList = null;
     private SameDateChecker sameDateChecker = null;
@@ -68,7 +68,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         this.statisticsTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // [lv/C]StatisticsPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기 / userDbManager 와 billiardDbManager 을 넘겨준다.
-        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.billiardDBManager, this.userData, this.billiardDataArrayList, this.sameDateChecker);
+        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.billiardDbManager, this.userData, this.billiardDataArrayList, this.sameDateChecker);
 
         // [iv/C]ViewPager : 위 의 adapter 와 연결하기
         this.statisticsTabPager.setAdapter(statisticsPagerAdapter);
@@ -112,8 +112,8 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         } // [check 1]
 
         // [check 2] : billiard 메니저가 생성되었다.
-        if (this.billiardDBManager != null) {
-            this.billiardDBManager.closeDb();
+        if (this.billiardDbManager != null) {
+            this.billiardDbManager.closeDb();
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
         } // [check 2]
@@ -132,8 +132,8 @@ public class StatisticsManagerActivity extends AppCompatActivity {
          this.userDbManager.initDb();
 
          // [iv/C]BilliardDBManager : billiard 메니저 생성 및 초기화
-         this.billiardDBManager = new BilliardDBManager(this);
-         this.billiardDBManager.initDb();
+         this.billiardDbManager = new BilliardDbManager(this);
+         this.billiardDbManager.initDb();
 
      } // End of method [createDbManager]
 
@@ -151,10 +151,10 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
 
         // [check 1] : userData 가 있다.
-        if (userData != null){
+        if (this.userData != null){
 
             // [iv/C]ArrayList<BilliardData> : 해당 userId 로 모든 billiard 데이터를 가져온다.
-            billiardDataArrayList = billiardDBManager.loadAllContentByUserID(this.userData.getId());
+//            billiardDataArrayList = this.billiardDbManager.loadAllContentByUserID(this.userData.getId());
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "전 Activity 에서 보내준 userData 가 없습니다.");

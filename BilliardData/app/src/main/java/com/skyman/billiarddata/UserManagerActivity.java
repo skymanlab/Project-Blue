@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
@@ -26,7 +26,7 @@ public class UserManagerActivity extends AppCompatActivity {
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
-    private BilliardDBManager billiardDBManager = null;
+    private BilliardDbManager billiardDbManager = null;
     private UserData userData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
 
@@ -78,7 +78,7 @@ public class UserManagerActivity extends AppCompatActivity {
         this.userTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // [lv/C]UserPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기
-        UserPagerAdapter userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.billiardDBManager, this.userData, this.friendDataArrayList);
+        UserPagerAdapter userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.billiardDbManager, this.userData, this.friendDataArrayList);
 
         // [iv/C]ViewPager : 위 의 adapter 와 연결하기
         this.userTabPager.setAdapter(userPagerAdapter);
@@ -160,8 +160,8 @@ public class UserManagerActivity extends AppCompatActivity {
         this.friendDbManager.initDb();
 
         // [iv/C]BilliardDbManager : billiard 테이블을 관리하는 매니저 생성과 초기화
-        this.billiardDBManager = new BilliardDBManager(this);
-        this.billiardDBManager.initDb();
+        this.billiardDbManager = new BilliardDbManager(this);
+        this.billiardDbManager.initDb();
     }
 
 

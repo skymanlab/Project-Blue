@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
@@ -28,7 +28,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
-    private BilliardDBManager billiardDbManager = null;
+    private BilliardDbManager billiardDbManager = null;
     private UserData userData = null;
 
     // instance variable
@@ -131,7 +131,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         this.friendDbManager.initDb();
 
         // [iv/C]BilliardDbManger : billiard 테이블 메니저 생성 및 초기화
-        this.billiardDbManager = new BilliardDBManager(this);
+        this.billiardDbManager = new BilliardDbManager(this);
         this.billiardDbManager.initDb();
 
     } // End of method [createDbManager]
@@ -162,7 +162,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
 
         // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
-        billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
+//        billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
 
         // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
         billiardLvManager.setListViewToAdapter();

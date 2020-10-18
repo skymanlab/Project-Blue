@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDBManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
@@ -50,7 +50,7 @@ public class UserInputFragment extends Fragment {
     // instance variable
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
-    private BilliardDBManager billiardDBManager;
+    private BilliardDbManager billiardDbManager;
     private UserData userData;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -58,10 +58,10 @@ public class UserInputFragment extends Fragment {
 
 
     // constructor
-    public UserInputFragment(UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDBManager billiardDBManager, UserData userData) {
+    public UserInputFragment(UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, UserData userData) {
         this.userDbManager = userDbManager;
         this.friendDbManager = friendDbManager;
-        this.billiardDBManager = billiardDBManager;
+        this.billiardDbManager = billiardDbManager;
         this.userData = userData;
     }
 
@@ -464,7 +464,7 @@ public class UserInputFragment extends Fragment {
             int resultDeleteOfFriend = this.friendDbManager.deleteContentByUserId(this.userData.getId());
 
             // [lv/i]resultDeleteOfBilliard : 해당 userId 의 billiard 데이터를 모두 삭제한 결과
-            int resultDeleteOfBilliard = this.billiardDBManager.deleteAllContentByUserId(this.userData.getId());
+            int resultDeleteOfBilliard = this.billiardDbManager.deleteAllContentByUserId(this.userData.getId());
 
             // [iv/C]UserData : user 데이터를 삭제하여 null 값으로 변경
             this.userData = null;
