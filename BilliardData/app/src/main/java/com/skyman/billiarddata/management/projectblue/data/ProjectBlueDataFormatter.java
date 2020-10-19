@@ -5,6 +5,7 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -159,6 +160,32 @@ public class ProjectBlueDataFormatter {
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "결과 : " + scoreData.toString());
         return scoreData.toString();
 
+    } // End of method [getFormatOfScore]
+
+
+    /**
+     * [method] [String 타입] ArrayList<String> 형태의 배열에 들어있는 score 값을 스코어 형태로 문자열 만들어 반환하기
+     *
+     * @param score score 값이 들어있는 문자열 배열
+     * @return score 의 length 에 맞는 형태로 만든 값
+     */
+    public static String getFormatOfScore(ArrayList<String> score) {
+
+        final String METHOD_NAME = "[getFormatOfScore] ";
+
+        // [lv/C]StringBuilder : 문자열을 더하기 위한 객체 생성
+        StringBuilder scoreData = new StringBuilder();
+
+        // 1. 첫번째 스코어
+        scoreData.append(score.get(0));
+
+        // [cycle 1] : score 의 1 번째 부터 length 까지
+        for (int index=1; index<score.size() ; index++) {
+            scoreData.append(" : ");
+            scoreData.append(score.get(index));
+        }
+
+        return scoreData.toString();
     } // End of method [getFormatOfScore]
 
 

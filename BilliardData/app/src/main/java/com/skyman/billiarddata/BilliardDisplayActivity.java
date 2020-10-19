@@ -265,6 +265,39 @@ public class BilliardDisplayActivity extends AppCompatActivity {
 
 
     /**
+     * [method] billiard 테이블에 저장된 모든 데이터를 custom layout 에 adapter 로 연결하여 뿌려준다.
+     */
+    private void displayBilliardData() {
+
+        final String METHOD_NAME = "[displayBilliardData] ";
+
+        // [check 1] : userData 가 있다.
+        if (this.userData != null) {
+
+            // [lv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
+            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
+
+            // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
+//            billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
+
+            // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
+            billiardLvManager.setListViewToAdapter();
+
+            // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
+            this.allBilliardData.setSelection(this.allBilliardData.getCount());
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
+
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없습니다.");
+        } // [check 1]
+
+    } // End of method [displayBilliardData]
+
+
+
+    /**
      * [method] 해당 문자열을 toast 로 보여준다.
      */
     private void toastHandler(String content) {

@@ -34,6 +34,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
     // constant
     private final String CLASS_NAME_LOG = "[Ac]_BilliardInputActivity";
+    private final int DEFAULT_TARGET_SCORE = 21;
 
     // instant variable
     private BilliardDbManager billiardDbManager = null;
@@ -326,7 +327,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]TextView : player 1 name
         this.playerName_1.setText(userData.getName());
 
-        // [iv/C]Spinner : player 1 target score 및 초기값 설정
+        // [iv/C]Spinner : player 1 target score 의 adapter 연결과 초기값 설정
         this.playerTargetScore_1.setAdapter(adapter);
         this.playerTargetScore_1.setSelection(userData.getTargetScore() - 1);
 
@@ -355,8 +356,9 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]TextView : player 2 name
         this.playerName_2.setText(friendData.getName());
 
-        // [iv/C]Spinner : player 2 target score
+        // [iv/C]Spinner : player 2 target score 의 adapter 연결과 초기값 설정
         this.playerTargetScore_2.setAdapter(adapter);
+        this.playerTargetScore_2.setSelection(DEFAULT_TARGET_SCORE);
 
         // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
         PlayerData playerData = new PlayerData();
@@ -383,8 +385,9 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]TextView : player 3 name
         this.playerName_3.setText(friendData.getName());
 
-        // [iv/C]Spinner : player 3 target score
+        // [iv/C]Spinner : player 3 target score 의 adapter 연결과 초기값 설정
         this.playerTargetScore_3.setAdapter(adapter);
+        this.playerTargetScore_3.setSelection(DEFAULT_TARGET_SCORE);
 
         // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
         PlayerData playerData = new PlayerData();
@@ -411,8 +414,9 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [iv/C]TextView : player 4 name
         this.playerName_4.setText(friendData.getName());
 
-        // [iv/C]Spinner : player 4 target score
+        // [iv/C]Spinner : player 4 target score 의 adapter 연결과 초기값 설정
         this.playerTargetScore_4.setAdapter(adapter);
+        this.playerTargetScore_4.setSelection(DEFAULT_TARGET_SCORE);
 
         // [lv/C]PlayerData : friendData 를 두번째 player 로 만들기
         PlayerData playerData = new PlayerData();
@@ -445,7 +449,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [check 1] : friendDataArrayList 의 size 값으로 player 의 수 알아내기
         if (friendDataArrayList.size() == 1) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 1 입니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "참가인원 중 친구목록은 1명입니다.");
 
             // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
             addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
@@ -456,7 +460,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
         } else if (friendDataArrayList.size() == 2) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 2 입니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "참가인원 중 친구목록은 2명입니다.");
 
             // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
             addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
@@ -468,7 +472,7 @@ public class BilliardInputActivity extends AppCompatActivity {
             this.player4.setVisibility(LinearLayout.GONE);
 
         } else if (friendDataArrayList.size() == 3) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "size 가 3 입니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "참가인원 중 친구목록은 3명입니다.");
 
             // [method]addPlayerListOfFirstFriendData : 두번째 player 등록 / friendData, index=0
             addPlayerListOfFirstFriendData(friendDataArrayList.get(0), adapter);
@@ -548,6 +552,8 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     public void showDialogToCheckWhetherSave() {
 
+        final String METHOD_NAME = "[showDialogToCheckWhetherSave] ";
+
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -558,8 +564,7 @@ public class BilliardInputActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // [method]setClickListenerOfInputButton : 입력 받은 값으로 billiardData 를 저장하고, userData 와 friendData 의 내용을 갱신한다.
-//                        setClickListenerOfInputButton();
+                        setClickListenerOfInputButton();
 
                     }
                 })
@@ -575,6 +580,330 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
     /**
+     * [method] Player 의 name, targetScore, score 을 입력받았는지 확인하여 그 결과를 true, false 로 리턴한다.
+     *
+     * @return 모든 데이터 입력 여부
+     */
+    public boolean checkWhetherInputPlayerData(TextView playerName, Spinner playerTargetScore, EditText playerScore) {
+
+        final String METHOD_NAME = "[checkWhetherInputPlayerData] ";
+
+        // [check 1] : player 1 의 모든 데이터가 입력 되었다.
+        if (!playerName.getText().toString().equals("")
+                && !playerTargetScore.getSelectedItem().toString().equals("")
+                && !playerScore.getText().toString().equals("")) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player name : " + playerName.getText());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player name 입력 여부 : " + playerName.getText().toString().equals(""));
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player target score : " + playerTargetScore.getSelectedItem());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player target score 입력 여부 : " + playerTargetScore.getSelectedItem().toString().equals(""));
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player score : " + playerScore.getText());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player score 입력 여부 : " + playerScore.getText().toString().equals(""));
+            return true;
+        } else {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player name : " + playerName.getText());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player name 입력 여부 : " + playerName.getText().toString().equals(""));
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player target score : " + playerTargetScore.getSelectedItem());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player target score 입력 여부 : " + playerTargetScore.getSelectedItem().toString().equals(""));
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player score : " + playerScore.getText());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 모든 데이터를 입력 받았습니다. player score 입력 여부 : " + playerScore.getText().toString().equals(""));
+            return false;
+        } // [check 1]
+
+    } // End of method [checkWhetherInputPlayerData]
+
+
+    /**
+     * [method] Player 의 데이터를 모두 입력 받았는지 확인
+     * name,
+     */
+    public boolean checkWhetherInputAllPlayerData(int playerCount) {
+
+        final String METHOD_NAME = "[checkWhetherInputAllPlayerData] ";
+
+        // [lv/b]isChecked : 모든 데이터가 형식에 맞게 입력되었는지 여부를 저장하는 변수
+        boolean isFormat = false;
+
+        // [check 1] : player 의 수는 2 명이다.
+        if (playerCount == 2) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Player 는 2 명입니다.");
+
+            // [check 2] : player 1, 2 의 모든 값을 입력 받았나?
+            if (checkWhetherInputPlayerData(this.playerName_1, this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherInputPlayerData(this.playerName_2, playerTargetScore_2, this.playerScore_2)) {
+
+                isFormat = true;
+
+            } else {
+                isFormat = false;
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2 의 점수 데이터가 입력되지 않았습니다.");
+            } // [check 2]
+
+        } else if (playerCount == 3) {
+            // player 의 수는 3 명이다.
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Player 는 3 명입니다.");
+
+            // [check 3] : player 1, 2, 3 의 모든 값을 입력 받았나?
+            if (checkWhetherInputPlayerData(this.playerName_1, this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherInputPlayerData(this.playerName_2, playerTargetScore_2, this.playerScore_2)
+                    && checkWhetherInputPlayerData(this.playerName_3, playerTargetScore_3, this.playerScore_3)) {
+                isFormat = true;
+            } else {
+                isFormat = false;
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2, 3 의 점수 데이터가 입력되지 않았습니다.");
+            } // [check 3]
+
+        } else if (playerCount == 4) {
+            // player 의 수는 4 명이다.
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Player 는 4 명입니다.");
+
+            // [check 4] : player 1, 2, 3, 4 의 모든 값을 입력 받았나?
+            if (checkWhetherInputPlayerData(this.playerName_1, this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherInputPlayerData(this.playerName_2, playerTargetScore_2, this.playerScore_2)
+                    && checkWhetherInputPlayerData(this.playerName_3, playerTargetScore_3, this.playerScore_3)
+                    && checkWhetherInputPlayerData(this.playerName_4, playerTargetScore_4, this.playerScore_4)) {
+
+                isFormat = true;
+
+            } else {
+                isFormat = false;
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2, 3 의 점수 데이터가 입력되지 않았습니다.");
+            } // [check 4]
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 수가 2~4 명 범위에 들지 않습니다.");
+        } // [check 1]
+
+        return isFormat;
+    } // End of method [checkWhetherInputAllPlayerData]
+
+
+    /**
+     * [method] player 의 score 값이 targetScore 값의 범위에 맞게 되었는지 확인
+     */
+    private boolean checkWhetherRangeOfTargetScore(Spinner playerTargetScore, EditText playerScore) {
+
+        final String METHOD_NAME = "[checkWhetherRangeOfTargetScore] ";
+
+        // [lv/b]isRange : 범위에 맞는 값이 입력되었는지 확인
+        boolean isRange = false;
+
+        // [lv/i]maxRange : playerTargetScore 로 maxRange
+        int maxRange = playerTargetScore.getSelectedItemPosition() + 1;
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playerTargetScore 값으로 알아낸 maxRange : " + maxRange);
+
+        // [lv/i]checkRageValue : playerScore 로 checkRageValue
+        int checkRageValue = Integer.parseInt(playerScore.getText().toString());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playerScore 값으로 알아낸 checkRangeValue : " + checkRageValue);
+
+        // [check 1] : 0 < playerScore <= (playerTargetScore 의 값)
+        if ((0 < checkRageValue) && (checkRageValue <= maxRange)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } // End of method [checkWhetherRangeOfTargetScore]
+
+
+    /**
+     * [method] player 의 score 값이 targetScore 값의 범위에 맞게 되었는지 확인
+     */
+    private boolean checkWhetherRangeOfTargetScoreAllPlayer(int playerCount) {
+
+        final String METHOD_NAME = "[checkWhetherRangeOfTargetScoreAllPlayer] ";
+
+        // [check 1] : player 수가 2 명이다.
+        if (playerCount == 2) {
+
+            // [check 2] : player 1, 2 의 범위가 모두 맞다.
+            if (checkWhetherRangeOfTargetScore(this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_2, this.playerScore_2)) {
+
+                return true;
+
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2 의 범위가 맞지 않습니다.");
+                return false;
+            } // [check 2]
+
+        } else if (playerCount == 3) {
+
+            // [check 3] : player 1, 2, 3 의 범위가 모두 맞다.
+            if (checkWhetherRangeOfTargetScore(this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_2, this.playerScore_2)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_3, this.playerScore_3)) {
+                return true;
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2 의 범위가 맞지 않습니다.");
+                return false;
+            } // [check 3]
+
+        } else if (playerCount == 4) {
+
+            // [check 4] : player 1, 2, 3, 4 의 범위가 모두 맞다.
+            if (checkWhetherRangeOfTargetScore(this.playerTargetScore_1, this.playerScore_1)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_2, this.playerScore_2)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_3, this.playerScore_3)
+                    && checkWhetherRangeOfTargetScore(this.playerTargetScore_4, this.playerScore_4)) {
+                return true;
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 1, 2 의 범위가 맞지 않습니다.");
+                return false;
+            } // [check 4]
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 수가 맞지 않습니다.");
+            return false;
+        }
+
+    } // End of method [checkWhetherRangeOfTargetScore]
+
+
+    /**
+     * [method] billiard 게임 데이터를 모두 입력 받았는지 확인하여 그 결과를 true, false 로 반환한다.
+     * date, gameMode, winnerName, playTime
+     *
+     * @return 모두 입력하였을 시 true, 하나라도 입력 안 받았을 시 false 를 반환한다.
+     */
+    private boolean checkWhetherInputAllBilliardData() {
+
+        final String METHOD_NAME = "[checkWhetherInputAllBilliardData] ";
+
+        // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다.
+        if (!date.getText().toString().equals("")
+                && !gameMode.getSelectedItem().toString().equals("")
+                && !winnerName.getSelectedItem().toString().equals("")
+                && !playTime.getText().toString().equals("")
+                && !cost.getText().toString().equals("")
+        ) {
+            // 모두 입력 받았으면
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 의 모든 데이터를 입력 받았습니다.");
+            return true;
+        } else {
+            // 하나라도 입력 안 받았으면
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 의 모든 데이터를 입력해주세요!");
+            return false;
+        } // [check 1]
+
+    } // End of method [checkInputAllEditText]
+
+
+    /**
+     * [method] billiard 테이블에 게임 데이터를 저장하기
+     */
+    private long saveBilliardData(String date, String gameMode, int playerCount, long winnerId, int playTime, String score, int cost) {
+
+        // [lv/l]billiardCount  : billiardDbManager 를 통해서 billiard 테이블에 저장한다. 그리고 그 결과로 넘어온 행의 값(=count) 을 받아온다.
+        long billiardCount = this.billiardDbManager.saveContent(date, gameMode, playerCount, winnerId, playTime, score, cost);
+
+        return billiardCount;
+
+    } // End of method [saveBilliardData]
+
+
+    /**
+     * [method] playerDataArrayList 의 size 만큼 targetScore, score 의 값을 셋팅한다.
+     */
+    private void setTargetScoreAndScoreOfPlayerList(ArrayList<PlayerData> playerDataArrayList) {
+
+        final String METHOD_NAME = "[setTargetScoreAndScoreOfPlayerList] ";
+
+
+        // [lv/C]String : score 값을 String 으로 임시 저장
+        String tempScore = null;
+
+        // [iv/C]ArrayList<PlayerData> : player 1 의 targetScore 와 score 값 설정, scoreArrayList 에 담기
+        tempScore = this.playerScore_1.getText().toString();
+        playerDataArrayList.get(0).setTargetScore(Integer.parseInt(this.playerTargetScore_1.getSelectedItem().toString()));
+        playerDataArrayList.get(0).setScore(Integer.parseInt(tempScore));
+
+        // [iv/C]ArrayList<PlayerData> : player 2 의 targetScore 와 score 값 설정, scoreArrayList 에 담기
+        tempScore = this.playerScore_2.getText().toString();
+        playerDataArrayList.get(1).setTargetScore(Integer.parseInt(this.playerTargetScore_2.getSelectedItem().toString()));
+        playerDataArrayList.get(1).setScore(Integer.parseInt(tempScore));
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "SIZE 는 = " + playerDataArrayList.size());
+
+
+        // [check 1] : playerDataArrayList 의 size 값 구분
+        switch (playerDataArrayList.size()) {
+            case 3:
+                // [iv/C]ArrayList<PlayerData> : player 3 의 targetScore 와 score 값 설정, scoreArrayList 에 담기
+                tempScore = this.playerScore_3.getText().toString();
+                playerDataArrayList.get(2).setTargetScore(Integer.parseInt(this.playerTargetScore_3.getSelectedItem().toString()));
+                playerDataArrayList.get(2).setScore(Integer.parseInt(tempScore));
+                break;
+            case 4:
+
+                // [iv/C]ArrayList<PlayerData> : player 3 의 targetScore 와 score 값 설정, scoreArrayList 에 담기
+                tempScore = this.playerScore_3.getText().toString();
+                playerDataArrayList.get(2).setTargetScore(Integer.parseInt(this.playerTargetScore_3.getSelectedItem().toString()));
+                playerDataArrayList.get(2).setScore(Integer.parseInt(tempScore));
+
+                // [iv/C]ArrayList<PlayerData> : player 4 의 targetScore 와 score 값 설정, scoreArrayList 에 담기
+                tempScore = this.playerScore_4.getText().toString();
+                playerDataArrayList.get(3).setTargetScore(Integer.parseInt(this.playerTargetScore_4.getSelectedItem().toString()));
+                playerDataArrayList.get(3).setScore(Integer.parseInt(tempScore));
+                break;
+            default:
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 수가 맞지 않습니다.");
+                break;
+        } // [check 1]
+
+    } // End of method [setTargetScoreAndScoreOfPlayerList]
+
+
+    /**
+     * [method] playerDataArrayList 에 있는 score 값을 ArrayList<String> 으로 담아서 반환한다.
+     */
+    private ArrayList<String> getScoreFormat(ArrayList<PlayerData> playerDataArrayList) {
+
+        final String METHOD_NAME = "[getScoreFormat] ";
+
+        // [lv/C]ArrayList<String> : score 값을 담은 ArrayList 객체 생성
+        ArrayList<String> scoreArrayList = new ArrayList<>();
+
+        // [lv/C]ArrayList<String> : player 1 의 score 를 저장
+        scoreArrayList.add(Integer.toString(playerDataArrayList.get(0).getScore()));
+
+        // [lv/C]ArrayList<String> : player 2 의 score 를 저장
+        scoreArrayList.add(Integer.toString(playerDataArrayList.get(1).getScore()));
+
+
+        // [cycle 1] : playerDataArrayList 의 size 만큼
+        for (int index=2; index < playerDataArrayList.size(); index++) {
+
+            // [lv/C]ArrayList<PlayerData> : index=2 or 3 이 있을 때, playerDataArrayList 의 score 를 추가하기
+            scoreArrayList.add(Integer.toString(playerDataArrayList.get(index).getScore()));
+
+        } // [cycle 1]
+
+        return scoreArrayList;
+    } // End of method [getScoreFormat]
+
+    /**
+     * [method] userData 와 friendDataArrayList 의 데이터를 업데이트하여 데이터베이스에 저장한다.
+     */
+    private void updateUserDataAndAllFriendData(long userId, long winnerId) {
+
+        String date = this.date.getText().toString();
+        int playTime = Integer.parseInt(this.playTime.getText().toString());
+        int cost = Integer.parseInt(this.cost.getText().toString());
+
+        // [check 1] : 내가 승리자이다. / userId=winnerId
+        if (userId == winnerId) {
+
+        } else {
+            // 패배자이다.
+
+        } // [check 1]
+
+    }
+
+
+    /**
      * [method] 모든 값을 입력 받아 billiard 테이블에 데이터를 저장하고,
      * 승리자, 패배자를 구분하여 UserData 와 FriendData 의 'id' 값을 이용하여
      * user, friend 테이블의 내용을 업데이트한다.
@@ -585,183 +914,53 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
 
-//        // [check 1] : EditText 의 모든 값을 입력 받지 않았다.
-//        if (!checkInputAllEditText()) {
-//            Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-//            // 버튼 이벤트 종료
-//            return;
-//        } // [check 1]
-//
-//        // [iv/C]BilliardDBManager : billiardData 값을 받아서 billiard 테이블에 저장한다.
-//        this.billiardDbManager.saveContent(
-//                userData.getId(),
-//                date.getText().toString(),
-//                Integer.parseInt(targetScore.getSelectedItem().toString()),
-//                speciality.getSelectedItem().toString(),
-//                Integer.parseInt(playTime.getText().toString()),
-//                player.getSelectedItem().toString(),
-//                BilliardDataFormatter.getFormatOfScore(score_1.getText().toString(), score_2.getText().toString()),
-//                Integer.parseInt(cost.getText().toString())
-//        );
-//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블에 저장을 완료했습니다.");
-//
-//
-//        // [check 2] : userData 데이터가 있다.
-//        if (this.userData != null) {
-//            // [lv/i]gameRecordWin : userData 가 승리했을 시, 그 값이 저장될 변수
-//            int gameRecordWin = 0;
-//
-//            // [lv/i]gameRecordLoss : userData 가 패배했을 시, 그 값이 저장될 변수
-//            int gameRecordLoss = 0;
-//
-//            // [check 2-1] : 승리자 이름과 userData 의 name 이 같다. 즉, userData 가 승리
-//            if (this.player.getSelectedItem().equals(this.userData.getName())) {
-//
-//                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordWin 값에 +1
-//                gameRecordWin = this.userData.getGameRecordWin() + 1;
-//
-//                // [lv/i] : userData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
-//                gameRecordLoss = this.userData.getGameRecordLoss();
-//
-//            } else {
-//                // friendDAta 가 승리
-//
-//                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
-//                gameRecordWin = this.userData.getGameRecordWin();
-//
-//                // [lv/i] : userData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
-//                gameRecordLoss = this.userData.getGameRecordLoss() + 1;
-//
-//            } // [check 2-1]
-//
-//            // [lv/l]recentGamePlayerID : userData 와 최근에 게임한 플레이어의 id. 즉, playerData 의 id 이다.
-//            long recentGamePlayerId = this.playerData.getId();
-//
-//            // [lv/S]recentPlayData : userData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
-//            String recentPlayDate = this.date.getText().toString();
-//
-//            // [lv/i]totalPlayTime : 기존의 userData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
-//            int totalPlayTime = this.userData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
-//
-//            // [lv/i]totalCost : 기존의 userData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
-//            int totalCost = this.userData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
-//
-//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData.getId(), gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost);
-//
-//            // [iv/C]UserDbManager : 위에서 셋팅된 값들을 이용하여 해당 userId 의 user 데이터를 갱신하기
-//            this.userDbManager.updateContent(this.userData.getId(),
-//                    gameRecordWin,
-//                    gameRecordLoss,
-//                    recentGamePlayerId,
-//                    recentPlayDate,
-//                    totalPlayTime,
-//                    totalCost);
-//
-//            // [iv/C]UserData : 위에서 변경된 데이터를 해당 userId 로 가져오기
-//            this.userData = this.userDbManager.loadContent(this.userData.getId());
-//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-//
-//        } else {
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "어플의 이번 단계에서 userData 가 없다는 것이 말이 안됩니다. 이 데이터를 기반으로 업데이트를 진행해야 합니다.");
-//        }
-//
-//
-//        // [check 3] : friendData 데이터가 있다.
-//        if (this.playerData != null) {
-//
-//            // [iv/i]gameRecordWin : FriendData 가 승리했을 시, 그 값이 저장될 변수
-//            int gameRecordWin = 0;
-//
-//            // [lv/i]gameRecordLoss : FriendData 가 패배했을 시, 그 값이 저장될 변수
-//            int gameRecordLoss = 0;
-//
-//            // [check 3-1] : 승리자 이름과 FriendData 의 name 이 같다. 즉, FriendData 가 승리
-//            if (this.player.getSelectedItem().equals(this.playerData.getName())) {
-//
-//                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordWin 값에 +1
-//                gameRecordWin = this.playerData.getGameRecordWin() + 1;
-//
-//                // [lv/i] : FriendData 의 승리이므로, 기존의 gameRecordLoss 값은 그대로
-//                gameRecordLoss = this.playerData.getGameRecordLoss();
-//
-//            } else {
-//
-//                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordWin 값은 그대로
-//                gameRecordWin = this.playerData.getGameRecordWin();
-//
-//                // [lv/i] : FriendData 의 패배이므로, 기존의 gameRecordLoss 값에 +1
-//                gameRecordLoss = this.playerData.getGameRecordLoss() + 1;
-//
-//            } // [check 3-1]
-//
-//            // [lv/S]recentPlayData : friendData 가 최근에 게임한 날짜. 즉 오늘 날짜이다.
-//            String recentPlayDate = this.date.getText().toString();
-//
-//            // [lv/i]totalPlayTime : 기존의 friendData 의 totalPlayTime 에 오늘 게임한 시간을 더한 값이다.
-//            int totalPlayTime = this.playerData.getTotalPlayTime() + Integer.parseInt(this.playTime.getText().toString());
-//
-//            // [lv/i]totalCost : 기존의 friendData 의 totalCost 에 오늘 게임한 비용을 더한 값이다.
-//            int totalCost = this.playerData.getTotalCost() + Integer.parseInt(this.cost.getText().toString());
-//
-//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData.getId(), gameRecordWin, gameRecordLoss, recentPlayDate, totalPlayTime, totalCost);
-//
-//            // [iv/C]FriendDbManager : 위에서 셋팅된 값들을 이용해서 해당 id 로 Friend 데이터 갱신하기 / 해당 userId 로 가져온 친구목록이기 때문에 userId 는 필요없이 friend 의 id 값으로 찾으면 된다.
-//            this.friendDbManager.updateContentById(
-//                    this.playerData.getId(),
-//                    gameRecordWin,
-//                    gameRecordLoss,
-//                    recentPlayDate,
-//                    totalPlayTime,
-//                    totalCost
-//            );
-//
-//            // [iv/C]FriendData : 위에서 갱신된 데이터를 해당 id 로 가져오기
-//            this.playerData = this.friendDbManager.loadContentById(this.playerData.getId());
-//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.playerData);
-//
-//        } else {
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friendDbManager 가 초기화되지 않았습니다. initDb 값을 확인하세요.");
-//        }// [check 3]
-//
-//        // [method]showDialogToCheckWhetherToMoveBDA : 다음 BilliardDisplayActivity 로 이동할 지 묻는 dialog 를 보여준다.
-//        showDialogToCheckWhetherToMoveBDA();
-//
-//        // [iv/C]Button : input disable, background color exchange
-//        this.input.setEnabled(false);
-//        this.input.setBackgroundResource(R.color.colorWidgetDisable);
+        // [check 1] : player 의 데이터가 모두 입력 되었다.
+        if (checkWhetherInputAllPlayerData(playerDataArrayList.size())) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 player 의 데이터를 입력 받았습니다.");
+
+            // [check 2] : player 의 score 가 범위에 맞게 입력되었다.
+            if (checkWhetherRangeOfTargetScoreAllPlayer(playerDataArrayList.size())) {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "범위에 맞는 데이터를 입력 받았습니다.");
+
+                // [check 3] : billiard 의 데이터가 형식에 맞게 모두 입력 되었다.
+                if (checkWhetherInputAllBilliardData()) {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 데이터 베이스에 입력합니다.");
+
+                    // [method] : playerDataArrayList 의 targetScore, score 값을 셋팅하기
+                    setTargetScoreAndScoreOfPlayerList(this.playerDataArrayList);
+
+                    // date, gameMode, playerCount, winnerId, playTime, score, cost 의 값을 구한다.
+                    String date = this.date.getText().toString();
+                    String gameMode = this.gameMode.getSelectedItem().toString();
+                    int playerCount = this.playerDataArrayList.size();
+                    long winnerId = this.playerDataArrayList.get(this.winnerName.getSelectedItemPosition()).getPlayerId();
+                    int playTime = Integer.parseInt(this.playTime.getText().toString());
+                    int cost = Integer.parseInt(this.cost.getText().toString());
+                    String score = ProjectBlueDataFormatter.getFormatOfScore(getScoreFormat(playerDataArrayList));
+
+
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "해당 스코어로 만든 스코어 값은 = " + score);
+
+                    DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+
+                } else {
+                    toastHandler("billiard 의 모든 데이터를 입력해주세요. ");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 의 모든 데이터를 입력 받지 못했습니다.");
+                } // [check 3]
+
+            } else {
+                toastHandler("범위에 맞는 score 의 값을 입력해주세요.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 의 score 값이 범위에 맞는 값이 아닙니다.");
+            } // [check 2]
+
+        } else {
+            toastHandler("모든 player 의 데이터를 입력해주세요.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 player 의 데이터를 입력 받지 않았습니다.");
+        } // [check 1]
+
 
     } // End of method [setClickListenerOfInputButton]
-
-
-
-
-
-    /**
-     * [method] EditText widget 의 값이 모두 입력되었는지 검사하여 모두 입력하였을 시 true 를 반환한다.
-     *
-     * @return 모두 입력하였을 시 true, 하나라도 입력 안 받았을 시 false 를 반환한다.
-     */
-    /* method : 모든 값을 입력 받았나요?*/
-//    private boolean checkInputAllEditText() {
-//
-//        final String METHOD_NAME= "[checkInputAllEditText] ";
-//
-//        // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다.
-//        if (!this.score_1.getText().toString().equals("") &&
-//                !this.score_2.getText().toString().equals("") &&
-//                !this.playTime.getText().toString().equals("") &&
-//                !this.cost.getText().toString().equals("")
-//        ) {
-//            // 모두 입력 받았으면
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력 받았습니다.");
-//            return true;
-//        } else {
-//            // 하나라도 입력 안 받았으면
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값을 입력해주세요!");
-//            return false;
-//        } // End of method [ch]
-//
-//    } // End of method [checkInputAllEditText]
 
 
     /**
@@ -769,65 +968,32 @@ public class BilliardInputActivity extends AppCompatActivity {
      */
     private void showDialogToCheckWhetherToMoveBDA() {
 
-//        // [lv/C]AlertDialog : Builder 객체 생성
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-//        builder.setTitle(R.string.ad_billiard_input_complete_input_title)
-//                .setMessage(R.string.ad_billiard_input_complete_input_message)
-//                .setPositiveButton(R.string.ad_billiard_input_bt_complete_input_positive, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
-//                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-//
-//                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
-//                        SessionManager.setIntentOfUserData(intent, userData);
-//
-//                        // [method]finish : 이 BilliardInputActivity 화면 종료
-//                        finish();
-//
-//                        // [method]startActivity : intent 설정 값으로 화면이동
-//                        startActivity(intent);
-//                    }
-//                })
-//                .show();
+        // [lv/C]AlertDialog : Builder 객체 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
+        builder.setTitle(R.string.ad_billiard_input_complete_input_title)
+                .setMessage(R.string.ad_billiard_input_complete_input_message)
+                .setPositiveButton(R.string.ad_billiard_input_bt_complete_input_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+
+                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
+                        SessionManager.setIntentOfUserData(intent, userData);
+
+                        // [method]finish : 이 BilliardInputActivity 화면 종료
+                        finish();
+
+                        // [method]startActivity : intent 설정 값으로 화면이동
+                        startActivity(intent);
+                    }
+                })
+                .show();
 
     }
-
-
-    /**
-     * [method] billiard 테이블에 저장된 모든 데이터를 custom layout 에 adapter 로 연결하여 뿌려준다.
-     */
-    private void displayBilliardData() {
-
-        final String METHOD_NAME = "[displayBilliardData] ";
-
-//        // [check 1] : userData 가 있다.
-//        if (this.userData != null) {
-//
-//            // [lv/C]BilliardLvManager : 위 의 내용을 토대로 custom list view 에 뿌리는 메니저 객체 생성
-//            BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager);
-//
-//            // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
-////            billiardLvManager.addData(this.billiardDbManager.loadAllContentByUserID(this.userData.getId()), this.userData.getName());
-//
-//            // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
-//            billiardLvManager.setListViewToAdapter();
-//
-//            // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
-//            this.allBilliardData.setSelection(this.allBilliardData.getCount());
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
-//
-//
-//        } else {
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없습니다.");
-//        } // [check 1]
-
-    } // End of method [displayBilliardData]
-
 
     /**
      * [method] 해당 문자열을 toast 로 보여준다.

@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                                 ArrayList<FriendData> tempArrayList = new ArrayList<>();
                                 tempArrayList.add(friendDataArrayList.get(selectedIndex[0]));
 
-                                SessionManager.setIntentOfPlayerList(intent, tempArrayList);
+                                SessionManager.setIntentOfPlayerList(intent, friendDataArrayList);
 
                                 // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                                 startActivityForResult(intent, 101);
