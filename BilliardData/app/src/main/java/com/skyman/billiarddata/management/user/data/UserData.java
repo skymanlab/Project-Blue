@@ -11,10 +11,9 @@ public class UserData implements Serializable {
     private String speciality;              // 3. speciality
     private int gameRecordWin;              // 4. game record win
     private int gameRecordLoss;             // 5. game record loss
-    private long recentGamePlayerId;        // 6. recent game player id
-    private String recentPlayDate;          // 7. recent play date
-    private int totalPlayTime;              // 8. total play time
-    private int totalCost;                  // 9. total cost
+    private long recentGameBilliardCount;   // 6. recent game player id
+    private int totalPlayTime;              // 7. total play time
+    private int totalCost;                  // 8. total cost
 
     // method : getter, setter
     public long getId() {
@@ -65,20 +64,12 @@ public class UserData implements Serializable {
         this.gameRecordLoss = gameRecordLoss;
     }
 
-    public long getRecentGamePlayerId() {
-        return recentGamePlayerId;
+    public long getRecentGameBilliardCount() {
+        return recentGameBilliardCount;
     }
 
-    public void setRecentGamePlayerId(long recentGamePlayerId) {
-        this.recentGamePlayerId = recentGamePlayerId;
-    }
-
-    public String getRecentPlayDate() {
-        return recentPlayDate;
-    }
-
-    public void setRecentPlayDate(String recentPlayDate) {
-        this.recentPlayDate = recentPlayDate;
+    public void setRecentGameBilliardCount(long recentGameBilliardCount) {
+        this.recentGameBilliardCount = recentGameBilliardCount;
     }
 
     public int getTotalPlayTime() {

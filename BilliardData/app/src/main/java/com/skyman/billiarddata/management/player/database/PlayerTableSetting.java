@@ -10,11 +10,12 @@ public class PlayerTableSetting {
     // class constant : create table
     public static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + Entry.TABLE_NAME + "(" +
-                    Entry._COUNT + " INTEGER PRIMARY KEY, " +
-                    Entry.COLUMN_NAME_BILLIARD_COUNT + " INTEGER, " +
-                    Entry.COLUMN_NAME_PLAYER_ID + " INTEGER, " +
-                    Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER, " +
-                    Entry.COLUMN_NAME_SCORE + " INTEGER)";
+                    Entry._COUNT + " INTEGER PRIMARY KEY, " +           // 0. count
+                    Entry.COLUMN_NAME_BILLIARD_COUNT + " INTEGER, " +   // 1. billiard count
+                    Entry.COLUMN_NAME_PLAYER_ID + " INTEGER, " +        // 2. player id
+                    Entry.COLUMN_NAME_PLAYER_NAME + " TEXT, " +         // 3. player name
+                    Entry.COLUMN_NAME_TARGET_SCORE + " INTEGER, " +     // 4. target score
+                    Entry.COLUMN_NAME_SCORE + " INTEGER)";              // 5. score
 
     // class constant : if exists drop table
     public static final String SQL_DROP_TABLE_IF_EXISTS =
@@ -27,10 +28,11 @@ public class PlayerTableSetting {
     // inner class : Entry, Table column name
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "player";
-        public static final String COLUMN_NAME_BILLIARD_COUNT = "billiardCount";
-        public static final String COLUMN_NAME_PLAYER_ID ="playerId";
-        public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";
-        public static final String COLUMN_NAME_SCORE = "score";
+        public static final String COLUMN_NAME_BILLIARD_COUNT = "billiardCount";    // 1. count
+        public static final String COLUMN_NAME_PLAYER_ID ="playerId";               // 2. player id
+        public static final String COLUMN_NAME_PLAYER_NAME ="playerName";           // 3. player name
+        public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";        // 4. target score
+        public static final String COLUMN_NAME_SCORE = "score";                     // 5. score
 
     }
 }

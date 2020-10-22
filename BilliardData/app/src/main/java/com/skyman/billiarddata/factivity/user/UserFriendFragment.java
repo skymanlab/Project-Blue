@@ -177,7 +177,7 @@ public class UserFriendFragment extends Fragment {
                         name.getText().toString(),
                         0,
                         0,
-                        "-1",
+                        0,
                         0,
                         0);
 

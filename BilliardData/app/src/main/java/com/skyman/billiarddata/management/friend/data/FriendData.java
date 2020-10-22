@@ -10,7 +10,7 @@ public class FriendData implements Serializable {
     private String name;                // 2. name
     private int gameRecordWin;          // 3. game record win
     private int gameRecordLoss;         // 4. game record loss
-    private String recentPlayDate;      // 5. recent play date
+    private long recentBilliardCount;   // 5. recent game billiard count
     private int totalPlayTime;          // 6. total play time
     private int totalCost;              // 7. total cost
 
@@ -55,12 +55,12 @@ public class FriendData implements Serializable {
         this.gameRecordLoss = gameRecordLoss;
     }
 
-    public String getRecentPlayDate() {
-        return recentPlayDate;
+    public long getRecentBilliardCount() {
+        return recentBilliardCount;
     }
 
-    public void setRecentPlayDate(String recentPlayDate) {
-        this.recentPlayDate = recentPlayDate;
+    public void setRecentBilliardCount(long recentBilliardCount) {
+        this.recentBilliardCount = recentBilliardCount;
     }
 
     public int getTotalPlayTime() {

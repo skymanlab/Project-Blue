@@ -178,32 +178,8 @@ public class UserInfoFragment extends Fragment {
         // [iv/C]TextView : gameRecord 를 userData 의 getGameRecordWin 와 getGameRecordLoss 를 특정 문자열 형태로 바꾼 값으로
         gameRecord.setText(UserDataFormatter.getFormatOfGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss()));
 
-        // [check 1] : userData 의 recentPlayDate 의 문자열이 '-1' 이다.
-        if (userData.getRecentPlayDate().equals("-1")) {
 
-            // [iv/C]TextView : recentPlayDate 를 '최근 경기 없음' 으로
-            recentPlayDate.setText("최근 경기 없음");
-
-        } else {
-
-            // [iv/C]TextView : recentPlayDate 를 userData 의 getRecentPlayDate 으로
-            recentPlayDate.setText(userData.getRecentPlayDate());
-
-        } // [check 1]
-
-        // check : userData 의 recentGamePlayerId 가 0 이상 일때
-        // [check 2] : userData 의 recentGamePlayerId 가 0 이상이다. 즉, 게임한 player 가 있다.
-        if (userData.getRecentGamePlayerId() > 0) {
-
-            // [iv/C]TextView : recentGamePlayerId 를 userData 의 (getRecentGamePlayerId-1) 한 값으로 찾은 친구이름
-            recentGamePlayerId.setText(friendDataArrayList.get(((int) userData.getRecentGamePlayerId() - 1)).getName());
-
-        } else {
-
-            // [iv/C]TextView : recentGamePlayerId 를 '최근 경기 없음' 으로
-            recentGamePlayerId.setText("최근 경기 없음");
-
-        }
+        // recentGameBilliardCount 으로 billiard
 
         // [iv/C]TextView : totalPlayTime 를 userData 의 getTotalPlayTime 을 특정 문자열로 바꾼 값으로
         totalPlayTime.setText(UserDataFormatter.getFormatOfPlayTime(userData.getTotalPlayTime()));

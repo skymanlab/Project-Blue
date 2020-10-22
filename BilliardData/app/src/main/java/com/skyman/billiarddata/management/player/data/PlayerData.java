@@ -5,12 +5,12 @@ public class PlayerData {
     // instance variable : desc
     private long count;                 // 0. count
     private long billiardCount;         // 1. billiard count
-    private long playerId;              // 2. playerId
+    private long playerId;              // 2. player id
+    private String playerName;          // 3. player name
     private int targetScore;            // 3. target score
     private int score;                  // 4. score
 
     // method : getter. setter
-
     public long getCount() {
         return count;
     }
@@ -33,6 +33,14 @@ public class PlayerData {
 
     public void setPlayerId(long playerId) {
         this.playerId = playerId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public int getTargetScore() {

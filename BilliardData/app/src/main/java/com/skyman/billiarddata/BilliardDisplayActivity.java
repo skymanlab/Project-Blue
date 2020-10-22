@@ -236,7 +236,6 @@ public class BilliardDisplayActivity extends AppCompatActivity {
                     0,
                     0,
                     0,
-                    "-1",
                     0,
                     0);
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
@@ -249,7 +248,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
             int initDataOfFriend = this.friendDbManager.updateContentByUserId(this.userData.getId(),
                     0,
                     0,
-                    "-1",
+                    0,
                     0,
                     0);
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 friend 의 데이터가 초기화 되었습니다. : " + initDataOfFriend);

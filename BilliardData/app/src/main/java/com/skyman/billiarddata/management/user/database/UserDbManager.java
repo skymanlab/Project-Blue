@@ -47,6 +47,14 @@ public class UserDbManager extends ProjectBlueDBManager {
      * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
      * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
      *
+     * @param name [1] 이름
+     * @param targetScore [2] 수지
+     * @param speciality [3] 주종목
+     * @param gameRecordWin [4] 승리 횟수
+     * @param gameRecordLoss [5] 패배 횟수
+     * @param recentGameBilliardCount [6] 최근 게임 billiard count
+     * @param totalPlayTime [7] 총 게임 시간
+     * @param totalCost [8] 총 비용
      * @return user 테이블에 데이터를 입력한 결과를 반환한다.
      */
     public long saveContent(String name,                    // 1. name
@@ -54,10 +62,9 @@ public class UserDbManager extends ProjectBlueDBManager {
                             String speciality,              // 3. speciality
                             int gameRecordWin,              // 4. game record win
                             int gameRecordLoss,             // 5. game record loss
-                            int recentGamePlayerId,         // 6. recent game player id
-                            String recentPlayDate,          // 7. recent play date
-                            int totalPlayTime,              // 8. total play time
-                            int totalCost) {                // 9. total cost
+                            int recentGameBilliardCount,    // 6. recent game billiard count
+                            int totalPlayTime,              // 7. total play time
+                            int totalCost) {                // 8. total cost
 
         final String METHOD_NAME= "[saveContent] ";
 
@@ -70,30 +77,115 @@ public class UserDbManager extends ProjectBlueDBManager {
         if (this.isInitializedDB()) {
 
             // [check 2] : openDbHelper 가 초기화 되었다.
-            if (!name.equals("") &&                                 // 1. name                      -- 내용이 있어야 함
-                    (targetScore >= 0) &&                           // 2. target score              -- 0 보다 크거나 같다.
-                    !speciality.equals("") &&                       // 3. speciality                -- not null
-                    (gameRecordWin >= 0) &&                         // 4. game record win           -- 0 보다 크거나 같다.
-                    (gameRecordLoss >= 0) &&                        // 5. game record loss          -- 0 보다 크거나 같다.
-                    (recentGamePlayerId >= 0) &&                    // 6. recent game player id     -- 0 보다 크거나 같다.
-                    !recentPlayDate.equals("") &&                   // 7. recent play date          -- 내용이 있어야 함
-                    (totalPlayTime >= 0) &&                         // 8. total play time           -- 0 보다 크거나 같다.
-                    (totalCost >= 0)) {                             // 9. total cost                -- 0 보다 크거나 같다.
+            if (!name.equals("") &&                                 // 1. name                          -- 내용이 있어야 함
+                    (targetScore >= 0) &&                           // 2. target score                  -- 0 보다 크거나 같다.
+                    !speciality.equals("") &&                       // 3. speciality                    -- not null
+                    (gameRecordWin >= 0) &&                         // 4. game record win               -- 0 보다 크거나 같다.
+                    (gameRecordLoss >= 0) &&                        // 5. game record loss              -- 0 보다 크거나 같다.
+                    (recentGameBilliardCount >= 0) &&               // 6. recent game billiard count    -- 0 보다 크거나 같다.
+                    (totalPlayTime >= 0) &&                         // 7. total play time               -- 0 보다 크거나 같다.
+                    (totalCost >= 0)) {                             // 8. total cost                    -- 0 보다 크거나 같다.
 
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
                 SQLiteDatabase writeDb = this.getDbOpenHelper().getWritableDatabase();
 
                 // [lv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
                 ContentValues insertValues = new ContentValues();
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_NAME, name);                                    // 1. name
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);                     // 2. target score
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);                        // 3. speciality
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);                // 4. game record win
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);              // 5. game record loss
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_PLAYER_ID, recentGamePlayerId);     // 6. recent game player id
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_PLAY_DATE, recentPlayDate);              // 7. recent play date
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);                // 8. total play time
-                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                         // 9. total cost
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_NAME, name);                                            // 1. name
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);                             // 2. target score
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);                                // 3. speciality
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);                        // 4. game record win
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);                      // 5. game record loss
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, recentGameBilliardCount);   // 6. recent game billiard count
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);                        // 7. total play time
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                                 // 8. total cost
+
+                // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.
+                newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
+
+                // [lv/C]SQLiteDatabase : close
+                writeDb.close();
+
+                // [check 3] : newRowId 값이 어떤 값이진 구분하여 결과를 반환한다.
+                if (newRowId == -1) {
+
+                    // 데이터 insert 실패
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                } else {
+                    // 데이터 insert 성공
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + newRowId + " 번째 입력이 성공하였습니다.");
+                } // [check 3]
+
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들이 형식에 맞지 않아요.");
+                newRowId = -2;
+            } // [check 2]
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+        return newRowId;
+
+    } // End of method [saveContent]
+
+
+    /**
+     * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 user 테이블에 데이터를 저장한다.
+     *
+     * <p>
+     * project_blue.db 의 user 테이블에 데이터를 insert query 문을 실행한다.
+     *
+     * <p>
+     * 반환값
+     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
+     * '-1' : 데이터베이스 문제 발생
+     * '0' : 코드들이 실행되지 안았다.
+     * 그 외의 값 : user 테이블에 입력 된 행 번호
+     *
+     * <p>
+     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
+     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
+     *
+     * @param userData user 의 데이터가 들어있는 DTO
+     * @return user 테이블에 데이터를 입력한 결과를 반환한다.
+     */
+    public long saveContent(UserData userData) {                // 8. total cost
+
+        final String METHOD_NAME= "[saveContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+
+        // [lv/l]newRowId : 이 메소드의 결과 값 저장
+        long newRowId = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [check 2] : openDbHelper 가 초기화 되었다.
+            if (!userData.getName().equals("") &&                                 // 1. name                          -- 내용이 있어야 함
+                    (userData.getTargetScore() >= 0) &&                           // 2. target score                  -- 0 보다 크거나 같다.
+                    !userData.getSpeciality().equals("") &&                       // 3. speciality                    -- not null
+                    (userData.getGameRecordWin() >= 0) &&                         // 4. game record win               -- 0 보다 크거나 같다.
+                    (userData.getGameRecordLoss() >= 0) &&                        // 5. game record loss              -- 0 보다 크거나 같다.
+                    (userData.getRecentGameBilliardCount() >= 0) &&               // 6. recent game billiard count    -- 0 보다 크거나 같다.
+                    (userData.getTotalPlayTime() >= 0) &&                         // 7. total play time               -- 0 보다 크거나 같다.
+                    (userData.getTotalCost() >= 0)) {                             // 8. total cost                    -- 0 보다 크거나 같다.
+
+                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+                SQLiteDatabase writeDb = this.getDbOpenHelper().getWritableDatabase();
+
+                // [lv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
+                ContentValues insertValues = new ContentValues();
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_NAME, userData.getName());                                            // 1. name
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, userData.getTargetScore());                             // 2. target score
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, userData.getSpeciality());                                // 3. speciality
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, userData.getGameRecordWin());                        // 4. game record win
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, userData.getGameRecordLoss());                      // 5. game record loss
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, userData.getRecentGameBilliardCount());   // 6. recent game billiard count
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, userData.getTotalPlayTime());                        // 7. total play time
+                insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, userData.getTotalCost());                                 // 8. total cost
 
                 // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.
                 newRowId = writeDb.insert(UserTableSetting.Entry.TABLE_NAME, null, insertValues);
@@ -160,16 +252,15 @@ public class UserDbManager extends ProjectBlueDBManager {
 
                 // [lv/C]UserData : user 테이블의 '한 행'의 정보를 담는다.
                 UserData userData = new UserData();
-                userData.setId(readCursor.getLong(0));                  // 0. id
-                userData.setName(readCursor.getString(1));              // 1. name
-                userData.setTargetScore(readCursor.getInt(2));          // 2. target score
-                userData.setSpeciality(readCursor.getString(3));        // 3. speciality
-                userData.setGameRecordWin(readCursor.getInt(4));        // 4. game record win
-                userData.setGameRecordLoss(readCursor.getInt(5));       // 5. game record loss
-                userData.setRecentGamePlayerId(readCursor.getLong(6));  // 6. recent game player id
-                userData.setRecentPlayDate(readCursor.getString(7));    // 7. recent play time
-                userData.setTotalPlayTime(readCursor.getInt(8));        // 8. total play time
-                userData.setTotalCost(readCursor.getInt(9));            // 9. total cost
+                userData.setId(readCursor.getLong(0));                          // 0. id
+                userData.setName(readCursor.getString(1));                      // 1. name
+                userData.setTargetScore(readCursor.getInt(2));                  // 2. target score
+                userData.setSpeciality(readCursor.getString(3));                // 3. speciality
+                userData.setGameRecordWin(readCursor.getInt(4));                // 4. game record win
+                userData.setGameRecordLoss(readCursor.getInt(5));               // 5. game record loss
+                userData.setRecentGameBilliardCount(readCursor.getLong(6));     // 6. recent game billiard count
+                userData.setTotalPlayTime(readCursor.getInt(7));                // 7. total play time
+                userData.setTotalCost(readCursor.getInt(8));                    // 8. total cost
 
                 // [lv/C]ArrayList<UserData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
                 userDataArrayList.add(userData);
@@ -226,16 +317,15 @@ public class UserDbManager extends ProjectBlueDBManager {
                 if (readCursor.moveToFirst()) {
 
                     // [lv/C]UserData : 가져온 데이터를 UserData 으로 만든다.
-                    userData.setId(readCursor.getLong(0));                  // 0. id
-                    userData.setName(readCursor.getString(1));              // 1. name
-                    userData.setTargetScore(readCursor.getInt(2));          // 2. target score
-                    userData.setSpeciality(readCursor.getString(3));        // 3. speciality
-                    userData.setGameRecordWin(readCursor.getInt(4));        // 4. game record win
-                    userData.setGameRecordLoss(readCursor.getInt(5));       // 5. game record loss
-                    userData.setRecentGamePlayerId(readCursor.getLong(6));  // 6. recent game player id
-                    userData.setRecentPlayDate(readCursor.getString(7));    // 7. recent play time
-                    userData.setTotalPlayTime(readCursor.getInt(8));        // 8. total play time
-                    userData.setTotalCost(readCursor.getInt(9));            // 9. total cost
+                    userData.setId(readCursor.getLong(0));                          // 0. id
+                    userData.setName(readCursor.getString(1));                      // 1. name
+                    userData.setTargetScore(readCursor.getInt(2));                  // 2. target score
+                    userData.setSpeciality(readCursor.getString(3));                // 3. speciality
+                    userData.setGameRecordWin(readCursor.getInt(4));                // 4. game record win
+                    userData.setGameRecordLoss(readCursor.getInt(5));               // 5. game record loss
+                    userData.setRecentGameBilliardCount(readCursor.getLong(6));     // 6. recent game billiard count
+                    userData.setTotalPlayTime(readCursor.getInt(7));                // 8. total play time
+                    userData.setTotalCost(readCursor.getInt(8));                    // 9. total cost
 
                 } else {
                     DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 에서 가져온 데이터가 없습니다.");
@@ -317,16 +407,15 @@ public class UserDbManager extends ProjectBlueDBManager {
      * [method] [update] gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost 값을 받아서
      * 해당 id 의 user 의 정보를 갱신한다.
      *
-     * @param id                 [0] user 의 id
-     * @param gameRecordWin      [4] user 의 게임 승리 수
-     * @param gameRecordLoss     [5] user 의 게임 패배 수
-     * @param recentGamePlayerId [6] user 의 최근 게임 플레이어 id (friend id)
-     * @param recentPlayDate     [7] user 의 최근 게임 날짜
-     * @param totalPlayTime      [8] user 의 총 게임 시간
-     * @param totalCost          [9] user 의 총 비용
+     * @param id                        [0] user 의 id
+     * @param gameRecordWin             [4] user 의 게임 승리 수
+     * @param gameRecordLoss            [5] user 의 게임 패배 수
+     * @param recentGameBilliardCount   [6] user 의 최근 게임의 billiard count
+     * @param totalPlayTime             [7] user 의 총 게임 시간
+     * @param totalCost                 [8] user 의 총 비용
      * @return update query 문을 실행한 결과
      */
-    public int updateContent(long id, int gameRecordWin, int gameRecordLoss, long recentGamePlayerId, String recentPlayDate, int totalPlayTime, int totalCost) {
+    public int updateContent(long id, int gameRecordWin, int gameRecordLoss, long recentGameBilliardCount, int totalPlayTime, int totalCost) {
 
         final String METHOD_NAME= "[updateContent] ";
 
@@ -339,13 +428,12 @@ public class UserDbManager extends ProjectBlueDBManager {
         if (this.isInitializedDB()) {
 
             // [check 2] : id, gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost 형식 확인
-            if ((id > 0)                                // 0. id
-                    && (gameRecordWin >= 0)              // 4. game record win
-                    && (gameRecordLoss >= 0)             // 5. game record loss
-                    && (recentGamePlayerId >= 0)         // 6. recent game player id
-                    && !recentPlayDate.equals("")       // 7. recent play date
-                    && (totalPlayTime >= 0)              // 8. total play time
-                    && (totalCost >= 0)) {               // 9. total cost
+            if ((id > 0)                                    // 0. id
+                    && (gameRecordWin >= 0)                 // 4. game record win
+                    && (gameRecordLoss >= 0)                // 5. game record loss
+                    && (recentGameBilliardCount > 0)        // 6. recent game player id - update 할때는 무조건 게임을 하였으므로 0 보다는 커야한다.
+                    && (totalPlayTime >= 0)                 // 7. total play time
+                    && (totalCost >= 0)) {                  // 8. total cost
 
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
                 SQLiteDatabase updateDb = this.getDbOpenHelper().getWritableDatabase();
@@ -354,8 +442,7 @@ public class UserDbManager extends ProjectBlueDBManager {
                 ContentValues updateValue = new ContentValues();
                 updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);
                 updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_PLAYER_ID, recentGamePlayerId);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_PLAY_DATE, recentPlayDate);
+                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, recentGameBilliardCount);
                 updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);
                 updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);
 

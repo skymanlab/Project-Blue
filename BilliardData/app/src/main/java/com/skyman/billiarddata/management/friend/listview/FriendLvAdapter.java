@@ -83,18 +83,18 @@ public class FriendLvAdapter extends BaseAdapter {
 
         // check : recentPlayDate 가 '-1' 이면, '최근 경기 없음'
 
-        // [check 2] : recentPlayDate 가 초기값 '-1' 로 되어있다.
-        if(friendData.getRecentPlayDate().equals("-1")){
-
-            // [lv/C]TextView : recentPlayData 를 초기값 '-1' 이 아닌 '최근 경기 없음' 으로 출력한다.
-            recentPlayDate.setText("최근 경기 없음");
-
-        } else {
-
-            // [lv/C]Text : recentPlayDate 에 초기값이 아닌 추가된 내용이 있을 때는 그 값으로 출력한다.
-            recentPlayDate.setText(friendData.getRecentPlayDate());
-
-        } // [check 2]
+//        // [check 2] : recentPlayDate 가 초기값 '-1' 로 되어있다.
+//        if(friendData.getRecentPlayDate().equals("-1")){
+//
+//            // [lv/C]TextView : recentPlayData 를 초기값 '-1' 이 아닌 '최근 경기 없음' 으로 출력한다.
+//            recentPlayDate.setText("최근 경기 없음");
+//
+//        } else {
+//
+//            // [lv/C]Text : recentPlayDate 에 초기값이 아닌 추가된 내용이 있을 때는 그 값으로 출력한다.
+//            recentPlayDate.setText(friendData.getRecentPlayDate());
+//
+//        } // [check 2]
 
         return convertView;
     }
@@ -108,20 +108,20 @@ public class FriendLvAdapter extends BaseAdapter {
      * @param name              [2] 이름
      * @param gameRecordWin     [3] 승리 수
      * @param gameRecordLoss    [4] 패배 수
-     * @param recentPlayDate    [5] 최근 게임 날짜
+     * @param recentGameBilliardCount    [5] 최근 게임의 billiard count
      * @param totalPlayTime     [6] 총 게임 시간
      * @param totalCost         [7] 총 비용
      * */
-    public void addItem(long id, long userId, String name, int gameRecordWin, int gameRecordLoss, String recentPlayDate, int totalPlayTime, int totalCost){
+    public void addItem(long id, long userId, String name, int gameRecordWin, int gameRecordLoss, long recentGameBilliardCount, int totalPlayTime, int totalCost){
 
         // [lv/C]FriendData : 매개변수로 받은 데이터를 FriendData 담는다.
         FriendData friendData = new FriendData();
-        friendData.setId(id);
-        friendData.setUserId(userId);
-        friendData.setName(name);
-        friendData.setGameRecordWin(gameRecordWin);
+        friendData.setId(id);                                           // 0. id
+        friendData.setUserId(userId);                                   // 1. user id
+        friendData.setName(name);                                       // 2. name
+        friendData.setGameRecordWin(gameRecordWin);                     // 3.
         friendData.setGameRecordLoss(gameRecordLoss);
-        friendData.setRecentPlayDate(recentPlayDate);
+        friendData.setRecentBilliardCount(recentGameBilliardCount);
         friendData.setTotalPlayTime(totalPlayTime);
         friendData.setTotalCost(totalCost);
 

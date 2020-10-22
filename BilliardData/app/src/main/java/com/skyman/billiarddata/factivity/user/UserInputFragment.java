@@ -291,10 +291,9 @@ public class UserInputFragment extends Fragment {
                             selectedSpeciality.getText().toString(),                            // 3. speciality
                             0,                                                   // 4. game record win
                             0,                                                   // 5. game record loss
-                            0,                                                 // 6. recent game player id
-                            "-1",                                                  // 7. recent play date
-                            0,                                                      // 8. total play time
-                            0                                                          // 9. total cost
+                            0,                                             // 6. recent game billiard count
+                            0,                                                      // 7. total play time
+                            0                                                          // 8. total cost
                     );
 
                     DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장이 완료 되었습니다. 해당 유저의 id 는 " + resultSave + " 입니다.");

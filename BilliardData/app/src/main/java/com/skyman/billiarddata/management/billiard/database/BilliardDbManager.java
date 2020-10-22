@@ -72,7 +72,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
             if (!date.equals("")                    // 1. date          / String
                     && !gameMode.equals("")         // 2. game mode     / String
                     && (playerCount >= 0)           // 3. player time   / int
-                    && (winnerId >= 0)              // 4. winner id     / long
+                    && (winnerId > 0)               // 4. winner id     / long - 게임을 save 한다는 건 참가한 player 가 있다는 말, 모든 player 아이디는 0 보다 큰 값이다.
                     && (playTime >= 0)              // 5. play time     / int
                     && !score.equals("")            // 6. score         / String
                     && (cost >= 0)) {               // 7. cost          / int
@@ -288,7 +288,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                 if (!date.equals("")                    // 1. date          / String
                         && !gameMode.equals("")         // 2. game mode     / String
                         && (playerCount >= 0)           // 3. player count  / int
-                        && (winnerId >= 0)              // 4. winner id     / long
+                        && (winnerId > 0)               // 4. winner id     / long
                         && (playTime >= 0)              // 5. play time     / int
                         && !score.equals("")            // 6. score         / String
                         && (cost >= 0)) {               // 7. cost          / int
@@ -548,13 +548,13 @@ public class BilliardDbManager extends ProjectBlueDBManager {
         boolean isCheckedFormat = false;
 
         // [check 1] : BilliardData 의 모든 값이 형식에 맞는지 검사한다.
-        if (!billiardData.getDate().equals("")
-                && !billiardData.getGameMode().equals("")
-                && (billiardData.getPlayerCount() >= 0)
-                && (billiardData.getWinnerId() >= 0)
-                && (billiardData.getPlayTime() >= 0)
-                && !billiardData.getScore().equals("")
-                && (billiardData.getCost() >= 0)) {
+        if (!billiardData.getDate().equals("")                  // 1. date
+                && !billiardData.getGameMode().equals("")       // 2. game mode
+                && (billiardData.getPlayerCount() >= 0)         // 3. player count
+                && (billiardData.getWinnerId() > 0)             // 4. winner id
+                && (billiardData.getPlayTime() >= 0)            // 5. play time
+                && !billiardData.getScore().equals("")          // 6. score
+                && (billiardData.getCost() >= 0)) {             // 7. cost
 
             // [lv/b]isCheckedFormat : 모든 값들의 형식이 맞다.
             isCheckedFormat = true;
