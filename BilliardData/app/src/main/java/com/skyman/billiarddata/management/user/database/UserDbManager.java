@@ -431,7 +431,7 @@ public class UserDbManager extends ProjectBlueDBManager {
             if ((id > 0)                                    // 0. id
                     && (gameRecordWin >= 0)                 // 4. game record win
                     && (gameRecordLoss >= 0)                // 5. game record loss
-                    && (recentGameBilliardCount > 0)        // 6. recent game player id - update 할때는 무조건 게임을 하였으므로 0 보다는 커야한다.
+                    && (recentGameBilliardCount >= 0)        // 6. recent game player id
                     && (totalPlayTime >= 0)                 // 7. total play time
                     && (totalCost >= 0)) {                  // 8. total cost
 

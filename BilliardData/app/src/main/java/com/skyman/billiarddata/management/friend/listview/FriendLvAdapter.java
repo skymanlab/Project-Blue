@@ -121,7 +121,7 @@ public class FriendLvAdapter extends BaseAdapter {
         friendData.setName(name);                                       // 2. name
         friendData.setGameRecordWin(gameRecordWin);                     // 3.
         friendData.setGameRecordLoss(gameRecordLoss);
-        friendData.setRecentBilliardCount(recentGameBilliardCount);
+        friendData.setRecentGameBilliardCount(recentGameBilliardCount);
         friendData.setTotalPlayTime(totalPlayTime);
         friendData.setTotalCost(totalCost);
 

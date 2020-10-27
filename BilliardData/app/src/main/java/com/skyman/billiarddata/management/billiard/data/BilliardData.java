@@ -15,12 +15,12 @@ public class BilliardData implements Serializable {
     private String gameMode;            // 2. game mode
     private int playerCount;            // 3. player count
     private long winnerId;              // 4. winner id
-    private int playTime;               // 5. play time
-    private String score;               // 6. score
-    private int cost;                   // 7. cost
+    private String winnerName;          // 5. winner name
+    private int playTime;               // 6. play time
+    private String score;               // 7. score
+    private int cost;                   // 8. cost
 
     // method : getter, setter
-
     public long getCount() {
         return count;
     }
@@ -61,6 +61,14 @@ public class BilliardData implements Serializable {
         this.winnerId = winnerId;
     }
 
+    public String getWinnerName() {
+        return winnerName;
+    }
+
+    public void setWinnerName(String winnerName) {
+        this.winnerName = winnerName;
+    }
+
     public int getPlayTime() {
         return playTime;
     }
@@ -84,6 +92,4 @@ public class BilliardData implements Serializable {
     public void setCost(int cost) {
         this.cost = cost;
     }
-
-
 }

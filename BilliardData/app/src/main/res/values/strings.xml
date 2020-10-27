@@ -18,18 +18,18 @@
     <string name="main_bt_statistics_manager">통계 정보</string>
     <string name="main_bt_development_info">어플 정보</string>
     <string name="main_footer">Developed by JDI ⓒ 2020 skymanlab.</string>
-        <!-- AlertDialog : main activity -->
-        <string name="ad_main_user_data_title">유저 정보 등록</string>
-        <string name="ad_main_user_data_message">유저 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
-        <string name="ad_main_bt_user_data_positive">다음 화면</string>
-        <string name="ad_main_bt_user_data_negative">취소</string>
-        <string name="ad_main_friend_data_title">친구 추가</string>
-        <string name="ad_main_friend_data_message">친구 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
-        <string name="ad_main_bt_friend_data_positive">다음 화면</string>
-        <string name="ad_main_bt_friend_data_negative">취소</string>
-        <string name="ad_main_friend_list_title">친구 목록</string>
-        <string name="ad_main_bt_friend_list_positive">게임 시작</string>
-        <string name="ad_main_bt_friend_list_negative">취소</string>
+    <!-- AlertDialog : main activity -->
+    <string name="ad_main_user_data_title">유저 정보 등록</string>
+    <string name="ad_main_user_data_message">유저 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
+    <string name="ad_main_bt_user_data_positive">다음 화면</string>
+    <string name="ad_main_bt_user_data_negative">취소</string>
+    <string name="ad_main_friend_data_title">친구 추가</string>
+    <string name="ad_main_friend_data_message">친구 등록이 되어있지 않습니다. 등록을 위해 이동하겠습니까?</string>
+    <string name="ad_main_bt_friend_data_positive">다음 화면</string>
+    <string name="ad_main_bt_friend_data_negative">취소</string>
+    <string name="ad_main_friend_list_title">친구 목록</string>
+    <string name="ad_main_bt_friend_list_positive">게임 시작</string>
+    <string name="ad_main_bt_friend_list_negative">취소</string>
 
     <!-- Activity : app info -->
     <string name="app_info_title">어플리케이션 정보</string>
@@ -68,23 +68,45 @@
     <string name="billiard_input_player_name">### 님</string>
     <string name="billiard_input_player_target_score">수지</string>
     <string name="billiard_input_player_score">점수</string>
-        <!-- AlertDialog : billiard input activity-->
-        <string name="ad_billiard_input_complete_input_title">화면 이동</string>
-        <string name="ad_billiard_input_complete_input_message">다음 화면으로 이동합니다.</string>
-        <string name="ad_billiard_input_bt_complete_input_positive">다음 화면</string>
-        <string name="ad_billiard_input_check_input_title">입력</string>
-        <string name="ad_billiard_input_check_input_message">해당 내용을 입력하겠습니까?</string>
-        <string name="ad_billiard_input_bt_check_input_positive">입력 진행</string>
-        <string name="ad_billiard_input_bt_check_input_negative">취소</string>
+    <!-- AlertDialog : billiard input activity-->
+    <string name="ad_billiard_input_complete_input_title">화면 이동</string>
+    <string name="ad_billiard_input_complete_input_message">다음 화면으로 이동합니다.</string>
+    <string name="ad_billiard_input_bt_complete_input_positive">다음 화면</string>
+    <string name="ad_billiard_input_check_input_title">입력</string>
+    <string name="ad_billiard_input_check_input_message">해당 내용을 입력하겠습니까?</string>
+    <string name="ad_billiard_input_bt_check_input_positive">입력 진행</string>
+    <string name="ad_billiard_input_bt_check_input_negative">취소</string>
 
     <!-- Activity : billiard display -->
     <string name="billiard_display_title">당신의 입력데이터를 봅시다.</string>
     <string name="billiard_display_bt_delete">모든 내용 삭제</string>
-        <!-- AlertDialog : billiard display activity -->
-        <string name="ad_billiard_display_delete_title">삭제 확인</string>
-        <string name="ad_billiard_display_delete_message">정말 삭제하겠습니까?</string>
-        <string name="ad_billiard_display_delete_bt_positive">삭제</string>
-        <string name="ad_billiard_display_delete_bt_negative">취소</string>
+    <!-- AlertDialog : billiard display activity -->
+    <string name="ad_billiard_display_delete_title">삭제 확인</string>
+    <string name="ad_billiard_display_delete_message">정말 삭제하겠습니까?</string>
+    <string name="ad_billiard_display_delete_bt_positive">삭제</string>
+    <string name="ad_billiard_display_delete_bt_negative">취소</string>
+
+    <!-- Dialog : billiard modify -->
+    <string name="billiard_modify_title">정보 수정</string>
+    <string name="billiard_modify_count">번호</string>
+    <string name="billiard_modify_date">날짜</string>
+    <string name="billiard_modify_game_mode">종목</string>
+    <string name="billiard_modify_player_count">참가인원</string>
+    <string name="billiard_modify_winner_id">승리자 ID</string>
+    <string name="billiard_modify_winner_name">승리자 이름</string>
+    <string name="billiard_modify_play_time">게임 시간</string>
+    <string name="billiard_modify_score">스코어</string>
+    <string name="billiard_modify_player_name">player name</string>
+    <string name="billiard_modify_target_score">수지</string>
+    <string name="billiard_modify_score_vs">:</string>
+    <string name="billiard_modify_cost">비용</string>
+    <string name="billiard_modify_bt_modify">수정</string>
+    <string name="billiard_modify_bt_cancel">취소</string>
+    <!-- AlertDialog : billiard modify activity -->
+    <string name="ad1_billiard_modify_check_modify_title">수정 확인</string>
+    <string name="ad1_billiard_modify_check_modify_message">수정을 진행하시겠습니까?</string>
+    <string name="ad1_billiard_modify_bt_check_modify_positive">수정</string>
+    <string name="ad1_billiard_modify_bt_check_modify_negative">취소</string>
 
 
     <!-- Activity : user manager -->
@@ -96,7 +118,6 @@
     <!-- Activity : statistics manager -->
     <string name="statistics_manager_title">당신의 데이터를 시각화해보겠습니다.</string>
     <string name="statistics_manager_"></string>
-
 
 
     <!--                                Fragment
@@ -143,25 +164,24 @@
     <string name="f_user_friend_add_title">친구 추가 ▼</string>
     <string name="f_user_friend_friend_name">이름</string>
     <string name="f_user_friend_bt_add_friend">친구 추가</string>
-        <!-- AlertDialog : user friend Fragment -->
-        <string name="ad_user_friend_first_friend_add_title">화면 이동</string>
-        <string name="ad_user_friend_first_friend_add_message">모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?</string>
-        <string name="ad_user_friend_first_bt_friend_add_positive">다음 화면</string>
-        <string name="ad_user_friend_first_bt_friend_add_negative">취소</string>
+    <!-- AlertDialog : user friend Fragment -->
+    <string name="ad_user_friend_first_friend_add_title">화면 이동</string>
+    <string name="ad_user_friend_first_friend_add_message">모든 정보가 입력되었습니다. 게임 데이터를 등록하겠습니까?</string>
+    <string name="ad_user_friend_first_bt_friend_add_positive">다음 화면</string>
+    <string name="ad_user_friend_first_bt_friend_add_negative">취소</string>
 
     <!-- Fragment : calendar -->
     <string name="f_calendar_title">달력으로 확인해봐요.</string>
     <string name="f_calendar_win">승리</string>
     <string name="f_calendar_loss">패배</string>
     <string name="f_calendar_"></string>
-        <!-- AlertDialog : calendar Fragment -->
-        <string name="ad_calendar_title">당구 정보</string>
-        <string name="ad_calendar_bt_positive">확인</string>
+    <!-- AlertDialog : calendar Fragment -->
+    <string name="ad_calendar_title">당구 정보</string>
+    <string name="ad_calendar_bt_positive">확인</string>
 
     <!-- Fragment : chart -->
     <string name="f_chart_title">차트로 확인해봐요.</string>
     <string name="f_chart_"></string>
-
 
 
     <!--                                Dialog
@@ -194,23 +214,24 @@
     <!-- Dialog : billiard modify -->
     <string name="c_di_billiard_modify_title">정보 수정</string>
     <string name="c_di_billiard_modify_count">번호</string>
-    <string name="c_di_billiard_modify_user_id">유저 아이디</string>
     <string name="c_di_billiard_modify_date">날짜</string>
-    <string name="c_di_billiard_modify_target_score">수지</string>
-    <string name="c_di_billiard_modify_speciality">종목</string>
+    <string name="c_di_billiard_modify_game_mode">종목</string>
+    <string name="c_di_billiard_modify_player_count">참가인원</string>
+    <string name="c_di_billiard_modify_winner_id">승리자 ID</string>
+    <string name="c_di_billiard_modify_winner_name">승리자 이름</string>
     <string name="c_di_billiard_modify_play_time">게임 시간</string>
-    <string name="c_di_billiard_modify_winner">승리자</string>
     <string name="c_di_billiard_modify_score">스코어</string>
+    <string name="c_di_billiard_modify_player_name">player name</string>
+    <string name="c_di_billiard_modify_target_score">수지</string>
     <string name="c_di_billiard_modify_score_vs">:</string>
     <string name="c_di_billiard_modify_cost">비용</string>
     <string name="c_di_billiard_modify_bt_modify">수정</string>
     <string name="c_di_billiard_modify_bt_cancel">취소</string>
-        <!-- AlertDialog : billiard modify activity -->
-        <string name="ad_billiard_modify_check_modify_title">수정 확인</string>
-        <string name="ad_billiard_modify_check_modify_message">수정을 진행하시겠습니까?</string>
-        <string name="ad_billiard_modify_bt_check_modify_positive">수정</string>
-        <string name="ad_billiard_modify_bt_check_modify_negative">취소</string>
-
+    <!-- AlertDialog : billiard modify activity -->
+    <string name="ad_billiard_modify_check_modify_title">수정 확인</string>
+    <string name="ad_billiard_modify_check_modify_message">수정을 진행하시겠습니까?</string>
+    <string name="ad_billiard_modify_bt_check_modify_positive">수정</string>
+    <string name="ad_billiard_modify_bt_check_modify_negative">취소</string>
 
 
     <!--                                Custom Layout
@@ -259,7 +280,6 @@
     <string name="at_billiard_lv_adapter_check_modify_message">데이터 수정을 진행하시겠습니까?</string>
     <string name="at_billiard_lv_adapter_bt_check_modify_positive">수정</string>
     <string name="at_billiard_lv_adapter_bt_check_modify_negative">취소</string>
-
 
 
     <!--                        Applandeo Material Calendar View

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
@@ -273,10 +272,12 @@ public class MainActivity extends AppCompatActivity {
                                 // [lv/C]Intent : selectedIndex 의 FriendData 값을 serialize 화여 Intent 로 넘겨주기
                                 SessionManager.setIntentOfUserData(intent, userData);
 
+                                // [lv/C]ArrayList<FriendData> : 선택 한 친구들을 추가하기
                                 ArrayList<FriendData> tempArrayList = new ArrayList<>();
                                 tempArrayList.add(friendDataArrayList.get(selectedIndex[0]));
 
-                                SessionManager.setIntentOfPlayerList(intent, friendDataArrayList);
+                                // [lv/C]SessionManager : 'playerList' 에 추가해야 한다.
+                                SessionManager.setIntentOfFriendPlayerList(intent, tempArrayList);
 
                                 // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                                 startActivityForResult(intent, 101);

@@ -160,8 +160,8 @@ public class FriendDbManager extends ProjectBlueDBManager {
                     !friendData.getName().equals("") &&                 // 2. name
                     (friendData.getGameRecordWin() >= 0) &&             // 3. game record win
                     (friendData.getGameRecordLoss() >= 0) &&            // 4. game record loss
-                    (friendData.getRecentBilliardCount() >= 0) &&       // 5. recent game billiard count
-                    (friendData.getTotalPlayTime() >= 0) &&              // 6. total play time
+                    (friendData.getRecentGameBilliardCount() >= 0) &&   // 5. recent game billiard count
+                    (friendData.getTotalPlayTime() >= 0) &&             // 6. total play time
                     (friendData.getTotalCost() >= 0)                    // 7. total cost
             ) {
 
@@ -174,7 +174,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_NAME, friendData.getName());                                              // 2. name
                 insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, friendData.getGameRecordWin());                          // 3. game record win
                 insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, friendData.getGameRecordLoss());                        // 4. game record loss
-                insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, friendData.getRecentBilliardCount());         // 5. recent game billiard count
+                insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, friendData.getRecentGameBilliardCount());     // 5. recent game billiard count
                 insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, friendData.getTotalPlayTime());                          // 6. total play time
                 insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_COST, friendData.getTotalCost());                                   // 7. total cost
 
@@ -248,7 +248,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                 friendData.setName(cursor.getString(2));
                 friendData.setGameRecordWin(cursor.getInt(3));
                 friendData.setGameRecordLoss(cursor.getInt(4));
-                friendData.setRecentBilliardCount(cursor.getLong(5));
+                friendData.setRecentGameBilliardCount(cursor.getLong(5));
                 friendData.setTotalPlayTime(cursor.getInt(6));
                 friendData.setTotalCost(cursor.getInt(7));
 
@@ -314,7 +314,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                     friendData.setName(cursor.getString(2));
                     friendData.setGameRecordWin(cursor.getInt(3));
                     friendData.setGameRecordLoss(cursor.getInt(4));
-                    friendData.setRecentBilliardCount(cursor.getLong(5));
+                    friendData.setRecentGameBilliardCount(cursor.getLong(5));
                     friendData.setTotalPlayTime(cursor.getInt(6));
                     friendData.setTotalCost(cursor.getInt(7));
 
@@ -383,7 +383,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                     friendData.setName(cursor.getString(2));
                     friendData.setGameRecordWin(cursor.getInt(3));
                     friendData.setGameRecordLoss(cursor.getInt(4));
-                    friendData.setRecentBilliardCount(cursor.getLong(5));
+                    friendData.setRecentGameBilliardCount(cursor.getLong(5));
                     friendData.setTotalPlayTime(cursor.getInt(6));
                     friendData.setTotalCost(cursor.getInt(7));
 
@@ -455,7 +455,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
                     friendData.setName(cursor.getString(2));
                     friendData.setGameRecordWin(cursor.getInt(3));
                     friendData.setGameRecordLoss(cursor.getInt(4));
-                    friendData.setRecentBilliardCount(cursor.getLong(5));
+                    friendData.setRecentGameBilliardCount(cursor.getLong(5));
                     friendData.setTotalPlayTime(cursor.getInt(6));
                     friendData.setTotalCost(cursor.getInt(7));
 
@@ -510,7 +510,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
             if ((id > 0)                                // 0. id
                     && (gameRecordWin >= 0)             // 3. game record win
                     && (gameRecordLoss >= 0)            // 4. game record loss
-                    && (recentGameBilliardCount > 0)    // 5. recent game billiard count - update 를 할때는 무조건 게임을 하였으므로 0 보다 커야한다.
+                    && (recentGameBilliardCount >= 0)   // 5. recent game billiard count
                     && (totalPlayTime >= 0)             // 6. total play time
                     && (totalCost >= 0)) {              // 7. total cost
 
@@ -572,7 +572,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
             if ((userId > 0)                            // 1. user id
                     && (gameRecordWin >= 0)             // 3. game record win
                     && (gameRecordLoss >= 0)            // 4. game record loss
-                    && (recentGameBilliardCount > 0)    // 5. recent game billiard count - update 를 할때는 무조건 게임을 하였으므로 0 보다 커야한다.
+                    && (recentGameBilliardCount >= 0)    // 5. recent game billiard count
                     && (totalPlayTime >= 0)             // 6. total play time
                     && (totalCost >= 0)) {              // 7. total cost
 

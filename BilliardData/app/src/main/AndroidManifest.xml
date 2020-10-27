@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/icon_noline"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StatisticsManagerActivity"></activity>
+        <activity android:name=".BilliardModifyActivity"></activity>
+        <activity android:name=".StatisticsManagerActivity" />
         <activity android:name=".AppInfoActivity" />
         <activity android:name=".UserManagerActivity" />
         <activity android:name=".BilliardDisplayActivity" />

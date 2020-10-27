@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="@color/colorBlue"
+            android:background="@color/colorBackgroundPrimary"
             android:gravity="center">
 
             <TextView
@@ -54,7 +54,7 @@
             android:id="@+id/c_lv_billiard_data_ll_section_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBlue"
+            android:background="@color/colorBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp"
             android:baselineAligned="false">
@@ -148,7 +148,7 @@
             android:id="@+id/c_lv_billiard_data_ll_section_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBlue"
+            android:background="@color/colorBackgroundPrimary"
             android:orientation="horizontal"
             android:padding="2dp"
             android:baselineAligned="false">

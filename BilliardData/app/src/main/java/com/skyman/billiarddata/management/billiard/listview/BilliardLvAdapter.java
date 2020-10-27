@@ -3,21 +3,29 @@ package com.skyman.billiarddata.management.billiard.listview;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.BilliardModify;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.friend.data.FriendData;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 
@@ -30,17 +38,29 @@ public class BilliardLvAdapter extends BaseAdapter {
     private final String CLASS_NAME_LOG = "[LvM]_BilliardLvAdapter";
 
     // instance variable
-    private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
-    private ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
-    private UserData userData;
     private BilliardDbManager billiardDbManager;
+    private UserDbManager userDbManager;
+    private FriendDbManager friendDbManager;
+    private PlayerDbManager playerDbManager;
 
+    // instance variable
+    private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
+    private UserData userData = null;
 
-    private String userName = new String();
+    // instance variable
+    private ArrayList<FriendData> friendDataArrayList;
+    private ArrayList<PlayerData> playerDataArrayList;
+
+    // instance variable
+    private ListView targetListView;
 
     // constructor
-    public BilliardLvAdapter(BilliardDbManager billiardDbManager){
+    public BilliardLvAdapter(BilliardDbManager billiardDbManager, UserDbManager userDbManager, PlayerDbManager playerDbManager, FriendDbManager friendDbManager, ListView targetListView) {
         this.billiardDbManager = billiardDbManager;
+        this.userDbManager = userDbManager;
+        this.playerDbManager = playerDbManager;
+        this.friendDbManager = friendDbManager;
+        this.targetListView = targetListView;
     }
 
     @Override
@@ -62,7 +82,7 @@ public class BilliardLvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // [lv/C]String : method name constant
-        final String METHOD_NAME= "[getView] ";
+        final String METHOD_NAME = "[getView] ";
 
         // [lv/C]Context : context 가져오기
         Context context = parent.getContext();
@@ -92,28 +112,31 @@ public class BilliardLvAdapter extends BaseAdapter {
         // [lv/C]BilliardData : 각 리스트에 뿌려줄 아이템을 받아오는데 BilliardData 재활용
         BilliardData billiardData = (BilliardData) getItem(position);
 
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + position + " / userData 의 id = " + userData.getId());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + position + " / userData 의 name = " + userData.getName());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + position + " / billiard 의 winnerId = " + billiardData.getWinnerId());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + position + " / billiard 의 winnerName = " + billiardData.getWinnerName());
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userName : " + userName);
+        // [check 1] : userId 와 playerId,  userName 과 playerName 이 모두 같으면 승리 / 나의 승리 여부만 검사하면 됨
+        if ((userData.getId() == billiardData.getWinnerId()) && (userData.getName().equals(billiardData.getWinnerName()))) {
 
-        // [check 1] : userName 과 winner 으로 승리여부 확인
-//        if (userName.equals(billiardData.getWinner())) {
-//
-//            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
-//            countLinearLayout.setBackgroundResource(R.color.colorBlue);
-//
-//        } else {
-//
-//            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
-//            countLinearLayout.setBackgroundResource(R.color.colorRed);
-//
-//        } // [check 1]
+            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
+            countLinearLayout.setBackgroundResource(R.color.colorBlue);
+
+        } else {
+
+            // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
+            countLinearLayout.setBackgroundResource(R.color.colorRed);
+
+        } // [check 1]
 
 
-        // [lv/C]TextView : 매핑된 count, data, targetScore, speciality, playTime, winner, score, cost 값 셋팅
+        // [lv/C]TextView : 매핑된 count, data, targ etScore, speciality, playTime, winner, score, cost 값 셋팅
         count.setText(billiardData.getCount() + "");                                                                // 0. count
         date.setText(billiardData.getDate());                                                                       // 1. date
         gameMode.setText(billiardData.getGameMode());                                                               // 2. game mode
-        playerCount.setText(billiardData.getPlayerCount());                                                         // 3. player count
+        playerCount.setText(billiardData.getPlayerCount() + "");                                                    // 3. player count
+        winnerName.setText(billiardData.getWinnerName());                                                           // 4. winner name
         playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 5. play time
         score.setText(billiardData.getScore());                                                                     // 6. score
         cost.setText(BilliardDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 7. cost
@@ -123,78 +146,79 @@ public class BilliardLvAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                // [method]showDialogToCheckWhetherModify : 수정을 하는 과정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
-                showDialogToCheckWhetherProgressNextStep(context, billiardData);
+                // [method] 클릭 리스터 불러오기
+                setClickListenerOfCountLinearLayout(context, billiardData, userData);
 
             }
         });
 
         return convertView;
-    }
-
-    /**
-     * [method] 매개 변수로 받은 값을 BilliardData 로 만들어 billiardDataArrayList 에 추가한다.
-     *
-     * @param cost          [0] count : primary key
-     * @param date          [1] 날짜
-     * @param gameMode      [2] 종목
-     * @param playerCount   [3] 참가인원
-     * @param winnerId      [4] 승리자 아이디
-     * @param playTime      [5] 게임 시간
-     * @param score         [6] 스코어
-     * @param cost          [7] 비용
-     */
-    public void addItem(long count,         // 0. count
-                        String date,        // 1. date
-                        String gameMode,    // 2. game mode
-                        int playerCount,    // 3. player count
-                        long winnerId,      // 4. winner id
-                        int playTime,       // 5. play time
-                        String score,       // 6. score
-                        int cost) {         // 7. cost
-
-        // [lv/C]BilliardData : 매개변수로 받은 데이터를 BilliardData 담는다.
-        BilliardData billiardData = new BilliardData();
-        billiardData.setCount(count);                       // 0. count
-        billiardData.setDate(date);                         // 1. date
-        billiardData.setGameMode(gameMode);                 // 2. game mode
-        billiardData.setPlayerCount(playerCount);           // 3. player count
-        billiardData.setWinnerId(winnerId);                 // 4. winner id
-        billiardData.setPlayTime(playTime);                 // 5. play time
-        billiardData.setScore(score);                       // 6. score
-        billiardData.setCost(cost);                         // 7. cost
-
-        // [iv/C]ArrayList<BilliardData> : 위 에서 만든 데이터를 배열에 담는다.
-        this.billiardDataArrayList.add(billiardData);
-
-    } // End of method [addItem]
+    } // End of method [getView]
 
 
     /**
-     * [method] BilliardData 를 매개변수로 받아 billiardDataArrayList 에 추가한다.
+     * [method] [set] BilliardData 를 매개변수로 받아 billiardDataArrayList 에 mapping 한다.
      *
-     * @param billiardData billiard 데이터가 담긴
+     * @param billiardDataArrayList billiard 데이터가 담긴
      */
-    public void addItem(BilliardData billiardData) {
+    public void setBilliardDataArrayList(ArrayList<BilliardData> billiardDataArrayList) {
 
         // [iv/C]ArrayList<BilliardData> : 입력받은 BilliardData 가 배열형태로 담길 객체
-        this.billiardDataArrayList.add(billiardData);
+        this.billiardDataArrayList = billiardDataArrayList;
 
     } // End of method [addItem]
 
 
     /**
-     * [method] userName 을 추가한다.
+     * [method] [set] UserData 를 매개변수로 받아 userData 에 mapping 한다.
+     *
+     * @param userData userData 데이터가 담긴
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    public void setUserData(UserData userData) {
+
+        // [iv/C]UserData : 입력받은 UserData 가 배열형태로 담길 객체
+        this.userData = userData;
+
+    } // End of method [addItem]
+
 
     /**
-     * [method] 다음 단계로 데이터 수정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
-     *
+     * [method] [BL] modify button 의 click listener 를 설정한다.
      */
-    private void showDialogToCheckWhetherProgressNextStep (Context context, BilliardData billiardData) {
+    private void setClickListenerOfCountLinearLayout(Context context, BilliardData billiardData, UserData userData) {
+
+        final String METHOD_NAME = "[setClickListenerOfCountLinearLayout] ";
+
+        // [lv/C]ArrayList<PlayerData> : billiardData 의 count 값으로 player 데이터 가져오기
+        ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByBilliardCount(billiardData.getCount());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiardCount 로 가져온 playerData 를 확인하겠습니다.");
+        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+
+        // [lv/C]ArrayList<FriendData> : 위 playerDataArrayList 에서 friend 에 해당하는 playerId 로 가져온 데이터를 담을
+        ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
+
+        // [cycle 1] : playerDataArrayList 중 friend 에 해당하는 수 만큼
+        for (int friendIndex = 1; friendIndex < playerDataArrayList.size(); friendIndex++) {
+
+            // [lv/C]ArrayList<FriendData> : 가져온 friendData 추가
+            friendDataArrayList.add(this.friendDbManager.loadContentById(playerDataArrayList.get(friendIndex).getPlayerId()));
+
+        } // [cycle 1]
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playerId 로 가져온 friendData 를 확인하겠습니다.");
+        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList);
+
+
+        // [method]showDialogToCheckWhetherModify : 수정을 하는 과정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
+        showDialogToCheckWhetherProgressNextStep(context, billiardData, userData, playerDataArrayList, friendDataArrayList);
+
+
+    } // End of method [setClickListenerOfCountLinearLayout]
+
+
+    /**
+     * [method] [Di] 다음 단계로 데이터 수정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
+     */
+    private void showDialogToCheckWhetherProgressNextStep(Context context, BilliardData billiardData, UserData userData, ArrayList<PlayerData> playerDataArrayList, ArrayList<FriendData> friendDataArrayList) {
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -206,11 +230,34 @@ public class BilliardLvAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
-                        BilliardModify billiardModify = new BilliardModify(context, billiardDbManager, billiardData);
+//                        // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
+//                        BilliardModify billiardModify = new BilliardModify(context, billiardDbManager, userDbManager, friendDbManager, playerDbManager);
+//
+//                        // [lv/C]BilliardModify : billiardData set
+//                        billiardModify.setBilliardData(billiardData);
+//
+//                        // [lv/C]BilliardModify : userData set
+//                        billiardModify.setUserData(userData);
+//
+//                        // [lv/C]BilliardModify : playerDataArrayList set
+//                        billiardModify.setPlayerDataArrayList(playerDataArrayList);
+//
+//                        // [lv/C]BilliardModify : friendDataArrayList set
+//                        billiardModify.setFriendDataArrayList(friendDataArrayList);
+//
+//                        // [lv/C]BilliardModify : dialog 보여주기
+//                        billiardModify.setDialog(targetListView);
 
-                        // [lv/C]BilliardModify : dialog 보여주기
-                        billiardModify.setDialog();
+                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 Intent 생성
+                        Intent intent = new Intent(context, BilliardModifyActivity.class);
+
+                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setIntentOfBilliardData(intent, billiardData);
+                        SessionManager.setIntentOfFriendPlayerList(intent, friendDataArrayList);
+                        SessionManager.setIntentOfPlayerList(intent, playerDataArrayList);
+
+                        context.startActivity(intent);
+
                     }
                 })
                 .setNegativeButton(R.string.at_billiard_lv_adapter_bt_check_modify_negative, new DialogInterface.OnClickListener() {
@@ -222,4 +269,5 @@ public class BilliardLvAdapter extends BaseAdapter {
                 .show();
 
     } // End of method [showDialogToCheckWhetherProgressNextStep]
+
 }

@@ -1,6 +1,8 @@
 package com.skyman.billiarddata.management.player.data;
 
-public class PlayerData {
+import java.io.Serializable;
+
+public class PlayerData implements Serializable {
 
     // instance variable : desc
     private long count;                 // 0. count

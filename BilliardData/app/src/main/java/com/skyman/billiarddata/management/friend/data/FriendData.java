@@ -5,16 +5,17 @@ import java.io.Serializable;
 public class FriendData implements Serializable {
 
     // variable : desc
-    private long id;                    // 0. id
-    private long userId;                // 1. user id
-    private String name;                // 2. name
-    private int gameRecordWin;          // 3. game record win
-    private int gameRecordLoss;         // 4. game record loss
-    private long recentBilliardCount;   // 5. recent game billiard count
-    private int totalPlayTime;          // 6. total play time
-    private int totalCost;              // 7. total cost
+    private long id;                        // 0. id
+    private long userId;                    // 1. user id
+    private String name;                    // 2. name
+    private int gameRecordWin;              // 3. game record win
+    private int gameRecordLoss;             // 4. game record loss
+    private long recentGameBilliardCount;   // 5. recent game billiard count
+    private int totalPlayTime;              // 6. total play time
+    private int totalCost;                  // 7. total cost
 
     // method : getter, setter
+
     public long getId() {
         return id;
     }
@@ -55,12 +56,12 @@ public class FriendData implements Serializable {
         this.gameRecordLoss = gameRecordLoss;
     }
 
-    public long getRecentBilliardCount() {
-        return recentBilliardCount;
+    public long getRecentGameBilliardCount() {
+        return recentGameBilliardCount;
     }
 
-    public void setRecentBilliardCount(long recentBilliardCount) {
-        this.recentBilliardCount = recentBilliardCount;
+    public void setRecentGameBilliardCount(long recentGameBilliardCount) {
+        this.recentGameBilliardCount = recentGameBilliardCount;
     }
 
     public int getTotalPlayTime() {

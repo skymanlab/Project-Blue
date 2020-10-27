@@ -116,7 +116,8 @@
                     <EditText
                         android:id="@+id/f_user_friend_friend_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></EditText>
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"></EditText>
                 </LinearLayout><!-- End of content 2-2-->
 
                 <!-- content 2-3. button -->

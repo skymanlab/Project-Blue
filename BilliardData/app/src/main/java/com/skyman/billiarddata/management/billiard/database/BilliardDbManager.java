@@ -54,9 +54,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                             String gameMode,        // 2. game mode
                             int playerCount,        // 3. player count
                             long winnerId,          // 4. winner Id
-                            int playTime,           // 5. play time
-                            String score,           // 6. score
-                            int cost) {             // 7. cost
+                            String winnerName,      // 5. winner name
+                            int playTime,           // 6. play time
+                            String score,           // 7. score
+                            int cost) {             // 8. cost
 
         final String METHOD_NAME = "[saveContent] ";
 
@@ -73,9 +74,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                     && !gameMode.equals("")         // 2. game mode     / String
                     && (playerCount >= 0)           // 3. player time   / int
                     && (winnerId > 0)               // 4. winner id     / long - 게임을 save 한다는 건 참가한 player 가 있다는 말, 모든 player 아이디는 0 보다 큰 값이다.
-                    && (playTime >= 0)              // 5. play time     / int
-                    && !score.equals("")            // 6. score         / String
-                    && (cost >= 0)) {               // 7. cost          / int
+                    && !winnerName.equals("")       // 5. winner name   / string
+                    && (playTime >= 0)              // 6. play time     / int
+                    && !score.equals("")            // 7. score         / String
+                    && (cost >= 0)) {               // 8. cost          / int
 
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기            ==> SQLiteDatabase 는 모든 조건이 만족 했을 때 가져와서
                 SQLiteDatabase writeDb = super.getDbOpenHelper().getWritableDatabase();
@@ -86,9 +88,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, gameMode);           // 2. game mode
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, playerCount);     // 3. player count
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, winnerId);           // 4. winner id
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTime);           // 5. play time
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, score);                  // 6. score
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, cost);                    // 7. cost
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, winnerName);       // 5. winner name
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTime);           // 6. play time
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, score);                  // 7. score
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, cost);                    // 8. cost
 
                 // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
                 newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
@@ -162,9 +165,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, billiardData.getGameMode());         // 2. game mode
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, billiardData.getPlayerCount());   // 3. player count
                 insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, billiardData.getWinnerId());         // 4. winner id
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, billiardData.getPlayTime());         // 5. play time
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, billiardData.getScore());                // 6. score
-                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, billiardData.getCost());                  // 7. cost
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, billiardData.getWinnerName());     // 5. winner name
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, billiardData.getPlayTime());         // 6. play time
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, billiardData.getScore());                // 7. score
+                insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, billiardData.getCost());                  // 8. cost
 
                 // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
                 newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
@@ -235,9 +239,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                 billiardData.setGameMode(readCursor.getString(2));
                 billiardData.setPlayerCount(readCursor.getInt(3));
                 billiardData.setWinnerId(readCursor.getLong(4));
-                billiardData.setPlayTime(readCursor.getInt(5));
-                billiardData.setScore(readCursor.getString(6));
-                billiardData.setCost(readCursor.getInt(7));
+                billiardData.setWinnerName(readCursor.getString(5));
+                billiardData.setPlayTime(readCursor.getInt(6));
+                billiardData.setScore(readCursor.getString(7));
+                billiardData.setCost(readCursor.getInt(8));
 
                 // [lv/C]ArrayList<BilliardData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
                 billiardDataArrayList.add(billiardData);
@@ -258,6 +263,63 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
 
     /**
+     * [method] [select] billiard 테이블의 count 값으로 해당 레코드 하나를 가져온다.
+     *
+     * @param count billiard 의 count
+     * @return billiard 테이블에 저장된 모든 데이터
+     */
+    /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
+    public BilliardData loadAllContentByCount(long count) {
+
+        final String METHOD_NAME = "[loadAllContentByCount] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+
+        // [lv/C]BilliardData : billiard 테이블에 해당 count 로 가져온 데이터가 담기는 객체
+        BilliardData billiardData = null;
+
+        // [check  1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
+            SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
+
+            // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
+            Cursor readCursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_WHERE_COUNT + count, null);
+
+            // [check 2] : readCursor 의 첫 번째 데이터가 있다.
+            if (readCursor.moveToFirst()) {
+
+                // [lv/C]BilliardData : billiard 테이블의 '한 행'의 정보를 담는다.
+                billiardData = new BilliardData();
+                billiardData.setCount(readCursor.getLong(0));
+                billiardData.setDate(readCursor.getString(1));
+                billiardData.setGameMode(readCursor.getString(2));
+                billiardData.setPlayerCount(readCursor.getInt(3));
+                billiardData.setWinnerId(readCursor.getLong(4));
+                billiardData.setWinnerName(readCursor.getString(5));
+                billiardData.setPlayTime(readCursor.getInt(6));
+                billiardData.setScore(readCursor.getString(7));
+                billiardData.setCost(readCursor.getInt(8));
+
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "해당 count 의 billiard 레코드가 없습니다.");
+            } // [check 2]
+
+            // [lv/C]SQLiteDatabase : close / end
+            readDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+
+        return billiardData;
+    } // End of method [loadAllContentByCount]
+
+
+    /**
      * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
      *
      * @return update query 문을 실행한 결과
@@ -267,9 +329,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                                     String gameMode,        // 2. game mode
                                     int playerCount,        // 3. player count
                                     long winnerId,          // 4. winner id
-                                    int playTime,           // 5. player time
-                                    String score,           // 6. score
-                                    int cost) {             // 7. cost
+                                    String winnerName,      // 5. winner name
+                                    int playTime,           // 6. player time
+                                    String score,           // 7. score
+                                    int cost) {             // 8. cost
 
         final String METHOD_NAME = "[updateContentByCount] ";
 
@@ -289,9 +352,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                         && !gameMode.equals("")         // 2. game mode     / String
                         && (playerCount >= 0)           // 3. player count  / int
                         && (winnerId > 0)               // 4. winner id     / long
-                        && (playTime >= 0)              // 5. play time     / int
-                        && !score.equals("")            // 6. score         / String
-                        && (cost >= 0)) {               // 7. cost          / int
+                        && !winnerName.equals("")       // 5. winner name   / String
+                        && (playTime >= 0)              // 6. play time     / int
+                        && !score.equals("")            // 7. score         / String
+                        && (cost >= 0)) {               // 8. cost          / int
 
                     // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
                     SQLiteDatabase updateDb = this.getDbOpenHelper().getWritableDatabase();
@@ -302,9 +366,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, gameMode);             // 2. game mode
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, playerCount);       // 3. player count
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, winnerId);             // 4. winner id
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTime);             // 5. play time
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, score);                    // 6. score
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, cost);                      // 7. cost
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, winnerName);         // 5. winner name
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTime);             // 6. play time
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, score);                    // 7. score
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, cost);                      // 8. cost
 
                     // [lv/i]methodResult : update query 문을 실행한 결과
                     methodResult = updateDb.update(BilliardTableSetting.Entry.TABLE_NAME, updateValues, BilliardTableSetting.Entry._COUNT + "=" + count, null);
@@ -447,7 +512,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
      *
      * @return billiard 테이블의 count 행 데이터를 삭제한 결과
      */
-    public int deleteContent(long count) {
+    public int deleteContentByCount(long count) {
 
         final String METHOD_NAME = "[deleteContent] ";
 
@@ -552,9 +617,10 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                 && !billiardData.getGameMode().equals("")       // 2. game mode
                 && (billiardData.getPlayerCount() >= 0)         // 3. player count
                 && (billiardData.getWinnerId() > 0)             // 4. winner id
-                && (billiardData.getPlayTime() >= 0)            // 5. play time
-                && !billiardData.getScore().equals("")          // 6. score
-                && (billiardData.getCost() >= 0)) {             // 7. cost
+                && !billiardData.getWinnerName().equals("")     // 5. winner name
+                && (billiardData.getPlayTime() >= 0)            // 6. play time
+                && !billiardData.getScore().equals("")          // 7. score
+                && (billiardData.getCost() >= 0)) {             // 8. cost
 
             // [lv/b]isCheckedFormat : 모든 값들의 형식이 맞다.
             isCheckedFormat = true;

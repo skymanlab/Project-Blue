@@ -25,6 +25,15 @@ public class PlayerTableSetting {
     public static final String SQL_SELECT_WHERE_BILLIARD_COUNT =
             "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_BILLIARD_COUNT + "=";
 
+    // class constant : select - where billiard count
+    public static final String SQL_SELECT_WHERE_PLAYER_ID =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry.COLUMN_NAME_PLAYER_ID + "=";
+
+    // class constant : select - where billiard count
+    public static final String SQL_SELECT_WHERE =
+            "SELECT * FROM " + Entry.TABLE_NAME + " WHERE ";
+
+
     // inner class : Entry, Table column name
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "player";
