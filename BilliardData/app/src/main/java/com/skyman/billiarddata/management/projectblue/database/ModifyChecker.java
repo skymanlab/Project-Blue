@@ -4,11 +4,12 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
 
-public class ModifyManager {
+public class ModifyChecker {
 
     // constant
     private static final String CLASS_NAME_LOG = "[C]_ModifyManager";
@@ -30,9 +31,10 @@ public class ModifyManager {
     // instance variable
     private boolean isCompleteSetting;
     private boolean isRangeError;
+    private boolean isChanged;
 
     // constructor
-    public ModifyManager(int playerCount) {
+    public ModifyChecker(int playerCount) {
 
         this.billiardData = new BilliardData();
         this.userData = new UserData();
@@ -49,136 +51,11 @@ public class ModifyManager {
 
         this.isCompleteSetting = false;
         this.isRangeError = false;
+        this.isChanged = false;
     }
 
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-    /**
-     * [method] [set] billiardData 를 복사하기
-     *
-     * @param billiardData 값 복사를 위한 원본 billiardData
-     */
-    public void setBilliardData(BilliardData billiardData) {
-
-        final String METHOD_NAME = "[setBilliardData] ";
-
-        // [iv/C]BilliardData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
-        this.billiardData.setCount(billiardData.getCount());                // 0. count
-        this.billiardData.setDate(billiardData.getDate());                  // 1. date
-        this.billiardData.setGameMode(billiardData.getGameMode());          // 2. game mode
-        this.billiardData.setPlayerCount(billiardData.getPlayerCount());    // 3. player count
-        this.billiardData.setWinnerId(billiardData.getWinnerId());          // 4. winner id
-        this.billiardData.setWinnerName(billiardData.getWinnerName());      // 5. winner name
-        this.billiardData.setPlayTime(billiardData.getPlayTime());          // 6. play time
-        this.billiardData.setScore(billiardData.getScore());                // 7. score
-        this.billiardData.setCost(billiardData.getCost());                  // 8. cost
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.billiardData 확인! ************");
-        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.billiardData);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "********************************************************");
-
-    } // End of method [setBilliardData]
-
-
-    /**
-     * [method] [set] userData 를 복사하기
-     *
-     * @param userData 값 복사를 위한 원본 userData
-     */
-    public void setUserData(UserData userData) {
-
-        final String METHOD_NAME = "[setUserData] ";
-
-        // [iv/C]UserData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
-        this.userData.setId(userData.getId());                                              // 0. id
-        this.userData.setName(userData.getName());                                          // 1. name
-        this.userData.setTargetScore(userData.getTargetScore());                            // 2. target score
-        this.userData.setSpeciality(userData.getSpeciality());                              // 3. speciality
-        this.userData.setGameRecordWin(userData.getGameRecordWin());                        // 4. game record win
-        this.userData.setGameRecordLoss(userData.getGameRecordLoss());                      // 5. game record loss
-        this.userData.setRecentGameBilliardCount(userData.getRecentGameBilliardCount());    // 6. recent game billiard count
-        this.userData.setTotalPlayTime(userData.getTotalPlayTime());                        // 7. total play time
-        this.userData.setTotalCost(userData.getTotalCost());                                // 8. total cost
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.userData 확인! ************");
-        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "****************************************************");
-
-    } // End of method [setUserData]
-
-
-    /**
-     * [method] [set] 모든 fiendData 를 복사한다.
-     *
-     * @param friendDataArrayList 값 복사를 위한 원본 friendDataArrayList
-     */
-    public void setFriendDataArrayList(ArrayList<FriendData> friendDataArrayList) {
-
-        final String METHOD_NAME = "[setFriendDataArrayList] ";
-
-        // [iv/C]ArrayList<FriendData> : 기존 데이터를 모두 지우기
-        this.friendDataArrayList.clear();
-
-        // [cycle 1] : friendDataArrayList 의 size 만큼
-        for (int index = 0; index < friendDataArrayList.size(); index++) {
-
-            // [lv/C]FriendData : friendDataArrayList 에서 하나의 FriendData 데이터를 저장한다.
-            FriendData friendData = new FriendData();
-            friendData.setId(friendDataArrayList.get(index).getUserId());                                           // 0. id
-            friendData.setUserId(friendDataArrayList.get(index).getUserId());                                       // 1. user id
-            friendData.setName(friendDataArrayList.get(index).getName());                                           // 2. name
-            friendData.setGameRecordWin(friendDataArrayList.get(index).getGameRecordWin());                         // 3. game record win
-            friendData.setGameRecordLoss(friendDataArrayList.get(index).getGameRecordLoss());                       // 4. game record loss
-            friendData.setRecentGameBilliardCount(friendDataArrayList.get(index).getRecentGameBilliardCount());     // 6. recent game billiard count
-            friendData.setTotalPlayTime(friendDataArrayList.get(index).getTotalPlayTime());                         // 7. total play time
-            friendData.setTotalCost(friendDataArrayList.get(index).getTotalCost());                                 // 8. total cost
-
-            // [iv/C]ArrayList<FriendData> : 위의 friendData 를 추가하기
-            this.friendDataArrayList.add(friendData);
-
-        } // [cycle 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.friendDataArrayList 확인! ************");
-        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.friendDataArrayList);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
-
-    } // End of method [setFriendDataArrayList]
-
-
-    /**
-     * [method] [set] 이 게임에 참가한 모든 player 의 정보가 담긴 playerDataArrayList 를 복사한다.
-     */
-    public void setPlayerDataArrayList(ArrayList<PlayerData> playerDataArrayList) {
-
-        final String METHOD_NAME = "[setPlayerDataArrayList] ";
-
-        // [iv/C]ArrayList<PlayerData> : 기존 데이터를 모두 지우기
-        this.playerDataArrayList.clear();
-
-        // [cycle 1] : playerDataArrayList 의 size 만큼
-        for (int index = 0; index < playerDataArrayList.size(); index++) {
-
-            // [lv/C]PlayerData : playerDataArrayList 에서 하나의 PlayerData 데이터를 저장한다.
-            PlayerData playerData = new PlayerData();
-            playerData.setCount(playerDataArrayList.get(index).getCount());                     // 0. count
-            playerData.setBilliardCount(playerDataArrayList.get(index).getBilliardCount());     // 1. billiard count
-            playerData.setPlayerId(playerDataArrayList.get(index).getPlayerId());               // 2. player id
-            playerData.setPlayerName(playerDataArrayList.get(index).getPlayerName());            // 3. player name
-            playerData.setTargetScore(playerDataArrayList.get(index).getTargetScore());         // 4. target score
-            playerData.setScore(playerDataArrayList.get(index).getScore());                     // 5. score
-
-            // [iv/C]ArrayList<PlayerData> : 위의 playerData 를 추가하기
-            this.playerDataArrayList.add(playerData);
-
-        } // [cycle 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.playerDataArrayList 확인! ************");
-        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
-
-    } // End of method [setPlayerDataArrayList]
-
 
     /**
      * [method] [set] init variable 설정하기
@@ -231,7 +108,6 @@ public class ModifyManager {
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "초기 cost 의 값 = " + this.initCost);
 
     } // End of method [setInitData]
-
 
     /**
      * [method] [check] 위의 set method 로 필드 변수에 데이터를 모두 설정하였는지 검사하여 true 또는 false 를 반환한다.
@@ -318,16 +194,13 @@ public class ModifyManager {
 
     } // End of method [setCompleteSetting]
 
-
     /**
      * [method] playerDataArrayList 의 score 값들이 범위 안의 값인지, winner 의 targetScore 와 score 값이 같은지 이 두가지를 검사하여 범위안의 모두 통과하면 true 로 설정한다.
-     *
-     *
      */
     public void setRangeError() {
 
         final String METHOD_NAME = "[setRangeError] ";
-        
+
         // [lv/b]isRangeError : 범위 에러가 발생하였는가?
         boolean isRangeError = false;
 
@@ -338,27 +211,27 @@ public class ModifyManager {
         String winnerName = this.billiardData.getWinnerName();
 
         // [cycle 1] : playerDataArrayList 의 size 만큼
-        for (int index=0; index<this.playerDataArrayList.size(); index++) {
+        for (int index = 0; index < this.playerDataArrayList.size(); index++) {
 
             int targetScore = this.playerDataArrayList.get(index).getTargetScore();
             int score = this.playerDataArrayList.get(index).getScore();
 
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_1. <player " + index + "> 의 <score> 값의 범위를 확인 중입니다.");
             // [check 1] : 0 <= score <= targetScore 에서 벗어난 값
-            if ( (score <= 0) && (targetScore <= score) ) {
+            if ((0 <= score) && (score <= targetScore)) {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_1. <player " + index + "> 의 통과");
+            } else {
                 // 오류 발생
 
                 isRangeError = true;
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_1.<player " + index + "> 의 <score> 가 범위 밖의 값이여!");
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_1. <player " + index + "> 의 통과");
             } // [check 1]
 
             long playerId = this.playerDataArrayList.get(index).getPlayerId();
             String playerName = this.playerDataArrayList.get(index).getPlayerName();
 
             // [check 2] : winner 를 찾아서
-            if ( (winnerId == playerId) && (winnerName.equals(playerName)) ) {
+            if ((winnerId == playerId) && (winnerName.equals(playerName))) {
 
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_2. <승리자>의 targetScore 와 score 값이 같은지 비교합니다.");
                 // [check 3] : 승리자의 score 가 targetScore 가 같나요?
@@ -368,7 +241,7 @@ public class ModifyManager {
                     isRangeError = true;
 
                 } else {
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "2. <승리자> 통과");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_2. <승리자> 통과");
                 } // [check 3]
 
             } // [check 2]
@@ -378,6 +251,158 @@ public class ModifyManager {
         this.isRangeError = isRangeError;
     } // End of method [setRangeError]
 
+    public BilliardData getBilliardData() {
+        return billiardData;
+    }
+
+    /**
+     * [method] [set] billiardData 를 복사하기
+     *
+     * @param billiardData 값 복사를 위한 원본 billiardData
+     */
+    public void setBilliardData(BilliardData billiardData) {
+
+        final String METHOD_NAME = "[setBilliardData] ";
+
+        // [iv/C]BilliardData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
+        this.billiardData.setCount(billiardData.getCount());                // 0. count
+        this.billiardData.setDate(billiardData.getDate());                  // 1. date
+        this.billiardData.setGameMode(billiardData.getGameMode());          // 2. game mode
+        this.billiardData.setPlayerCount(billiardData.getPlayerCount());    // 3. player count
+        this.billiardData.setWinnerId(billiardData.getWinnerId());          // 4. winner id
+        this.billiardData.setWinnerName(billiardData.getWinnerName());      // 5. winner name
+        this.billiardData.setPlayTime(billiardData.getPlayTime());          // 6. play time
+        this.billiardData.setScore(billiardData.getScore());                // 7. score
+        this.billiardData.setCost(billiardData.getCost());                  // 8. cost
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.billiardData 확인! ************");
+        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.billiardData);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "********************************************************");
+
+    } // End of method [setBilliardData]
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    /**
+     * [method] [set] userData 를 복사하기
+     *
+     * @param userData 값 복사를 위한 원본 userData
+     */
+    public void setUserData(UserData userData) {
+
+        final String METHOD_NAME = "[setUserData] ";
+
+        // [iv/C]UserData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
+        this.userData.setId(userData.getId());                                              // 0. id
+        this.userData.setName(userData.getName());                                          // 1. name
+        this.userData.setTargetScore(userData.getTargetScore());                            // 2. target score
+        this.userData.setSpeciality(userData.getSpeciality());                              // 3. speciality
+        this.userData.setGameRecordWin(userData.getGameRecordWin());                        // 4. game record win
+        this.userData.setGameRecordLoss(userData.getGameRecordLoss());                      // 5. game record loss
+        this.userData.setRecentGameBilliardCount(userData.getRecentGameBilliardCount());    // 6. recent game billiard count
+        this.userData.setTotalPlayTime(userData.getTotalPlayTime());                        // 7. total play time
+        this.userData.setTotalCost(userData.getTotalCost());                                // 8. total cost
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.userData 확인! ************");
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "****************************************************");
+
+    } // End of method [setUserData]
+
+
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+    public ArrayList<FriendData> getFriendDataArrayList() {
+        return friendDataArrayList;
+    }
+
+    /**
+     * [method] [set] 모든 fiendData 를 복사한다.
+     *
+     * @param friendDataArrayList 값 복사를 위한 원본 friendDataArrayList
+     */
+    public void setFriendDataArrayList(ArrayList<FriendData> friendDataArrayList) {
+
+        final String METHOD_NAME = "[setFriendDataArrayList] ";
+
+        // [iv/C]ArrayList<FriendData> : 기존 데이터를 모두 지우기
+        this.friendDataArrayList.clear();
+
+        // [cycle 1] : friendDataArrayList 의 size 만큼
+        for (int index = 0; index < friendDataArrayList.size(); index++) {
+
+            // [lv/C]FriendData : friendDataArrayList 에서 하나의 FriendData 데이터를 저장한다.
+            FriendData friendData = new FriendData();
+            friendData.setId(friendDataArrayList.get(index).getUserId());                                           // 0. id
+            friendData.setUserId(friendDataArrayList.get(index).getUserId());                                       // 1. user id
+            friendData.setName(friendDataArrayList.get(index).getName());                                           // 2. name
+            friendData.setGameRecordWin(friendDataArrayList.get(index).getGameRecordWin());                         // 3. game record win
+            friendData.setGameRecordLoss(friendDataArrayList.get(index).getGameRecordLoss());                       // 4. game record loss
+            friendData.setRecentGameBilliardCount(friendDataArrayList.get(index).getRecentGameBilliardCount());     // 6. recent game billiard count
+            friendData.setTotalPlayTime(friendDataArrayList.get(index).getTotalPlayTime());                         // 7. total play time
+            friendData.setTotalCost(friendDataArrayList.get(index).getTotalCost());                                 // 8. total cost
+
+            // [iv/C]ArrayList<FriendData> : 위의 friendData 를 추가하기
+            this.friendDataArrayList.add(friendData);
+
+        } // [cycle 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.friendDataArrayList 확인! ************");
+        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.friendDataArrayList);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
+
+    } // End of method [setFriendDataArrayList]
+
+    public ArrayList<PlayerData> getPlayerDataArrayList() {
+        return playerDataArrayList;
+    }
+
+    /**
+     * [method] [set] 이 게임에 참가한 모든 player 의 정보가 담긴 playerDataArrayList 를 복사한다.
+     */
+    public void setPlayerDataArrayList(ArrayList<PlayerData> playerDataArrayList) {
+
+        final String METHOD_NAME = "[setPlayerDataArrayList] ";
+
+        // [iv/C]ArrayList<PlayerData> : 기존 데이터를 모두 지우기
+        this.playerDataArrayList.clear();
+
+        // [cycle 1] : playerDataArrayList 의 size 만큼
+        for (int index = 0; index < playerDataArrayList.size(); index++) {
+
+            // [lv/C]PlayerData : playerDataArrayList 에서 하나의 PlayerData 데이터를 저장한다.
+            PlayerData playerData = new PlayerData();
+            playerData.setCount(playerDataArrayList.get(index).getCount());                     // 0. count
+            playerData.setBilliardCount(playerDataArrayList.get(index).getBilliardCount());     // 1. billiard count
+            playerData.setPlayerId(playerDataArrayList.get(index).getPlayerId());               // 2. player id
+            playerData.setPlayerName(playerDataArrayList.get(index).getPlayerName());            // 3. player name
+            playerData.setTargetScore(playerDataArrayList.get(index).getTargetScore());         // 4. target score
+            playerData.setScore(playerDataArrayList.get(index).getScore());                     // 5. score
+
+            // [iv/C]ArrayList<PlayerData> : 위의 playerData 를 추가하기
+            this.playerDataArrayList.add(playerData);
+
+        } // [cycle 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.playerDataArrayList 확인! ************");
+        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
+
+    } // End of method [setPlayerDataArrayList]
+
+    public boolean isCompleteSetting() {
+        return isCompleteSetting;
+    }
+
+    public boolean isRangeError() {
+        return isRangeError;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -397,31 +422,41 @@ public class ModifyManager {
      * - gameRecordLoss
      * </p>
      *
-     * @param changeWinnerId          변경된 승리자의 아이디
-     * @param changeWinnerName        변경된 승리자의 이름
-     * @param changeWinnerPlayerIndex 변경된 승리자의 playerDataArrayList 에서의 위치
+     * @param changedWinnerId          변경된 승리자의 아이디
+     * @param changedWinnerName        변경된 승리자의 이름
+     * @param changedWinnerPlayerIndex 변경된 승리자의 playerDataArrayList 에서의 위치
      */
-    private void changeWinner(long changeWinnerId, String changeWinnerName, int changeWinnerPlayerIndex) {
+    public void changeWinner(long changedWinnerId, String changedWinnerName, int changedWinnerPlayerIndex) {
 
         final String METHOD_NAME = "[changeWinner] ";
 
-        // [check 1] : initWinnerId 와 initWinnerName 이 변경되었다.
-        if ((changeWinnerId != this.initWinnerId) && (!changeWinnerName.equals(this.initWinnerName))) {
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<전> <승리자> id = " + this.initWinnerId + " / name = " + this.initWinnerName);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<변경> <승리자> id = " + changedWinnerId + " / name = " + changedWinnerName);
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "id check 확인 (같으면 true) = " + (changedWinnerId == this.initWinnerId));
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name check 확인 (같으면 true) = " + (changedWinnerName.equals(this.initWinnerName)));
+
+        // [check 1] : initWinnerId 와 initWinnerName 이 변경되지 않았다.
+        if ((changedWinnerId == this.initWinnerId) && (changedWinnerName.equals(this.initWinnerName))) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<승리자>가 변경되지 않았어!");
+
+        } else {
 
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<승리자>가 변경되었습니다. 변경된 <승리자> 를 확인하겠습니다.");
 
             // [iv/C]BilliardData : 기존 this.billiardData 의 winnerId 와 winnerName 을 변경한다. / this.billiardData
-            this.billiardData.setWinnerId(changeWinnerId);
-            this.billiardData.setWinnerName(changeWinnerName);
+            this.billiardData.setWinnerId(changedWinnerId);
+            this.billiardData.setWinnerName(changedWinnerName);
 
             // [method] : 변경된 승리자를 <패배자> -> <승리자>로 변경하기 / this.userData, this.friendDataArrayList
-            changeToWinnerFromChangedWinner(changeWinnerPlayerIndex);
+            changeToWinnerFromChangedWinner(changedWinnerPlayerIndex);
 
             // [method] : 기존 승리자를 <승리자> -> <패배자>로 변경하기 / this.userData, this.friendDataArrayList
             changeToLooserFromInitialWinner();
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<승리자>가 변경되지 않았어!");
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
+
         } // [check 1]
 
     } // End of method [changeWinner]
@@ -435,14 +470,14 @@ public class ModifyManager {
      * gameRecordLoss -= 1
      * </p>
      *
-     * @param changeWinnerPlayerIndex 변경된 승리자의 playerDataArrayList 에서의 위치
+     * @param changedWinnerPlayerIndex 변경된 승리자의 playerDataArrayList 에서의 위치
      */
-    private void changeToWinnerFromChangedWinner(int changeWinnerPlayerIndex) {
+    private void changeToWinnerFromChangedWinner(int changedWinnerPlayerIndex) {
 
         final String METHOD_NAME = "[changeToWinnerFromChangedWinner] ";
 
         // [check 2] : winner 가 변경되었을 때, 변경된 Looser(패배자) 가 playerDataArrayList 에서 몇 번째 player 인가?\
-        switch (changeWinnerPlayerIndex) {
+        switch (changedWinnerPlayerIndex) {
             case 0:
                 // player 0 이 <패배자> -> <승리자>로 변경됨 / userData
 
@@ -547,6 +582,38 @@ public class ModifyManager {
 
 
     /**
+     * [method] 기존 gameMode 가 변경되었는지 판별하여 gameMode 과 관련된 부분을 변경한다.
+     *
+     * <p>
+     *     1.billiardData
+     *     -gameMode
+     * </p>
+     *
+     * @param changedGameMode 변경된 게임시간
+     */
+    public void changeGameMode(String changedGameMode) {
+
+        final String METHOD_NAME = "[changeGameMode] ";
+
+        // [check 1] : 기존 gameMode 가 변경되었다.
+        if (!changedGameMode.equals(this.billiardData.getGameMode())) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<gameMode> 가 변경되었습니다.");
+
+            // [iv/C]BilliardData : 변경된 changedGameMode 로 변경하기
+            this.billiardData.setGameMode(changedGameMode);
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
+
+        } else  {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<gameMode> 가 변경되지 않았어!");
+        } // [check 1]
+
+    } // End of method [changeGameMode]
+
+
+    /**
      * [method] [Change] 기존 playTime 가 변경되었는지 판별하여 playTime 과 관련된 부분을 변경한다.
      *
      * <p>
@@ -558,30 +625,33 @@ public class ModifyManager {
      * - totalPlayTime
      * </p>
      *
-     * @param changePlayTime 변경된 게임시간
+     * @param changedPlayTime 변경된 게임시간
      */
-    private void changePlayTime(int changePlayTime) {
+    public void changePlayTime(int changedPlayTime) {
 
         final String METHOD_NAME = "[changePlayTime] ";
 
         // [check 1] : 기존 playTime 이 변경되었다.
-        if (changePlayTime != this.initPlayTime) {
+        if (changedPlayTime != this.initPlayTime) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playTime> 이 변경되었습니다. / 기존 initPlayTime = " + this.initPlayTime + " / 변경된 playTime = " + changePlayTime);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playTime> 이 변경되었습니다. / 기존 initPlayTime = " + this.initPlayTime + " / 변경된 playTime = " + changedPlayTime);
 
-            // [lv/C]BilliardData : 이 게임의 기존 playTime(initPlayTime) 을 변경된 playTime(changePlayTime) 으로 변경한다. / this.billiardData
-            this.billiardData.setPlayTime(changePlayTime);
+            // [iv/C]BilliardData : 이 게임의 기존 playTime(initPlayTime) 을 변경된 playTime(changePlayTime) 으로 변경한다. / this.billiardData
+            this.billiardData.setPlayTime(changedPlayTime);
 
-            // [lv/C]UserData : 기존 TotalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.userData
-            this.userData.setTotalPlayTime(this.userData.getTotalPlayTime() - this.initPlayTime + changePlayTime);
+            // [iv/C]UserData : 기존 TotalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.userData
+            this.userData.setTotalPlayTime(this.userData.getTotalPlayTime() - this.initPlayTime + changedPlayTime);
 
             // [cycle 1] : player 중 friend 의 수 만큼
             for (int friendIndex = 0; friendIndex < this.friendDataArrayList.size(); friendIndex++) {
 
-                // [lv/C]ArrayList<FriendData> : 모든 player 의 기존 totalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.friendDataArrayList
-                this.friendDataArrayList.get(friendIndex).setTotalPlayTime(this.friendDataArrayList.get(friendIndex).getTotalPlayTime() - this.initPlayTime + changePlayTime);
+                // [iv/C]ArrayList<FriendData> : 모든 player 의 기존 totalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.friendDataArrayList
+                this.friendDataArrayList.get(friendIndex).setTotalPlayTime(this.friendDataArrayList.get(friendIndex).getTotalPlayTime() - this.initPlayTime + changedPlayTime);
 
             } // [cycle 1]
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playTime> 가 변경되지 않았어!");
@@ -602,30 +672,35 @@ public class ModifyManager {
      * - totalCost
      * </p>
      *
-     * @param changeCost 변경된 비용
+     * @param changedCost 변경된 비용
      */
-    private void changeCost(int changeCost) {
+    public void changeCost(int changedCost) {
 
         final String METHOD_NAME = "[changeCost] ";
 
         // [check 1] : 기존 cost 가 변경되었다.
-        if (changeCost != this.initCost) {
+        if (changedCost != this.initCost) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<cost> 가 변경되었습니다. / 기존 initCost = " + this.initCost + " / 변경된 cost = " + changeCost);
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<cost> 가 변경되었습니다. / 기존 initCost = " + this.initCost + " / 변경된 cost = " + changedCost);
 
             // [lv/C]BilliardData : 이 게임의 기존 cost(initCost) 를 변경된 cost(changeCost) 로 변경한다. / this.billiardData
-            this.billiardData.setCost(changeCost);
+            this.billiardData.setCost(changedCost);
 
             // [lv/C]UserData : 기존 totalCost 에서 초기값(initCost)을 빼고 변경된 cost(changeCost)로 변경한다. / this.userData
-            this.userData.setTotalCost(this.userData.getTotalCost() - this.initCost + changeCost);
+            this.userData.setTotalCost(this.userData.getTotalCost() - this.initCost + changedCost);
 
             // [cycle 1] : player 중 friend 의 수 만큼
             for (int friendIndex = 0; friendIndex < this.friendDataArrayList.size(); friendIndex++) {
 
                 // [lv/C]ArrayList<FriendData> : 모든 player 의 기존 totalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.friendDataArrayList
-                this.friendDataArrayList.get(friendIndex).setTotalCost(this.friendDataArrayList.get(friendIndex).getTotalCost() - this.initCost + changeCost);
+                this.friendDataArrayList.get(friendIndex).setTotalCost(this.friendDataArrayList.get(friendIndex).getTotalCost() - this.initCost + changedCost);
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "**************88****************88**********************************");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 total cost = " + this.friendDataArrayList.get(friendIndex).getTotalCost());
 
             } // [cycle 1]
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<cost> 가 변경되지 않았어!");
@@ -642,30 +717,33 @@ public class ModifyManager {
      * - targetScore
      * </p>
      *
-     * @param changeTargetScore 변경된 수지(목표점수)
+     * @param changedTargetScores 변경된 수지(목표점수)
      */
-    private void changeTargetScore(int[] changeTargetScore) {
+    public void changeTargetScores(int[] changedTargetScores) {
 
-        final String METHOD_NAME = "[changeTargetScore] ";
+        final String METHOD_NAME = "[changeTargetScores] ";
 
         // [cycle 1] : player 의 수 만큼
         for (int index = 0; index < this.playerDataArrayList.size(); index++) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index +">번째 값은 변경었습니다.");
-
             // [check 1] : targetScore 값이 변경되었다.
-            if (changeTargetScore[index] != this.playerDataArrayList.get(index).getTargetScore()) {
+            if (changedTargetScores[index] != this.playerDataArrayList.get(index).getTargetScore()) {
+
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
 
                 // [lv/C]ArrayList<PlayerData> : 기존 targetScore 값을 changeTargetScore 값으로 변경한다.
-                this.playerDataArrayList.get(index).setTargetScore(changeTargetScore[index]);
+                this.playerDataArrayList.get(index).setTargetScore(changedTargetScores[index]);
+
+                // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+                this.isChanged = true;
 
             } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index +">번째 값은 변경되지 않았어! ");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
             } // [check 1]
 
         } // [cycle 1]
 
-    } // End of method [changeTargetScore]
+    } // End of method [changeTargetScores]
 
 
     /**
@@ -676,31 +754,184 @@ public class ModifyManager {
      * - targetScore
      * </p>
      *
-     * @param changeTargetScore 변경된 수지(목표점수)
-     * @param index 변경된 수지와 비교할 playerDataArrayList 의 위치
+     * @param changedTargetScore 변경된 수지(목표점수)
+     * @param index              변경된 수지와 비교할 playerDataArrayList 의 위치
      */
-    private void changeTargetScore(int changeTargetScore, int index) {
+    public void changeTargetScore(int changedTargetScore, int index) {
 
         final String METHOD_NAME = "[changeTargetScore] ";
 
         // [check 1] : targetScore 값이 변경되었다.
-        if (changeTargetScore != this.playerDataArrayList.get(index).getTargetScore()) {
+        if (changedTargetScore != this.playerDataArrayList.get(index).getTargetScore()) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index +">번째 값은 변경었습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
 
             // [lv/C]ArrayList<PlayerData> : 기존 targetScore 값을 changeTargetScore 값으로 변경한다.
-            this.playerDataArrayList.get(index).setTargetScore(changeTargetScore);
+            this.playerDataArrayList.get(index).setTargetScore(changedTargetScore);
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index +">번째 값은 변경되지 않았어! ");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
         } // [check 1]
 
     } // End of method [changeTargetScore]
 
 
     /**
-     * [method] [check] score 값이 0 <= score <= targetScore 안의 값이면 true 아니면 false 를 반환한다.
+     * [method] [Change] 기존 score 가 변경되었는지 판별하여 score 와 관련된 부분을 수정한다.
      *
+     * <p>
+     * 1. Billiard
+     * - score
+     * 2. PlayerData
+     * - score
+     * </p>
+     *
+     * @param changedScores 변경된 모든 score 값
+     */
+    public void changeScores(int[] changedScores) {
+
+        final String METHOD_NAME = "[changeScores] ";
+
+        // [lv/C]ArrayList<String> : 모든 player 의 score 값을 저장한다. / 스코어의 형태 문자열을 만들기 위해
+        ArrayList<String> changedScoreList = new ArrayList<>();
+
+        // [cycle 1] : player 수 만큼
+        for (int index = 0; index < this.playerDataArrayList.size(); index++) {
+
+            // [check 1] : 기존 score 값이 변경되었다.
+            if (changedScores[index] != this.initScore[index]) {
+
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
+
+                // [lv/C]ArrayList<PlayerData> : 해당 player 의 score 값을 changeScore 값으로 변경
+                playerDataArrayList.get(index).setScore(changedScores[index]);
+
+                // [lv/C]ArrayList<String> : changeScoreList 에 changeScore 값을 추가
+                changedScoreList.add(changedScores[index] + "");
+
+                // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+                this.isChanged = true;
+
+            } else {
+
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
+
+                // [lv/C]ArrayList<String> : changeScoreList 에 기존 score(this.initScore) 값을 추가
+                changedScoreList.add(this.initScore[index] + "");
+
+            } // [check 1]
+
+        } // [cycle 1]
+
+        // [lv/C]String : 위의 changedScoreList 로 특정 문자열로 만들기
+        String changedScoreFormat = ProjectBlueDataFormatter.getFormatOfScore(changedScoreList);
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "*********** 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat + "******************");
+
+        // [check 2] : billiardData 의 score 가 변경되었다.
+        if (!changedScoreFormat.equals(this.billiardData.getScore())) {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다. / 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat);
+
+            // [lv/C]BilliardCount : 위에서 다시 설정한 player 들의 score 값으로 billiard 의 score 값으로 변경하기
+            this.billiardData.setScore(changedScoreFormat);
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
+        } // [check 2]
+
+    } // End of method [changeScores]
+
+
+    /**
+     * [method] [Change] 기존 score 가 변경되었는지 판별하여 score 와 관련된 부분을 수정한다.
+     *
+     * <p>
+     * 1. PlayerData
+     * - score
+     * </p>
+     *
+     * @param changedScore 변경된 score 값
+     * @param index        몇 번째 player 인가요?
+     * @return 변경 검사 후 이 player 의 최종 score 값
+     */
+    public int changeScoreOfOnePlayerInPlayerDataArrayList(int changedScore, int index) {
+
+        final String METHOD_NAME = "[changeScoreOfOnePlayerInPlayerDataArrayList] ";
+
+        int score;
+
+        // [check 1] : 기존 score 값이 변경되었다.
+        if (changedScore != this.initScore[index]) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
+            // [lv/C]ArrayList<PlayerData> : 해당 player 의 score 값을 changeScore 값으로 변경
+            playerDataArrayList.get(index).setScore(changedScore);
+
+            // [lv/i]score : index 번째에 변경된 changedScore 를 추가한다.
+            score = changedScore;
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
+
+        } else {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
+
+            // [lv/i]scores : index 번째에 기존의 score(this.initScore) 를 추가한다.
+            score = this.initScore[index];
+
+        } // [check 1]
+
+        return score;
+    } // End of method [changeScoreOfOnePlayerInPlayerDataArrayList]
+
+
+    /**
+     * [method] [Change] 기존 score 가 변경되었는지 판별하여 score 와 관련된 부분을 수정한다.
+     *
+     * <p>
+     * 1. Billiard
+     * - score
+     * 2. PlayerData
+     * - score
+     * </p>
+     *
+     * @param finalChangedScore 변경검사가 끝난 최종 scores
+     */
+    public void changeScoreOfBilliardData(int[] finalChangedScore) {
+
+        final String METHOD_NAME = "[changeScoreOfBilliardData] ";
+
+        // [lv/C]String : 위의 finalChangedScore 로 특정 문자열로 만들기
+        String finalChangedScoreFormat = ProjectBlueDataFormatter.getFormatOfScore(finalChangedScore);
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "*********** 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + finalChangedScoreFormat + "******************");
+
+        // [check 2] : billiardData 의 score 가 변경되었다.
+        if (!finalChangedScoreFormat.equals(this.billiardData.getScore())) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다.");
+            // [lv/C]BilliardCount : 위에서 만든 finalChangedScoreFormat 으로 변경하기
+            this.billiardData.setScore(finalChangedScoreFormat);
+
+            // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
+            this.isChanged = true;
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
+        } // [check 2]
+
+    } // End of method [changeScoreOfBilliardData]
+
+
+    /**
+     * [method] [check] score 값이 0 <= score <= targetScore 안의 값이면 true 아니면 false 를 반환한다.
      */
     private boolean checkWhetherInputWithinRangeOfScore(int score, int targetScore) {
 
@@ -756,7 +987,6 @@ public class ModifyManager {
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 는  패배자입니다요!");
         } // [check 1]
-
 
         return isEqual;
     } // End of method [checkWhetherEqualOfTargetScoreAndScore]

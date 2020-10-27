@@ -1,5 +1,6 @@
 package com.skyman.billiarddata.management.billiard.listview;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.dialog.BilliardModify;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
@@ -256,6 +256,9 @@ public class BilliardLvAdapter extends BaseAdapter {
                         SessionManager.setIntentOfFriendPlayerList(intent, friendDataArrayList);
                         SessionManager.setIntentOfPlayerList(intent, playerDataArrayList);
 
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        ((Activity)context).finish();
                         context.startActivity(intent);
 
                     }

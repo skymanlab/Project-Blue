@@ -425,11 +425,12 @@ public class BilliardDbManager extends ProjectBlueDBManager {
                     ContentValues updateValues = new ContentValues();
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, billiardData.getDate());                      // 1. date
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, billiardData.getGameMode());             // 2. game mode
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, billiardData.getPlayerCount());          // 3. player count
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, billiardData.getPlayerCount());       // 3. player count
                     updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, billiardData.getWinnerId());             // 4. winner id
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, billiardData.getPlayTime());             // 5. play time
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, billiardData.getScore());                    // 6. score
-                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, billiardData.getCost());                      // 7. cost
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, billiardData.getWinnerName());         // 5. winner name
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, billiardData.getPlayTime());             // 6. play time
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, billiardData.getScore());                    // 7. score
+                    updateValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, billiardData.getCost());                      // 8. cost
 
                     // [lv/i]methodResult : update query 문을 실행한 결과
                     methodResult = updateDb.update(BilliardTableSetting.Entry.TABLE_NAME, updateValues, BilliardTableSetting.Entry._COUNT + "=" + billiardData.getCount(), null);

@@ -405,7 +405,7 @@ public class BilliardInputActivity extends AppCompatActivity {
         setAdapterOfBilliardPlayerNameListSpinner(playerDataArrayList);
 
         // [iv/C]Spinner : gameMode spinner 의 기본값 설정
-        this.gameMode.setSelection(getSelectedIdOfBilliardGameModeSpinner(userData.getSpeciality()));
+        this.gameMode.setSelection(ProjectBlueDataFormatter.getSelectedIdOfBilliardGameModeSpinner(userData.getSpeciality()));
 
     } // End o method [setInitialDataOfBilliardWidget]
 
@@ -444,32 +444,6 @@ public class BilliardInputActivity extends AppCompatActivity {
         this.playerNameList.setAdapter(playerNameListAdapter);
 
     } // End of method [setAdapterOfBilliardPlayerNameListSpinner]
-
-
-    /**
-     * [method] [G]해당 gameMode 문자열로 gameMode spinner 의 몇 번째 item 과 같은지를 비교하여 selectionId 값을 반환한다.
-     *
-     * @param gameMode 게임 종목
-     * @return spinner 의 selection id 값
-     */
-    private int getSelectedIdOfBilliardGameModeSpinner(String gameMode) {
-
-        final String METHOD_NAME = "[getSelectedIdOfBilliardGameModeSpinner] ";
-
-        // [check 1] : "3구" 이면 0, "4구" 이면 1, "포켓볼" 이면 2  - java version 7 이후로 switch 문에서 String 을 지원한다.
-        switch (gameMode) {
-            case "3구":
-                return 0;
-            case "4구":
-                return 1;
-            case "포켓볼":
-                return 2;
-            default:
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "현재 목록 중에 있는 값이 없네요.");
-                return -1;
-        }
-
-    } // End of method [getSelectedIdOfBilliardGameModeSpinner]
 
 
     /**

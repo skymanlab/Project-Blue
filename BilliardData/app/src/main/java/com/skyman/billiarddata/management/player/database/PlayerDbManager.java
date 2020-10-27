@@ -462,7 +462,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
                 updateValue.put(PlayerTableSetting.Entry.COLUMN_NAME_SCORE, playerData.getScore());
 
                 // [lv/i]methodResult : update query 문을 실행한 결과
-                methodResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, PlayerTableSetting.Entry._COUNT + "=" + playerData.getCount(), null);
+                methodResult = updateDb.update(PlayerTableSetting.Entry.TABLE_NAME, updateValue, PlayerTableSetting.Entry._COUNT + "=" + playerData.getCount(), null);
 
                 // [lv/C]SQLiteDatabase : close
                 updateDb.close();
