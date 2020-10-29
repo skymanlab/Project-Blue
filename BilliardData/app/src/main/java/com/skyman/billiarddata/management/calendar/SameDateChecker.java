@@ -219,17 +219,21 @@ public class SameDateChecker {
     }
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
     // [inner class]
     public static class SameDateItem {
 
         // instance variable
-        private long billiardCountNumber;
+        private long billiardCount;
         private boolean isWinner;
+        private int index;      // count 가 차례대로 증가하는 값이 아닐 수 도 있으므로 이 같은 날짜인 billiard 는 배열에서 몇 번째인지를 알고 있어야 한다.
 
         // constructor
-        public SameDateItem(long billiardCountNumber, boolean isWinner) {
-            this.billiardCountNumber = billiardCountNumber;
+        public SameDateItem(long billiardCount, boolean isWinner, int index) {
+            this.billiardCount = billiardCount;
             this.isWinner = isWinner;
+            this.index = index;
         }
 
         // method : getter
@@ -237,9 +241,12 @@ public class SameDateChecker {
             return isWinner;
         }
 
-        public long getBilliardCountNumber() {
-            return billiardCountNumber;
+        public long getBilliardCount() {
+            return billiardCount;
         }
 
+        public int getIndex() {
+            return index;
+        }
     } // End of Class [SameDateList]
 }

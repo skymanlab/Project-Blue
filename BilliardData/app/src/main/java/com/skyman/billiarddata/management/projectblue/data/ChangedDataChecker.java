@@ -1,18 +1,17 @@
-package com.skyman.billiarddata.management.projectblue.database;
+package com.skyman.billiarddata.management.projectblue.data;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
 
-public class ModifyChecker {
+public class ChangedDataChecker {
 
     // constant
-    private static final String CLASS_NAME_LOG = "[C]_ModifyManager";
+    private static final String CLASS_NAME_LOG = "[C]_ChangedDataChecker";
 
     // instance variable
     private BilliardData billiardData;
@@ -31,10 +30,11 @@ public class ModifyChecker {
     // instance variable
     private boolean isCompleteSetting;
     private boolean isRangeError;
+    private boolean isEqualError;
     private boolean isChanged;
 
     // constructor
-    public ModifyChecker(int playerCount) {
+    public ChangedDataChecker(int playerCount) {
 
         this.billiardData = new BilliardData();
         this.userData = new UserData();
@@ -51,11 +51,13 @@ public class ModifyChecker {
 
         this.isCompleteSetting = false;
         this.isRangeError = false;
+        this.isEqualError = false;
         this.isChanged = false;
     }
 
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 
     /**
      * [method] [set] init variable 설정하기
@@ -108,6 +110,7 @@ public class ModifyChecker {
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "초기 cost 의 값 = " + this.initCost);
 
     } // End of method [setInitData]
+
 
     /**
      * [method] [check] 위의 set method 로 필드 변수에 데이터를 모두 설정하였는지 검사하여 true 또는 false 를 반환한다.
@@ -194,8 +197,19 @@ public class ModifyChecker {
 
     } // End of method [setCompleteSetting]
 
+
+    public boolean isRangeError() {
+        return isRangeError;
+    }
+
+
     /**
-     * [method] playerDataArrayList 의 score 값들이 범위 안의 값인지, winner 의 targetScore 와 score 값이 같은지 이 두가지를 검사하여 범위안의 모두 통과하면 true 로 설정한다.
+     * [method] playerDataArrayList 의 score 값들이 범위 안의 값인지 검사하여, 다른 범위의 값이 있으면 error 가 발생한 것이므로 true 를 반환한다.
+     *
+     * <p>
+     * true : 에러 발생 / 다음 과정 진행 못함
+     * false : 에
+     * </p>
      */
     public void setRangeError() {
 
@@ -203,12 +217,6 @@ public class ModifyChecker {
 
         // [lv/b]isRangeError : 범위 에러가 발생하였는가?
         boolean isRangeError = false;
-
-        // [lv/l]winnerId : 최종 변경된 승리자의 아이디
-        long winnerId = this.billiardData.getWinnerId();
-
-        // [lv/c]String : 최종 변경된 승리자의 이름
-        String winnerName = this.billiardData.getWinnerName();
 
         // [cycle 1] : playerDataArrayList 의 size 만큼
         for (int index = 0; index < this.playerDataArrayList.size(); index++) {
@@ -227,6 +235,36 @@ public class ModifyChecker {
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_1.<player " + index + "> 의 <score> 가 범위 밖의 값이여!");
             } // [check 1]
 
+        } // [cycle 1]
+
+        this.isRangeError = isRangeError;
+    } // End of method [setRangeError]
+
+
+    public boolean isEqualError() {
+        return isEqualError;
+    }
+
+
+    /**
+     * [method] 승리자의 점수의 값이 목표점수와 같은지 비교하여, 다르면 true 를 반환하여 error 가 발생한 것을 알린다.
+     */
+    public void setEqualError() {
+
+        final String METHOD_NAME = "[setEqualError] ";
+
+        // [lv/b]isEqualError : 범위 에러가 발생하였는가? / 아직 발생안함.
+        boolean isEqualError = false;
+
+        // [lv/l]winnerId : 최종 변경된 승리자의 아이디
+        long winnerId = this.billiardData.getWinnerId();
+
+        // [lv/c]String : 최종 변경된 승리자의 이름
+        String winnerName = this.billiardData.getWinnerName();
+
+        // [cycle 1] : playerDataArrayList 의 size 만큼
+        for (int index = 0; index < this.playerDataArrayList.size(); index++) {
+
             long playerId = this.playerDataArrayList.get(index).getPlayerId();
             String playerName = this.playerDataArrayList.get(index).getPlayerName();
 
@@ -234,11 +272,15 @@ public class ModifyChecker {
             if ((winnerId == playerId) && (winnerName.equals(playerName))) {
 
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_2. <승리자>의 targetScore 와 score 값이 같은지 비교합니다.");
+
+                int targetScore = this.playerDataArrayList.get(index).getTargetScore();
+                int score = this.playerDataArrayList.get(index).getScore();
+
                 // [check 3] : 승리자의 score 가 targetScore 가 같나요?
                 if (score != targetScore) {
 
                     DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_2. <승리자> 의 targetScore != score 에러 발생했어!");
-                    isRangeError = true;
+                    isEqualError = true;
 
                 } else {
                     DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "check_2. <승리자> 통과");
@@ -248,12 +290,14 @@ public class ModifyChecker {
 
         } // [cycle 1]
 
-        this.isRangeError = isRangeError;
-    } // End of method [setRangeError]
+        this.isEqualError = isEqualError;
+    } // End of method [setEqualError]
+
 
     public BilliardData getBilliardData() {
         return billiardData;
     }
+
 
     /**
      * [method] [set] billiardData 를 복사하기
@@ -312,11 +356,10 @@ public class ModifyChecker {
     } // End of method [setUserData]
 
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
     public ArrayList<FriendData> getFriendDataArrayList() {
         return friendDataArrayList;
     }
+
 
     /**
      * [method] [set] 모든 fiendData 를 복사한다.
@@ -335,7 +378,7 @@ public class ModifyChecker {
 
             // [lv/C]FriendData : friendDataArrayList 에서 하나의 FriendData 데이터를 저장한다.
             FriendData friendData = new FriendData();
-            friendData.setId(friendDataArrayList.get(index).getUserId());                                           // 0. id
+            friendData.setId(friendDataArrayList.get(index).getId());                                               // 0. id
             friendData.setUserId(friendDataArrayList.get(index).getUserId());                                       // 1. user id
             friendData.setName(friendDataArrayList.get(index).getName());                                           // 2. name
             friendData.setGameRecordWin(friendDataArrayList.get(index).getGameRecordWin());                         // 3. game record win
@@ -392,17 +435,16 @@ public class ModifyChecker {
 
     } // End of method [setPlayerDataArrayList]
 
+
     public boolean isCompleteSetting() {
         return isCompleteSetting;
     }
 
-    public boolean isRangeError() {
-        return isRangeError;
-    }
 
     public boolean isChanged() {
         return isChanged;
     }
+
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -429,11 +471,6 @@ public class ModifyChecker {
     public void changeWinner(long changedWinnerId, String changedWinnerName, int changedWinnerPlayerIndex) {
 
         final String METHOD_NAME = "[changeWinner] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<전> <승리자> id = " + this.initWinnerId + " / name = " + this.initWinnerName);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<변경> <승리자> id = " + changedWinnerId + " / name = " + changedWinnerName);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "id check 확인 (같으면 true) = " + (changedWinnerId == this.initWinnerId));
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name check 확인 (같으면 true) = " + (changedWinnerName.equals(this.initWinnerName)));
 
         // [check 1] : initWinnerId 와 initWinnerName 이 변경되지 않았다.
         if ((changedWinnerId == this.initWinnerId) && (changedWinnerName.equals(this.initWinnerName))) {
@@ -585,8 +622,8 @@ public class ModifyChecker {
      * [method] 기존 gameMode 가 변경되었는지 판별하여 gameMode 과 관련된 부분을 변경한다.
      *
      * <p>
-     *     1.billiardData
-     *     -gameMode
+     * 1.billiardData
+     * -gameMode
      * </p>
      *
      * @param changedGameMode 변경된 게임시간
@@ -606,7 +643,7 @@ public class ModifyChecker {
             // [iv/b]isChanged : 변경된 것이 있으므로 true 로 변경
             this.isChanged = true;
 
-        } else  {
+        } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<gameMode> 가 변경되지 않았어!");
         } // [check 1]
 
@@ -694,8 +731,6 @@ public class ModifyChecker {
 
                 // [lv/C]ArrayList<FriendData> : 모든 player 의 기존 totalPlayTime 에서 초기값(initPlayTime)을 빼고 변경된 playTime(changePlayTime) 을 더한다. / this.friendDataArrayList
                 this.friendDataArrayList.get(friendIndex).setTotalCost(this.friendDataArrayList.get(friendIndex).getTotalCost() - this.initCost + changedCost);
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "**************88****************88**********************************");
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 total cost = " + this.friendDataArrayList.get(friendIndex).getTotalCost());
 
             } // [cycle 1]
 
@@ -829,8 +864,6 @@ public class ModifyChecker {
         // [lv/C]String : 위의 changedScoreList 로 특정 문자열로 만들기
         String changedScoreFormat = ProjectBlueDataFormatter.getFormatOfScore(changedScoreList);
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "*********** 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat + "******************");
-
         // [check 2] : billiardData 의 score 가 변경되었다.
         if (!changedScoreFormat.equals(this.billiardData.getScore())) {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다. / 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat);
@@ -911,7 +944,6 @@ public class ModifyChecker {
         // [lv/C]String : 위의 finalChangedScore 로 특정 문자열로 만들기
         String finalChangedScoreFormat = ProjectBlueDataFormatter.getFormatOfScore(finalChangedScore);
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "*********** 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + finalChangedScoreFormat + "******************");
 
         // [check 2] : billiardData 의 score 가 변경되었다.
         if (!finalChangedScoreFormat.equals(this.billiardData.getScore())) {

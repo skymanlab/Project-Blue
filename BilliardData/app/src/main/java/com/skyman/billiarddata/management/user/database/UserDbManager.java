@@ -30,6 +30,9 @@ public class UserDbManager extends ProjectBlueDBManager {
     }
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 user 테이블에 데이터를 저장한다.
      *
@@ -68,7 +71,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<name> <targetScore> <speciality> <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 저장합니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -155,7 +158,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardData> 를 저장하고 있습니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -218,6 +221,9 @@ public class UserDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 user 테이블에 저장된 데이터를 모두 가져온다.
      *
@@ -233,7 +239,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[loadAllContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 가져오고 있습니다.");
 
         // [lv/C]ArrayList<UserData> : user 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<UserData> userDataArrayList = new ArrayList<>();
@@ -296,7 +302,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[loadContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 로 해당 데이터를 가져오고 있습니다.");
 
         // [lv/C]UserData : 가져온 데이터를 담을 UserData
         UserData userData = new UserData();
@@ -348,6 +354,61 @@ public class UserDbManager extends ProjectBlueDBManager {
     } // End of method [loadContent]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+    /**
+     * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
+     *
+     * @param id          [0] user 의 id
+     * @param targetScore [2] user 의 수지
+     * @param speciality  [3] user 의 종목
+     * @return update query 문을 실행한 결과
+     */
+    public int updateContent(long id, int targetScore, String speciality) {
+
+        final String METHOD_NAME= "[updateContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 <targetScore> <speciality> 를 갱신합니다.");
+
+        // [lv/l]methodResult : 이 메소드의 결과 값 저장
+        int methodResult = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [check 2] : id, name, targetScore, speciality 형식 확인
+            if ((id > 0)                                    // 0. id
+                    && (targetScore >= 0)                    // 2. target score
+                    && !speciality.equals("")) {            // 3. speciality
+
+                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
+                SQLiteDatabase updateDb = this.getDbOpenHelper().getWritableDatabase();
+
+                // [lv/C]ContentValues : 위 의 매개변수 값을 담을 객체 생성과 초기화
+                ContentValues updateValue = new ContentValues();
+                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);
+                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);
+
+                // [lv/i]methodResult : update query 문을 실행한 결과
+                methodResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, UserTableSetting.Entry._ID + "=" + id, null);
+
+                // [lv/C]SQLiteDatabase : close
+                updateDb.close();
+
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들이 형식에 맞지 않아요.");
+            } // [check 2]
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+        return methodResult;
+    } // End of method [updateContent]
+
+
     /**
      * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
      *
@@ -361,7 +422,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[updateContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 <name> <targetScore>, <speciality> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -419,7 +480,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[updateContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -466,6 +527,9 @@ public class UserDbManager extends ProjectBlueDBManager {
     } // End of method [updateContent]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 user 테이블의 모든 내용을 삭제한다.
      *
@@ -483,7 +547,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[deleteAllContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -528,7 +592,7 @@ public class UserDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[deleteContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 유저의 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;

@@ -31,22 +31,11 @@ public class FriendDbManager extends ProjectBlueDBManager {
     }
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 billiard 테이블에 데이터를 저장한다.
-     *
-     * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 insert query 문을 실행한다.
-     *
-     * <p>
-     * 반환값
-     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
-     * '-1' : 데이터베이스 문제 발생
-     * '0' : 코드들이 실행되지 안았다.
-     * 그 외의 값 : friend 테이블에 입력 된 행 번호
-     *
-     * <p>
-     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
-     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
      *
      * @param userId                  [1] user 의 id (친구를 추가한 주체)
      * @param name                    [2] 이름
@@ -61,7 +50,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> <name> <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 저장합니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -127,16 +116,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 billiard 테이블에 데이터를 저장한다.
      *
      * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 insert query 문을 실행한다.
-     *
-     * <p>
-     * 반환값
-     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
-     * '-1' : 데이터베이스 문제 발생
-     * '0' : 코드들이 실행되지 안았다.
-     * 그 외의 값 : friend 테이블에 입력 된 행 번호
-     *
-     * <p>
      * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
      * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
      *
@@ -147,7 +126,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<friendData> 를 저장합니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -209,14 +188,11 @@ public class FriendDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 모두 가져온다.
-     *
-     * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
      *
      * @return friend 테이블에 저장된 모든 데이터
      */
@@ -224,7 +200,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadAllContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 가져옵니다.");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
@@ -272,12 +248,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 해당 userId 가 같은 데이터를 모두 가져온다.
      *
-     * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
-     *
      * @param userId [1] 친구를 추가한 user 의 id
      * @return friend 테이블에 저장된 모든 데이터
      */
@@ -285,7 +255,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadAllContentByUserId] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> 에 해당하는 데이터를 가져옵니다.");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
@@ -343,12 +313,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 해당 userId 와 id 가 모두 같은 데이터를 가져온다.
      *
-     * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
-     *
      * @param id [0] user 의 friend id
      * @return friend 테이블에 저장된 모든 데이터
      */
@@ -356,7 +320,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadContentById] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 데이터를 가져옵니다.");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         // [lv/C]FriendData : friend 테이블에 저장된 특정 userId 의 특정 친구의 id 로 데이터를 가져와 담을 객체
@@ -414,12 +378,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터 중 userId 와 id 값과 똑같은 데이터를 모두 가져온다.
      *
-     * <p>
-     * project_blue.db 의 friend 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
-     *
      * @param id     [0] user 의 friend id
      * @param userId [1] 친구를 추가한 user 의 id
      * @return friend 테이블에 저장된 모든 데이터
@@ -428,7 +386,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadContentByIdAndUserId] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 와 <userId> 에 해당하는 데이터를 가져옵니다.");
 
         // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
         // [lv/C]FriendData : friend 테이블에 저장된 특정 userId 의 특정 친구의 id 로 데이터를 가져와 담을 객체
@@ -483,6 +441,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
     } // End of method [loadContentByIdAndUserId]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [update] gameRecordWin, gameRecordLoss, recentGameBilliardCount, totalPlayTime, totalCost 를 해당 id 의 데이터를 갱신한다.
      *
@@ -498,7 +459,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[updateContentById] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에당하는 <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -560,7 +521,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[updateContentByUserId] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> 에 해당하는 모든 레코드의 <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 수정한다. ");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -607,16 +568,11 @@ public class FriendDbManager extends ProjectBlueDBManager {
     } // End of method [updateContentByUserId]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 friend 테이블의 모든 내용을 삭제한다.
-     *
-     * <p>
-     * project_blue.db 의 user 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
      *
      * @return user 테이블의 데이터를 삭제한 개수 or 실패
      */
@@ -624,7 +580,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[deleteContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 삭제한다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -654,14 +610,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 friend 테이블에서 userId 에 해당하는 모든 데이터를 삭제한다.
      *
-     * <p>
-     * project_blue.db 의 user 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
-     *
      * @param id [0] user 의 friend id
      * @return user 테이블의 데이터를 삭제한 개수 or 실패
      */
@@ -669,7 +617,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[deleteContentById] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -706,14 +654,6 @@ public class FriendDbManager extends ProjectBlueDBManager {
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 friend 테이블에서 userId 에 해당하는 모든 데이터를 삭제한다.
      *
-     * <p>
-     * project_blue.db 의 user 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
-     *
      * @param userId [1] user id ( friend 를 추가한 주체)
      * @return user 테이블의 데이터를 삭제한 개수 or 실패
      */
@@ -721,7 +661,7 @@ public class FriendDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[deleteContentByUserId] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> 에 해당하는 모든 데이터를 삭제한다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -753,6 +693,9 @@ public class FriendDbManager extends ProjectBlueDBManager {
         return methodResult;
 
     } // End of method [deleteContentByUserId]
+
+
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
     /**

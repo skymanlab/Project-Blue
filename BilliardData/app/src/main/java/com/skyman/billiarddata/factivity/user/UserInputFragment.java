@@ -21,9 +21,13 @@ import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +55,7 @@ public class UserInputFragment extends Fragment {
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
     private BilliardDbManager billiardDbManager;
+    private PlayerDbManager playerDbManager;
     private UserData userData;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -58,10 +63,11 @@ public class UserInputFragment extends Fragment {
 
 
     // constructor
-    public UserInputFragment(UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, UserData userData) {
+    public UserInputFragment(UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, PlayerDbManager playerDbManager, UserData userData) {
         this.userDbManager = userDbManager;
         this.friendDbManager = friendDbManager;
         this.billiardDbManager = billiardDbManager;
+        this.playerDbManager = playerDbManager;
         this.userData = userData;
     }
 
@@ -159,12 +165,12 @@ public class UserInputFragment extends Fragment {
 
     }
 
-    /*                                      private method
-     *   ============================================================================================
-     *  */
+
+   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 
     /**
-     * [method] activity_billiard_input.xml 의 widget 을 mapping(뜻: 하나의 값을 다른 값으로 대응시키는 것을 말한다.)
+     * [method] [set] activity_billiard_input.xml 의 widget 을 mapping(뜻: 하나의 값을 다른 값으로 대응시키는 것을 말한다.)
      */
     private void mappingOfWidget(View view) {
 
@@ -190,7 +196,7 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] UserData 가 있어서 화면 재설정한다. 입력 값들은 userData 의 값으로, 버튼들은 비활성화 활성화
+     * [method] [set] UserData 가 있어서 화면 재설정한다. 입력 값들은 userData 의 값으로, 버튼들은 비활성화 활성화
      *
      * <p>
      * UserData 의 getName 을 name EditText 에 설정한다.
@@ -207,8 +213,9 @@ public class UserInputFragment extends Fragment {
 
         final String METHOD_NAME= "[setWidgetWithUserData] ";
 
-        // [iv/C]Text : userData 의 getName 으로 셋팅
+        // [iv/C]Text : userData 의 getName 으로 셋팅 / 변경하지 못 하도록 설정
         this.name.setText(this.userData.getName());
+        this.name.setEnabled(false);
 
         // [iv/C]Text : userData 의 getTargetScore 으로 셋팅 / targetScore 의 variable type 는 int 이다. setText 는 String 으로 해야 하므로 +"" 으로 String 으로 변경한다.
         this.targetScore.setText(this.userData.getTargetScore() + "");
@@ -231,7 +238,7 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] userData 의 getSpeciality 값으로 RadioButton 을 찾아서 check 하기
+     * [method] [set] userData 의 getSpeciality 값으로 RadioButton 을 찾아서 check 하기
      *
      * @param view              onViewCreated 의 view 매개변수
      * @param specialityContent userData 의 getSpeciality 값
@@ -265,7 +272,7 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] save button 의 click listener 을 설정
+     * [method] [set] save button 의 click listener 을 설정
      *
      */
     private void setClickListenerOfSaveButton (View view){
@@ -273,10 +280,10 @@ public class UserInputFragment extends Fragment {
         final String METHOD_NAME= "[setClickListenerOfSaveButton] ";
 
         // [check 1] : userData 가 없다.
-        if (userData == null) {
+        if (this.userData == null) {
 
             // [lv/C]RadioButton : selectedSpeciality mapping
-            RadioButton selectedSpeciality = (RadioButton) view.findViewById(speciality.getCheckedRadioButtonId());
+            RadioButton selectedSpeciality = (RadioButton) view.findViewById(this.speciality.getCheckedRadioButtonId());
 
             // [check 2] : name, targetScore, speciality 가 모두 입력되었다.
             if (checkInputAllData(selectedSpeciality.getText().toString())) {
@@ -284,10 +291,12 @@ public class UserInputFragment extends Fragment {
                 // [check 3] :  < targetScore < 50 이다.
                 if (checkTargetScoreRange(view)) {
 
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "공백 제거 완료 = {" + removeWhitespaceOfName(name.getText().toString()) + "}");
+
                     // [lv/l]resultSave : userDbManager 를 통해 첫 나의 데이터(userData)를 입력한다. / 그 결과값으로 1 를 얻는다.
-                    long resultSave = userDbManager.saveContent(
-                            name.getText().toString(),                                          // 1. name
-                            Integer.parseInt(targetScore.getText().toString()),                 // 2. target score
+                    long resultSave = this.userDbManager.saveContent(
+                            this.name.getText().toString(),                                          // 1. name
+                            Integer.parseInt(this.targetScore.getText().toString()),                 // 2. target score
                             selectedSpeciality.getText().toString(),                            // 3. speciality
                             0,                                                   // 4. game record win
                             0,                                                   // 5. game record loss
@@ -300,8 +309,8 @@ public class UserInputFragment extends Fragment {
                     toastHandler(view, "당신의 아이디는 <" + resultSave + "> 입니다.");
 
                     // [iv/C]UserData : 위에서 갱신한 데이터를 가져오기
-                    userData = userDbManager.loadContent(resultSave);
-                    DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
+                    this.userData = this.userDbManager.loadContent(resultSave);
+                    DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
 
                     // [method]moveUserManagerActivity : UserManagerActivity 로 이동
                     moveUserManagerActivity(view);
@@ -324,7 +333,92 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] name, targetScore, speciality 의 값이 모두 입력되었는지 검사하여 모두 입력 하였을 경우 true 를 반환한다.
+     * [method] [set] modify button 의 click listener 을 설정
+     *
+     */
+    private void setClickListenerOfModifyButton(View view) {
+
+        final String METHOD_NAME= "[setClickListenerOfModifyButton] ";
+
+        // [check 1] : userData 가 있다.
+        if (this.userData != null) {
+
+            // [lv/C]RadioButton : speciality 로 선택된 Button 의 id 값으로 RadioButton 을 mapping 한다.
+            RadioButton selectedSpeciality = (RadioButton) view.findViewById(this.speciality.getCheckedRadioButtonId());
+
+            // [lv/i]resultUpdate :  변경할 값을 updateContent method 를 이용하여 갱신하기
+            int resultUpdate = this.userDbManager.updateContent(
+                    this.userData.getId(),
+                    Integer.parseInt(this.targetScore.getText().toString()),
+                    selectedSpeciality.getText().toString());
+
+            // [check 2] : result 값으로 update 잘 되었는지 판다
+            if (resultUpdate == 1) {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번재 내용이 수정되었습니다.");
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번째 내용을 수정하는데 실패하였습니다.");
+            } // [check 2]
+
+            // [iv/C]UserData : 위에서 갱신된 userData 를 user 메니저를 통해서 가져오기
+            this.userData = this.userDbManager.loadContent(this.userData.getId());
+
+            // [method]moveUserManagerActivity : UserManagerActivity 로 이동
+            moveUserManagerActivity(view);
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
+        } // [check 1]
+
+    } // End of method [setClickListenerOfModifyButton]
+
+
+    /**
+     * [method] [set] delete button 의 click listener 을 설정
+     *
+     */
+    private void setClickListenerOfDeleteButton(View view) {
+
+        final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
+
+        // [check 1] : userData 가 있다.
+        if (this.userData != null) {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 있어서 삭제 시작");
+
+            // UserDbManager : 테이블의 모든 내용 삭제
+            // [lv/i]resultDeleteOfUser : 해당 userId 의 user 데이터를 삭제한 결과
+            int resultDeleteOfUser = this.userDbManager.deleteContent(this.userData.getId());
+
+            // FriendDbManager : 테이블의 모든 내용 삭제
+            // [lv/i]resultDeleteOfUser : 해당 userId 의 friend 데이터를 모두 삭제한 결과
+            int resultDeleteOfFriend = this.friendDbManager.deleteContentByUserId(this.userData.getId());
+
+            // [lv/C]ArrayList<playerData> : userData 의 id 와 name 으로 참가한 게임 목록 가져오기
+            ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByPlayerIdAndPlayerName(userData.getId(), userData.getName());
+
+            // [cycle 1] : 게임에 참가한 player 수 만큼
+            for (int index=0; index<playerDataArrayList.size(); index++) {
+
+                this.billiardDbManager.deleteContentByCount(playerDataArrayList.get(index).getBilliardCount());
+
+                this.playerDbManager.deleteContentByBilliardCount(playerDataArrayList.get(index).getBilliardCount());
+
+            } // [cycle 1]
+
+            // [iv/C]UserData : user 데이터를 삭제하여 null 값으로 변경
+            this.userData = null;
+
+            // [method]moveUserManagerActivity : UserManagerActivity 로 이동
+            moveUserManagerActivity(view);
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 없어서 삭제 안함");
+        } // [check 1]
+
+    } // End of method [setClickListenerOfDeleteButton]
+
+
+    /**
+     * [method] [check] name, targetScore, speciality 의 값이 모두 입력되었는지 검사하여 모두 입력 하였을 경우 true 를 반환한다.
      *
      * @return 모든 값이 입력되고 선택되었을 때 true 를 반환한다.
      */
@@ -352,7 +446,7 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] targetScore 의 입력 값이 MIN_RANGE < targetScore < MAX_RANGE 사이인지 확인하여
+     * [method] [check] targetScore 의 입력 값이 MIN_RANGE < targetScore < MAX_RANGE 사이인지 확인하여
      * 이 범위 안이면 true 를 반환한다.
      *
      * @return targetScore 가 범위안에 있으면 true 이다.
@@ -382,7 +476,18 @@ public class UserInputFragment extends Fragment {
 
 
     /**
-     * [method] UserManagerActivity 로 이동
+     * [method] user 의 name 문자열의 공백을 제거
+     *
+     */
+    private String removeWhitespaceOfName(String name) {
+
+//        return name.replace(" ", "");
+        return name.trim();
+    } // End of method [removeWhitespaceOfName]
+
+
+    /**
+     * [method] [move] UserManagerActivity 로 이동
      */
     private void moveUserManagerActivity(View view) {
 
@@ -399,83 +504,6 @@ public class UserInputFragment extends Fragment {
         startActivity(intent);
 
     } // End of method [moveUserManagerActivity]
-
-
-    /**
-     * [method] modify button 의 click listener 을 설정
-     *
-     */
-    private void setClickListenerOfModifyButton(View view) {
-
-        final String METHOD_NAME= "[setClickListenerOfModifyButton] ";
-
-        // [check 1] : userData 가 있다.
-        if (this.userData != null) {
-
-            // [lv/C]RadioButton : speciality 로 선택된 Button 의 id 값으로 RadioButton 을 mapping 한다.
-            RadioButton selectedSpeciality = (RadioButton) view.findViewById(this.speciality.getCheckedRadioButtonId());
-
-            // [lv/i]resultUpdate :  변경할 값을 updateContent method 를 이용하여 갱신하기
-            int resultUpdate = this.userDbManager.updateContent(
-                    this.userData.getId(),
-                    this.name.getText().toString(),
-                    Integer.parseInt(this.targetScore.getText().toString()),
-                    selectedSpeciality.getText().toString());
-
-            // [check 2] : result 값으로 update 잘 되었는지 판다
-            if (resultUpdate == 1) {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번재 내용이 수정되었습니다.");
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번째 내용을 수정하는데 실패하였습니다.");
-            } // [check 2]
-
-            // [iv/C]UserData : 위에서 갱신된 userData 를 user 메니저를 통해서 가져오기
-            this.userData = this.userDbManager.loadContent(this.userData.getId());
-
-            // [method]moveUserManagerActivity : UserManagerActivity 로 이동
-            moveUserManagerActivity(view);
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
-        } // [check 1]
-
-    } // End of method [setClickListenerOfModifyButton]
-
-
-    /**
-     * [method] delete button 의 click listener 을 설정
-     *
-     */
-    private void setClickListenerOfDeleteButton(View view) {
-
-        final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
-
-        // [check 1] : userData 가 있다.
-        if (this.userData != null) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 있어서 삭제 시작");
-
-            // UserDbManager : 테이블의 모든 내용 삭제
-            // [lv/i]resultDeleteOfUser : 해당 userId 의 user 데이터를 삭제한 결과
-            int resultDeleteOfUser = this.userDbManager.deleteContent(this.userData.getId());
-
-            // FriendDbManager : 테이블의 모든 내용 삭제
-            // [lv/i]resultDeleteOfUser : 해당 userId 의 friend 데이터를 모두 삭제한 결과
-            int resultDeleteOfFriend = this.friendDbManager.deleteContentByUserId(this.userData.getId());
-
-            // [lv/i]resultDeleteOfBilliard : 해당 userId 의 billiard 데이터를 모두 삭제한 결과
-            int resultDeleteOfBilliard = this.billiardDbManager.deleteAllContentByUserId(this.userData.getId());
-
-            // [iv/C]UserData : user 데이터를 삭제하여 null 값으로 변경
-            this.userData = null;
-
-            // [method]moveUserManagerActivity : UserManagerActivity 로 이동
-            moveUserManagerActivity(view);
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 없어서 삭제 안함");
-        } // [check 1]
-
-    } // End of method [setClickListenerOfDeleteButton]
 
 
     /**

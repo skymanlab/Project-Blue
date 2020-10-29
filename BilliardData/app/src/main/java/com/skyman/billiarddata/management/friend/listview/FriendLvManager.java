@@ -3,6 +3,7 @@ package com.skyman.billiarddata.management.friend.listview;
 import android.hardware.SensorDirectChannel;
 import android.widget.ListView;
 
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 
@@ -13,11 +14,14 @@ public class FriendLvManager {
     // instance variable
     private FriendLvAdapter friendLvAdapter;
     private ListView targetListView;
+
+    // instance variable
     private FriendDbManager friendDbManager;
+    private BilliardDbManager billiardDbManager;
 
     // constructor
-    public FriendLvManager(ListView targetListView, FriendDbManager friendDbManager) {
-        this.friendLvAdapter = new FriendLvAdapter(friendDbManager);
+    public FriendLvManager(ListView targetListView, FriendDbManager friendDbManager, BilliardDbManager billiardDbManager) {
+        this.friendLvAdapter = new FriendLvAdapter(friendDbManager, billiardDbManager);
         this.targetListView = targetListView;
         this.friendDbManager = friendDbManager;
     }
@@ -30,7 +34,7 @@ public class FriendLvManager {
     public void createLvAdapter () {
 
         // [iv/C]FriendLvManager : adapter 생성 및 초기화
-        this.friendLvAdapter = new FriendLvAdapter(this.friendDbManager);
+        this.friendLvAdapter = new FriendLvAdapter(this.friendDbManager, this.billiardDbManager);
 
     } // End of method [createLvAdapter]
 

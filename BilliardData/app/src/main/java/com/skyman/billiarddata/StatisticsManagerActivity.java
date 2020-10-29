@@ -13,6 +13,8 @@ import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.calendar.SameDateChecker;
 import com.skyman.billiarddata.management.calendar.SameDateCheckerMake;
+import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -26,6 +28,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
     // instance variable
     private UserDbManager userDbManager = null;
+    private PlayerDbManager playerDbManager = null;
     private BilliardDbManager billiardDbManager = null;
     private UserData userData = null;
     private ArrayList<BilliardData> billiardDataArrayList = null;
@@ -96,7 +99,8 @@ public class StatisticsManagerActivity extends AppCompatActivity {
             }
         });
 
-    }
+    } // End of method [onCreate]
+
 
     @Override
     protected void onDestroy() {
@@ -118,7 +122,14 @@ public class StatisticsManagerActivity extends AppCompatActivity {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
         } // [check 2]
 
-    }
+        // [check 3] : player 메니저가 생성되었다.
+        if (this.playerDbManager != null) {
+            this.playerDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 메니저가 생성되지 않았습니다.");
+        } // [check 3]
+
+    } // End of method [onDestroy]
 
 
     /**
@@ -134,6 +145,10 @@ public class StatisticsManagerActivity extends AppCompatActivity {
          // [iv/C]BilliardDBManager : billiard 메니저 생성 및 초기화
          this.billiardDbManager = new BilliardDbManager(this);
          this.billiardDbManager.initDb();
+
+         // [iv/C]PlayerDbManager : player 메니저 생성 및 초기화
+         this.playerDbManager = new PlayerDbManager(this);
+         this.playerDbManager.initDb();
 
      } // End of method [createDbManager]
 
@@ -153,8 +168,22 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         // [check 1] : userData 가 있다.
         if (this.userData != null){
 
-            // [iv/C]ArrayList<BilliardData> : 해당 userId 로 모든 billiard 데이터를 가져온다.
-//            billiardDataArrayList = this.billiardDbManager.loadAllContentByUserID(this.userData.getId());
+            // [lv/C]ArrayList<PlayerData> : userData 의 id 와 name 으로 참가한 게임 데이터를 가져오기
+            ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByPlayerIdAndPlayerName(this.userData.getId(), this.userData.getName());
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "******************* playerDataArrayList 를 알아볼께 *******************  ");
+            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+
+            // [cycle 1] : 참가한 게임의 수 만큼(playerDataArrayList 의 size 와 같다.)
+            for (int index=0 ; index< playerDataArrayList.size(); index++) {
+
+                // [lv/C]ArrayList<BilliardData> : billiardCount 로 데이터를 가져와서 추가하기
+                billiardDataArrayList.add(this.billiardDbManager.loadAllContentByCount(playerDataArrayList.get(index).getBilliardCount()));
+
+            } // [cycle 1]
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "******************* billiardDataArrayList 를 알아볼께 *******************  ");
+            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, billiardDataArrayList);
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "전 Activity 에서 보내준 userData 가 없습니다.");

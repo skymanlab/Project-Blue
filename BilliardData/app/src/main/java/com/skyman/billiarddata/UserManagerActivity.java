@@ -12,6 +12,7 @@ import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
@@ -27,6 +28,7 @@ public class UserManagerActivity extends AppCompatActivity {
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
     private BilliardDbManager billiardDbManager = null;
+    private PlayerDbManager playerDbManager = null;
     private UserData userData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
 
@@ -39,7 +41,7 @@ public class UserManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manager);
 
-        final String METHOD_NAME= "[onCreate] ";
+        final String METHOD_NAME = "[onCreate] ";
 
         // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
         createDBManager();
@@ -78,7 +80,7 @@ public class UserManagerActivity extends AppCompatActivity {
         this.userTabBar.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // [lv/C]UserPagerAdapter : Fragment 와 연결하기 위한 adapter 생성하기
-        UserPagerAdapter userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.billiardDbManager, this.userData, this.friendDataArrayList);
+        UserPagerAdapter userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), this.userDbManager, this.friendDbManager, this.billiardDbManager, this.playerDbManager, this.userData, this.friendDataArrayList);
 
         // [iv/C]ViewPager : 위 의 adapter 와 연결하기
         this.userTabPager.setAdapter(userPagerAdapter);
@@ -117,10 +119,10 @@ public class UserManagerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        final String METHOD_NAME= "[onDestroy] ";
+        final String METHOD_NAME = "[onDestroy] ";
 
         // [check 1] : user 메니저가 생성되었다.
-        if(this.userDbManager != null) {
+        if (this.userDbManager != null) {
 
             // [iv/C]UserDbManager : user 메니저를 close
             this.userDbManager.closeDb();
@@ -145,9 +147,9 @@ public class UserManagerActivity extends AppCompatActivity {
     /*                                      private method
      *   ============================================================================================
      *  */
+
     /**
      * [method] user, friend 테이블을 관리하는 메니저를 생성한다.
-     *
      */
     private void createDBManager() {
 
@@ -162,17 +164,20 @@ public class UserManagerActivity extends AppCompatActivity {
         // [iv/C]BilliardDbManager : billiard 테이블을 관리하는 매니저 생성과 초기화
         this.billiardDbManager = new BilliardDbManager(this);
         this.billiardDbManager.initDb();
+
+        // [iv/C]PlayerDbManager : player 테이블을 관리하는 매니저 생성과 초기화
+        this.playerDbManager = new PlayerDbManager(this);
+        this.playerDbManager.initDb();
     }
 
 
     /**
      * [method] intent 에서 "pageNumber"로 값을 받아와서 해당 pageNumber 값으로 fragment 페이지로 이동
-     *
      */
-    private void moveFragmentPage(Intent intent){
+    private void moveFragmentPage(Intent intent) {
 
 
-        final String METHOD_NAME= "[moveFragmentPage] ";
+        final String METHOD_NAME = "[moveFragmentPage] ";
 
         // [lv/i]pageNumber : 위 의 intent 에서 pageNumber 값으로 가져오기 - 기본 값은 '-1' 이다.
         int pageNumber = SessionManager.getPageNumberInIntent(intent);

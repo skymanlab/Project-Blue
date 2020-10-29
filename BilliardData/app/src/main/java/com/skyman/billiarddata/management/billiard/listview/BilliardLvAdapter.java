@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.dialog.PlayerList;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
@@ -152,6 +153,16 @@ public class BilliardLvAdapter extends BaseAdapter {
             }
         });
 
+        // [lv/C]TextView : playerCount 의 click listener
+        playerCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // [method] : 게임에 참가한 player 의 수를
+                setClickListenerOfPlayerCount(context, billiardData);
+            }
+        });
+
         return convertView;
     } // End of method [getView]
 
@@ -216,7 +227,7 @@ public class BilliardLvAdapter extends BaseAdapter {
 
 
     /**
-     * [method] [Di] 다음 단계로 데이터 수정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
+     * [method] [Dialog] 다음 단계로 데이터 수정을 진행할 건지 물어보는 AlertDialog 를 보여준다.
      */
     private void showDialogToCheckWhetherProgressNextStep(Context context, BilliardData billiardData, UserData userData, ArrayList<PlayerData> playerDataArrayList, ArrayList<FriendData> friendDataArrayList) {
 
@@ -230,24 +241,6 @@ public class BilliardLvAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-//                        // [lv/C]BilliardModify : billiard 데이터를 수정하는 dialog 를 호출하기 위한 객체 생성
-//                        BilliardModify billiardModify = new BilliardModify(context, billiardDbManager, userDbManager, friendDbManager, playerDbManager);
-//
-//                        // [lv/C]BilliardModify : billiardData set
-//                        billiardModify.setBilliardData(billiardData);
-//
-//                        // [lv/C]BilliardModify : userData set
-//                        billiardModify.setUserData(userData);
-//
-//                        // [lv/C]BilliardModify : playerDataArrayList set
-//                        billiardModify.setPlayerDataArrayList(playerDataArrayList);
-//
-//                        // [lv/C]BilliardModify : friendDataArrayList set
-//                        billiardModify.setFriendDataArrayList(friendDataArrayList);
-//
-//                        // [lv/C]BilliardModify : dialog 보여주기
-//                        billiardModify.setDialog(targetListView);
-
                         // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 Intent 생성
                         Intent intent = new Intent(context, BilliardModifyActivity.class);
 
@@ -256,9 +249,7 @@ public class BilliardLvAdapter extends BaseAdapter {
                         SessionManager.setIntentOfFriendPlayerList(intent, friendDataArrayList);
                         SessionManager.setIntentOfPlayerList(intent, playerDataArrayList);
 
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                         context.startActivity(intent);
 
                     }
@@ -272,5 +263,27 @@ public class BilliardLvAdapter extends BaseAdapter {
                 .show();
 
     } // End of method [showDialogToCheckWhetherProgressNextStep]
+
+
+    /**
+     * [method] [BL] setClickListenerOfPlayerCount
+     */
+    private void setClickListenerOfPlayerCount(Context context, BilliardData billiardData) {
+
+        final String METHOD_NAME = "[setClickListenerOfPlayerCount] ";
+
+        // [lv/C]ArrayList<PlayerData> : billiardData 의 count 값으로 player 데이터 가져오기
+        ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByBilliardCount(billiardData.getCount());
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiardCount 로 가져온 playerData 를 확인하겠습니다.");
+        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+
+        // [lv/C]PlayerList : billiardData 에 참가한 player 의 목록을 보여주는 dialog 생성
+        PlayerList playerList = new PlayerList(context);
+
+        playerList.setPlayerDataArrayList(playerDataArrayList);
+
+        playerList.setDialog();
+
+    } // End of method [setClickListenerOfPlayerCount]
 
 }

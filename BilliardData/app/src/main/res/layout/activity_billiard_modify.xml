@@ -336,7 +336,7 @@
                             android:layout_column="0"
                             android:layout_columnWeight="1"
                             android:layout_marginRight="5dp"
-                            android:background="@color/colorBlue"
+                            android:background="@color/colorBackgroundPrimary"
                             android:orientation="vertical"
                             android:padding="3dp">
 
@@ -353,7 +353,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:layout_marginBottom="3dp"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -371,7 +371,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -398,7 +398,7 @@
                             android:layout_column="1"
                             android:layout_columnWeight="1"
                             android:layout_marginLeft="5dp"
-                            android:background="@color/colorBlue"
+                            android:background="@color/colorBackgroundPrimary"
                             android:orientation="vertical"
                             android:padding="3dp">
 
@@ -415,7 +415,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:layout_marginBottom="3dp"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -433,7 +433,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -461,7 +461,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="5dp"
-                            android:background="@color/colorBlue"
+                            android:background="@color/colorBackgroundPrimary"
                             android:orientation="vertical"
                             android:padding="3dp">
 
@@ -478,7 +478,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:layout_marginBottom="3dp"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -496,7 +496,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -524,7 +524,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:background="@color/colorBlue"
+                            android:background="@color/colorBackgroundPrimary"
                             android:orientation="vertical"
                             android:padding="3dp">
 
@@ -541,7 +541,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:layout_marginBottom="3dp"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -559,7 +559,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorBackgroundSecond"
+                                android:background="@color/colorBackgroundThird"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 

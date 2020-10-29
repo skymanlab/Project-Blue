@@ -11,7 +11,6 @@ import com.skyman.billiarddata.management.projectblue.database.ProjectBlueDBMana
 
 import java.util.ArrayList;
 
-
 /**
  * [class] project_blue.db 의 billiard 테이블을 관리하기 위한 클래스이다.
  *
@@ -31,22 +30,11 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     }
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 billiard 테이블에 데이터를 저장한다.
-     *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 insert query 문을 실행한다.
-     *
-     * <p>
-     * 반환값
-     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
-     * '-1' : 데이터베이스 문제 발생
-     * '0' : 코드들이 실행되지 안았다.
-     * 그 외의 값 : billiard 테이블에 입력 된 행 번호
-     *
-     * <p>
-     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
-     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
      *
      * @return billiard 테이블에 데이터를 입력한 결과를 반환한다.
      */
@@ -61,7 +49,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<date> <gameMode> <playerCount> <winnerId> <winnerName> <playTime> <score> <cost> 를 저장합니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -125,27 +113,13 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     /**
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 billiard 테이블에 데이터를 저장한다.
      *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 insert query 문을 실행한다.
-     *
-     * <p>
-     * 반환값
-     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
-     * '-1' : 데이터베이스 문제 발생
-     * '0' : 코드들이 실행되지 안았다.
-     * 그 외의 값 : billiard 테이블에 입력 된 행 번호
-     *
-     * <p>
-     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
-     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
-     *
      * @return billiard 테이블에 데이터를 입력한 결과를 반환한다.
      */
     public long saveContent(BilliardData billiardData) {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardData> 를 저장합니다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -199,14 +173,11 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 billiard 테이블에 저장된 데이터를 모두 가져온다.
-     *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
      *
      * @return billiard 테이블에 저장된 모든 데이터
      */
@@ -215,7 +186,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadAllContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 가져옵니다.");
 
         // [lv/C]ArrayList<BilliardDataT> : billiard 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
@@ -273,7 +244,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadAllContentByCount] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 데이터를 가져옵니다.");
 
         // [lv/C]BilliardData : billiard 테이블에 해당 count 로 가져온 데이터가 담기는 객체
         BilliardData billiardData = null;
@@ -319,6 +290,9 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     } // End of method [loadAllContentByCount]
 
 
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
     /**
      * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
      *
@@ -336,7 +310,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[updateContentByCount] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 <date> <gameMode> <playerCount> <winnerId> <winnerName> <playTime> <score> <cost> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -404,7 +378,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[updateContentByCount] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardData> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -456,16 +430,11 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     } // End of method [updateContentByCount]
 
 
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 billiard 테이블의 모든 내용을 삭제한다.
-     *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
      *
      * @return billiard 테이블의 데이터를 삭제한 개수 or 실패
      */
@@ -473,7 +442,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[deleteAllContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -503,21 +472,13 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     /**
      * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 billiard 테이블의 count 행의 내용을 삭제한다.
      *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * '1' : 데이터베이스 delete query 실행 성공 - 삭제한 데이터는 1개 이므로
-     *
      * @return billiard 테이블의 count 행 데이터를 삭제한 결과
      */
     public int deleteContentByCount(long count) {
 
         final String METHOD_NAME = "[deleteContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -552,57 +513,7 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     } // End of method [deleteAllContent]
 
 
-    /**
-     * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 billiard 테이블의 해당 userID 의 모든 내용을 삭제한다.
-     *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
-     *
-     * @param userId
-     * @return billiard 테이블의 데이터를 삭제한 개수 or 실패
-     */
-    public int deleteAllContentByUserId(long userId) {
-
-        final String METHOD_NAME = "[deleteAllContentByUserId] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing............");
-
-        // [lv/l]methodResult : 이 메소드의 결과 값 저장
-        int methodResult = 0;
-
-        // [check 1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
-
-            // [check 2] : userId 가 0 보다 큰 값이 들어왔다.
-            if (userId > 0) {
-
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
-                SQLiteDatabase deleteDb = super.getDbOpenHelper().getWritableDatabase();
-
-                // [lv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
-                methodResult = deleteDb.delete(BilliardTableSetting.Entry.TABLE_NAME, null, null);
-
-                // [lv/C]SQLiteDatabase : close
-                deleteDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 userId 가 형식에 맞지 않아요.");
-                methodResult = -2;
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
-
-        return methodResult;
-    } // End of method [deleteAllContent]
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
     /**
@@ -632,74 +543,4 @@ public class BilliardDbManager extends ProjectBlueDBManager {
 
     } // End of method [checkFormatOfBilliardData]
 
-
-    // ====================================================================================================
-    /**
-     * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 billiard 테이블에서 해당 userID 로 저장된 데이터를 모두 가져온다.
-     *
-     * <p>
-     * project_blue.db 의 billiard 테이블에 데이터를 select query 문을 실행한다.
-     *
-     * <p>
-     * 이 데이터는 ArrayList 로 만들어진 객체에 추가되어 참조값을 리턴한다.
-     *
-     * @param userId [1] 이 데이터를 저장한 주체인 user 의 id
-     * @return billiard 테이블에 저장된 모든 데이터
-     */
-/*    public ArrayList<BilliardData> loadAllContentByUserID(long userId) {
-
-        final String METHOD_NAME = "[loadAllContentByUserID] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
-
-        // [lv/C]ArrayList<BilliardDataT> : billiard 테이블에 저장된 모든 데이커가 담길 ArrayList
-        ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
-
-        // [check 1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
-
-            // [check 2] : userId 의 값이 0 보다 크다
-            if (userId > 0) {
-
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
-                SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
-
-                // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
-                Cursor readCursor = readDb.rawQuery(BilliardTableSetting.SQL_SELECT_WHERE_ID + userId, null);
-
-                // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
-                while (readCursor.moveToNext()) {
-
-                    // [lv/C]BilliardData : billiard 테이블의 '한 행'의 정보를 담는다.
-                    BilliardData billiardData = new BilliardData();
-                    billiardData.setCount(readCursor.getLong(0));               // 0. count
-                    billiardData.setUserId(readCursor.getLong(1));              // 1. user id
-                    billiardData.setDate(readCursor.getString(2));              // 2. date
-                    billiardData.setTargetScore(readCursor.getInt(3));          // 3. target score
-                    billiardData.setSpeciality(readCursor.getString(4));        // 4. speciality
-                    billiardData.setPlayTime(readCursor.getInt(5));             // 5. play time
-                    billiardData.setWinner(readCursor.getString(6));            // 6. winner
-                    billiardData.setScore(readCursor.getString(7));             // 7. score
-                    billiardData.setCost(readCursor.getInt(8));                 // 8. cost
-
-                    // [lv/C]ArrayList<BilliardData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
-                    billiardDataArrayList.add(billiardData);
-
-                } // [cycle 1]
-
-                // [lv/C]SQLiteDatabase : close / end
-                readDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 userId 가 형식에 맞지 않아요.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-
-        return billiardDataArrayList;
-    } // End of method [loadAllContentByUserID]*/
 }

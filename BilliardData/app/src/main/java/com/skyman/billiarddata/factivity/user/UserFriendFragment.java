@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.friend.listview.FriendLvManager;
@@ -34,15 +35,15 @@ import java.util.ArrayList;
  */
 public class UserFriendFragment extends Fragment {
 
-    // constant
-    private final String CLASS_NAME_LOG = "[F]_UserFriendFragment";
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    // constant
+    private final String CLASS_NAME_LOG = "[F]_UserFriendFragment";
     // instance variable
     private FriendDbManager friendDbManager;
+    private BilliardDbManager billiardDbManager;
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
     // instance variable
@@ -54,8 +55,9 @@ public class UserFriendFragment extends Fragment {
     private String mParam2;
 
     // constructor
-    public UserFriendFragment(FriendDbManager friendDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
+    public UserFriendFragment(FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
         this.friendDbManager = friendDbManager;
+        this.billiardDbManager = billiardDbManager;
         this.userData = userData;
         this.friendDataArrayList = friendDataArrayList;
     }
@@ -101,7 +103,7 @@ public class UserFriendFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final String METHOD_NAME= "[onViewCreated] ";
+        final String METHOD_NAME = "[onViewCreated] ";
 
         // [method]mappingOfWidget : fragment_user_friend layout 의 widget mapping
         mappingOfWidget(view);
@@ -118,7 +120,7 @@ public class UserFriendFragment extends Fragment {
         });
 
         // [lv/C]FriendLvManager : ListView 와 Adapter 를 관리하는 ListView 메니저 생성
-        FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager);
+        FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager, this.billiardDbManager);
 
         // [check 1] : user 정보가 있다.
         if (this.userData != null) {
@@ -163,7 +165,7 @@ public class UserFriendFragment extends Fragment {
      */
     private void setClickListenerOfFriendAddButton() {
 
-        final String METHOD_NAME= "[setClickListenerOfFriendAddButton] ";
+        final String METHOD_NAME = "[setClickListenerOfFriendAddButton] ";
 
         // [check 1] : 입력한 user 데이터가 있다.
         if (this.userData != null) {
@@ -210,7 +212,7 @@ public class UserFriendFragment extends Fragment {
      */
     private void checkNewRowId(long newRowId) {
 
-        final String METHOD_NAME= "[checkNewRowId] ";
+        final String METHOD_NAME = "[checkNewRowId] ";
 
         // [check 1] : newRowId 는 어떤 값일까?
         if (newRowId == -2) {
@@ -235,7 +237,7 @@ public class UserFriendFragment extends Fragment {
      */
     private void showDialogToCheckWhetherFirstGameDataInput() {
 
-        final String METHOD_NAME= "[showDialogToCheckWhetherFirstGameDataInput] ";
+        final String METHOD_NAME = "[showDialogToCheckWhetherFirstGameDataInput] ";
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -268,7 +270,6 @@ public class UserFriendFragment extends Fragment {
 
     /**
      * [method] 해당 문자열을 toast 로 보여준다.
-     *
      */
     private void toastHandler(String content) {
 

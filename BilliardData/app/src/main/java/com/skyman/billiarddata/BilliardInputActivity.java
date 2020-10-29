@@ -492,76 +492,84 @@ public class BilliardInputActivity extends AppCompatActivity {
         // [check 1] : player 의 데이터가 모두 입력 되었다.
         if (checkWhetherInputAllDataOfPlayerWidget(playerDataArrayList.size())) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player widget = 모든 데이터를 입력 받았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player widget> 모든 데이터를 입력 받았습니다.");
 
             // [check 2] : player 의 score 가 범위에 맞게 입력되었다.
             if (checkWhetherInputWithinRangeOfPlayerScoreValue(playerDataArrayList.size())) {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "score = 범위에 맞는 데이터를 입력 받았습니다.");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<score> 범위에 맞는 데이터를 입력 받았습니다.");
 
                 // [check 3] : billiard 의 데이터가 형식에 맞게 모두 입력 되었다.
                 if (checkWhetherInputAllDataOfBilliardWidget()) {
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard widget = 모든 데이터를 입력받았습니다.");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard widget> 모든 데이터를 입력받았습니다.");
 
-                    // [method] : playerDataArrayList 의 targetScore, score 값을 셋팅하기
-                    setTargetScoreAndScoreOfPlayerList(this.playerDataArrayList);
+                    // [check 4] : winner 의 targetScore 와 score 가 같습니다.
+                    if (checkWhetherEqualOfTargetScoreAndScore()) {
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 와 <score> 가 같으므로 승자가 맞습니다.");
+                        
+                        // [method] : playerDataArrayList 의 targetScore, score 값을 셋팅하기
+                        setTargetScoreAndScoreOfPlayerList(this.playerDataArrayList);
 
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "===== playerDataArrayList 의 데이터를 확인하겠습니다. =====");
-                    DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "===== playerDataArrayList 의 데이터를 확인하겠습니다. =====");
+                        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
 
-                    // date, gameMode, playerCount, winnerId, playTime, score, cost 의 값을 구한다.
-                    String date = this.date.getText().toString();
-                    String gameMode = this.gameMode.getSelectedItem().toString();
-                    int playerCount = this.playerDataArrayList.size();
-                    long winnerId = this.playerDataArrayList.get(this.playerNameList.getSelectedItemPosition()).getPlayerId();
-                    String winnerName = this.playerNameList.getSelectedItem().toString();
-                    int playTime = Integer.parseInt(this.playTime.getText().toString());
-                    int cost = Integer.parseInt(this.cost.getText().toString());
-                    String score = ProjectBlueDataFormatter.getFormatOfScore(makeScoreStringArray(playerDataArrayList));
+                        // date, gameMode, playerCount, winnerId, playTime, score, cost 의 값을 구한다.
+                        String date = this.date.getText().toString();
+                        String gameMode = this.gameMode.getSelectedItem().toString();
+                        int playerCount = this.playerDataArrayList.size();
+                        long winnerId = this.playerDataArrayList.get(this.playerNameList.getSelectedItemPosition()).getPlayerId();
+                        String winnerName = this.playerNameList.getSelectedItem().toString();
+                        int playTime = Integer.parseInt(this.playTime.getText().toString());
+                        int cost = Integer.parseInt(this.cost.getText().toString());
+                        String score = ProjectBlueDataFormatter.getFormatOfScore(makeScoreStringArray(playerDataArrayList));
 
-                    // [lv/l]billiardCount : billiard 테이블에 저장을 하고, 그 결과값이 count 값을 받는다.
-                    long billiardCount = saveDataOfBilliard(this.billiardDbManager, date, gameMode, playerCount, winnerId, winnerName, playTime, score, cost);
+                        // [lv/l]billiardCount : billiard 테이블에 저장을 하고, 그 결과값이 count 값을 받는다.
+                        long billiardCount = saveDataOfBilliard(this.billiardDbManager, date, gameMode, playerCount, winnerId, winnerName, playTime, score, cost);
 
-                    // [method] : 모든 player 의 gameRecordWin, gameRecordLoss, totalPlayTime, totalCost, recentGameBilliardCount 를 설정한다.
-                    setDataOfPlayer(this.playerDataArrayList, this.userData,this.friendDataArrayList, winnerId, winnerName, playTime, cost, billiardCount);
+                        // [method] : 모든 player 의 gameRecordWin, gameRecordLoss, totalPlayTime, totalCost, recentGameBilliardCount 를 설정한다.
+                        setDataOfPlayer(this.playerDataArrayList, this.userData,this.friendDataArrayList, winnerId, winnerName, playTime, cost, billiardCount);
 
-                    // [method] : playerDataArrayList 의 billiardCount 를 저장 결과인 billiardCount 값을 저장한다.
-                    setBilliardCountOfPlayerList(this.playerDataArrayList, billiardCount);
+                        // [method] : playerDataArrayList 의 billiardCount 를 저장 결과인 billiardCount 값을 저장한다.
+                        setBilliardCountOfPlayerList(this.playerDataArrayList, billiardCount);
 
-                    // [method] : userData 업데이트 하기
-                    saveDataOfUser(this.userDbManager, this.userData);
+                        // [method] : userData 업데이트 하기
+                        saveDataOfUser(this.userDbManager, this.userData);
 
-                    // [method] : friendDataArrayList 업데이트 하기
-                    saveDataFriendList(this.friendDbManager, this.friendDataArrayList);
+                        // [method] : friendDataArrayList 업데이트 하기
+                        saveDataFriendList(this.friendDbManager, this.friendDataArrayList);
 
-                    // [method] : playerDataArrayList 저장하기
-                    saveDataOfPlayer(this.playerDbManager, this.playerDataArrayList);
+                        // [method] : playerDataArrayList 저장하기
+                        saveDataOfPlayer(this.playerDbManager, this.playerDataArrayList);
 
-                    // [method] : player, billiard widget 을 초기화
-                    initializeOfPlayerAndBilliardWidget(this.playerDataArrayList.size());
+                        // [method] : player, billiard widget 을 초기화
+                        initializeOfPlayerAndBilliardWidget(this.playerDataArrayList.size());
 
-                    // [method] : BilliardDisplayActivity 로 이동할 지 물어본다.
-                    showDialogToCheckWhetherToMoveBDA();
+                        // [method] : BilliardDisplayActivity 로 이동할 지 물어본다.
+                        showDialogToCheckWhetherToMoveBDA();
+                    } else {
+                        toastHandler("승리자의 점수가 수지와 같아야 합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 와 <score> 가 같아야지만 승리자요!");
+                    } // [check 4]
 
                 } else {
                     toastHandler("billiard 의 모든 데이터를 입력해주세요. ");
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard widget = 모든 데이터를 입력해줘!");
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
                 } // [check 3]
 
             } else {
                 toastHandler("범위에 맞는 score 의 값을 입력해주세요.");
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "score = 범위에 맞는 점수를 입력해줘!");
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
             } // [check 2]
 
         } else {
             toastHandler("모든 player 의 데이터를 입력해주세요.");
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player widget = 모든 데이터를 입력해줘!");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
         } // [check 1]
 
     } // End of method [setClickListenerOfInputButton]
 
 
     /**
-     * [method] [Ch] player widget 에서 모든 값들이 다 입력되었는지 검사하여 그 값을 true 또는 false 로 반환한다.
+     * [method] [check] player widget 에서 모든 값들이 다 입력되었는지 검사하여 그 값을 true 또는 false 로 반환한다.
      *
      * <p>
      * 검사 항목
@@ -612,7 +620,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
     /**
-     * [method] [Ch] player widget 중 playerScore 의 범위를 검사하여 그 결과를 true 또는 false 로 반환한다.
+     * [method] [check] player widget 중 playerScore 의 범위를 검사하여 그 결과를 true 또는 false 로 반환한다.
      *
      * <p>
      * score 의 범위 = 0 < score < TargetScore
@@ -661,7 +669,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
 
     /**
-     * [method] [Ch] billiard widget 의 모든 데이터가 입력되었는지 검사하여 그 결과를 true 또는 false 로 반환한다.
+     * [method] [check] billiard widget 의 모든 데이터가 입력되었는지 검사하여 그 결과를 true 또는 false 로 반환한다.
      *
      * <p>
      * 검사항목
@@ -697,6 +705,37 @@ public class BilliardInputActivity extends AppCompatActivity {
         } // [check 1]
 
     } // End of method [checkInputAllEditText]
+
+
+    /**
+     * [method] [check] winner 의 targetScore 와 score 값이 같은지 판별하여 같으면 true, 다르면 false 를 반환한다.
+     *
+     */
+    private boolean checkWhetherEqualOfTargetScoreAndScore() {
+
+        final String METHOD_NAME = "[checkWhetherEqualOfTargetScoreAndScore] ";
+        
+        // [lv/i]winnerPosition : playerNameList spinner 의 winner 의 위치를 받아온다.
+        int winnerPosition = this.playerNameList.getSelectedItemPosition();
+
+        // [lv/i]targetScore : winner 의 playerTargetScore 의 값을 int type casting
+        int targetScore =Integer.parseInt( this.playerTargetScore[winnerPosition].getSelectedItem().toString() );
+
+        // [lv/i]score : winner 의 playerScore 의 값을 int type casting
+        int score = Integer.parseInt(this.playerScore[winnerPosition].getText().toString());
+
+        // [check 1] : winner 의 위치의 targetScore 와 score 가 같다.
+        if (targetScore == score) {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같습니다.");
+            return true;
+        } else {
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같지 않아요!");
+            return false;
+        } // [check 1]
+
+    } // End of method [checkWhetherEqualOfTargetScoreAndScore]
 
 
     /**
@@ -1172,6 +1211,7 @@ public class BilliardInputActivity extends AppCompatActivity {
 
         // [iv/C]Button : input widget 을 클릭하지 못하도록
         this.input.setEnabled(false);
+        this.input.setBackgroundResource(R.color.colorWidgetDisable);
 
     } // End of method [initializeOfPlayerAndBilliardWidget]
 

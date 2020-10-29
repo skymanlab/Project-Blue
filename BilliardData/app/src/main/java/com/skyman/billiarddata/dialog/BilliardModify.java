@@ -316,12 +316,11 @@ public class BilliardModify {
 
     /**
      * [method] 생성자로 받아온 billiardData, userData, friendDataArrayList, playerDataArrayList 를 복사한다.
-     *
      */
     private void copyAllData(BilliardData billiardData,
                              UserData userData,
                              ArrayList<FriendData> friendDataArrayList,
-                             ArrayList<PlayerData> playerDataArrayList){
+                             ArrayList<PlayerData> playerDataArrayList) {
 
         final String METHOD_NAME = "[copyAllData] ";
 
@@ -356,7 +355,7 @@ public class BilliardModify {
         this.changeFriendDataArrayList.clear();
 
         // [cycle 1] : friendDataArrayList 의 size 만큼
-        for (int friendIndex=0; friendIndex < friendDataArrayList.size(); friendIndex++) {
+        for (int friendIndex = 0; friendIndex < friendDataArrayList.size(); friendIndex++) {
 
             // [lv/C]FriendData : friendDataArrayList 에서 하나의 FriendData 복사
             FriendData friendData = new FriendData();
@@ -380,7 +379,7 @@ public class BilliardModify {
         this.changePlayerDataArrayList.clear();
 
         // [cycle 2] : playerDataArrayList 의 size 만큼
-        for (int playerIndex=0; playerIndex< playerDataArrayList.size(); playerIndex++) {
+        for (int playerIndex = 0; playerIndex < playerDataArrayList.size(); playerIndex++) {
 
             // [lv/C]PlayerData : playerDataArrayList 에서 하나의 playerData 복사
             PlayerData playerData = new PlayerData();
@@ -403,12 +402,11 @@ public class BilliardModify {
 
     /**
      * [method] 생성자로 받은 billiardData, userData, friendDataArrayList, playerDataArrayList 를 변경된 값으로 최종 변경
-     *
      */
     private void copyAllUpdatedData(BilliardData changeBilliardData,
-                             UserData changeUserData,
-                             ArrayList<FriendData> changeFriendDataArrayList,
-                             ArrayList<PlayerData> changePlayerDataArrayList){
+                                    UserData changeUserData,
+                                    ArrayList<FriendData> changeFriendDataArrayList,
+                                    ArrayList<PlayerData> changePlayerDataArrayList) {
 
         final String METHOD_NAME = "[copyAllUpdatedData] ";
 
@@ -443,7 +441,7 @@ public class BilliardModify {
         this.friendDataArrayList.clear();
 
         // [cycle 1] : friendDataArrayList 의 size 만큼
-        for (int friendIndex=0; friendIndex < changeFriendDataArrayList.size(); friendIndex++) {
+        for (int friendIndex = 0; friendIndex < changeFriendDataArrayList.size(); friendIndex++) {
 
             // [lv/C]FriendData : friendDataArrayList 에서 하나의 FriendData 복사
             FriendData friendData = new FriendData();
@@ -467,7 +465,7 @@ public class BilliardModify {
         this.playerDataArrayList.clear();
 
         // [cycle 2] : playerDataArrayList 의 size 만큼
-        for (int playerIndex=0; playerIndex< changePlayerDataArrayList.size(); playerIndex++) {
+        for (int playerIndex = 0; playerIndex < changePlayerDataArrayList.size(); playerIndex++) {
 
             // [lv/C]PlayerData : playerDataArrayList 에서 하나의 playerData 복사
             PlayerData playerData = new PlayerData();
@@ -781,7 +779,6 @@ public class BilliardModify {
 
                             // [method] : 변경된 모든 데이터를 기존 데이터(생성자 매개변수)에 반영하기
                             copyAllUpdatedData(changeBilliardData, changeUserData, changeFriendDataArrayList, changePlayerDataArrayList);
-
 
 
                         } else {

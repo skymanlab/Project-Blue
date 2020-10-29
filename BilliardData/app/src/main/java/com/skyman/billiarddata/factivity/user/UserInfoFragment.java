@@ -9,15 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.data.UserDataFormatter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -28,9 +27,12 @@ import java.util.ArrayList;
  */
 public class UserInfoFragment extends Fragment {
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     // constant
     private final String CLASS_NAME_LOG = "[F]_UserInfoFragment";
-
     // instance variable
     private TextView id;
     private TextView name;
@@ -39,25 +41,19 @@ public class UserInfoFragment extends Fragment {
     private TextView gameRecord;
     private TextView totalPlayTime;
     private TextView totalCost;
-    private TextView recentGamePlayerId;
     private TextView recentPlayDate;
-
     // instance variable
+    private BilliardDbManager billiardDbManager;
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
 
     // constructor
-    public UserInfoFragment(UserData userData, ArrayList<FriendData> friendDataArrayList) {
+    public UserInfoFragment(BilliardDbManager billiardDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
+        this.billiardDbManager = billiardDbManager;
         this.userData = userData;
         this.friendDataArrayList = friendDataArrayList;
     }
@@ -104,16 +100,19 @@ public class UserInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final String METHOD_NAME= "[getFormatOfCost] ";
+        final String METHOD_NAME = "[getFormatOfCost] ";
 
         // [method]mappingOfWidget : fragment_user_info layout 의 widget 을 mapping
         mappingOfWidget(view);
 
         // [check 1] : userData 가 있다.
-        if (userData != null) {
+        if (this.userData != null) {
+
+            // [lv/C]BilliardData : userData 의 recentGameBilliardCount 로 해당 billiard 데이터 가져오기
+            BilliardData billiardData = this.billiardDbManager.loadAllContentByCount(this.userData.getRecentGameBilliardCount());
 
             // [method]displayUserData : userData 값을 widget 을 setText 하기
-            displayUserData();
+            setInitialData(billiardData);
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 초기 세팅으로");
@@ -142,9 +141,6 @@ public class UserInfoFragment extends Fragment {
         // [iv/C]TextView : gameRecord mapping
         this.gameRecord = (TextView) view.findViewById(R.id.f_user_info_game_record);
 
-        // [iv/C]TextView : recentGamePlayerId mapping
-        this.recentGamePlayerId = (TextView) view.findViewById(R.id.f_user_info_recent_game_player_id);
-
         // [iv/C]TextView : recentPlayDate mapping
         this.recentPlayDate = (TextView) view.findViewById(R.id.f_user_info_recent_play_date);
 
@@ -160,11 +156,11 @@ public class UserInfoFragment extends Fragment {
     /**
      * [method] userData 의 값들을 mapping 된 widget 에 출력한다.
      */
-    private void displayUserData() {
+    private void setInitialData(BilliardData billiardData) {
 
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
         // [iv/C]TextView : id 를 userData 의 getId 으로
-        id.setText(userData.getId()+"");
+        id.setText(userData.getId() + "");
 
         // [iv/C]TextView : name 를 userData 의 getName 으로
         name.setText(userData.getName());
@@ -178,14 +174,25 @@ public class UserInfoFragment extends Fragment {
         // [iv/C]TextView : gameRecord 를 userData 의 getGameRecordWin 와 getGameRecordLoss 를 특정 문자열 형태로 바꾼 값으로
         gameRecord.setText(UserDataFormatter.getFormatOfGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss()));
 
-
-        // recentGameBilliardCount 으로 billiard
-
         // [iv/C]TextView : totalPlayTime 를 userData 의 getTotalPlayTime 을 특정 문자열로 바꾼 값으로
         totalPlayTime.setText(UserDataFormatter.getFormatOfPlayTime(userData.getTotalPlayTime()));
 
         // [iv/C]TextView : totalCost 를 userData 의 getTotalCost 을 특정 문자열로 바꾼 값으로
         totalCost.setText(UserDataFormatter.getFormatOfCost(userData.getTotalCost()));
 
-    } // End of method [displayUserData]
+        // [check 1] : 참가한 게임이 있다.
+        if (billiardData != null) {
+
+            // [iv/C]TextView : recentPlayData 를 billiardData 의 date 로 설정
+            this.recentPlayDate.setText(billiardData.getDate());
+
+        } else {
+
+            // [iv/C]TextView : recentPlayData 를 billiardData 의 date 로 설정
+            this.recentPlayDate.setText("참가 게임 없음!");
+
+        } // [check 1]
+
+
+    } // End of method [setInitialData]
 }

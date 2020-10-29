@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -19,15 +20,17 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     private UserDbManager userDbManager;
     private FriendDbManager friendDbManager;
     private BilliardDbManager billiardDbManager;
+    private PlayerDbManager playerDbManager;
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 
     // constructor
-    public UserPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDBManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
+    public UserPagerAdapter(@NonNull FragmentManager fm, UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDBManager, PlayerDbManager playerDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
         super(fm);
         this.userDbManager = userDbManager;
         this.friendDbManager = friendDbManager;
         this.billiardDbManager = billiardDBManager;
+        this.playerDbManager = playerDbManager;
         this.userData = userData;
         this.friendDataArrayList = friendDataArrayList;
     }
@@ -37,11 +40,11 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new UserInputFragment(userDbManager, friendDbManager, billiardDbManager, userData);
+                return new UserInputFragment(this.userDbManager, this.friendDbManager, this.billiardDbManager, this.playerDbManager, this.userData);
             case 1:
-                return new UserInfoFragment(userData, friendDataArrayList);
+                return new UserInfoFragment(this.billiardDbManager, this.userData, this.friendDataArrayList);
             case 2:
-                return new UserFriendFragment(friendDbManager, userData, friendDataArrayList);
+                return new UserFriendFragment(this.friendDbManager, this.billiardDbManager, this.userData, this.friendDataArrayList);
             default:
                 return null;
         }

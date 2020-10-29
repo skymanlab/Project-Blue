@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.data.FriendDataFormatter;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
@@ -24,11 +26,13 @@ public class FriendLvAdapter extends BaseAdapter {
 
     // instance variable
     private FriendDbManager friendDbManager;
+    private BilliardDbManager billiardDbManager;
     private ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
 
     // constructor
-    public FriendLvAdapter(FriendDbManager friendDbManager) {
+    public FriendLvAdapter(FriendDbManager friendDbManager, BilliardDbManager billiardDbManager) {
         this.friendDbManager = friendDbManager;
+        this.billiardDbManager = billiardDbManager;
     }
 
     @Override
@@ -74,6 +78,9 @@ public class FriendLvAdapter extends BaseAdapter {
         // [lv/C]FriendData : 각 리스트에 뿌려줄 아이템을 받아오는데 FriendData 재활용
         FriendData friendData = (FriendData) getItem(position);
 
+        // [lv/C]BilliardData : friendData 의 recentGameBilliardCount 로 billiardData 가져오기
+        BilliardData billiardData = this.billiardDbManager.loadAllContentByCount(friendData.getRecentGameBilliardCount());
+
         // [lv/C]TextView : 매핑된 count, data, targetScore, speciality, playTime, winner, score, cost 값 셋팅
         id.setText(Long.toString(friendData.getId()));
         name.setText(friendData.getName());
@@ -81,21 +88,12 @@ public class FriendLvAdapter extends BaseAdapter {
         totalPlayTime.setText(FriendDataFormatter.getFormatOfPlayTime(Integer.toString(friendData.getTotalPlayTime())));
         totalCost.setText(FriendDataFormatter.getFormatOfCost(Integer.toString(friendData.getTotalCost())));
 
-        // check : recentPlayDate 가 '-1' 이면, '최근 경기 없음'
-
-//        // [check 2] : recentPlayDate 가 초기값 '-1' 로 되어있다.
-//        if(friendData.getRecentPlayDate().equals("-1")){
-//
-//            // [lv/C]TextView : recentPlayData 를 초기값 '-1' 이 아닌 '최근 경기 없음' 으로 출력한다.
-//            recentPlayDate.setText("최근 경기 없음");
-//
-//        } else {
-//
-//            // [lv/C]Text : recentPlayDate 에 초기값이 아닌 추가된 내용이 있을 때는 그 값으로 출력한다.
-//            recentPlayDate.setText(friendData.getRecentPlayDate());
-//
-//        } // [check 2]
-
+        // [check 1] : 참가한 게임이 있다.
+        if (billiardData != null) {
+            recentPlayDate.setText(billiardData.getDate());
+        } else {
+            recentPlayDate.setText("참가 게임 없음!");
+        } // [check 1]
         return convertView;
     }
 

@@ -1,5 +1,6 @@
 package com.skyman.billiarddata;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
@@ -19,9 +22,9 @@ import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.projectblue.data.ChangedDataChecker;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.ModifyChecker;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -114,84 +117,6 @@ public class BilliardModifyActivity extends AppCompatActivity {
             // [method] : this.playerDataArrayList 로 player section 의 playerName, targetScore, score 값 초기 설정
             initialSettingOfPlayerScoreWidget(this.playerDataArrayList);
 
-            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-targetScore=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-=
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "========================================================================================");
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 변경 <전> *********************");
-//            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.modifyManager.getPlayerDataArrayList());
-//
-//            int[] changedTargetScore = new int[2];
-//
-//            changedTargetScore[0] = 20;
-//            changedTargetScore[1] = 8;
-//
-//            for (int index =0; index < 2; index++) {
-//                this.modifyManager.changeTargetScore(changedTargetScore[index], index);
-//            }
-//
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 변경 <후> *********************");
-//            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.modifyManager.getPlayerDataArrayList());
-
-            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-cost=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-=
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "========================================================================================");
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<cost> 변경 <전> *********************");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.modifyManager.getUserData());
-//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.modifyManager.getFriendDataArrayList());
-//
-//            this.modifyManager.changeCost(900);
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<cost> 변경 <후> *********************");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-//            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.modifyManager.getUserData());
-//            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.modifyManager.getFriendDataArrayList());
-
-
-            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-winnerName=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-=
-
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "========================================================================================");
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<winner> 변경 <전> 확인 ==================");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-//
-//            this.modifyManager.changeWinner(1, "장동익", 0);
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<winner> 변경 <후> 확인 ==================");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-
-
-            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-score=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-=
-//            int[] temp = new int[2];
-//            temp[0] = 13;
-//            temp[1] = 17;
-//
-//            int[] finalTemp = new int[2];
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "========================================================================================");
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<< playerDataArrayList >> 를 변경 전 확인");
-//            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.modifyManager.getPlayerDataArrayList());
-//
-//            for (int index = 0; index < 2; index++) {
-//                finalTemp[index] = this.modifyManager.changeScoreOfOnePlayerInPlayerDataArrayList(temp[index], index);
-//                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player " + index  + "> 의 최종 score = " + finalTemp[index]);
-//            }
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<< playerDataArrayList >> 를 변경 확인");
-//            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.modifyManager.getPlayerDataArrayList());
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "========================================================================================");
-//
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<< billiardData >> 를 변경 전 확인");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-//
-//            this.modifyManager.changeScoreOfBilliardData(finalTemp);
-//
-//
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<< billiardData >> 를 변경 후 확인");
-//            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.modifyManager.getBilliardData());
-
-            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-=-=
-
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Intent 에서 아직 받아오지 않은 데이터가 있어요!");
         } // [check 1]
@@ -201,8 +126,15 @@ public class BilliardModifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // [method] : 변경된 값들로 설정하고 정확한 값들인지 검사하여 데이터베이스에 수정된 데이터를 반영한다.
-                setClickListenerOfModify(Integer.parseInt(playerCount.getText().toString()));
+                // [check 1] : intent 로 가져온 데이터 입력받았다.
+                if ((billiardData != null) && (userData != null) && (friendDataArrayList.size() != 0) && (playerDataArrayList.size() != 0)) {
+
+                    // [method] : 수정을 진행 여부를 묻는 AlertDialog 를 보여준다.
+                    showDialogWhetherModify(Integer.parseInt(playerCount.getText().toString()));
+
+                } else {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Intent 에서 아직 받아오지 않은 데이터가 있어요!");
+                } // [check 1]
 
             }
         });
@@ -539,6 +471,37 @@ public class BilliardModifyActivity extends AppCompatActivity {
 
 
     /**
+     * [method] [AlertDialog] 정말 수정할 건지 물어보는 dialog 를 보여준다.
+     */
+    private void showDialogWhetherModify(int playerCount) {
+
+        // [lv/C]AlertDialog : builder 객체 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // [lv/C]AlertDialog : builder 초기값 설정 및 보여주기
+        builder.setTitle(R.string.ad_billiard_modify_check_modify_title)
+                .setMessage(R.string.ad_billiard_modify_check_modify_message)
+                .setPositiveButton(R.string.ad_billiard_modify_bt_check_modify_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // [method] : 변경된 값들로 설정하고 정확한 값들인지 검사하여 데이터베이스에 수정된 데이터를 반영한다.
+                        setClickListenerOfModify(playerCount);
+
+                    }
+                })
+                .setNegativeButton(R.string.ad_billiard_modify_bt_check_modify_negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+
+    } // End of method [showDialogWhetherModify]
+
+
+    /**
      * [method] modify button click listener
      */
     private void setClickListenerOfModify(int playerCount) {
@@ -546,13 +509,13 @@ public class BilliardModifyActivity extends AppCompatActivity {
         final String METHOD_NAME = "[setClickListenerOfModify] ";
 
         // [lv/C]ModifyChecker : billiardData, userData, friendDataArrayList, playerDataArrayList 의 변경 여부를 체크하는 객체를 참가한 player 수로 생성한다.
-        ModifyChecker modifyChecker = new ModifyChecker(playerCount);
+        ChangedDataChecker changedDataChecker = new ChangedDataChecker(playerCount);
 
         // [method] : 위의 modifyChecker 의 초기 셋팅하기
-        setModifyChecker(modifyChecker);
+        setModifyChecker(changedDataChecker);
 
         // [check 1] : modifyChecker 의 데이터를 수정하고 변경할 준비가 되어있다.
-        if (modifyChecker.isCompleteSetting()) {
+        if (changedDataChecker.isCompleteSetting()) {
 
             int changedWinnerPlayerIndex = this.winnerName.getSelectedItemPosition();
             long changedWinnerId = this.playerDataArrayList.get(changedWinnerPlayerIndex).getPlayerId();
@@ -578,66 +541,89 @@ public class BilliardModifyActivity extends AppCompatActivity {
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "8. changedScores <player " + index + "> = " + changedScores[index]);
             }
 
+
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <전> billiard ************************************");
+            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, changedDataChecker.getBilliardData());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <전> user ************************************");
+            DeveloperManager.displayToUserData(CLASS_NAME_LOG, changedDataChecker.getUserData());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <전> friend ************************************");
+            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, changedDataChecker.getFriendDataArrayList());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <전> player ************************************");
+            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, changedDataChecker.getPlayerDataArrayList());
+
             // [method] : winner 가 변경되었는지 판별하여 변경한다. / billiard section
-            modifyChecker.changeWinner(changedWinnerId, changedWinnerName, changedWinnerPlayerIndex);
+            changedDataChecker.changeWinner(changedWinnerId, changedWinnerName, changedWinnerPlayerIndex);
 
             // [method] : gameMode 가 변경되었는지 판별하여 변경한다. / billiard section
-            modifyChecker.changeGameMode(changedGameMode);
+            changedDataChecker.changeGameMode(changedGameMode);
 
             // [method] : playTime 이 변경되었는지 판별하여 변경한다. / billiard section
-            modifyChecker.changePlayTime(changedPlayTime);
+            changedDataChecker.changePlayTime(changedPlayTime);
 
             // [method] : cost 가 변경되었는지 판별하여 변경한다. / billiard section
-            modifyChecker.changeCost(changedCost);
+            changedDataChecker.changeCost(changedCost);
 
             // [method] : 모든 targetScore 가 변경되었는지 판별하여 변경한다. / player section
-            modifyChecker.changeTargetScores(changedTargetScores);
+            changedDataChecker.changeTargetScores(changedTargetScores);
 
             // [method] : 모든 score 가 변경되었는지 판별하여 변경한다. / player section
-            modifyChecker.changeScores(changedScores);
+            changedDataChecker.changeScores(changedScores);
 
-            // [method] : 위에서 변경한 값들 중 / score 가 범위에 맞는 값이 입력되었는지, 승자의 targetScore 와 score 값이 맞게 변경되었는지 검사하여, 오류가 발생하면 true 가 된다.
-            modifyChecker.setRangeError();
+            // [method] : 위에서 변경한 값들 중 / score 가 범위에 맞는 값이 입력되었는지 검사하여 오류가 발생하면 true 가 된다.
+            changedDataChecker.setRangeError();
+
+            // [method] : 위에서 변경한 값들 중 / 승리자의 targetScore 와 score 값이 같은지 검사하여 오류가 발생하면 true 가 된다.
+            changedDataChecker.setEqualError();
 
             // [check 2] : 위에서 변경한 값들이 범위에 맞는 값들로 변경되었다.
-            if (!modifyChecker.isRangeError()) {
+            if (!changedDataChecker.isRangeError()) {
 
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "범위 체크에서 통과하였습니다. ");
 
-                // [check 3] : 변경된 값이 있나요?
-                if (modifyChecker.isChanged()) {
+                // [check 3] : 승리자의 targetScore 와 score 가 같다.
+                if (!changedDataChecker.isEqualError()) {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "승리자의 수지와 점수는 같습니다.");
 
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 값이 있어서 테이터베이스에 데이터를 갱신해야 합니다.");
-                    // [iv/C]BilliardData : modifyChecker 의 billiardData 를 데이터베이스에 반영하기
-                    this.billiardDbManager.updateContentByCount(modifyChecker.getBilliardData());
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "++++ billiard data  확인 *********************");
-                    DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, modifyChecker.getBilliardData());
+                    // [check 4] : 변경된 값이 있나요?
+                    if (changedDataChecker.isChanged()) {
 
-                    // [method] : modifyChecker 의 userData 를 데이터베이스에 반영하기
-                    updateOfChangedUserData(modifyChecker.getUserData());
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 값이 있어서 테이터베이스에 데이터를 갱신해야 합니다.");
+                        // [iv/C]BilliardData : modifyChecker 의 billiardData 를 데이터베이스에 반영하기
+                        this.billiardDbManager.updateContentByCount(changedDataChecker.getBilliardData());
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <전> billiard ************************************");
+                        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, changedDataChecker.getBilliardData());
 
-                    // [method] : modifyChecker 의 friendDataArrayList 를 데이터베이스에 반영하기
-                    updateOfChangedAllFriendData(modifyChecker.getFriendDataArrayList());
+                        // [method] : modifyChecker 의 userData 를 데이터베이스에 반영하기
+                        updateOfChangedUserData(changedDataChecker.getUserData());
 
-                    // [method] : modifyChecker 의 playerDataArrayList 를 데이터베이스에 반영하기
-                    updateOfChangedAllPlayerData(modifyChecker.getPlayerDataArrayList());
+                        // [method] : modifyChecker 의 friendDataArrayList 를 데이터베이스에 반영하기
+                        updateOfChangedAllFriendData(changedDataChecker.getFriendDataArrayList());
 
-                    // [lv/C]Intent : update 완료 후 BilliardDisplayActivity 로 이동하여 변경된 값 확인
-                    Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+                        // [method] : modifyChecker 의 playerDataArrayList 를 데이터베이스에 반영하기
+                        updateOfChangedAllPlayerData(changedDataChecker.getPlayerDataArrayList());
 
-                    // [lv/C]SessionManager : intent 에 변경된 userData 를 포함하기
-                    SessionManager.setIntentOfUserData(intent, modifyChecker.getUserData());
+                        // [lv/C]Intent : update 완료 후 BilliardDisplayActivity 로 이동하여 변경된 값 확인
+                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
-                    finish();
+                        // [lv/C]SessionManager : intent 에 변경된 userData 를 포함하기
+                        SessionManager.setIntentOfUserData(intent, changedDataChecker.getUserData());
 
-                    startActivity(intent);
+                        finish();
+
+                        startActivity(intent);
+
+                    } else {
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 값이 없어!");
+                    } // [check 4]
 
                 } else {
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "변경된 값이 없어!");
+                    Toast.makeText(getApplicationContext(), "승리자는 '수지'와 '점수'가 같아야 합니다.", Toast.LENGTH_SHORT).show();
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<승리자> 의 targetScore 와 score 값이 다릅니다요!");
                 } // [check 3]
 
             } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "범위 체크하던 중 범위이외의 값이 입력되었어!");
+                Toast.makeText(getApplicationContext(), "점수를 범위에 맞는 값들로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player> 의 score 범위에 맞는 값이 아니예요!");
             } // [check 2]
 
         } else {
@@ -650,31 +636,31 @@ public class BilliardModifyActivity extends AppCompatActivity {
     /**
      * [method] [set] ModifyManager 를 생성하고, billiardData, userData, friendDataArrayList, playerDataArrayList 를 설정하기
      */
-    private void setModifyChecker(ModifyChecker modifyManager) {
+    private void setModifyChecker(ChangedDataChecker changedDataChecker) {
 
         // [lv/C]ModifyChecker : billiardData 입력
-        modifyManager.setBilliardData(this.billiardData);
+        changedDataChecker.setBilliardData(this.billiardData);
 
         // [lv/C]ModifyChecker : userData 입력
-        modifyManager.setUserData(this.userData);
+        changedDataChecker.setUserData(this.userData);
 
         // [lv/C]ModifyChecker : friendDataArrayList 입력
-        modifyManager.setFriendDataArrayList(this.friendDataArrayList);
+        changedDataChecker.setFriendDataArrayList(this.friendDataArrayList);
 
         // [lv/C]ModifyChecker : playerDataArrayList 입력
-        modifyManager.setPlayerDataArrayList(this.playerDataArrayList);
+        changedDataChecker.setPlayerDataArrayList(this.playerDataArrayList);
 
         // [lv/C]ModifyChecker : init 변수들 초기값 설정
-        modifyManager.setInitData();
+        changedDataChecker.setInitData();
 
         // [lv/C]ModifyChecker : 초기 화 완료 되었는지 세팅
-        modifyManager.setCompleteSetting();
+        changedDataChecker.setCompleteSetting();
 
     } // End of method [setModifyManager]
 
 
     /**
-     * [method] player widget 중 targetScore spinner 의 선택한 값들을 int[] 로 만들어서 반환한다.
+     * [method] [setData] player widget 중 targetScore spinner 의 선택한 값들을 int[] 로 만들어서 반환한다.
      */
     private int[] setChangedTargetScores(int playerCount, Spinner[] targetScore) {
 
@@ -695,7 +681,7 @@ public class BilliardModifyActivity extends AppCompatActivity {
 
 
     /**
-     * [method] player widget 중 score EditText 의 값들을 int[] 로 만들어서 반환한다.
+     * [method] [setData] player widget 중 score EditText 의 값들을 int[] 로 만들어서 반환한다.
      */
     private int[] setChangedScores(int playerCount, EditText[] score) {
 
@@ -715,9 +701,13 @@ public class BilliardModifyActivity extends AppCompatActivity {
 
 
     /**
-     * [method] 변경된 UserData 를 데이터베이스에 반영하기
+     * [method] [update] 변경된 UserData 를 데이터베이스에 반영하기
      */
     private void updateOfChangedUserData(UserData changedUserData) {
+
+        final String METHOD_NAME = "[updateOfChangedUserData] ";
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <후> user ************************************");
+        DeveloperManager.displayToUserData(CLASS_NAME_LOG, changedUserData);
 
         // [iv/C]UserDbManager : 위 changedUserData 를 데이터베이스에 반영하기
         this.userDbManager.updateContent(changedUserData.getId(), changedUserData.getGameRecordWin(), changedUserData.getGameRecordLoss(), changedUserData.getRecentGameBilliardCount(), changedUserData.getTotalPlayTime(), changedUserData.getTotalCost());
@@ -726,9 +716,13 @@ public class BilliardModifyActivity extends AppCompatActivity {
 
 
     /**
-     * [method] 변경된 모든 friendData 를 데이터베이스에 반영하기
+     * [method] [update] 변경된 모든 friendData 를 데이터베이스에 반영하기
      */
     private void updateOfChangedAllFriendData(ArrayList<FriendData> friendDataArrayList) {
+
+        final String METHOD_NAME = "[updateOfChangedAll] ";
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <후> friend ************************************");
+        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList);
 
         // [lv/i]result : update 한 후의 결과를 저장
         int[] result = new int[friendDataArrayList.size()];
@@ -749,10 +743,13 @@ public class BilliardModifyActivity extends AppCompatActivity {
     } // End of method [updateOfChangedAllFriendData]
 
     /**
-     * [method] 변경된 모든 playerData 를 데이터베이스에 반영하기
-     *
+     * [method] [update] 변경된 모든 playerData 를 데이터베이스에 반영하기
      */
     private void updateOfChangedAllPlayerData(ArrayList<PlayerData> playerDataArrayList) {
+
+        final String METHOD_NAME = "[updateOfChangedAllPlayerData] ";
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + " ************************************ <후> player ************************************");
+        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
 
         // [lv/i]result : update 한 후의 결과를 저장
         int[] result = new int[playerDataArrayList.size()];

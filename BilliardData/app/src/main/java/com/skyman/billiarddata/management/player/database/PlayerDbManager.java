@@ -26,22 +26,9 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+
     /**
      * [method] [insert] ProjectBlueDBHelper 에서 writeableDatabase 를 가져와 player 테이블에 데이터를 저장한다.
-     *
-     * <p>
-     * project_blue.db 의 player 테이블에 데이터를 insert query 문을 실행한다.
-     *
-     * <p>
-     * 반환값
-     * '-2' : 매개변수로 받은 값들이 형식에 맞지 않는다.
-     * '-1' : 데이터베이스 문제 발생
-     * '0' : 코드들이 실행되지 안았다.
-     * 그 외의 값 : player 테이블에 입력 된 행 번호
-     *
-     * <p>
-     * ContentValues 의 nullColumnHack 이 'null' 이라면, values 객체의 어떤 열에 값이 없으면 지금 내용을 insert query 가 실행 안 된다.
-     * 이 '열 이름' 이라면, 해당 열에 값이 없다면 'null' 값을 넣는다.
      *
      * @return player 테이블에 데이터를 입력한 결과를 반환한다.
      */
@@ -53,7 +40,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardCount> <playerId> <playerName> <targetScore> <score> 을 저장한다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -117,7 +104,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[saveContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playerData> 을 저장한다.");
 
         // [lv/l]newRowId : 이 메소드의 결과 값 저장
         long newRowId = 0;
@@ -185,7 +172,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME = "[loadAllContentByBilliardCount] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardCount> 에 해당하는 데이터 가져오기");
 
         // [lv/C]ArrayList<PlayerData> : player 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
@@ -243,76 +230,11 @@ public class PlayerDbManager extends ProjectBlueDBManager {
      * @return player 테이블에 저장된 모든 데이터
      */
     /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
-    public ArrayList<PlayerData> loadAllContentByPlayerId(long playerId, String playerName) {
-
-        final String METHOD_NAME = "[loadAllContentByPlayerIdAndPlayerName] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
-
-        // [lv/C]ArrayList<PlayerData> : player 테이블에 저장된 모든 데이커가 담길 ArrayList
-        ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
-
-        // [check  1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
-
-            // [check 2 : billiardCount 의 형식이 0 이상이다.
-            if ((playerId > 0)
-                    && !playerName.equals("")) {
-
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
-                SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
-
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "QUERY =  " + makeSelectQueryOfPlayerIdAndPlayerName(playerId,playerName));
-
-                // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
-                Cursor readCursor = readDb.rawQuery(makeSelectQueryOfPlayerIdAndPlayerName(playerId, playerName), null);
-
-                // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
-                while (readCursor.moveToNext()) {
-
-                    // [lv/C]PlayerData : player 테이블의 '한 행'의 정보를 담는다.
-                    PlayerData playerData = new PlayerData();
-                    playerData.setCount(readCursor.getLong(0));
-                    playerData.setBilliardCount(readCursor.getLong(1));
-                    playerData.setPlayerId(readCursor.getLong(2));
-                    playerData.setPlayerName(readCursor.getString(3));
-                    playerData.setTargetScore(readCursor.getInt(4));
-                    playerData.setScore(readCursor.getInt(5));
-
-                    // [lv/C]ArrayList<BilliardData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
-                    playerDataArrayList.add(playerData);
-
-                } // [cycle 1]
-
-                // [lv/C]SQLiteDatabase : close / end
-                readDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiardCount 의 형식이 맞지 않습니다.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-
-        return playerDataArrayList;
-    } // End of method [loadAllContentByPlayerIdAndPlayerName]
-
-
-    /**
-     * [method] [select] 해당 playerId 가 참가한 게임 목록을 가져온다.
-     *
-     * @param playerId 게임에 참가한 player 의 id
-     * @return player 테이블에 저장된 모든 데이터
-     */
-    /* method : load, SQLite DB Helper 를 이용하여 해당 테이블의 정보를 가져온다. */
     public ArrayList<PlayerData> loadAllContentByPlayerIdAndPlayerName(long playerId, String playerName) {
 
         final String METHOD_NAME = "[loadAllContentByPlayerIdAndPlayerName] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playerId> <playerName> 에 해당하는 데이터를 가져온다.");
 
         // [lv/C]ArrayList<PlayerData> : player 테이블에 저장된 모든 데이커가 담길 ArrayList
         ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
@@ -378,7 +300,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[updateContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 <billiardCount> <playerId> <playerName> <targetScore> <score> 을 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -434,7 +356,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[updateContent] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playerData> 를 갱신합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -494,7 +416,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
 
         final String METHOD_NAME= "[deleteContentByBilliardCount] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing ............");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardCount> 에 해당하는 모든 데이터를 삭제합니다.");
 
         // [lv/l]methodResult : 이 메소드의 결과 값 저장
         int methodResult = 0;
@@ -526,6 +448,9 @@ public class PlayerDbManager extends ProjectBlueDBManager {
         return methodResult;
 
     } // End of method [deleteContentByBilliardCount]
+
+
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
     /**
