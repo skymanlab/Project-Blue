@@ -1,6 +1,5 @@
-package com.skyman.billiarddata.management.friend.listview;
+package com.skyman.billiarddata.management.friend.ListView;
 
-import android.hardware.SensorDirectChannel;
 import android.widget.ListView;
 
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;

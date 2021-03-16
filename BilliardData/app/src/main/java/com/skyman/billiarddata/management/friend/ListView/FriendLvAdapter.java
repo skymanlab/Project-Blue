@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.management.friend.listview;
+package com.skyman.billiarddata.management.friend.ListView;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.management.calendar;
+package com.skyman.billiarddata.management.statistics;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
@@ -29,6 +29,9 @@ public class SameDateCheckerMake {
 
             // [lv/i]dateDivision : 날짜를 년, 월, 일 을 구분하여 int 배열로 만든다.
             int[] dateDivision = changeDateToIntArrayType(billiardDataArrayList.get(index).getDate());
+
+            // [lv/C]SameDateChecker : index 번째의 year 에 해당월의 넣는다. / 기준 날짜(index)에만 해당한다.
+            sameDateChecker.setYearToIndex(index, dateDivision[0]);
 
             // [lv/C]SameDateChecker : index 번째의 month 에 해당월의 넣는다. / 기준 날짜(index)에만 해당한다.
             sameDateChecker.setMonthToIndex(index, dateDivision[1]);
@@ -209,7 +212,7 @@ public class SameDateCheckerMake {
      * [method] date 문자열을 StringTokenizer 로 구분한 뒤, 각 문자열을 int 로 parse 한 다음 배열에 담아 반환한다.
      *
      * @param date 날짜 문자열
-     * @return 분할 된 날짜가 integer 로 변환되어 담긴 배열
+     * @return 분할 된 날짜가 integer 로 변환되어 담긴 배열 [0]:year, [1]:month, [2]:dayOfMonth
      */
     private int[] changeDateToIntArrayType(String date) {
 

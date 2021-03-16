@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.factivity.user.UserPagerAdapter;
+import com.skyman.billiarddata.fragment.user.UserPagerAdapter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;

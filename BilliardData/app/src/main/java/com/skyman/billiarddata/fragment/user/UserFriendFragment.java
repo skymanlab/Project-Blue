@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.factivity.user;
+package com.skyman.billiarddata.fragment.user;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
-import com.skyman.billiarddata.management.friend.listview.FriendLvManager;
+import com.skyman.billiarddata.management.friend.ListView.FriendLvManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
@@ -202,6 +202,10 @@ public class UserFriendFragment extends Fragment {
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장된 user 데이터가 없습니다.");
+
+            // <사용자 알림>
+            toastHandler("먼저 당신의 기본 정보를 입력해주세요.");
+
         } // [check 1]
 
     } // End of method [setClickListenerOfFriendAddButton]

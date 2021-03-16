@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <!-- title -->
         <LinearLayout
@@ -32,22 +31,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorActivityContent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <!-- content 1. tab -->
-            <LinearLayout
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/user_manager_tl_tab_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPagerTab"
-                android:padding="5dp">
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/user_manager_tl_tab_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.google.android.material.tabs.TabLayout>
-            </LinearLayout><!-- End of content 1 -->
+                android:background="@color/colorPagerTab" /><!-- End of content 1 -->
 
             <!-- divider -->
             <View
@@ -57,16 +48,11 @@
                 android:background="?android:attr/listDivider" /><!-- End of divider -->
 
             <!-- content 2. pager-->
-            <LinearLayout
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/user_manager_pg_user_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPagerContent">
+                android:layout_height="match_parent" /><!-- End of content 2 -->
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/user_manager_pg_user_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
-            </LinearLayout><!-- End of content 2 -->
         </LinearLayout><!-- End of content-->
     </LinearLayout><!-- End of main-->
 

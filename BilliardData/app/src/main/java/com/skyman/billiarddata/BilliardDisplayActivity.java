@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.billiard.listview.BilliardLvManager;
+import com.skyman.billiarddata.management.billiard.ListView.BilliardLvManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.player.data.PlayerData;

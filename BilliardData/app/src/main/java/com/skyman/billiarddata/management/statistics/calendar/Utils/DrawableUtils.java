@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.management.calendar.Utils;
+package com.skyman.billiarddata.management.statistics.calendar.Utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -33,7 +33,7 @@ public class DrawableUtils {
     /* method : 파란색, 빨간색 원에 문자열을 넣은 원을 생성 */
     public static Drawable getBlueOrRedCircleDrawableWithText(Context context, String string) {
         Drawable background = ContextCompat.getDrawable(context, R.drawable.sample_two_icons);
-        Drawable text = CalendarUtils.getDrawableText(context, string, null, android.R.color.white, 10);
+        Drawable text = CalendarUtils.getDrawableText(context, string, null, android.R.color.white, 8);
 
         Drawable[] layers = {background, text};
         return new LayerDrawable(layers);

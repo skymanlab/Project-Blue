@@ -41,74 +41,102 @@ public class MainActivity extends AppCompatActivity {
         Button userManager = (Button) findViewById(R.id.main_bt_user_manager);
         Button statisticsManager = (Button) findViewById(R.id.main_bt_statistics_manager);
         Button appInfo = (Button) findViewById(R.id.main_bt_app_info);
+        Button appSetting = (Button) findViewById(R.id.main_bt_app_setting);
 
-        // [method]mappingOfWidget
-        mappingOfWidget();
+        // [method]connectDbManager
+        connectDbManager();
 
         // [iv/C]UserData : user 테이블에서 id 값으로 데이터 가져오기 / 현재는 혼자 이므로 id 는 1
         this.userData = this.userDbManager.loadContent(TEMP_ID);
         this.friendDataArrayList = this.friendDbManager.loadAllContentByUserId(TEMP_ID);
 
-        // [lv/C]Button : billiardInput click listener setting
-        billiardInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                // [method]showDialogOfCheckFriend : 유저 정보와 친구 목록이 있을 때, 친구를 선택해서 intent 에 저장하여 BilliardInputActivity 로 이동한다.
-                setClickListenerOfBilliardInputButton();
-            }
-        });
+        // [lv/C]Button : billiardInput click listener setting
+        billiardInput.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // [method]showDialogOfCheckFriend : 유저 정보와 친구 목록이 있을 때, 친구를 선택해서 intent 에 저장하여 BilliardInputActivity 로 이동한다.
+                        setClickListenerOfBilliardInputButton();
+                    }
+                }
+        );
+
 
         // [lv/C]Button : billiardDisplay click listener setting
-        billiardDisplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        billiardDisplay.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
-                Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-                SessionManager.setIntentOfUserData(intent, userData);
-                startActivity(intent);
+                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+                        SessionManager.setIntentOfUserData(intent, userData);
+                        startActivity(intent);
 
-            }
-        });
+                    }
+                }
+        );
 
         // [lv/C]Button : userManager click listener setting
-        userManager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        userManager.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 intent 생성
-                Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
-                SessionManager.setIntentOfUserData(intent, userData);
-                startActivity(intent);
+                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                        SessionManager.setIntentOfUserData(intent, userData);
+                        startActivity(intent);
 
-            }
-        });
+                    }
+                }
+        );
 
         // [lv/C]Button : statistics click listener setting
-        statisticsManager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        statisticsManager.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
-                Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
-                SessionManager.setIntentOfUserData(intent, userData);
-                startActivity(intent);
+                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
+                        SessionManager.setIntentOfUserData(intent, userData);
+                        startActivity(intent);
 
-            }
-        });
+                    }
+                }
+        );
+
+        // [lv/C]Button : appSetting click listener setting
+        appSetting.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), AppSettingActivity.class);
+                        startActivity(intent);
+
+                    }
+                }
+        );
 
         // [lv/C]Button : appInfo click listener setting
-        appInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        appInfo.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
-                Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
-                startActivity(intent);
+                        // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
+                        Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
+                        startActivity(intent);
 
-            }
-        });
+                    }
+                }
+        );
+
     } // End of method [onCreate]
 
 
@@ -116,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        final String METHOD_NAME= "[onStart] ";
+        final String METHOD_NAME = "[onStart] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "메소드가 실행하였습니다.");
 
@@ -137,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        final String METHOD_NAME= "[onDestroy] ";
+        final String METHOD_NAME = "[onDestroy] ";
 
         // [check 1] : userDbManager 가 생성되었다.
         if (this.userDbManager != null) {
@@ -161,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * [method] user, friend 테이블 관리하는 객체 생성
      */
-    private void mappingOfWidget() {
+    private void connectDbManager() {
 
         // [iv/C]UserDbManager : user 테이블을 관리하는 매니저 생성 및 초기화
         this.userDbManager = new UserDbManager(this);
@@ -171,16 +199,15 @@ public class MainActivity extends AppCompatActivity {
         this.friendDbManager = new FriendDbManager(this);
         this.friendDbManager.initDb();
 
-    } // End of method [mappingOfWidget]
+    } // End of method [connectDbManager]
 
 
     /**
      * [method] userDate -> FriendData 의 데이터 유무를 확인하고 모두 존재할 경우만 친구목록을 선택하여 BilliardInputActivity 로 넘어간다.
-     *
      */
-    private void  setClickListenerOfBilliardInputButton() {
+    private void setClickListenerOfBilliardInputButton() {
 
-        final String METHOD_NAME= "[setClickListenerOfBilliardInputButton] ";
+        final String METHOD_NAME = "[setClickListenerOfBilliardInputButton] ";
 
         // [check 1] : userData 가(나의 정보) 있다.
         if (userData != null) {
@@ -219,11 +246,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * [method] 친구목록을 AlertDialog 의 setSingleChoiceItems 를 설정하고, 선택한 값을 intent 로 넘겨준다.
-     *
      */
     private void showDialogOfCheckFriend() {
 
-        final String METHOD_NAME= "[showDialogOfCheckFriend] ";
+        final String METHOD_NAME = "[showDialogOfCheckFriend] ";
 
         // [lv/C]ArrayList<String> : 친구 이름만 담길 배열
         final ArrayList<String> friendNameList = new ArrayList<>();
@@ -258,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // [check 1] : 유저 정보가 있다. / 다시 한 번 검사하는게 필요있니?
-                        if(userData != null) {
+                        if (userData != null) {
 
                             // [check 2] : 친구 목록이 있다. / 다시 한 번 검사하는게 필요있니?
                             if (friendNameArray.length != 0) {
@@ -305,11 +331,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * [method] 유저 등록 화면으로 이동할 건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=0 값을 intent 로 넘긴다.
-     *
      */
     private void showDialogToCheckWhetherToMoveUMAWithUserData() {
 
-        final String METHOD_NAME= "[showDialogToCheckWhetherToMoveUMAWithUserData] ";
+        final String METHOD_NAME = "[showDialogToCheckWhetherToMoveUMAWithUserData] ";
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -345,11 +370,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * [method] 친구를 등록 할건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=2 값을 intent 로 넘겨준다.
-     *
      */
     private void showDialogToCheckWhetherToMoveUMAWithFriendData() {
 
-        final String METHOD_NAME= "[showDialogToCheckWhetherToMoveUMAWithFriendData] ";
+        final String METHOD_NAME = "[showDialogToCheckWhetherToMoveUMAWithFriendData] ";
 
         // [lv/C]AlertDialog : Builder 객체 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

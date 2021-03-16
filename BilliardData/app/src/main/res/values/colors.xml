@@ -25,7 +25,7 @@
     <color name="colorActivityFooter">#ebe8ff</color>
 
     <!-- fragment manager activity -->
-    <color name="colorPagerTab">#c0c7d1</color>
+    <color name="colorPagerTab">#ebe8ff</color>
     <color name="colorPagerContent">#9cb6db</color>
 
     <!-- widget -->

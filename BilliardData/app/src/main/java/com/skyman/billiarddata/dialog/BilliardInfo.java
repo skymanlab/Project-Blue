@@ -3,18 +3,17 @@ package com.skyman.billiarddata.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Debug;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.calendar.SameDateChecker;
+import com.skyman.billiarddata.management.statistics.SameDateChecker;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class BilliardInfo {
      */
     public void setDialog() {
 
-        final String METHOD_NAME= "[setDialog] ";
+        final String METHOD_NAME = "[setDialog] ";
 
         // [lv/C]Dialog : 객체 생성
         final Dialog dialog = new Dialog(this.context);
@@ -91,33 +90,33 @@ public class BilliardInfo {
             ArrayList<SameDateChecker.SameDateItem> sameDateItemArrayList = this.sameDateChecker.getSameDateItemToIndex(this.index);
 
             // LinearLayout 에 들어가는 Button 의 설정
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(120, 110);
-            params.setMargins(10,10,10,10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(10, 10, 10, 10);
 
             // [cycle 1] : dataChecker 의 getArraySize 만큼 순환하며
-            for (int position=0 ; position < sameDateItemArrayList.size() ; position++){
+            for (int position = 0; position < sameDateItemArrayList.size(); position++) {
 
                 // [lv/C]Button : 버튼 동적으로 생성
                 billiardInfo[position] = new Button(dialog.getContext());
-                
+
                 // [lv/C]Button : billiardInfo 버튼을 설정
                 billiardInfo[position].setLayoutParams(params);
-                billiardInfo[position].setId(100+position);
+                billiardInfo[position].setId(100 + position);
                 billiardInfo[position].setTextColor(Color.parseColor("#FFFFFF"));
 
                 // [check 2] : sameDateItemArrayList 의 isWinner 가 true 이다. 즉 승리이다.
-                if (sameDateItemArrayList.get(position).isWinner()){
+                if (sameDateItemArrayList.get(position).isWinner()) {
                     // 승리
-                  
+
                     // [lv/C]Button : 승리한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
-                    billiardInfo[position].setText(position +".승리" );
+                    billiardInfo[position].setText("승리");
                     billiardInfo[position].setBackgroundResource(R.color.colorBlue);
 
                 } else {
                     // 패배
-                  
+
                     // [lv/C]Button : 패배한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
-                    billiardInfo[position].setText(position + ".패배");
+                    billiardInfo[position].setText("패배");
                     billiardInfo[position].setBackgroundResource(R.color.colorRed);
 
                 } // [check 2]
@@ -144,8 +143,8 @@ public class BilliardInfo {
                         gameMode.setText(billiardDataArrayList.get(indexOfBilliardArray).getGameMode());           // 2. game mode
                         winnerName.setText(billiardDataArrayList.get(indexOfBilliardArray).getWinnerName());       // 5. winner name
                         playTime.setText(billiardDataArrayList.get(indexOfBilliardArray).getPlayTime() + "");      // 6. play time
-                        score.setText(billiardDataArrayList.get(indexOfBilliardArray).getScore() +"");             // 7. score
-                        cost.setText(billiardDataArrayList.get(indexOfBilliardArray).getCost()+"");                // 8. cost
+                        score.setText(billiardDataArrayList.get(indexOfBilliardArray).getScore() + "");             // 7. score
+                        cost.setText(billiardDataArrayList.get(indexOfBilliardArray).getCost() + "");                // 8. cost
                     }
                 });
                 // [iv/C]LinearLayout : 위에서 생성한 버튼 넣기

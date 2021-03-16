@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.factivity.user;
+package com.skyman.billiarddata.fragment.user;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

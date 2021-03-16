@@ -10,14 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <!-- title -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorActivityTitle"
             android:gravity="top"
             android:padding="10dp">
 
@@ -28,95 +26,120 @@
                 android:text="@string/main_title"></TextView>
         </LinearLayout><!-- End of title -->
 
-        <!-- content -->
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorActivityContent"
-            android:gravity="top|center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <!-- content 1. icon image -->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:src="@drawable/icon_noline"></ImageView>
-
-            <!-- content 2. inputData -->
-            <Button
-                android:id="@+id/main_bt_billiard_input"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorBackgroundPrimary"
-                android:text="@string/main_bt_billiard_input"
-                android:textColor="@color/colorTextPrimary"></Button>
-
-            <!-- content 3. viewData -->
-            <Button
-                android:id="@+id/main_bt_billiard_display"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorBackgroundPrimary"
-                android:text="@string/main_bt_billiard_display"
-                android:textColor="@color/colorTextPrimary"></Button>
-
-            <!-- content 4. userManager -->
-            <Button
-                android:id="@+id/main_bt_user_manager"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorBackgroundPrimary"
-                android:text="@string/main_bt_user_manager"
-                android:textColor="@color/colorTextPrimary"></Button>
-
-            <!-- content 4. statisticsManager -->
-            <Button
-                android:id="@+id/main_bt_statistics_manager"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorBackgroundPrimary"
-                android:text="@string/main_bt_statistics_manager"
-                android:textColor="@color/colorTextPrimary"></Button>
-
-            <!-- content 5. DevelopmentInfo -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom|end"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/main_bt_app_info"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/colorBackgroundSecond"
-                    android:text="@string/main_bt_development_info"
-                    android:textColor="@color/colorTextPrimary"></Button>
 
+                <!-- content -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|center"
+                    android:orientation="vertical">
+
+                    <!-- content 1. icon image -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:src="@drawable/icon_noline"></ImageView>
+
+                    <!-- content 2. billiard data input -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_billiard_input"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_billiard_input"
+                        app:cornerRadius="5dp" />
+
+                    <!-- content 3. billiard data display -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_billiard_display"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_billiard_display"
+                        app:cornerRadius="5dp" />
+
+                    <!-- content 4. user manager -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_user_manager"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_user_manager"
+                        app:cornerRadius="5dp" />
+
+                    <!-- content 4. statistics manager -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_statistics_manager"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_statistics_manager"
+                        app:cornerRadius="5dp" />
+
+                    <!-- content 5. setting -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_app_setting"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_app_setting"
+                        app:cornerRadius="5dp" />
+
+                    <!-- content 6. app info -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/main_bt_app_info"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/main_bt_app_info"
+                        app:cornerRadius="5dp" />
+
+                </LinearLayout><!-- End of content -->
+
+                <!-- footer -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/main_footer"
+                        android:textAlignment="center"></TextView>
+                </LinearLayout><!-- End of footer -->
             </LinearLayout>
 
-        </LinearLayout><!-- End of content -->
-
-        <!-- footer -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorActivityFooter"
-            android:gravity="bottom"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/main_footer"
-                android:textAlignment="center"></TextView>
-        </LinearLayout><!-- End of footer -->
+        </ScrollView>
     </LinearLayout><!-- End of main -->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <!-- title -->
         <LinearLayout
@@ -33,9 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorActivityContent"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
 
 
             <!-- content 1. app name -->
@@ -49,7 +47,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_developer">
+                    android:text="@string/app_info_app_name">
 
                 </TextView>
 
@@ -64,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/app_info_developer_content"></TextView>
+                    android:text="@string/app_info_app_name_content"></TextView>
             </LinearLayout><!-- End of content 2 -->
 
             <!-- content 2. developer group-->
@@ -183,40 +181,11 @@
                     android:text="@string/app_info_main_site_content"></TextView>
             </LinearLayout><!-- End of content 5 -->
 
-            <!-- content 6. second site -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_info_second_site">
-
-                </TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/app_info_second_site_content"></TextView>
-            </LinearLayout><!-- End of content 6 -->
-
             <!-- content 7. third site -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
+                android:background="@color/colorBackgroundThird"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -240,28 +209,6 @@
                     android:layout_weight="1"
                     android:text="@string/app_info_third_site_content"></TextView>
             </LinearLayout><!-- End of content 7 -->
-
-            <!-- content 6. second site -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_info_step"></TextView>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?android:attr/listDivider" />
-
-            </LinearLayout><!-- End of content 6 -->
-
         </LinearLayout><!-- End of content -->
 
     </LinearLayout><!-- End of main -->

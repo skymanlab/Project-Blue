@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <!-- title -->
         <LinearLayout
@@ -33,31 +32,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorActivityContent"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <!-- content 1. all billiard data -->
-            <LinearLayout
+            <ListView
+                android:id="@+id/billiard_display_lv_all_billiard_data"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBackgroundSecond"></ListView>
 
-                <ListView
-                    android:id="@+id/billiard_display_lv_all_billiard_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorBackgroundSecond"></ListView>
-            </LinearLayout><!-- End of content 1 -->
-
-
-            <!-- content 2. button -->
             <View
-                android:id="@+id/divider4"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="?android:attr/listDivider" />
 
+            <!-- content 2. button -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,9 +58,9 @@
                     android:id="@+id/billiard_display_bt_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorBackgroundPrimary"
                     android:text="@string/billiard_display_bt_delete"
-                    android:textColor="@color/colorTextPrimary"
-                    android:background="@color/colorBackgroundPrimary"></Button>
+                    android:textColor="@color/colorTextPrimary"></Button>
             </LinearLayout><!-- End of content 2 -->
 
         </LinearLayout><!-- End of content -->

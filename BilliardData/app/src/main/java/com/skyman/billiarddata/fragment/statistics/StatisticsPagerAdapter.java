@@ -1,4 +1,4 @@
-package com.skyman.billiarddata.factivity.statistics;
+package com.skyman.billiarddata.fragment.statistics;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.calendar.SameDateChecker;
+import com.skyman.billiarddata.management.statistics.SameDateChecker;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -39,7 +39,7 @@ public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new CalendarFragment(userData, billiardDataArrayList, sameDateChecker);
             case 1:
-                return new ChartFragment();
+                return ChartFragment.newInstance(userData, billiardDataArrayList, sameDateChecker);
             default:
                 return null;
         }

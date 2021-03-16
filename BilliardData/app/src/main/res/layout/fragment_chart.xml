@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".factivity.statistics.ChartFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.statistics.ChartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <!-- main -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <!-- title-->
         <LinearLayout
@@ -31,8 +30,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp">
+
+                <!-- my total game record -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statistics_manager_chart_my_total_game_record"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/cardview_dark_background" />
+
+                    <TextView
+                        android:id="@+id/f_chart_myTotalGameRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statistics_manager_chart_my_total_game_record_default"/>
+                </LinearLayout><!-- End of my total game record -->
+
+                <!-- -->
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <ListView
+                android:id="@+id/f_chart_month_statistics"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout><!-- End of content-->
 
