@@ -82,6 +82,8 @@ public final class DeveloperManager {
                 // [cycle 1] : billiardDataArrayList 의 size 만큼
                 for (int index = 0; index < billiardDataArrayList.size(); index++) {
 
+                    Log.d(className, "----------------------------------- " + index + " -----------------------------------");
+
                     Log.d(className, "billiardData / 0. count : " + billiardDataArrayList.get(index).getCount());                      // 0. count
                     Log.d(className, "billiardData / 1. date : " + billiardDataArrayList.get(index).getDate());                        // 1. date
                     Log.d(className, "billiardData / 2. gameMode : " + billiardDataArrayList.get(index).getGameMode());                // 2 target score
@@ -201,6 +203,8 @@ public final class DeveloperManager {
                 // [cycle 1] : friendDataArrayList 의 size 만큼 모든 내용을 확인한다.
                 for (int position = 0; position < friendDataArrayList.size(); position++) {
 
+                    Log.d(className, "----------------------------------- " + position + " -----------------------------------");
+
                     Log.d(className, "FriendData / 0. id : " + friendDataArrayList.get(position).getId());                                              // 0. id
                     Log.d(className, "FriendData / 1. userId : " + friendDataArrayList.get(position).getUserId());                                      // 1. user id
                     Log.d(className, "FriendData / 2. name : " + friendDataArrayList.get(position).getName());                                          // 2. name
@@ -257,6 +261,8 @@ public final class DeveloperManager {
 
                 // [cycle 1] : friendDataArrayList 의 size 만큼 모든 내용을 확인한다.
                 for (int index = 0; index < playerDataArrayList.size(); index++) {
+
+                    Log.d(className, "----------------------------------- " + index + " -----------------------------------");
 
                     Log.d(className, "PlayerData / 0. count : " + playerDataArrayList.get(index).getCount());                       // 0. id
                     Log.d(className, "PlayerData / 1. billiardCount : " + playerDataArrayList.get(index).getBilliardCount());       // 1. billiard count

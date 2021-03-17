@@ -92,7 +92,7 @@
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:src="@drawable/sample_blue_circle"></ImageView>
+                            android:src="@drawable/sample_red_circle"></ImageView>
                     </LinearLayout><!-- End of content 2-1 -->
 
                     <!-- content 2-2. loss -->
@@ -118,7 +118,7 @@
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:src="@drawable/sample_red_circle"></ImageView>
+                            android:src="@drawable/sample_blue_circle"></ImageView>
                     </LinearLayout><!-- End of content 2-2 -->
                 </LinearLayout><!-- End of content 2 -->
             </LinearLayout><!-- End of content-->

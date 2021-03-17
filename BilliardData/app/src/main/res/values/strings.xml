@@ -92,8 +92,8 @@
     <string name="app_info_version_content">ⓥ 1.0.0</string>
     <string name="app_info_main_site">블로그</string>
     <string name="app_info_main_site_content">https://blog.naver.com/skyman13</string>
-    <string name="app_info_third_site">GitHub</string>
-    <string name="app_info_third_site_content">https://github.com/skymanlab/Project-Blue</string>
+    <string name="app_info_second_site">GitHub</string>
+    <string name="app_info_second_site_content">https://github.com/skymanlab</string>
     <string name="app_info_step">조작 단계 ▼</string>
 
     <!-- Activity : app setting -->

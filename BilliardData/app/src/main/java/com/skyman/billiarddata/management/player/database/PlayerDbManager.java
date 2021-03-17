@@ -130,7 +130,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
                 insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_SCORE, playerData.getScore());
 
                 // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
-                newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
+                newRowId = writeDb.insert(PlayerTableSetting.Entry.TABLE_NAME, null, insertValues);
 
                 // [lv/C]SQLiteDatabase : close             == > 닫은 다음 결과값을 반환하든 가공하든 하면 된다.
                 writeDb.close();
@@ -158,7 +158,129 @@ public class PlayerDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+
+    public long saveContentByImport(ArrayList<PlayerData> playerDataArrayList) {
+        final String METHOD_NAME = "[saveContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playerData> 을 저장한다.");
+
+        // [lv/l]newRowId : 이 메소드의 결과 값 저장
+        long newRowId = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기            ==> SQLiteDatabase 는 모든 조건이 만족 했을 때 가져와서
+            SQLiteDatabase writeDb = super.getDbOpenHelper().getWritableDatabase();
+
+            // 0. count
+            // 1. billiard count
+            // 2. player id
+            // 3. player name
+            // 4. target score
+            // 5. score
+
+            for (int index =0 ; index< playerDataArrayList.size(); index++) {
+
+                // [check 2] : 매개변수의 형식이 맞는 지 검사한다.
+                if (
+                        (playerDataArrayList.get(index).getCount() > 0)
+                                && (playerDataArrayList.get(index).getBilliardCount() > 0)
+                                && (playerDataArrayList.get(index).getPlayerId() > 0)
+                                && !playerDataArrayList.get(index).getPlayerName().equals("")
+                                && (playerDataArrayList.get(index).getTargetScore() >= 0)
+                                && (playerDataArrayList.get(index).getScore() >= 0)) {
+
+                    // [lv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
+                    ContentValues insertValues = new ContentValues();
+                    insertValues.put(PlayerTableSetting.Entry._COUNT, playerDataArrayList.get(index).getCount());
+                    insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_BILLIARD_COUNT, playerDataArrayList.get(index).getBilliardCount());
+                    insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_PLAYER_ID, playerDataArrayList.get(index).getPlayerId());
+                    insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_PLAYER_NAME, playerDataArrayList.get(index).getPlayerName());
+                    insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, playerDataArrayList.get(index).getTargetScore());
+                    insertValues.put(PlayerTableSetting.Entry.COLUMN_NAME_SCORE, playerDataArrayList.get(index).getScore());
+
+                    // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
+                    newRowId = writeDb.insert(PlayerTableSetting.Entry.TABLE_NAME, null, insertValues);
+
+
+                    // [check 3] : newRowId 값이 어떤 값이진 구분하여 결과를 반환한다.
+                    if (newRowId == -1) {
+                        // 데이터 insert 실패
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    } else {
+                        // 데이터 insert 성공
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "입력 성공했습니다. " + newRowId + " 값을 리턴합니다.");
+                    } // [check 3]
+
+                } else {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않아요.");
+                    newRowId = -2;
+                } // [check 2]
+
+            }
+
+            // [lv/C]SQLiteDatabase : close             == > 닫은 다음 결과값을 반환하든 가공하든 하면 된다.
+            writeDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
+        return newRowId;
+    } // End of method [saveContent]
+
+
+
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    public ArrayList<PlayerData> loadAllContent() {
+
+        final String METHOD_NAME = "[loadAllContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardCount> 에 해당하는 데이터 가져오기");
+
+        // [lv/C]ArrayList<PlayerData> : player 테이블에 저장된 모든 데이커가 담길 ArrayList
+        ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
+
+        // [check  1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
+            SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
+
+            // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
+            Cursor readCursor = readDb.rawQuery(PlayerTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
+
+            // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
+            while (readCursor.moveToNext()) {
+
+                // [lv/C]PlayerData : player 테이블의 '한 행'의 정보를 담는다.
+                PlayerData playerData = new PlayerData();
+                playerData.setCount(readCursor.getLong(0));
+                playerData.setBilliardCount(readCursor.getLong(1));
+                playerData.setPlayerId(readCursor.getLong(2));
+                playerData.setPlayerName(readCursor.getString(3));
+                playerData.setTargetScore(readCursor.getInt(4));
+                playerData.setScore(readCursor.getInt(5));
+
+                // [lv/C]ArrayList<BilliardData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
+                playerDataArrayList.add(playerData);
+
+            } // [cycle 1]
+
+            // [lv/C]SQLiteDatabase : close / end
+            readDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+
+        return playerDataArrayList;
+
+    } // End of method [loadAllContentByBilliardCount]
 
 
     /**
@@ -249,7 +371,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
                 // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
                 SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
 
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "QUERY =  " + makeSelectQueryOfPlayerIdAndPlayerName(playerId,playerName));
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "QUERY =  " + makeSelectQueryOfPlayerIdAndPlayerName(playerId, playerName));
 
                 // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
                 Cursor readCursor = readDb.rawQuery(makeSelectQueryOfPlayerIdAndPlayerName(playerId, playerName), null);
@@ -298,7 +420,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
      */
     public int updateContentByCount(long count, long billiardCount, long playerId, String playerName, int targetScore, int score) {
 
-        final String METHOD_NAME= "[updateContent] ";
+        final String METHOD_NAME = "[updateContent] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 <billiardCount> <playerId> <playerName> <targetScore> <score> 을 갱신합니다.");
 
@@ -354,7 +476,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
      */
     public int updateContentByCount(PlayerData playerData) {
 
-        final String METHOD_NAME= "[updateContent] ";
+        final String METHOD_NAME = "[updateContent] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playerData> 를 갱신합니다.");
 
@@ -414,7 +536,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
      */
     public int deleteContentByBilliardCount(long billiardCount) {
 
-        final String METHOD_NAME= "[deleteContentByBilliardCount] ";
+        final String METHOD_NAME = "[deleteContentByBilliardCount] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardCount> 에 해당하는 모든 데이터를 삭제합니다.");
 
@@ -431,7 +553,7 @@ public class PlayerDbManager extends ProjectBlueDBManager {
                 SQLiteDatabase deleteDb = this.getDbOpenHelper().getWritableDatabase();
 
                 // [lv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
-                methodResult = deleteDb.delete(PlayerTableSetting.Entry.TABLE_NAME, PlayerTableSetting.Entry.COLUMN_NAME_BILLIARD_COUNT + "="+ billiardCount, null);
+                methodResult = deleteDb.delete(PlayerTableSetting.Entry.TABLE_NAME, PlayerTableSetting.Entry.COLUMN_NAME_BILLIARD_COUNT + "=" + billiardCount, null);
 
                 // [lv/C]SQLiteDatabase : close
                 deleteDb.close();
@@ -456,12 +578,11 @@ public class PlayerDbManager extends ProjectBlueDBManager {
     /**
      * [method] playerId 와 playerName 으로 SQL query 문을 만든다.
      *
-     * <P>
+     * <p>
      * select * from player where playerId='' and playerName=''
      * </P>
-     *
      */
-    private String makeSelectQueryOfPlayerIdAndPlayerName(long playerId, String playerName){
+    private String makeSelectQueryOfPlayerIdAndPlayerName(long playerId, String playerName) {
 
         StringBuilder query = new StringBuilder();
 

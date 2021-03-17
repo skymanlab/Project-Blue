@@ -188,6 +188,88 @@ public class FriendDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+    public long saveContentByImport(ArrayList<FriendData> friendDataArrayList) {
+
+        final String METHOD_NAME = "[saveContentByImport] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<friendData> 를 저장합니다.");
+
+        // [lv/l]newRowId : 이 메소드의 결과 값 저장
+        long newRowId = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기            ==> SQLiteDatabase 는 모든 조건이 만족 했을 때 가져와서
+            SQLiteDatabase writeDb = this.getDbOpenHelper().getWritableDatabase();
+
+            // 0. id
+            // 1. user id
+            // 2. name
+            // 3. game record win
+            // 4. game record loss
+            // 5. recent game billiard count
+            // 6. total play time
+            // 7. total cost
+
+
+            for (int index=0; index<friendDataArrayList.size(); index++) {
+
+                // check : 매개변수의 내용 중에 빈 곳이 없나 검사
+                if (
+                        (friendDataArrayList.get(index).getId()> 0) &&                          // 0. id
+                        (friendDataArrayList.get(index).getUserId() > 0) &&                     // 1. user id
+                        !friendDataArrayList.get(index).getName().equals("") &&                 // 2. name
+                        (friendDataArrayList.get(index).getGameRecordWin() >= 0) &&             // 3. game record win
+                        (friendDataArrayList.get(index).getGameRecordLoss() >= 0) &&            // 4. game record loss
+                        (friendDataArrayList.get(index).getRecentGameBilliardCount() >= 0) &&   // 5. recent game billiard count
+                        (friendDataArrayList.get(index).getTotalPlayTime() >= 0) &&             // 6. total play time
+                        (friendDataArrayList.get(index).getTotalCost() >= 0)                    // 7. total cost
+                ) {
+
+                    // [lv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
+                    ContentValues insertValues = new ContentValues();
+                    insertValues.put(FriendTableSetting.Entry._ID, friendDataArrayList.get(index).getId());                                                             // 0. user id
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_USER_ID, friendDataArrayList.get(index).getUserId());                                         // 1. user id
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_NAME, friendDataArrayList.get(index).getName());                                              // 2. name
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, friendDataArrayList.get(index).getGameRecordWin());                          // 3. game record win
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, friendDataArrayList.get(index).getGameRecordLoss());                        // 4. game record loss
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, friendDataArrayList.get(index).getRecentGameBilliardCount());     // 5. recent game billiard count
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, friendDataArrayList.get(index).getTotalPlayTime());                          // 6. total play time
+                    insertValues.put(FriendTableSetting.Entry.COLUMN_NAME_TOTAL_COST, friendDataArrayList.get(index).getTotalCost());                                   // 7. total cost
+
+
+                    // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
+                    newRowId = writeDb.insert(FriendTableSetting.Entry.TABLE_NAME, null, insertValues);
+
+                    // check : 데이터베이스 입력이 실패, 성공 했는지 구분하여
+                    if (newRowId == -1) {
+                        // 데이터 insert 실패
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    } else {
+                        // 데이터 insert 성공
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + newRowId + " 번째 입력이 성공하였습니다.");
+                    }
+
+                } else {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
+                    newRowId = -2;
+                }
+            }
+
+            // SQLiteDatabase : close
+            writeDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
+        return newRowId;
+
+    } // End of method [saveContent]
+
+
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 

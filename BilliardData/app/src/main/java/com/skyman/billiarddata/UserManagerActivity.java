@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class UserManagerActivity extends AppCompatActivity {
 
     // constant
-    private final String CLASS_NAME_LOG = "[Ac]_UserManagerActivity";
+    private static final String CLASS_NAME_LOG = "[Ac]_UserManagerActivity";
 
     // instance variable
     private UserDbManager userDbManager = null;
@@ -117,29 +117,38 @@ public class UserManagerActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        final String METHOD_NAME = "[onDestroy] ";
         super.onDestroy();
 
-        final String METHOD_NAME = "[onDestroy] ";
-
-        // [check 1] : user 메니저가 생성되었다.
+        // user
         if (this.userDbManager != null) {
-
-            // [iv/C]UserDbManager : user 메니저를 close
             this.userDbManager.closeDb();
-
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
-        } // [check 1]
+        }
 
-        // [check 2] : friend 메니저가 생성되었다.
+
+        // friend
         if (this.friendDbManager != null) {
-
-            // [iv/C]UserDbManager : friend 메니저를 close
             this.friendDbManager.closeDb();
-
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
-        } // [check 2]
+        }
+
+
+        // Billiard
+        if (this.billiardDbManager != null) {
+            this.billiardDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
+        }
+
+        // player
+        if (this.playerDbManager != null) {
+            this.playerDbManager.closeDb();
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 메니저가 생성되지 않았습니다.");
+        }
 
     } // End of method [onDestroy]
 

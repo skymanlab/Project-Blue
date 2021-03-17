@@ -4,14 +4,36 @@ import java.io.Serializable;
 
 public class UserData implements Serializable {
 
+    // 0. id
+    // 1. name
+    // 2. target score
+    // 3. speciality
+    // 4. game record win
+    // 5. game record loss
+    // 6. recent game billiard count
+    // 7. total play time
+    // 8. total cost
+
+    // constructor
+    public static final String CLASS_NAME = "userData";
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String TARGET_SCORE = "targetScore";
+    public static final String SPECIALITY = "speciality";
+    public static final String GAME_RECORD_WIN = "gameRecordWin";
+    public static final String GAME_RECORD_LOSS = "gameRecordLoss";
+    public static final String RECENT_GAME_BILLIARD_COUNT = "recentGameBilliardCount";
+    public static final String TOTAL_PLAY_TIME = "totalPlayTime";
+    public static final String TOTAL_COST = "totalCost";
+
     // variable : desc
     private long id;                         // 0. id
-    private String  name;                   // 1. name
+    private String name;                   // 1. name
     private int targetScore;                // 2. target score
     private String speciality;              // 3. speciality
     private int gameRecordWin;              // 4. game record win
     private int gameRecordLoss;             // 5. game record loss
-    private long recentGameBilliardCount;   // 6. recent game player id
+    private long recentGameBilliardCount;   // 6. recent game billiard count
     private int totalPlayTime;              // 7. total play time
     private int totalCost;                  // 8. total cost
 

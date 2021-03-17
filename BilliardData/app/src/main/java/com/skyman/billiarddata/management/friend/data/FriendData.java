@@ -4,6 +4,26 @@ import java.io.Serializable;
 
 public class FriendData implements Serializable {
 
+    // 0. id
+    // 1. user id
+    // 2. name
+    // 3. game record win
+    // 4. game record loss
+    // 5. recent game billiard count
+    // 6. total play time
+    // 7. total cost
+
+    // constructor
+    public static final String CLASS_NAME = "friendData";
+    public static final String ID = "id";
+    public static final String USER_ID = "userId";
+    public static final String NAME = "name";
+    public static final String GAME_RECORD_WIN = "gameRecordWin";
+    public static final String GAME_RECORD_LOSS = "gameRecordLoss";
+    public static final String RECENT_GAME_BILLIARD_COUNT = "recentGameBilliardCount";
+    public static final String TOTAL_PLAY_TIME = "totalPlayTime";
+    public static final String TOTAL_COST = "totalCost";
+
     // variable : desc
     private long id;                        // 0. id
     private long userId;                    // 1. user id

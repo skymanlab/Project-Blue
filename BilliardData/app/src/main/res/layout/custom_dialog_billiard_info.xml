@@ -52,14 +52,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black" />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_date_default"></TextView>
+                android:layout_weight="1"/>
 
         </LinearLayout><!-- End of content 1 -->
 
@@ -81,14 +80,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black"  />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_speciality_default"></TextView>
+                android:layout_weight="1"/>
         </LinearLayout><!-- End of content 2 -->
 
         <!-- content 3. play time-->
@@ -109,14 +107,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black" />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_play_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_play_time_default"></TextView>
+                android:layout_weight="1"/>
         </LinearLayout><!-- End of content 3 -->
 
         <!-- content 4. winner -->
@@ -137,14 +134,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black"  />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_winner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_winner_default"></TextView>
+                android:layout_weight="1"/>
         </LinearLayout><!-- End of content 4 -->
 
 
@@ -166,14 +162,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black"  />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_score_default"></TextView>
+                android:layout_weight="1"/>
         </LinearLayout><!-- End of content 5 -->
 
         <!-- content 6. cost -->
@@ -194,14 +189,13 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="?android:attr/listDivider" />
+                android:background="@android:color/black"  />
 
             <TextView
                 android:id="@+id/c_di_billiard_info_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/c_di_billiard_info_cost_default"></TextView>
+                android:layout_weight="1"/>
         </LinearLayout><!-- End of content 6 -->
 
         <!-- content 6. cost -->

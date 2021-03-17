@@ -75,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
                         SessionManager.setIntentOfUserData(intent, userData);
                         startActivity(intent);
 
+                        DeveloperManager.displayLog(
+                                CLASS_NAME_LOG,
+                                "===================================================------------------------------------------------???"
+                        );
+                        DeveloperManager.displayToUserData(
+                                CLASS_NAME_LOG,
+                                userData
+                        );
+
                     }
                 }
         );
@@ -146,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String METHOD_NAME = "[onStart] ";
 
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "메소드가 실행하였습니다.");
 
         // [check 1] : UserDbManager 가 생성되었다.
@@ -153,6 +163,9 @@ public class MainActivity extends AppCompatActivity {
 
             // [iv/C]UserData : 뒤로 가기로 왔을 때 해당 userId 로 userData 다시 가져오기
             this.userData = this.userDbManager.loadContent(TEMP_ID);
+            DeveloperManager.displayToUserData(CLASS_NAME_LOG,
+                    userData
+                    );
 
         } else {
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");

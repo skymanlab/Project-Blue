@@ -122,12 +122,12 @@ public class BilliardLvAdapter extends BaseAdapter {
         if ((userData.getId() == billiardData.getWinnerId()) && (userData.getName().equals(billiardData.getWinnerName()))) {
 
             // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorBlue
-            countLinearLayout.setBackgroundResource(R.color.colorBlue);
+            countLinearLayout.setBackgroundResource(R.color.colorRed);
 
         } else {
 
             // [lv/C]LinearLayout : countLinearLayout 을 승리하여 background 를 R.color.colorRed
-            countLinearLayout.setBackgroundResource(R.color.colorRed);
+            countLinearLayout.setBackgroundResource(R.color.colorBlue);
 
         } // [check 1]
 

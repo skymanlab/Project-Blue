@@ -9,6 +9,28 @@ import java.io.Serializable;
  */
 public class BilliardData implements Serializable {
 
+    // 0. count
+    // 1. date
+    // 2. game mode
+    // 3. player count
+    // 4. winner id
+    // 5. winner name
+    // 6. play time
+    // 7. score
+    // 8. cost
+
+    // constructor
+    public static final String CLASS_NAME = "billiardData";
+    public static final String COUNT = "count";
+    public static final String DATE = "date";
+    public static final String GAME_MODE = "gameMode";
+    public static final String PLAYER_COUNT = "playerCount";
+    public static final String WINNER_ID = "winnerId";
+    public static final String WINNER_NAME = "winnerName";
+    public static final String PLAY_TIME = "playTime";
+    public static final String SCORE = "score";
+    public static final String COST = "cost";
+
     // instance variable : desc
     private long count;                 // 0. count
     private String date;                // 1. date

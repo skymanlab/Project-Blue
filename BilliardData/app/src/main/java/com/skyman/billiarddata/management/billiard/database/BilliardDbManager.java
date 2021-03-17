@@ -173,6 +173,80 @@ public class BilliardDbManager extends ProjectBlueDBManager {
     } // End of method [saveContent]
 
 
+    public long saveContentByImport(ArrayList<BilliardData> billiardDataArrayList) {
+
+        final String METHOD_NAME = "[saveContentByImport] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiardData> 를 저장합니다.");
+
+        // [lv/l]newRowId : 이 메소드의 결과 값 저장
+        long newRowId = 0;
+
+        // [check 1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기            ==> SQLiteDatabase 는 모든 조건이 만족 했을 때 가져와서
+            SQLiteDatabase writeDb = super.getDbOpenHelper().getWritableDatabase();
+
+            // 0. count
+            // 1. date
+            // 2. game mode
+            // 3. player count
+            // 4. winner id
+            // 5. winner name
+            // 6. play time
+            // 7. score
+            // 8. cost
+
+            for (int index=0; index<billiardDataArrayList.size(); index++) {
+
+                // [check 2] : 매개변수의 형식이 맞다.
+                if (checkFormatOfBilliardData(billiardDataArrayList.get(index))) {
+
+                    // [lv/C]ContentValues : query 의 값들을 매개변수의 값들로 셋팅한다.
+                    ContentValues insertValues = new ContentValues();
+                    insertValues.put(BilliardTableSetting.Entry._COUNT, billiardDataArrayList.get(index).getCount());                           // 0. count
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, billiardDataArrayList.get(index).getDate());                  // 1. date
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, billiardDataArrayList.get(index).getGameMode());         // 2. game mode
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, billiardDataArrayList.get(index).getPlayerCount());   // 3. player count
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, billiardDataArrayList.get(index).getWinnerId());         // 4. winner id
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, billiardDataArrayList.get(index).getWinnerName());     // 5. winner name
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, billiardDataArrayList.get(index).getPlayTime());         // 6. play time
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, billiardDataArrayList.get(index).getScore());                // 7. score
+                    insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, billiardDataArrayList.get(index).getCost());                  // 8. cost
+
+                    // [lv/l]newRowId : writeDb 를 insert 한 값 결과 값을 받는다. 실패하면 '-1' 이고 성공하면 1 이상의 값이 반환된다.                == > 사용하고
+                    newRowId = writeDb.insert(BilliardTableSetting.Entry.TABLE_NAME, null, insertValues);
+
+                    // [check 3] : newRowId 값이 어떤 값이진 구분하여 결과를 반환한다.
+                    if (newRowId == -1) {
+                        // 데이터 insert 실패
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "DB 저장 실패 : " + newRowId + " 값을 리턴합니다.");
+                    } else {
+                        // 데이터 insert 성공
+                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "입력 성공했습니다. " + newRowId + " 값을 리턴합니다.");
+                    } // [check 3]
+
+                } else {
+                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않아요.");
+                    newRowId = -2;
+                } // [check 2]
+
+            }
+
+            // [lv/C]SQLiteDatabase : close             == > 닫은 다음 결과값을 반환하든 가공하든 하면 된다.
+            writeDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete");
+        return newRowId;
+    } // End of method [saveContent]
+
+
+
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 

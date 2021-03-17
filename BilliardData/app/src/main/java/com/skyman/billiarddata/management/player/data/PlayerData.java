@@ -4,13 +4,29 @@ import java.io.Serializable;
 
 public class PlayerData implements Serializable {
 
+    // 0. count
+    // 1. billiard count
+    // 2. player id
+    // 3. player name
+    // 4. target score
+    // 5. score
+
+    // constructor
+    public static final String CLASS_NAME = "playerData";
+    public static final String COUNT = "count";
+    public static final String BILLIARD_COUNT= "billiardCount";
+    public static final String PLAYER_ID= "playerId";
+    public static final String PLAYER_NAME = "playerName";
+    public static final String TARGET_SCORE = "targetScore";
+    public static final String SCORE = "score";
+
     // instance variable : desc
     private long count;                 // 0. count
     private long billiardCount;         // 1. billiard count
     private long playerId;              // 2. player id
     private String playerName;          // 3. player name
-    private int targetScore;            // 3. target score
-    private int score;                  // 4. score
+    private int targetScore;            // 4. target score
+    private int score;                  // 5. score
 
     // method : getter. setter
     public long getCount() {

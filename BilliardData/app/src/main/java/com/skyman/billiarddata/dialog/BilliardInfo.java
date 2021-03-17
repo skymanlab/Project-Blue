@@ -110,14 +110,14 @@ public class BilliardInfo {
 
                     // [lv/C]Button : 승리한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
                     billiardInfo[position].setText("승리");
-                    billiardInfo[position].setBackgroundResource(R.color.colorBlue);
+                    billiardInfo[position].setBackgroundResource(R.color.colorRed);
 
                 } else {
                     // 패배
 
                     // [lv/C]Button : 패배한 경우의 버튼 만들기 / color 도 R.color.colorBlue 로 변경
                     billiardInfo[position].setText("패배");
-                    billiardInfo[position].setBackgroundResource(R.color.colorRed);
+                    billiardInfo[position].setBackgroundResource(R.color.colorBlue);
 
                 } // [check 2]
 

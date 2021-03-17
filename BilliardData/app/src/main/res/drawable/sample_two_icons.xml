@@ -3,13 +3,13 @@
     <item>
         <bitmap
             android:gravity="left|top"
-            android:tint="@android:color/holo_blue_dark"
+            android:tint="@android:color/holo_red_dark"
             android:src="@drawable/ic_dot" />
     </item>
     <item android:left="37dp">
         <bitmap
             android:gravity="right|top"
-            android:tint="@android:color/holo_red_dark"
+            android:tint="@android:color/holo_blue_dark"
             android:src="@drawable/ic_dot" />
     </item>
 </layer-list>
