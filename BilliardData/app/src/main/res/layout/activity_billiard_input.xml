@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/billiard_input_title"
+                android:text="@string/billiardInput_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout>
 
@@ -35,8 +35,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <!-- content 1. player -->
                 <GridLayout
@@ -48,7 +48,7 @@
 
                     <!-- content 1-1. player 0 -->
                     <LinearLayout
-                        android:id="@+id/billiard_input_ll_player_section_0"
+                        android:id="@+id/billiardInput_ll_player_section_0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_row="0"
@@ -59,13 +59,13 @@
 
                         <!-- content 1-1-1. player name -->
                         <TextView
-                            android:id="@+id/billiard_input_player_name_0"
+                            android:id="@+id/billiardInput_player_name_0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorPagerContent"
                             android:paddingTop="3dp"
                             android:paddingBottom="3dp"
-                            android:text="@string/billiard_input_player_name"
+                            android:text="@string/billiardInput_player_name"
                             android:textAlignment="center"></TextView>
 
                         <!-- content 1-1-2.  target score -->
@@ -80,7 +80,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_target_score"></TextView>
+                                android:text="@string/billiardInput_player_target_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -89,7 +89,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <Spinner
-                                android:id="@+id/billiard_input_player_target_score_0"
+                                android:id="@+id/billiardInput_player_target_score_0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"></Spinner>
                         </LinearLayout><!-- End of content 1-1-2 -->
@@ -106,7 +106,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_score"></TextView>
+                                android:text="@string/billiardInput_player_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -115,7 +115,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <EditText
-                                android:id="@+id/billiard_input_player_score_0"
+                                android:id="@+id/billiardInput_player_score_0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -126,7 +126,7 @@
 
                     <!-- content 1-2. player 1 -->
                     <LinearLayout
-                        android:id="@+id/billiard_input_ll_player_section_1"
+                        android:id="@+id/billiardInput_ll_player_section_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_row="0"
@@ -137,13 +137,13 @@
 
                         <!-- content 1-2-1. player name -->
                         <TextView
-                            android:id="@+id/billiard_input_player_name_1"
+                            android:id="@+id/billiardInput_player_name_1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorPagerContent"
                             android:paddingTop="3dp"
                             android:paddingBottom="3dp"
-                            android:text="@string/billiard_input_player_name"
+                            android:text="@string/billiardInput_player_name"
                             android:textAlignment="center"></TextView>
 
                         <!-- content 1-2-2.  target score -->
@@ -158,7 +158,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_target_score"></TextView>
+                                android:text="@string/billiardInput_player_target_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -167,7 +167,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <Spinner
-                                android:id="@+id/billiard_input_player_target_score_1"
+                                android:id="@+id/billiardInput_player_target_score_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"></Spinner>
                         </LinearLayout><!-- End of content 1-2-2 -->
@@ -184,7 +184,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_score"></TextView>
+                                android:text="@string/billiardInput_player_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -193,7 +193,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <EditText
-                                android:id="@+id/billiard_input_player_score_1"
+                                android:id="@+id/billiardInput_player_score_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -203,7 +203,7 @@
 
                     <!-- content 1-3. player 2 -->
                     <LinearLayout
-                        android:id="@+id/billiard_input_ll_player_section_2"
+                        android:id="@+id/billiardInput_ll_player_section_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_row="1"
@@ -214,13 +214,13 @@
 
                         <!-- content 1-3-1. player name -->
                         <TextView
-                            android:id="@+id/billiard_input_player_name_2"
+                            android:id="@+id/billiardInput_player_name_2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorPagerContent"
                             android:paddingTop="3dp"
                             android:paddingBottom="3dp"
-                            android:text="@string/billiard_input_player_name"
+                            android:text="@string/billiardInput_player_name"
                             android:textAlignment="center"></TextView>
 
                         <!-- content 1-3-2.  target score -->
@@ -235,7 +235,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_target_score"></TextView>
+                                android:text="@string/billiardInput_player_target_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -244,7 +244,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <Spinner
-                                android:id="@+id/billiard_input_player_target_score_2"
+                                android:id="@+id/billiardInput_player_target_score_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"></Spinner>
                         </LinearLayout><!-- End of content 1-3-2 -->
@@ -261,7 +261,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_score"></TextView>
+                                android:text="@string/billiardInput_player_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -270,7 +270,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <EditText
-                                android:id="@+id/billiard_input_player_score_2"
+                                android:id="@+id/billiardInput_player_score_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -280,7 +280,7 @@
 
                     <!-- content 1-4. player 3 -->
                     <LinearLayout
-                        android:id="@+id/billiard_input_ll_player_section_3"
+                        android:id="@+id/billiardInput_ll_player_section_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_row="1"
@@ -291,13 +291,13 @@
 
                         <!-- content 1-4-1. player name -->
                         <TextView
-                            android:id="@+id/billiard_input_player_name_3"
+                            android:id="@+id/billiardInput_player_name_3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorPagerContent"
                             android:paddingTop="3dp"
                             android:paddingBottom="3dp"
-                            android:text="@string/billiard_input_player_name"
+                            android:text="@string/billiardInput_player_name"
                             android:textAlignment="center"></TextView>
 
                         <!-- content 1-4-2.  target score -->
@@ -312,7 +312,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_target_score"></TextView>
+                                android:text="@string/billiardInput_player_target_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -321,7 +321,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <Spinner
-                                android:id="@+id/billiard_input_player_target_score_3"
+                                android:id="@+id/billiardInput_player_target_score_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"></Spinner>
                         </LinearLayout><!-- End of content 1-4-2 -->
@@ -338,7 +338,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/billiard_input_player_score"></TextView>
+                                android:text="@string/billiardInput_player_score"></TextView>
 
                             <View
                                 android:layout_width="1dp"
@@ -347,7 +347,7 @@
                                 android:background="?android:attr/listDivider" />
 
                             <EditText
-                                android:id="@+id/billiard_input_player_score_3"
+                                android:id="@+id/billiardInput_player_score_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="numberDecimal"
@@ -381,7 +381,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/billiard_input_date"
+                            android:text="@string/billiardInput_date"
                             android:textAlignment="textStart"></TextView>
 
                         <View
@@ -392,21 +392,21 @@
                             android:background="?android:attr/listDivider" />
 
                         <TextView
-                            android:id="@+id/billiard_input_date"
+                            android:id="@+id/billiardInput_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/billiard_input_date_content"
+                            android:text="@string/billiardInput_date_content"
                             android:textAlignment="textStart"></TextView>
 
                         <TextView
-                            android:id="@+id/billiard_input_re_date"
+                            android:id="@+id/billiardInput_re_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/colorBackgroundPrimary"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
-                            android:text="@string/billiard_input_date_re"
+                            android:text="@string/billiardInput_date_re"
                             android:textColor="@color/colorBackgroundThird"></TextView>
                     </LinearLayout><!-- End of content 2-1 -->
 
@@ -421,7 +421,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/billiard_input_speciality"
+                            android:text="@string/billiardInput_speciality"
                             android:textAlignment="textStart"></TextView>
 
                         <View
@@ -432,7 +432,7 @@
                             android:background="?android:attr/listDivider" />
 
                         <Spinner
-                            android:id="@+id/billiard_input_sp_game_mode"
+                            android:id="@+id/billiardInput_sp_game_mode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
@@ -450,7 +450,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/billiard_input_winner"
+                            android:text="@string/billiardInput_winner"
                             android:textAlignment="textStart"></TextView>
 
                         <View
@@ -461,7 +461,7 @@
                             android:background="?android:attr/listDivider" />
 
                         <Spinner
-                            android:id="@+id/billiard_input_sp_player_name_list"
+                            android:id="@+id/billiardInput_sp_player_name_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"></Spinner>
@@ -479,7 +479,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/billiard_input_play_time"
+                            android:text="@string/billiardInput_play_time"
                             android:textAlignment="textStart"></TextView>
 
                         <View
@@ -489,10 +489,17 @@
                             android:background="?android:attr/listDivider" />
 
                         <EditText
-                            android:id="@+id/billiard_input_play_time"
+                            android:id="@+id/billiardInput_play_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text|numberDecimal"></EditText>
+                            android:layout_weight="1"
+                            android:inputType="numberDecimal"></EditText>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/billiardInput_play_time_unit" />
+
                     </LinearLayout><!-- End of content 2-5 -->
 
                     <!-- content 2-6. cost -->
@@ -507,7 +514,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/billiard_input_cost"
+                            android:text="@string/billiardInput_cost"
                             android:textAlignment="textStart"></TextView>
 
                         <View
@@ -517,19 +524,25 @@
                             android:background="?android:attr/listDivider" />
 
                         <EditText
-                            android:id="@+id/billiard_input_cost"
+                            android:id="@+id/billiardInput_cost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text|numberDecimal"></EditText>
+                            android:layout_weight="1"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/billiardInput_cost_unit" />
                     </LinearLayout><!-- End of content 2-6 -->
 
                     <!-- content 2-7. input button -->
                     <Button
-                        android:id="@+id/billiard_input_bt_input"
+                        android:id="@+id/billiardInput_bt_save"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorBackgroundPrimary"
-                        android:text="@string/billiard_input_bt_input"
+                        android:text="@string/billiardInput_bt_save"
                         android:textColor="@color/colorTextPrimary"></Button><!-- End of content 2-7 -->
 
                 </LinearLayout><!-- End of content 2 -->

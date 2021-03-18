@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.statistics.CalendarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
-        android:id="@+id/f_calendar_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -31,7 +29,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/f_calendar_title"
+                    android:text="@string/F_calendar_title"
                     android:textAlignment="center"></TextView>
             </LinearLayout><!-- End of title-->
 
@@ -50,7 +48,7 @@
                     android:orientation="vertical">
 
                     <com.applandeo.materialcalendarview.CalendarView
-                        android:id="@+id/f_calendar_cv_game_record"
+                        android:id="@+id/F_calendar_calendarView_displayGameRecord"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:eventsEnabled="true"
@@ -80,7 +78,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/f_calendar_win"></TextView>
+                            android:text="@string/F_calendar_win"></TextView>
 
                         <View
                             android:layout_width="1dp"
@@ -106,7 +104,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/f_calendar_loss"></TextView>
+                            android:text="@string/F_calendar_loss"></TextView>
 
                         <View
                             android:layout_width="1dp"
@@ -123,6 +121,6 @@
                 </LinearLayout><!-- End of content 2 -->
             </LinearLayout><!-- End of content-->
         </LinearLayout><!-- End of main -->
-
     </ScrollView>
+
 </FrameLayout>

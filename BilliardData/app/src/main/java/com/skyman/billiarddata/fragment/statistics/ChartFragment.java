@@ -114,11 +114,11 @@ public class ChartFragment extends Fragment {
         adapter.setMonthStatisticsDataArrayList(monthStatisticsDataArrayList);
 
         // ListView : monthStatistics
-        this.monthStatistics = (ListView) view.findViewById(R.id.f_chart_month_statistics);
+        this.monthStatistics = (ListView) view.findViewById(R.id.F_chart_monthStatistics);
         this.monthStatistics.setAdapter(adapter);
 
         // TextView : myTotalGameRecord
-        this.myTotalGameRecord = (TextView) view.findViewById(R.id.f_chart_myTotalGameRecord);
+        this.myTotalGameRecord = (TextView) view.findViewById(R.id.F_chart_myTotalGameRecord);
         this.myTotalGameRecord.setText(
                 ProjectBlueDataFormatter.getFormatOfGameRecord(
                         userData.getGameRecordWin(),

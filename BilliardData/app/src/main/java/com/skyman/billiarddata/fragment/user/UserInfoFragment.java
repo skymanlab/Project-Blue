@@ -127,7 +127,7 @@ public class UserInfoFragment extends Fragment {
     private void mappingOfWidget(View view) {
 
         // [iv/C]TextView : id mapping
-        this.id = (TextView) view.findViewById(R.id.f_user_info_id);
+//        this.id = (TextView) view.findViewById(R.id.f_user_info_id);
 
         // [iv/C]TextView : name mapping
         this.name = (TextView) view.findViewById(R.id.f_user_info_name);
@@ -160,7 +160,7 @@ public class UserInfoFragment extends Fragment {
 
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
         // [iv/C]TextView : id 를 userData 의 getId 으로
-        id.setText(userData.getId() + "");
+//        id.setText(userData.getId() + "");
 
         // [iv/C]TextView : name 를 userData 의 getName 으로
         name.setText(userData.getName());

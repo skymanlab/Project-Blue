@@ -13,10 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
 import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.PlayerList;
+import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
@@ -57,6 +59,7 @@ public class BilliardLvAdapter extends BaseAdapter {
 
     // constructor
     public BilliardLvAdapter(BilliardDbManager billiardDbManager, UserDbManager userDbManager, PlayerDbManager playerDbManager, FriendDbManager friendDbManager, ListView targetListView) {
+
         this.billiardDbManager = billiardDbManager;
         this.userDbManager = userDbManager;
         this.playerDbManager = playerDbManager;

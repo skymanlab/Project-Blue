@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.user.UserInputFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <!-- main -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/f_user_input_title"
+                android:text="@string/F_userInput_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title-->
 
@@ -49,7 +49,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:text="@string/f_user_input_name"></TextView>
+                    android:text="@string/F_userInput_name"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -59,12 +59,12 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    android:id="@+id/f_user_input_name"
+                    android:id="@+id/F_userInput_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
-                    android:hint="@string/f_user_input_name_hint"
+                    android:hint="@string/F_userInput_name_hint"
                     android:inputType="text"
                     android:paddingLeft="10dp"
                     android:singleLine="true"></EditText>
@@ -84,7 +84,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:text="@string/f_user_input_target_score"></TextView>
+                    android:text="@string/F_userInput_targetScore"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -94,12 +94,12 @@
                     android:background="?android:attr/listDivider" />
 
                 <EditText
-                    android:id="@+id/f_user_input_target_score"
+                    android:id="@+id/F_userInput_targetScore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
-                    android:hint="@string/f_user_input_target_score_hint"
+                    android:hint="@string/F_userInput_targetScore_hint"
                     android:inputType="numberDecimal"
                     android:paddingLeft="10dp"
                     android:singleLine="true"></EditText>
@@ -122,7 +122,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:gravity="start"
-                    android:text="@string/f_user_input_speciality"></TextView>
+                    android:text="@string/F_userInput_speciality"></TextView>
 
                 <View
                     android:layout_width="1dp"
@@ -132,7 +132,7 @@
                     android:background="?android:attr/listDivider" />
 
                 <RadioGroup
-                    android:id="@+id/f_user_input_speciality"
+                    android:id="@+id/F_userInput_speciality"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -141,26 +141,26 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/f_user_input_speciality_three_cushion"
+                        android:id="@+id/F_userInput_speciality_threeCushion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="@string/f_user_input_speciality_three_cushion" />
+                        android:text="@string/F_userInput_speciality_threeCushion" />
 
                     <RadioButton
-                        android:id="@+id/f_user_input_speciality_four_ball"
+                        android:id="@+id/F_userInput_speciality_fourBall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/f_user_input_speciality_four_ball" />
+                        android:text="@string/F_userInput_speciality_fourBall" />
 
                     <RadioButton
-                        android:id="@+id/f_user_input_speciality_pocket_ball"
+                        android:id="@+id/F_userInput_speciality_pocketBall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/f_user_input_speciality_pocket_ball" />
+                        android:text="@string/F_userInput_speciality_pocketBall" />
                 </RadioGroup>
             </LinearLayout><!-- End of content 3 -->
 
@@ -174,35 +174,36 @@
                 android:padding="4dp">
 
                 <Button
-                    android:id="@+id/f_user_input_bt_save"
+                    android:id="@+id/F_userInput_button_save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:background="@color/colorBackgroundPrimary"
-                    android:text="@string/f_user_input_bt_save"
+                    android:text="@string/F_userInput_button_save"
                     android:textColor="@color/colorTextPrimary"></Button>
 
                 <Button
-                    android:id="@+id/f_user_input_bt_modify"
+                    android:id="@+id/F_userInput_button_modify"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:enabled="false"
                     android:background="@color/colorWidgetDisable"
-                    android:text="@string/f_user_input_bt_modify"
+                    android:enabled="false"
+                    android:text="@string/F_userInput_button_modify"
                     android:textColor="@color/colorTextPrimary"></Button>
 
                 <Button
-                    android:id="@+id/f_user_input_bt_delete"
+                    android:id="@+id/F_userInput_button_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorBackgroundPrimary"
-                    android:text="@string/f_user_input_bt_delete"
+                    android:background="@color/colorWidgetDisable"
+                    android:enabled="false"
+                    android:text="@string/F_userInput_button_delete"
                     android:textColor="@color/colorTextPrimary"></Button>
             </LinearLayout>
 

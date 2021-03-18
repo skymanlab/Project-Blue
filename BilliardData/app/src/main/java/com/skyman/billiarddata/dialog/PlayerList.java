@@ -6,6 +6,7 @@ import android.os.Debug;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class PlayerList {
     private TextView[] id;
     private TextView[] targetScore;
     private TextView[] score;
-    private Button close;
+    private ImageView close;
 
     // instance variable
     private ArrayList<PlayerData> playerDataArrayList;
@@ -47,10 +48,6 @@ public class PlayerList {
      *
      */
     public void setDialog() {
-
-        final String METHOD_NAME = "[setDialog] ";
-
-        // [lv/C]String : method name log
         final String METHOD_NAME_LOG = "[setDialog] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME_LOG + "dialog 를 시작합니다.");
@@ -94,49 +91,49 @@ public class PlayerList {
         this.section = new LinearLayout[4];
 
         // [iv/C]LinearLayout : 모든 section mapping
-        this.section[0] = (LinearLayout) dialog.findViewById(R.id.c_di_player_list_section_0);
-        this.section[1] = (LinearLayout) dialog.findViewById(R.id.c_di_player_list_section_1);
-        this.section[2] = (LinearLayout) dialog.findViewById(R.id.c_di_player_list_section_2);
-        this.section[3] = (LinearLayout) dialog.findViewById(R.id.c_di_player_list_section_3);
+        this.section[0] = (LinearLayout) dialog.findViewById(R.id.custom_dialog_playerList_section_0);
+        this.section[1] = (LinearLayout) dialog.findViewById(R.id.custom_dialog_playerList_section_1);
+        this.section[2] = (LinearLayout) dialog.findViewById(R.id.custom_dialog_playerList_section_2);
+        this.section[3] = (LinearLayout) dialog.findViewById(R.id.custom_dialog_playerList_section_3);
 
         // [iv/C]TextView : name 은 4개
         this.name = new TextView[4];
 
         // [iv/C]TextView : 모든 name mapping
-        this.name[0] = (TextView) dialog.findViewById(R.id.c_di_player_list_name_0);
-        this.name[1] = (TextView) dialog.findViewById(R.id.c_di_player_list_name_1);
-        this.name[2] = (TextView) dialog.findViewById(R.id.c_di_player_list_name_2);
-        this.name[3] = (TextView) dialog.findViewById(R.id.c_di_player_list_name_3);
+        this.name[0] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_name_0);
+        this.name[1] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_name_1);
+        this.name[2] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_name_2);
+        this.name[3] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_name_3);
 
         // [iv/C]TextView : id 는 4개
         this.id = new TextView[4];
 
         // [iv/C]TextView : 모든 id mapping
-        this.id[0] = (TextView) dialog.findViewById(R.id.c_di_player_list_id_0 );
-        this.id[1] = (TextView) dialog.findViewById(R.id.c_di_player_list_id_1 );
-        this.id[2] = (TextView) dialog.findViewById(R.id.c_di_player_list_id_2 );
-        this.id[3] = (TextView) dialog.findViewById(R.id.c_di_player_list_id_3 );
+        this.id[0] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_id_0 );
+        this.id[1] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_id_1 );
+        this.id[2] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_id_2 );
+        this.id[3] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_id_3 );
 
         // [iv/C]TextView : targetScore 는 4개
         this.targetScore = new TextView[4];
 
         // [iv/C]TextView : 모든 targetScore mapping
-        this.targetScore[0] = (TextView) dialog.findViewById(R.id.c_di_player_list_target_score_0);
-        this.targetScore[1] = (TextView) dialog.findViewById(R.id.c_di_player_list_target_score_1);
-        this.targetScore[2] = (TextView) dialog.findViewById(R.id.c_di_player_list_target_score_2);
-        this.targetScore[3] = (TextView) dialog.findViewById(R.id.c_di_player_list_target_score_3);
+        this.targetScore[0] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_target_score_0);
+        this.targetScore[1] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_target_score_1);
+        this.targetScore[2] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_target_score_2);
+        this.targetScore[3] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_target_score_3);
 
         // [iv/C]TextView : score 는 4개
         this.score = new TextView[4];
 
         // [iv/C]TextView : 모든 score mapping
-        this.score[0] = (TextView) dialog.findViewById(R.id.c_di_player_list_score_0);
-        this.score[1] = (TextView) dialog.findViewById(R.id.c_di_player_list_score_1);
-        this.score[2] = (TextView) dialog.findViewById(R.id.c_di_player_list_score_2);
-        this.score[3] = (TextView) dialog.findViewById(R.id.c_di_player_list_score_3);
+        this.score[0] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_score_0);
+        this.score[1] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_score_1);
+        this.score[2] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_score_2);
+        this.score[3] = (TextView) dialog.findViewById(R.id.custom_dialog_playerList_score_3);
 
         // [iv/C]Button : close mapping
-        this.close = (Button) dialog.findViewById(R.id.c_di_player_list_bt_close);
+        this.close = (ImageView) dialog.findViewById(R.id.custom_dialog_playerList_button_close);
 
     } // End of method [mappingOfWidget]
 

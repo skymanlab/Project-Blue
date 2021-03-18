@@ -5,37 +5,48 @@
     android:orientation="vertical">
 
     <!-- title -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorActivityTitle"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/c_di_player_list_title"
-            android:textAlignment="center"></TextView>
+            android:padding="10dp"
+            android:text="@string/custom_dialog_playerList_title"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/c_di_player_list_bt_close"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:background="@color/colorBackgroundPrimary"
-            android:text="@string/c_di_player_list_bt_close"
-            android:textColor="@color/colorTextPrimary"></Button>
+        <ImageView
+            android:id="@+id/custom_dialog_playerList_button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:padding="5dp"
+            android:src="@drawable/dialog_button_close" />
+    </FrameLayout><!-- End of title -->
 
-    </LinearLayout><!-- End of title -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:text="@string/custom_dialog_playerList_explain"/>
 
     <!-- content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorActivityContent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingStart="10dp"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp">
 
         <GridLayout
             android:layout_width="match_parent"
@@ -47,7 +58,7 @@
 
             <!-- content 1. player 0 -->
             <LinearLayout
-                android:id="@+id/c_di_player_list_section_0"
+                android:id="@+id/custom_dialog_playerList_section_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
@@ -60,12 +71,12 @@
 
                 <!-- content 1-1. name -->
                 <TextView
-                    android:id="@+id/c_di_player_list_name_0"
+                    android:id="@+id/custom_dialog_playerList_name_0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
                     android:padding="7dp"
-                    android:text="@string/c_di_player_list_name"
+                    android:text="@string/custom_dialog_playerList_name"
                     android:textAlignment="center"></TextView><!-- End of content 1-1 -->
 
                 <!-- content 1-2. id -->
@@ -81,7 +92,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id"></TextView>
+                        android:text="@string/custom_dialog_playerList_id"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -91,10 +102,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_id_0"
+                        android:id="@+id/custom_dialog_playerList_id_0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_id_default"></TextView>
                 </LinearLayout><!-- End of content 1-2 -->
 
                 <!-- content 1-3. targetScore-->
@@ -111,7 +122,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -121,10 +132,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_target_score_0"
+                        android:id="@+id/custom_dialog_playerList_target_score_0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score_default"></TextView>
                 </LinearLayout><!-- End of content 1-3 -->
 
                 <!-- content 1-4. score -->
@@ -139,7 +150,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -149,16 +160,16 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_score_0"
+                        android:id="@+id/custom_dialog_playerList_score_0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_score_default"></TextView>
                 </LinearLayout><!-- End of content 1-4 -->
             </LinearLayout><!-- End of content 1-->
 
             <!-- content 2. player 1 -->
             <LinearLayout
-                android:id="@+id/c_di_player_list_section_1"
+                android:id="@+id/custom_dialog_playerList_section_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
@@ -171,12 +182,12 @@
 
                 <!-- content 2-1. name -->
                 <TextView
-                    android:id="@+id/c_di_player_list_name_1"
+                    android:id="@+id/custom_dialog_playerList_name_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
                     android:padding="7dp"
-                    android:text="@string/c_di_player_list_name"
+                    android:text="@string/custom_dialog_playerList_name"
                     android:textAlignment="center"></TextView><!-- End of content 2-1 -->
 
                 <!-- content 2-2. id -->
@@ -192,7 +203,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id"></TextView>
+                        android:text="@string/custom_dialog_playerList_id"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -202,10 +213,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_id_1"
+                        android:id="@+id/custom_dialog_playerList_id_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_id_default"></TextView>
                 </LinearLayout><!-- End of content 2-2 -->
 
                 <!-- content 2-3. targetScore-->
@@ -222,7 +233,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -232,10 +243,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_target_score_1"
+                        android:id="@+id/custom_dialog_playerList_target_score_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score_default"></TextView>
                 </LinearLayout><!-- End of content 2-3 -->
 
                 <!-- content 2-4. score -->
@@ -250,7 +261,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -260,16 +271,16 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_score_1"
+                        android:id="@+id/custom_dialog_playerList_score_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_score_default"></TextView>
                 </LinearLayout><!-- End of content 2-4 -->
             </LinearLayout><!-- End of content 2 -->
 
             <!-- content 3. player 2 -->
             <LinearLayout
-                android:id="@+id/c_di_player_list_section_2"
+                android:id="@+id/custom_dialog_playerList_section_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -283,12 +294,12 @@
 
                 <!-- content 3-1. name -->
                 <TextView
-                    android:id="@+id/c_di_player_list_name_2"
+                    android:id="@+id/custom_dialog_playerList_name_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
                     android:padding="7dp"
-                    android:text="@string/c_di_player_list_name"
+                    android:text="@string/custom_dialog_playerList_name"
                     android:textAlignment="center"></TextView><!-- End of content 3-1 -->
 
                 <!-- content 3-2. id -->
@@ -304,7 +315,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id"></TextView>
+                        android:text="@string/custom_dialog_playerList_id"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -314,10 +325,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_id_2"
+                        android:id="@+id/custom_dialog_playerList_id_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_id_default"></TextView>
                 </LinearLayout><!-- End of content 3-2 -->
 
                 <!-- content 3-3. targetScore-->
@@ -334,7 +345,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -344,10 +355,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_target_score_2"
+                        android:id="@+id/custom_dialog_playerList_target_score_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score_default"></TextView>
                 </LinearLayout><!-- End of content 3-3-->
 
                 <!-- content 3-4. score -->
@@ -362,7 +373,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -372,16 +383,16 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_score_2"
+                        android:id="@+id/custom_dialog_playerList_score_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_score_default"></TextView>
                 </LinearLayout><!-- End of content 3-4 -->
             </LinearLayout><!-- End of content 3 -->
 
             <!-- content 4. player 3 -->
             <LinearLayout
-                android:id="@+id/c_di_player_list_section_3"
+                android:id="@+id/custom_dialog_playerList_section_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -395,12 +406,12 @@
 
                 <!-- content 4-1. name -->
                 <TextView
-                    android:id="@+id/c_di_player_list_name_3"
+                    android:id="@+id/custom_dialog_playerList_name_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundSecond"
                     android:padding="7dp"
-                    android:text="@string/c_di_player_list_name"
+                    android:text="@string/custom_dialog_playerList_name"
                     android:textAlignment="center"></TextView><!-- End of content 4-1 -->
 
                 <!-- content 4-2. id -->
@@ -416,7 +427,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id"></TextView>
+                        android:text="@string/custom_dialog_playerList_id"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -426,10 +437,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_id_3"
+                        android:id="@+id/custom_dialog_playerList_id_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_id_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_id_default"></TextView>
                 </LinearLayout><!-- End of content 4-2 -->
 
                 <!-- content 4-3. targetScore-->
@@ -446,7 +457,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -456,10 +467,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_target_score_3"
+                        android:id="@+id/custom_dialog_playerList_target_score_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_target_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_target_score_default"></TextView>
                 </LinearLayout><!-- End of content 4-3 -->
 
                 <!-- content 4-4. score -->
@@ -474,7 +485,7 @@
                     <TextView
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score"></TextView>
+                        android:text="@string/custom_dialog_playerList_score"></TextView>
 
                     <View
                         android:layout_width="1dp"
@@ -484,10 +495,10 @@
                         android:background="@color/colorBackgroundPrimary" />
 
                     <TextView
-                        android:id="@+id/c_di_player_list_score_3"
+                        android:id="@+id/custom_dialog_playerList_score_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_di_player_list_score_default"></TextView>
+                        android:text="@string/custom_dialog_playerList_score_default"></TextView>
                 </LinearLayout><!-- End of content 4-4 -->
             </LinearLayout><!-- End of content 4 -->
         </GridLayout>

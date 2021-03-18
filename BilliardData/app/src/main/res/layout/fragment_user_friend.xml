@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragment.user.UserFriendFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <!-- main -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/f_user_friend_title"
+                android:text="@string/F_userFriend_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title-->
 
@@ -51,7 +50,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="친구 목록 ▼"></TextView>
+                        android:text="@string/F_userFriend_listSection_title"></TextView>
                 </LinearLayout><!-- End of content 1-1 -->
 
                 <!-- divider -->
@@ -67,7 +66,7 @@
                     android:padding="5dp">
 
                     <ListView
-                        android:id="@+id/f_user_friend_lv_list"
+                        android:id="@+id/F_userFriend_listSection_listView_friendList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"></ListView>
                 </LinearLayout><!-- End of content 1-2 -->
@@ -90,7 +89,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="친구 추가 ▼"></TextView>
+                        android:text="@string/F_userFriend_addSection_title"></TextView>
                 </LinearLayout>
 
                 <!-- divider -->
@@ -110,10 +109,10 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/f_user_friend_friend_name"></TextView>
+                        android:text="@string/F_userFriend_addSection_friendName"></TextView>
 
                     <EditText
-                        android:id="@+id/f_user_friend_friend_name"
+                        android:id="@+id/F_userFriend_addSection_friendName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"></EditText>
@@ -125,11 +124,11 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/f_user_friend_bt_friend_add"
+                        android:id="@+id/F_userFriend_addSection_button_addFriend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorBackgroundPrimary"
-                        android:text="@string/f_user_friend_bt_add_friend"
+                        android:text="@string/F_userFriend_addSection_button_addFriend"
                         android:textColor="@color/colorTextPrimary"></Button>
                 </LinearLayout><!-- End of content 2-3 -->
             </LinearLayout><!-- End of content 2 -->

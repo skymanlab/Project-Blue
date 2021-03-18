@@ -149,13 +149,13 @@ public class UserFriendFragment extends Fragment {
     private void mappingOfWidget(View view) {
 
         // [iv/C]ListView : allFriendData mapping
-        this.allFriendData = (ListView) view.findViewById(R.id.f_user_friend_lv_list);
+        this.allFriendData = (ListView) view.findViewById(R.id.F_userFriend_listSection_listView_friendList);
 
         // [iv/C]EditText : name mapping
-        this.name = (EditText) view.findViewById(R.id.f_user_friend_friend_name);
+        this.name = (EditText) view.findViewById(R.id.F_userFriend_addSection_friendName);
 
         // [iv/C]Button : friendAdd mapping
-        this.friendAdd = (Button) view.findViewById(R.id.f_user_friend_bt_friend_add);
+        this.friendAdd = (Button) view.findViewById(R.id.F_userFriend_addSection_button_addFriend);
 
     } // End of method [mappingOfWidget]
 
@@ -247,9 +247,9 @@ public class UserFriendFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         // [lv/C]AlertDialog : 초기값 셋팅
-        builder.setTitle(R.string.ad_user_friend_first_friend_add_title)
-                .setMessage(R.string.ad_user_friend_first_friend_add_message)
-                .setPositiveButton(R.string.ad_user_friend_first_bt_friend_add_positive, new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.F_userFriend_dialog_startFirstGame_title)
+                .setMessage(R.string.F_userFriend_dialog_startFirstGame_message)
+                .setPositiveButton(R.string.F_userFriend_dialog_startFirstGame_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -261,7 +261,7 @@ public class UserFriendFragment extends Fragment {
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton(R.string.ad_user_friend_first_bt_friend_add_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.F_userFriend_dialog_startFirstGame_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/f_chart_title"
+                android:text="@string/F_chart_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title-->
 
@@ -58,7 +58,7 @@
                         android:background="@color/cardview_dark_background" />
 
                     <TextView
-                        android:id="@+id/f_chart_myTotalGameRecord"
+                        android:id="@+id/F_chart_myTotalGameRecord"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_manager_chart_my_total_game_record_default"/>
@@ -69,7 +69,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <ListView
-                android:id="@+id/f_chart_month_statistics"
+                android:id="@+id/F_chart_monthStatistics"
                 android:layout_width="match_parent"
                 android:padding="5dp"
                 android:layout_height="wrap_content"/>

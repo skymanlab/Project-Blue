@@ -38,23 +38,20 @@ public class UserManagerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final String METHOD_NAME = "[onCreate] ";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manager);
 
-        final String METHOD_NAME = "[onCreate] ";
-
-        // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
-        createDBManager();
-
-        // [lv/C]Intent : 저 Activity 에서 보내온 데이터를 담을 intent 가져오기
-        Intent intent = getIntent();
-
-        // [lv/C]UserData : user 정보가 담길 객체
-        this.userData = SessionManager.getUserDataInIntent(intent);
+        // SessionManger 를 통해서 userData 가져오기
+        this.userData = SessionManager.getUserDataInIntent(getIntent());
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
+
+
+        // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
+        createDBManager();
 
         // [check 1] : user 정보가 있다.
         if (this.userData != null) {
@@ -110,7 +107,7 @@ public class UserManagerActivity extends AppCompatActivity {
         });
 
         // [method]moveFragmentPage : intent 값에서 pageNumber 값을 가져와서 해당 pageNumber 로 Fragment 페이지 이동을 한다. / 위 의 pager 가 셋팅되어야지만 이동할 수 있다.
-        moveFragmentPage(intent);
+        moveFragmentPage(getIntent());
 
 
     } // End of method [onCreate]

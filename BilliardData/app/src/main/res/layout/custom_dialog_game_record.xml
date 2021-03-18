@@ -2,51 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp"
-    android:background="@color/colorActivityContent">
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/custom_dialog_gameRecord_title"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/custom_dialog_gameRecord_button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:padding="5dp"
+            android:src="@drawable/dialog_button_close" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="5dp"
+        android:text="@string/custom_dialog_gameRecord_explain"
+        android:textAlignment="center" />
 
     <!-- win or loss -->
     <HorizontalScrollView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPagerTab">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/colorPagerTab"
+        android:padding="5dp">
 
         <LinearLayout
-            android:id="@+id/c_di_billiard_info_win_or_loss"
+            android:id="@+id/custom_dialog_gameRecord_win_or_loss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
 
     </HorizontalScrollView><!-- End of win or loss-->
 
-
-    <View
-        android:id="@+id/divider6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
     <!-- content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
 
         <!-- content 1. 날짜 -->
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundThird">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_date"></TextView>
+                android:text="@string/custom_dialog_gameRecord_date"></TextView>
 
             <View
                 android:layout_width="1dp"
@@ -55,10 +93,10 @@
                 android:background="@android:color/black" />
 
             <TextView
-                android:id="@+id/c_di_billiard_info_date"
+                android:id="@+id/custom_dialog_gameRecord_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout><!-- End of content 1 -->
 
@@ -66,42 +104,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundSecond">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_speciality"></TextView>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black"  />
-
-            <TextView
-                android:id="@+id/c_di_billiard_info_speciality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout><!-- End of content 2 -->
-
-        <!-- content 3. play time-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundThird">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_play_time"></TextView>
+                android:text="@string/custom_dialog_gameRecord_speciality"></TextView>
 
             <View
                 android:layout_width="1dp"
@@ -110,37 +121,64 @@
                 android:background="@android:color/black" />
 
             <TextView
-                android:id="@+id/c_di_billiard_info_play_time"
+                android:id="@+id/custom_dialog_gameRecord_speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+        </LinearLayout><!-- End of content 2 -->
+
+        <!-- content 3. play time-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/custom_dialog_gameRecord_playTime"></TextView>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/custom_dialog_gameRecord_playTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout><!-- End of content 3 -->
 
         <!-- content 4. winner -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundSecond">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_winner"></TextView>
+                android:text="@string/custom_dialog_gameRecord_winner"></TextView>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/black"  />
+                android:background="@android:color/black" />
 
             <TextView
-                android:id="@+id/c_di_billiard_info_winner"
+                android:id="@+id/custom_dialog_gameRecord_winner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout><!-- End of content 4 -->
 
 
@@ -148,73 +186,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundThird"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundThird">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_score"></TextView>
+                android:text="@string/custom_dialog_gameRecord_score"></TextView>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/black"  />
+                android:background="@android:color/black" />
 
             <TextView
-                android:id="@+id/c_di_billiard_info_score"
+                android:id="@+id/custom_dialog_gameRecord_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout><!-- End of content 5 -->
 
         <!-- content 6. cost -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundSecond"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundSecond">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/c_di_billiard_info_cost"></TextView>
+                android:text="@string/custom_dialog_gameRecord_cost"></TextView>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/black"  />
+                android:background="@android:color/black" />
 
             <TextView
-                android:id="@+id/c_di_billiard_info_cost"
+                android:id="@+id/custom_dialog_gameRecord_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout><!-- End of content 6 -->
-
-        <!-- content 6. cost -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/colorBackgroundSecond">
-
-            <Button
-                android:id="@+id/c_di_billiard_info_bt_close"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundPrimary"
-                android:text="@string/c_di_billiard_info_bt_close"
-                android:textColor="@color/colorTextPrimary">
-
-            </Button>
+                android:layout_weight="1" />
         </LinearLayout><!-- End of content 6 -->
 
     </LinearLayout><!-- End of content -->

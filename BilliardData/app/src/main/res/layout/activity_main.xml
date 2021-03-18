@@ -53,74 +53,74 @@
 
                     <!-- content 2. billiard data input -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_billiard_input"
+                        android:id="@+id/main_button_billiardInput"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_billiard_input"
+                        android:text="@string/main_button_billiardInput"
                         app:cornerRadius="5dp" />
 
                     <!-- content 3. billiard data display -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_billiard_display"
+                        android:id="@+id/main_button_billiardDisplay"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_billiard_display"
+                        android:text="@string/main_button_billiardDisplay"
                         app:cornerRadius="5dp" />
 
                     <!-- content 4. user manager -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_user_manager"
+                        android:id="@+id/main_button_userManager"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_user_manager"
+                        android:text="@string/main_button_userManager"
                         app:cornerRadius="5dp" />
 
                     <!-- content 4. statistics manager -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_statistics_manager"
+                        android:id="@+id/main_button_statisticsManager"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_statistics_manager"
+                        android:text="@string/main_button_statisticsManager"
                         app:cornerRadius="5dp" />
 
                     <!-- content 5. setting -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_app_setting"
+                        android:id="@+id/main_button_appSetting"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_app_setting"
+                        android:text="@string/main_button_appSetting"
                         app:cornerRadius="5dp" />
 
                     <!-- content 6. app info -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_bt_app_info"
+                        android:id="@+id/main_button_appInfo"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/main_bt_app_info"
+                        android:text="@string/main_button_appInfo"
                         app:cornerRadius="5dp" />
 
                 </LinearLayout><!-- End of content -->

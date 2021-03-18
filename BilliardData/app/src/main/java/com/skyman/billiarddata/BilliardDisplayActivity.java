@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.ListView.BilliardLvManager;
@@ -26,7 +27,7 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 import java.util.ArrayList;
 
 
-public class BilliardDisplayActivity extends AppCompatActivity {
+public class BilliardDisplayActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
     private final String CLASS_NAME_LOG ="[Ac]_BilliardDisplayActivity";
@@ -45,18 +46,17 @@ public class BilliardDisplayActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final String METHOD_NAME= "[onCreate] ";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
-        final String METHOD_NAME= "[onCreate] ";
-
-        // [lv/C]Intent : 전 Activity 에서 전달 된 Intent 가져오기
-        Intent intent = getIntent();
-
-        // [iv/C]UserData : 저장된 user 로 이 화면에 들어왔다.
-        this.userData = SessionManager.getUserDataInIntent(intent);
+        // SessionManager 에서 userData 가져오기
+        this.userData = SessionManager.getUserDataInIntent(getIntent());
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME +"Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+
+
+
 
         // [method]createDbManager : user, friend, billiard 테이블 메니저 생성 및 초기화
         createDbManager();
@@ -134,6 +134,21 @@ public class BilliardDisplayActivity extends AppCompatActivity {
 
     } // End of method [onDestroy]
 
+    @Override
+    public void initSectionManager() {
+
+    }
+
+    @Override
+    public void connectWidget() {
+
+    }
+
+    @Override
+    public void initWidget() {
+
+    }
+
 
     /**
      * [method] user, friend, billiard 테이블 메니저 생성
@@ -165,10 +180,10 @@ public class BilliardDisplayActivity extends AppCompatActivity {
     private void mappingOfWidget() {
 
         // [iv/C]ListView : allBilliardData mapping
-        this.allBilliardData = (ListView) findViewById(R.id.billiard_display_lv_all_billiard_data);
+        this.allBilliardData = (ListView) findViewById(R.id.billiardDisplay_listView_allBilliardData);
 
         // [iv/C]Button : delete mapping
-        this.delete = (Button) findViewById(R.id.billiard_display_bt_delete);
+        this.delete = (Button) findViewById(R.id.billiardDisplay_button_delete);
 
     } // End of method [mappingOfWidget]
 
@@ -231,9 +246,9 @@ public class BilliardDisplayActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // [lv/C]AlertDialog : Builder 로 초기값 설정
-        builder.setTitle(R.string.ad_billiard_display_delete_title)
-                .setMessage(R.string.ad_billiard_display_delete_message)
-                .setPositiveButton(R.string.ad_billiard_display_delete_bt_positive, new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.billiardDisplay_dialog_allDataDelete_title)
+                .setMessage(R.string.billiardDisplay_dialog_allDataDelete_message)
+                .setPositiveButton(R.string.billiardDisplay_dialog_allDataDelete_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -241,7 +256,7 @@ public class BilliardDisplayActivity extends AppCompatActivity {
                         setClickListenerOfDeleteButton();
                     }
                 })
-                .setNegativeButton(R.string.ad_billiard_display_delete_bt_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.billiardDisplay_dialog_allDataDelete_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

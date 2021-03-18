@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,10 +19,13 @@ import com.skyman.billiarddata.management.billiard.data.BilliardData;
 
 import java.util.ArrayList;
 
-public class BilliardInfo {
+public class GameRecord {
 
     // constant
     private final String CLASS_NAME_LOG = "[Di]_BilliardInfo";
+
+    // instance variable
+    private Context context;
 
     // instance variable
     private LinearLayout linearLayout;
@@ -31,10 +35,7 @@ public class BilliardInfo {
     private TextView playTime;                  // 6. play time
     private TextView score;                     // 7. score
     private TextView cost;                      // 8. cost
-    private Button close;
-
-    // instance variable
-    private Context context;
+    private ImageView close;
 
     // instance variable
     private SameDateChecker sameDateChecker;
@@ -42,7 +43,7 @@ public class BilliardInfo {
     private int index;
 
     // constructor
-    public BilliardInfo(Context context, SameDateChecker sameDateChecker, ArrayList<BilliardData> billiardDataArrayList, int index) {
+    public GameRecord(Context context, SameDateChecker sameDateChecker, ArrayList<BilliardData> billiardDataArrayList, int index) {
         this.context = context;
         this.sameDateChecker = sameDateChecker;
         this.billiardDataArrayList = billiardDataArrayList;
@@ -54,9 +55,9 @@ public class BilliardInfo {
      * [method] Dialog 객체를 생성하고, dialog 를 통해서 widget 을 mapping 한다.
      */
     public void setDialog() {
-
         final String METHOD_NAME = "[setDialog] ";
 
+        
         // [lv/C]Dialog : 객체 생성
         final Dialog dialog = new Dialog(this.context);
 
@@ -64,7 +65,7 @@ public class BilliardInfo {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // [lv/C]Dialog : layout 을 custom_dialog_date_modify 으로 설정하기
-        dialog.setContentView(R.layout.custom_dialog_billiard_info);
+        dialog.setContentView(R.layout.custom_dialog_game_record);
 
         // [method]mappingOfWidget : custom_dialog_billiard_info layout 의 모든 widget 을  mapping 한다.
         mappingOfWidget(dialog);
@@ -142,16 +143,13 @@ public class BilliardInfo {
                         date.setText(billiardDataArrayList.get(indexOfBilliardArray).getDate());                   // 1. date
                         gameMode.setText(billiardDataArrayList.get(indexOfBilliardArray).getGameMode());           // 2. game mode
                         winnerName.setText(billiardDataArrayList.get(indexOfBilliardArray).getWinnerName());       // 5. winner name
-                        playTime.setText(billiardDataArrayList.get(indexOfBilliardArray).getPlayTime() + "");      // 6. play time
+                        playTime.setText(billiardDataArrayList.get(indexOfBilliardArray).getPlayTime() + "분");      // 6. play time
                         score.setText(billiardDataArrayList.get(indexOfBilliardArray).getScore() + "");             // 7. score
-                        cost.setText(billiardDataArrayList.get(indexOfBilliardArray).getCost() + "");                // 8. cost
+                        cost.setText(billiardDataArrayList.get(indexOfBilliardArray).getCost() + "원");                // 8. cost
                     }
                 });
                 // [iv/C]LinearLayout : 위에서 생성한 버튼 넣기
                 this.linearLayout.addView(billiardInfo[position]);
-
-                // [lv/C]Toast : 버튼을 눌러달라는 메시지 출력
-                Toast.makeText(dialog.getContext(), "확인을 할려면 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
 
             } // [cycle 1]
 
@@ -173,28 +171,28 @@ public class BilliardInfo {
     public void mappingOfWidget(Dialog dialog) {
 
         // [iv/C]HorizontalScrollView : winOfLoss mapping
-        this.linearLayout = (LinearLayout) dialog.findViewById(R.id.c_di_billiard_info_win_or_loss);
+        this.linearLayout = (LinearLayout) dialog.findViewById(R.id.custom_dialog_gameRecord_win_or_loss);
 
         // [iv/C]TextView : date mapping
-        this.date = (TextView) dialog.findViewById(R.id.c_di_billiard_info_date);
+        this.date = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_date);
 
         // [iv/C]TextView : speciality mapping
-        this.gameMode = (TextView) dialog.findViewById(R.id.c_di_billiard_info_speciality);
+        this.gameMode = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_speciality);
 
         // [iv/C]TextView : playTime mapping
-        this.playTime = (TextView) dialog.findViewById(R.id.c_di_billiard_info_play_time);
+        this.playTime = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_playTime);
 
         // [iv/C]TextView : winner mapping
-        this.winnerName = (TextView) dialog.findViewById(R.id.c_di_billiard_info_winner);
+        this.winnerName = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_winner);
 
         // [iv/C]TextView : score mapping
-        this.score = (TextView) dialog.findViewById(R.id.c_di_billiard_info_score);
+        this.score = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_score);
 
         // [iv/C]TextView : cost mapping
-        this.cost = (TextView) dialog.findViewById(R.id.c_di_billiard_info_cost);
+        this.cost = (TextView) dialog.findViewById(R.id.custom_dialog_gameRecord_cost);
 
         // [iv/C]Button : close mapping
-        this.close = (Button) dialog.findViewById(R.id.c_di_billiard_info_bt_close);
+        this.close = (ImageView) dialog.findViewById(R.id.custom_dialog_gameRecord_button_close);
 
     } // End of method [mappingOfWidget]
 

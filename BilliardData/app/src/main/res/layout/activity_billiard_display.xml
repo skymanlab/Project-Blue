@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/billiard_display_title"
+                android:text="@string/billiardDisplay_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout><!-- End of title -->
 
@@ -37,7 +37,7 @@
 
             <!-- content 1. all billiard data -->
             <ListView
-                android:id="@+id/billiard_display_lv_all_billiard_data"
+                android:id="@+id/billiardDisplay_listView_allBilliardData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -55,11 +55,11 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/billiard_display_bt_delete"
+                    android:id="@+id/billiardDisplay_button_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorBackgroundPrimary"
-                    android:text="@string/billiard_display_bt_delete"
+                    android:text="@string/billiardDisplay_button_delete"
                     android:textColor="@color/colorTextPrimary"></Button>
             </LinearLayout><!-- End of content 2 -->
 
