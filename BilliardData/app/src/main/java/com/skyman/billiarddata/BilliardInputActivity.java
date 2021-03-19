@@ -26,6 +26,7 @@ import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -42,7 +43,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private final int PLAYER_WIDGET_MAX_SIZE = 4;
 
     // instant variable
-    private SectionManager sectionManager;
+    private AppDbManager appDbManager;
 
     // instant variable
     private UserData userData = null;
@@ -126,17 +127,8 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
     } // End of method [onDestroy]
 
-
     @Override
-    public void initSectionManager() {
-
-        sectionManager = new SectionManager(this);
-        sectionManager.connectDb(
-                true,
-                true,
-                true,
-                true
-        );
+    public void initAppDbManager() {
 
     }
 

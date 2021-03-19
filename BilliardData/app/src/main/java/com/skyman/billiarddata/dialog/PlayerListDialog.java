@@ -73,8 +73,6 @@ public class PlayerListDialog extends DialogFragment implements SectionManager.I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // sectionManager
-        initSectionManager();
         // widget
         connectWidget();
         initWidget();
@@ -89,7 +87,7 @@ public class PlayerListDialog extends DialogFragment implements SectionManager.I
     }
 
     @Override
-    public void initSectionManager() {
+    public void initAppDbManager() {
 
     }
 

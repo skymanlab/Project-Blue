@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
@@ -35,24 +36,23 @@ import java.util.ArrayList;
  */
 public class UserFriendFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     // constant
     private final String CLASS_NAME_LOG = "[F]_UserFriendFragment";
+
+    // constant
+    private static final String USER_DATA = "userData";
+    private static final String FRIEND_DATA_ARRAY_LIST = "friendDataArrayList;";
+
     // instance variable
     private FriendDbManager friendDbManager;
     private BilliardDbManager billiardDbManager;
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
+
     // instance variable
     private ListView allFriendData;
     private EditText name;
     private Button friendAdd;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     // constructor
     public UserFriendFragment(FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
@@ -70,16 +70,12 @@ public class UserFriendFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment UserFriend.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserFriendFragment newInstance(String param1, String param2) {
+    public static UserFriendFragment newInstance() {
         UserFriendFragment fragment = new UserFriendFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,8 +84,6 @@ public class UserFriendFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -101,9 +95,8 @@ public class UserFriendFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         final String METHOD_NAME = "[onViewCreated] ";
+        super.onViewCreated(view, savedInstanceState);
 
         // [method]mappingOfWidget : fragment_user_friend layout 의 widget mapping
         mappingOfWidget(view);
@@ -190,8 +183,9 @@ public class UserFriendFragment extends Fragment {
                 this.name.setText("");
 
                 // [lv/C]FragmentTransaction : Fragment 화면을 갱신하기 위한 방법
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
+
 
             } else {
 

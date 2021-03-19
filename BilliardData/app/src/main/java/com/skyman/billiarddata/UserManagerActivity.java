@@ -9,28 +9,39 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.fragment.user.UserPagerAdapter;
+import com.skyman.billiarddata.management.SectionManager;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 
-public class UserManagerActivity extends AppCompatActivity {
+public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable{
 
     // constant
     private static final String CLASS_NAME_LOG = "[Ac]_UserManagerActivity";
+
+    // instance variable
+    private UserData userData = null;
 
     // instance variable
     private UserDbManager userDbManager = null;
     private FriendDbManager friendDbManager = null;
     private BilliardDbManager billiardDbManager = null;
     private PlayerDbManager playerDbManager = null;
-    private UserData userData = null;
+
+    // instance variable
     private ArrayList<FriendData> friendDataArrayList = null;
+
+    // instance variable
+    private SectionManager sectionManager;
 
     // instance variable : widget
     private ViewPager userTabPager;
@@ -44,11 +55,13 @@ public class UserManagerActivity extends AppCompatActivity {
 
         // SessionManger 를 통해서 userData 가져오기
         this.userData = SessionManager.getUserDataInIntent(getIntent());
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "session 메니저를 통해 userData 를 가져 왔습니다. 확인해 보겠습니다.");
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "=====================================================================================");
 
+
+
+        // widget
+        connectWidget();
+        initWidget();
 
         // [method] : user, friend 테이블을 관리하는 메니저 생성과 초기화
         createDBManager();
@@ -64,11 +77,14 @@ public class UserManagerActivity extends AppCompatActivity {
         } // [check 1]
 
 
-        // [iv/C]TabLayout : userTabBar mapping
-        this.userTabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
+        BilliardData billiardData = new BilliardData();
 
-        // [iv/C]ViewPager : userTabPager mapping
-        this.userTabPager = (ViewPager) findViewById(R.id.user_manager_pg_user_pager);
+        AppDbSetting2 appDbSetting2 = new AppDbSetting2(this);
+        BilliardDbManager2 billiardDbManager2 = new BilliardDbManager2(appDbSetting2);
+
+        billiardDbManager2.saveContent(billiardData);
+
+
 
         // [iv/C]TabLayout : userTabBar 의 메뉴 설정
         this.userTabBar.addTab(this.userTabBar.newTab().setText("기본 정보 입력"));
@@ -149,6 +165,27 @@ public class UserManagerActivity extends AppCompatActivity {
 
     } // End of method [onDestroy]
 
+
+    @Override
+    public void initAppDbManager() {
+
+    }
+
+    @Override
+    public void connectWidget() {
+
+        // [iv/C]TabLayout : userTabBar mapping
+        this.userTabBar = (TabLayout) findViewById(R.id.user_manager_tl_tab_bar);
+
+        // [iv/C]ViewPager : userTabPager mapping
+        this.userTabPager = (ViewPager) findViewById(R.id.user_manager_pg_user_pager);
+
+    }
+
+    @Override
+    public void initWidget() {
+
+    }
 
     /*                                      private method
      *   ============================================================================================

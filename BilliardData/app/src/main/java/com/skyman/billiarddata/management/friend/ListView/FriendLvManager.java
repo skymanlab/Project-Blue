@@ -61,6 +61,7 @@ public class FriendLvManager {
 
             // ListView : activityTargetListView 에 연결하기
             this.targetListView.setAdapter(this.friendLvAdapter);
+
         }
     }
 

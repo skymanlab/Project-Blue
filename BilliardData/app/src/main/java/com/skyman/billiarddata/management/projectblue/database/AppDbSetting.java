@@ -14,18 +14,18 @@ import com.skyman.billiarddata.developer.DeveloperManager;
  * <p>
  * 이 클래스를 생성하는 곳의 Context 를 받아 ProjectBlueDbHelper 의 생성 매개변수로 넘긴다.
  */
-public class ProjectBlueDBManager {
+public class AppDbSetting {
 
     // constant
     private final String CLASS_NAME_LOG = "[DbM]_ProjectBlueDBManager";
 
     // instance variable
-    private ProjectBlueDBHelper dbOpenHelper;
+    private AppDbOpenHelper dbOpenHelper;
     private Context targetContext;
     private boolean isInitializedDB;
 
     // constructor
-    public ProjectBlueDBManager(Context targetContext) {
+    public AppDbSetting(Context targetContext) {
         this.dbOpenHelper = null;
         this.targetContext = targetContext;
         this.isInitializedDB = false;
@@ -47,7 +47,7 @@ public class ProjectBlueDBManager {
      *
      * @return dbOpenHelper 객체를 반환한다.
      */
-    public ProjectBlueDBHelper getDbOpenHelper() {
+    public AppDbOpenHelper getDbOpenHelper() {
         return dbOpenHelper;
     }
 
@@ -66,11 +66,11 @@ public class ProjectBlueDBManager {
         final String METHOD_NAME= "[initDb] ";
 
         // [iv/C]ProjectBlueDBHelper : 이 클래스를 생성한 Component 의 context 를 받아 생성한다.
-        this.dbOpenHelper = new ProjectBlueDBHelper(this.targetContext);
+        this.dbOpenHelper = new AppDbOpenHelper(this.targetContext);
 
         // [iv/b]isInitializedDB : dbOpenHelper 가 생성되었음을 알려준다.
         this.isInitializedDB = true;
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "project_blue.db 의 " + ProjectBlueDBInfo.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "project_blue.db 의 " + ProjectDbConstants.TABLES_NAME + " 을 사용할 준비가 완료되었습니다.");
 
     } // End of method [init_db]
 

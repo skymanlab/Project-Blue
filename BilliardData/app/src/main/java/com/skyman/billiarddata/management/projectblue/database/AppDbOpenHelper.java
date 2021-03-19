@@ -33,14 +33,14 @@ import com.skyman.billiarddata.management.user.database.UserTableSetting;
  * 이 클래스로 Open 한 db 는 getReadableDatabase 와 getWriteableDatabase method 를 이용하여 SQLiteDatabase 객체를 반환한다.
  * 위 의 SQLiteDatabase 객체를 이용하여 해당 db 의 테이블의 내용을 create, insert, select, update, delete 문을 이용하여 사용할 수 있다.
  */
-public class ProjectBlueDBHelper extends SQLiteOpenHelper {
+public class AppDbOpenHelper extends SQLiteOpenHelper {
 
     // constant
     private final String CLASS_NAME_LOG = "[DbH]_ProjectBlueDatabaseHelper";
 
     // constructor
-    public ProjectBlueDBHelper(Context context) {
-        super(context, ProjectBlueDBInfo.DATABASE_NAME, null, ProjectBlueDBInfo.DATABASE_VERSION);
+    public AppDbOpenHelper(Context context) {
+        super(context, AppDbConstants.DATABASE_NAME, null, AppDbConstants.DATABASE_VERSION);
     }
 
     @Override
@@ -69,9 +69,8 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // project_blue.db 버전 업그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 업그레이드 된 테이블을 생성한다.
-
         final String METHOD_NAME= "[onUpgrade] ";
+        // project_blue.db 버전 업그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 업그레이드 된 테이블을 생성한다.
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is executing........");
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The project_blue.db is upgrading.");
@@ -86,9 +85,8 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // project_blue.db 버전 다운그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 다운그레이드 된 테이블을 생성한다.
-
         final String METHOD_NAME= "[onDowngrade] ";
+        // project_blue.db 버전 다운그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 다운그레이드 된 테이블을 생성한다.
 
         onUpgrade(db, oldVersion, newVersion);
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
@@ -96,10 +94,9 @@ public class ProjectBlueDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onOpen(SQLiteDatabase db) {
+        final String METHOD_NAME= "[onOpen] ";
         super.onOpen(db);
         // project_blue.db 에 billiard, user 테이블이 생성되면(존재하면), onOpen method 가 실행 된다.
-
-        final String METHOD_NAME= "[onOpen] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete.");
     }

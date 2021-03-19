@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.projectblue.database.ProjectBlueDBManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbSetting;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * ProjectBlueDBHelper 를 생성한다.
  * 이 openDBHelper 에서 readableDatabase 와 writeableDatabase 를 가져와서 query 문을 실행한다.
  */
-public class BilliardDbManager extends ProjectBlueDBManager {
+public class BilliardDbManager extends AppDbSetting {
 
     // constant
     private final String CLASS_NAME_LOG = "[DbM]_BilliardDbManager";

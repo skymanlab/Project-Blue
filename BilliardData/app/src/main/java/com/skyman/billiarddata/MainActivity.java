@@ -15,11 +15,13 @@ import com.skyman.billiarddata.dialog.PlayerList;
 import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
 
@@ -32,13 +34,11 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
     private final int TEMP_ID = 1;
 
     // instance variable
-//    private UserDbManager userDbManager;
-//    private FriendDbManager friendDbManager;
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 
     // instance variable
-    private SectionManager sectionManager;
+    private AppDbManager appDbManager;
 
     // instance variable : widget
     private Button billiardInput;
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // sectionManager
-        initSectionManager();
+        // appDbManager
+        initAppDbManager();
 
         // widget : connect, init
         connectWidget();
@@ -65,12 +65,14 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     @Override
-    public void initSectionManager() {
-
-        // sectionManager : 섹션 관리를 위한 sectionManager 를 생성하고
-        // db를 사용하기 위해 필요한 db manager 를 요청한다.
-        sectionManager = new SectionManager(this);
-        sectionManager.connectDb(true, true, false, false);
+    public void initAppDbManager() {
+        appDbManager = new AppDbManager(this);
+        appDbManager.connectDb(
+                true,
+                true,
+                false,
+                false
+        );
     }
 
     @Override
@@ -188,46 +190,64 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
     @Override
     protected void onStart() {
-        final String METHOD_NAME = "[onStart] ";
         super.onStart();
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-        sectionManager.requestDbQuery(
-                new SectionManager.DbQueryRequestListener() {
+        appDbManager.requestQuery(
+                new AppDbManager.QueryRequestListener() {
                     @Override
-                    public void requestUserDb(UserDbManager userDbManager) {
-                        userData = userDbManager.loadContent(TEMP_ID);
-                    }
-
-                    @Override
-                    public void requestFriendDb(FriendDbManager friendDbManager) {
-                        friendDataArrayList = friendDbManager.loadAllContentByUserId(TEMP_ID);
-                    }
-
-                    @Override
-                    public void requestBilliardDb(BilliardDbManager billiardDbManager) {
+                    public void requestUserQuery(UserDbManager userDbManager) {
 
                     }
 
                     @Override
-                    public void requestPlayerDb(PlayerDbManager playerDbManager) {
+                    public void requestFriendQuery(FriendDbManager friendDbManager) {
+
+                    }
+
+                    @Override
+                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager) {
+
+                    }
+
+                    @Override
+                    public void requestPlayerQuery(PlayerDbManager playerDbManager) {
 
                     }
                 }
         );
+//        sectionManager.requestDbQuery(
+//                new SectionManager.DbQueryRequestListener() {
+//                    @Override
+//                    public void requestUserDb(UserDbManager userDbManager) {
+//                        userData = userDbManager.loadContent(TEMP_ID);
+//                    }
+//
+//                    @Override
+//                    public void requestFriendDb(FriendDbManager friendDbManager) {
+//                        friendDataArrayList = friendDbManager.loadAllContentByUserId(TEMP_ID);
+//                    }
+//
+//                    @Override
+//                    public void requestBilliardDb(BilliardDbManager billiardDbManager) {
+//
+//                    }
+//
+//                    @Override
+//                    public void requestPlayerDb(PlayerDbManager playerDbManager) {
+//
+//                    }
+//                }
+//        );
 
     } // End of method [onStart]
 
 
     @Override
     protected void onDestroy() {
-        final String METHOD_NAME = "[onDestroy] ";
+
+        appDbManager.closeDb();
+
         super.onDestroy();
-
-        // sectionManager : 연결요청한 db manager 를 종료한다.
-        sectionManager.closeDb();
-
     } // End of method [onDestroy]
 
 

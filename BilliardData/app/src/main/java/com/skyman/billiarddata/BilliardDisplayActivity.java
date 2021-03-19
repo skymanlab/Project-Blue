@@ -27,10 +27,10 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 import java.util.ArrayList;
 
 
-public class BilliardDisplayActivity extends AppCompatActivity implements SectionManager.Initializable {
+public class BilliardDisplayActivity extends AppCompatActivity {
 
     // constant
-    private final String CLASS_NAME_LOG ="[Ac]_BilliardDisplayActivity";
+    private final String CLASS_NAME_LOG = "[Ac]_BilliardDisplayActivity";
 
     // instance variable
     private UserDbManager userDbManager = null;
@@ -46,16 +46,14 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final String METHOD_NAME= "[onCreate] ";
+        final String METHOD_NAME = "[onCreate] ";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
         // SessionManager 에서 userData 가져오기
         this.userData = SessionManager.getUserDataInIntent(getIntent());
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME +"Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-
-
 
 
         // [method]createDbManager : user, friend, billiard 테이블 메니저 생성 및 초기화
@@ -71,7 +69,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             mappingAllBilliardDataToListView();
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME +"userData 가 없으므로 가져올 billiardData 도 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
         } // [check 1]
 
         // [lv/C]Button : delete click listener
@@ -91,7 +89,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
     protected void onDestroy() {
         super.onDestroy();
 
-        final String METHOD_NAME= "[onDestroy] ";
+        final String METHOD_NAME = "[onDestroy] ";
 
         // [check 1] : user 테이블 메니저가 생성되었다.
         if (this.userDbManager != null) {
@@ -133,22 +131,6 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
         } // [check 4]
 
     } // End of method [onDestroy]
-
-    @Override
-    public void initSectionManager() {
-
-    }
-
-    @Override
-    public void connectWidget() {
-
-    }
-
-    @Override
-    public void initWidget() {
-
-    }
-
 
     /**
      * [method] user, friend, billiard 테이블 메니저 생성
@@ -193,7 +175,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
      */
     private void mappingAllBilliardDataToListView() {
 
-        final String METHOD_NAME= "[mappingAllBilliardDataToListView] ";
+        final String METHOD_NAME = "[mappingAllBilliardDataToListView] ";
 
         // [lv/C]ArrayList<PlayerData> : user 의 id 와 name 으로 참가한 모든 경기를 가져오기 / player 테이블에서 playerId 와 playerName 으로 찾아야 한다.
         ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByPlayerIdAndPlayerName(this.userData.getId(), this.userData.getName());
@@ -207,7 +189,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
         this.billiardDataArrayList = new ArrayList<>();
 
         // [cycle 1] : 참가한 경기 수 만큼
-        for (int index=0 ; index <playerDataArrayList.size() ; index++) {
+        for (int index = 0; index < playerDataArrayList.size(); index++) {
 
             // [lv/C]ArrayList<BilliardData> : playerData 의 billiardCount 로 가져온 BilliardData 를 추가한다.
             this.billiardDataArrayList.add(this.billiardDbManager.loadAllContentByCount(playerDataArrayList.get(index).getBilliardCount()));
@@ -238,7 +220,6 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
 
     /**
      * [method] 삭제 버튼을 눌렀을 때 진짜 삭제할 건지 물어본다.
-     *
      */
     private void showDialogWhetherDelete() {
 
@@ -272,13 +253,13 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
      */
     private void setClickListenerOfDeleteButton() {
 
-        final String METHOD_NAME= "[setClickListenerOfDeleteButton] ";
+        final String METHOD_NAME = "[setClickListenerOfDeleteButton] ";
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
 
             // [cycle 1] : billiardDataArrayLst 의 개수만큼
-            for (int playerIndex= 0; playerIndex < billiardDataArrayList.size(); playerIndex++){
+            for (int playerIndex = 0; playerIndex < billiardDataArrayList.size(); playerIndex++) {
 
 
                 int temp = this.playerDbManager.deleteContentByBilliardCount(this.billiardDataArrayList.get(playerIndex).getCount());
@@ -288,16 +269,14 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             } // [cycle 1]
 
 
-
-           // [cycle 2] : billiardDataArrayList 의 개수만큼
-            for (int billiardIndex = 0 ; billiardIndex < billiardDataArrayList.size() ; billiardIndex++){
+            // [cycle 2] : billiardDataArrayList 의 개수만큼
+            for (int billiardIndex = 0; billiardIndex < billiardDataArrayList.size(); billiardIndex++) {
 
                 int temp = this.billiardDbManager.deleteContentByCount(this.billiardDataArrayList.get(billiardIndex).getCount());
 
                 DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블이 몇 개 지워졌나요? = " + temp);
 
             } // [cycle 2]
-
 
 
             // [lv/i]initDataOfUser : 해당 userId 로 user 의 데이터를 초기화한다.
@@ -308,7 +287,6 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                     0,
                     0);
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
-
 
 
             // [lv/i] : 해당 userId 로 모든 Friend 데이터를 초기값으로 변경 - 친구와 했던 모든 BilliardData 가 삭제되므로 모두 초기값으로 변경해야 한다.
@@ -322,7 +300,6 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
 
 
             //=======================================================================================================
-
 
 
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== userData 초기화 후 변경 값 확인 =====================");
@@ -342,7 +319,6 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== billiard 초기화 후 변경 값 확인 =====================");
             ArrayList<BilliardData> tempBilliardDataArrayList = this.billiardDbManager.loadAllContent();
             DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, tempBilliardDataArrayList);
-
 
 
             // [method]mappingAllBilliardDataToListView : billiard 테이블에서 가져온 모든 데이터를 ListView 에 뿌려준다.
