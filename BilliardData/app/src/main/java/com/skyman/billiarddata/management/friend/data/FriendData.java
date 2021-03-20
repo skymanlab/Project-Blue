@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FriendData implements Serializable {
 
-    // 0. id
+    // 0. id (primary key/autoincrement)
     // 1. user id
     // 2. name
     // 3. game record win

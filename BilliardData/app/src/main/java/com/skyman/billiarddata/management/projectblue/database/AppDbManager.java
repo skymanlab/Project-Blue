@@ -3,9 +3,10 @@ package com.skyman.billiarddata.management.projectblue.database;
 import android.content.Context;
 
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 public class AppDbManager {
 
@@ -16,7 +17,10 @@ public class AppDbManager {
     private AppDbSetting2 appDbSetting2;
 
     // instance variable
+    private UserDbManager2 userDbManager2;
+    private FriendDbManager2 friendDbManager2;
     private BilliardDbManager2 billiardDbManager2;
+    private PlayerDbManager2 playerDbManager2;
 
     // instance variable
     private boolean shouldRequestUserDbConnection;
@@ -42,15 +46,19 @@ public class AppDbManager {
 
         // user
         if (shouldRequestUserDbConnection) {
+            userDbManager2 = new UserDbManager2(appDbSetting2);
             connectingList
                     .append("<")
+                    .append(UserDbManager2.class.getSimpleName())
                     .append(">");
         }
 
         // friend
         if (shouldRequestFriendDbConnection) {
+            friendDbManager2 = new FriendDbManager2(appDbSetting2);
             connectingList
                     .append("<")
+                    .append(FriendDbManager2.class.getSimpleName())
                     .append(">");
         }
 
@@ -65,8 +73,10 @@ public class AppDbManager {
 
         // player
         if (shouldRequestPlayerDbConnection) {
+            playerDbManager2 = new PlayerDbManager2(appDbSetting2);
             connectingList
                     .append("<")
+                    .append(PlayerDbManager2.class.getSimpleName())
                     .append(">");
         }
 
@@ -87,7 +97,7 @@ public class AppDbManager {
     public void requestUserQuery(UserQueryRequestListener userQueryRequestListener) {
 
         if (shouldRequestUserDbConnection) {
-//            userQueryRequestListener.requestQuery();
+            userQueryRequestListener.requestQuery(userDbManager2);
         } else {
             new RuntimeException("userDbManager 연결 요청을 하지 않았습니다.");
         }
@@ -97,7 +107,7 @@ public class AppDbManager {
     public void requestFriendQuery(FriendQueryRequestListener friendQueryRequestListener) {
 
         if (shouldRequestFriendDbConnection) {
-//            friendQueryRequestListener.requestQuery();
+            friendQueryRequestListener.requestQuery(friendDbManager2);
         } else {
             new RuntimeException("friendDbManager 연결 요청을 하지 않았습니다.");
         }
@@ -117,7 +127,7 @@ public class AppDbManager {
     public void requestPlayerQuery(PlayerQueryRequestListener playerQueryRequestListener) {
 
         if (shouldRequestPlayerDbConnection) {
-//            playerQueryRequestListener.requestQuery();
+            playerQueryRequestListener.requestQuery(playerDbManager2);
         } else {
             new RuntimeException("playerDbManager 연결 요청을 하지 않았습니다.");
         }
@@ -132,14 +142,14 @@ public class AppDbManager {
 
         // userDbManger 연결요청을 했을 때만 수행
         if (shouldRequestUserDbConnection) {
-//            queryRequestListener.requestUserQuery();
+            queryRequestListener.requestUserQuery(userDbManager2);
         } else {
             new RuntimeException("userDbManager 연결 요청을 하지 않았습니다.");
         }
 
         // friendDbManager 연결요청을 했을 때만 수행
         if (shouldRequestFriendDbConnection) {
-//            queryRequestListener.requestFriendQuery();
+            queryRequestListener.requestFriendQuery(friendDbManager2);
         } else {
             new RuntimeException("friendDbManager 연결 요청을 하지 않았습니다.");
         }
@@ -153,7 +163,7 @@ public class AppDbManager {
 
         // playerDbManager 연결요청을 했을 때만 수행
         if (shouldRequestBilliardDbConnection) {
-//            queryRequestListener.requestPlayerQuery();
+            queryRequestListener.requestPlayerQuery(playerDbManager2);
         } else {
             new RuntimeException("playerDbManager 연결 요청을 하지 않았습니다.");
         }
@@ -163,21 +173,21 @@ public class AppDbManager {
 
     // ==================================================== Listener ====================================================
     public interface QueryRequestListener {
-        void requestUserQuery(UserDbManager userDbManager);
+        void requestUserQuery(UserDbManager2 userDbManager2);
 
-        void requestFriendQuery(FriendDbManager friendDbManager);
+        void requestFriendQuery(FriendDbManager2 friendDbManager2);
 
-        void requestBilliardQuery(BilliardDbManager2 billiardDbManager);
+        void requestBilliardQuery(BilliardDbManager2 billiardDbManager2);
 
-        void requestPlayerQuery(PlayerDbManager playerDbManager);
+        void requestPlayerQuery(PlayerDbManager2 playerDbManager2);
     }
 
     public interface UserQueryRequestListener {
-        void requestQuery(UserDbManager userDbManager);
+        void requestQuery(UserDbManager2 userDbManager2);
     }
 
     public interface FriendQueryRequestListener {
-        void requestQuery(FriendDbManager friendDbManager);
+        void requestQuery(FriendDbManager2 friendDbManager2);
     }
 
     public interface BilliardQueryRequestListener {
@@ -185,6 +195,6 @@ public class AppDbManager {
     }
 
     public interface PlayerQueryRequestListener {
-        void requestQuery(PlayerDbManager playerDbManager);
+        void requestQuery(PlayerDbManager2 playerDbManager2);
     }
 }

@@ -14,16 +14,20 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.PlayerList;
 import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.SectionManager;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.util.ArrayList;
 
@@ -53,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DeveloperManager.displayLog(
+                CLASS_NAME_LOG,
+                "====>>>> MainActivity <<<<=============="
+        );
         // appDbManager
         initAppDbManager();
 
@@ -70,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         appDbManager.connectDb(
                 true,
                 true,
-                false,
-                false
+                true,
+                true
         );
     }
 
@@ -194,50 +202,69 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
         appDbManager.requestQuery(
                 new AppDbManager.QueryRequestListener() {
+
                     @Override
-                    public void requestUserQuery(UserDbManager userDbManager) {
+                    public void requestUserQuery(UserDbManager2 userDbManager2) {
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME_LOG,
+                                "======>>>> userData"
+                        );
+                        userData = userDbManager2.loadContent(TEMP_ID);
+                        DeveloperManager.displayToUserData(
+                                CLASS_NAME_LOG,
+                                userData
+                        );
+                    }
+
+                    @Override
+                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME_LOG,
+                                "======>>>> friendDataArrayList"
+                        );
+
+                        friendDataArrayList = friendDbManager2.loadAllContentByUserId(TEMP_ID);
+                        DeveloperManager.displayToFriendData(
+                                CLASS_NAME_LOG,
+                                friendDataArrayList
+                        );
 
                     }
 
                     @Override
-                    public void requestFriendQuery(FriendDbManager friendDbManager) {
+                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
 
+                        DeveloperManager.displayLog(
+                                CLASS_NAME_LOG,
+                                "======>>>> billiardData"
+                        );
+
+                        BilliardData billiardData = billiardDbManager2.loadContentByCount(1);
+                        DeveloperManager.displayToBilliardData(
+                                CLASS_NAME_LOG,
+                                billiardData
+                        );
                     }
+
 
                     @Override
-                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager) {
+                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
 
+                        DeveloperManager.displayLog(
+                                CLASS_NAME_LOG,
+                                "======>>>> billiardData"
+                        );
+
+                        ArrayList<PlayerData> playerDataArrayList = playerDbManager2.loadAllContentByBilliardCount(1);
+                        DeveloperManager.displayToPlayerData(
+                                CLASS_NAME_LOG,
+                                playerDataArrayList
+                        );
                     }
 
-                    @Override
-                    public void requestPlayerQuery(PlayerDbManager playerDbManager) {
-
-                    }
                 }
         );
-//        sectionManager.requestDbQuery(
-//                new SectionManager.DbQueryRequestListener() {
-//                    @Override
-//                    public void requestUserDb(UserDbManager userDbManager) {
-//                        userData = userDbManager.loadContent(TEMP_ID);
-//                    }
-//
-//                    @Override
-//                    public void requestFriendDb(FriendDbManager friendDbManager) {
-//                        friendDataArrayList = friendDbManager.loadAllContentByUserId(TEMP_ID);
-//                    }
-//
-//                    @Override
-//                    public void requestBilliardDb(BilliardDbManager billiardDbManager) {
-//
-//                    }
-//
-//                    @Override
-//                    public void requestPlayerDb(PlayerDbManager playerDbManager) {
-//
-//                    }
-//                }
-//        );
 
     } // End of method [onStart]
 

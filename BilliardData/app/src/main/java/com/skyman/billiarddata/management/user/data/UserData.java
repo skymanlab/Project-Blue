@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserData implements Serializable {
 
-    // 0. id
+    // 0. id (primary key/autoincrement)
     // 1. name
     // 2. target score
     // 3. speciality

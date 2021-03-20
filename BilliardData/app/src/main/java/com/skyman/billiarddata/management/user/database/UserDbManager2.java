@@ -9,6 +9,7 @@ import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
 import com.skyman.billiarddata.management.projectblue.database.AppDbLog;
 import com.skyman.billiarddata.management.projectblue.database.AppDbSetting;
 import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
@@ -49,6 +50,72 @@ public class UserDbManager2 {
 
 
     // ==================================================== Insert Query ====================================================
+    public long saveContent(String name,                    // 1. name
+                            int targetScore,                // 2. target score
+                            String speciality,              // 3. speciality
+                            int gameRecordWin,              // 4. game record win
+                            int gameRecordLoss,             // 5. game record loss
+                            int recentGameBilliardCount,    // 6. recent game billiard count
+                            int totalPlayTime,              // 7. total play time
+                            int totalCost) {                // 8. total cost
+
+        final long rowNumber[] = {0};
+
+        appDbSetting2.requestInsertQuery(
+                new AppDbSetting2.InsertQueryListener() {
+                    @Override
+                    public boolean checkFormat() {
+                        return (!name.equals("") &&
+                                (targetScore >= 0) &&
+                                !speciality.equals("") &&
+                                (gameRecordWin >= 0) &&
+                                (gameRecordLoss >= 0) &&
+                                (recentGameBilliardCount >= 0) &&
+                                (totalPlayTime >= 0) &&
+                                (totalCost >= 0)) ? true : false;
+                    }
+
+                    @Override
+                    public long requestQuery(SQLiteDatabase writable) {
+
+                        ContentValues insertValues = new ContentValues();
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_NAME, name);                                            // 1. name
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TARGET_SCORE, targetScore);                             // 2. target score
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_SPECIALITY, speciality);                                // 3. speciality
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);                        // 4. game record win
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);                      // 5. game record loss
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, recentGameBilliardCount);   // 6. recent game billiard count
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);                        // 7. total play time
+                        insertValues.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);                                 // 8. total cost
+
+                        return writable.insert(
+                                UserTableSetting.Entry.TABLE_NAME,
+                                null,
+                                insertValues
+                        );
+                    }
+
+                    @Override
+                    public void successRequest(long result) {
+                        rowNumber[0] = result;
+                    }
+
+                    @Override
+                    public void errorDatabase() {
+                        AppDbLog.printDatabaseErrorLog(CLASS_NAME, UserDbManager2.class.getSimpleName());
+                    }
+
+                    @Override
+                    public void errorFormat() {
+                        AppDbLog.printFormatErrorLog(CLASS_NAME, UserData.class.getSimpleName());
+                    }
+                }
+        );
+
+        return rowNumber[0];
+    } // End of method [saveContent]
+
+
     public long saveContent(UserData userData) {
 
         final long rowNumber[] = {0};
@@ -153,7 +220,7 @@ public class UserDbManager2 {
 
 
     // ==================================================== Select Query ====================================================
-    public UserData loadContent(long idOfUser) {
+    public UserData loadContent(long id) {
 
         final UserData[] userData = {null};
 
@@ -161,13 +228,14 @@ public class UserDbManager2 {
                 new AppDbSetting2.SelectQueryListener() {
                     @Override
                     public boolean checkFormat() {
-                        return (0 < idOfUser) ? true : false;
+                        return (0 < id) ? true : false;
                     }
 
                     @Override
                     public Cursor requestQuery(SQLiteDatabase readable) {
+
                         return readable.rawQuery(
-                                UserTableSetting.SQL_SELECT_WHERE_ID + idOfUser,
+                                UserTableSetting.SQL_SELECT_WHERE_ID + id,
                                 null
                         );
                     }
@@ -258,7 +326,9 @@ public class UserDbManager2 {
 
 
     // ==================================================== Update Query ====================================================
-    public int updateContent(long id, int targetScore, String speciality) {
+    public int updateContent(long id,
+                             int targetScore,
+                             String speciality) {
 
         final int numberOfUpdatedRows[] = {0};
 
@@ -303,16 +373,10 @@ public class UserDbManager2 {
     } // End of method [updateContent]
 
 
-    /**
-     * [method] [update] name, targetScore, speciality 값을 받아서 해당 id 의 user 의 정보를 갱신한다.
-     *
-     * @param id          [0] user 의 id
-     * @param name        [1] user 의 이름
-     * @param targetScore [2] user 의 수지
-     * @param speciality  [3] user 의 종목
-     * @return update query 문을 실행한 결과
-     */
-    public int updateContent(long id, String name, int targetScore, String speciality) {
+    public int updateContent(long id,
+                             String name,
+                             int targetScore,
+                             String speciality) {
 
 
         final int numberOfUpdatedRows[] = {0};
@@ -359,165 +423,137 @@ public class UserDbManager2 {
     } // End of method [updateContent]
 
 
-    /**
-     * [method] [update] gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost 값을 받아서
-     * 해당 id 의 user 의 정보를 갱신한다.
-     *
-     * @param id                      [0] user 의 id
-     * @param gameRecordWin           [4] user 의 게임 승리 수
-     * @param gameRecordLoss          [5] user 의 게임 패배 수
-     * @param recentGameBilliardCount [6] user 의 최근 게임의 billiard count
-     * @param totalPlayTime           [7] user 의 총 게임 시간
-     * @param totalCost               [8] user 의 총 비용
-     * @return update query 문을 실행한 결과
-     */
-    public int updateContent(long id, int gameRecordWin, int gameRecordLoss, long recentGameBilliardCount, int totalPlayTime, int totalCost) {
+    public int updateContent(long id,
+                             int gameRecordWin,
+                             int gameRecordLoss,
+                             long recentGameBilliardCount,
+                             int totalPlayTime,
+                             int totalCost) {
 
-        final String METHOD_NAME = "[updateContent] ";
+        final int numberOfUpdatedRows[] = {0};
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 <gameRecordWin> <gameRecordLoss> <recentGameBilliardCount> <totalPlayTime> <totalCost> 를 갱신합니다.");
+        appDbSetting2.requestUpdateQuery(
+                new AppDbSetting2.UpdateQueryListener() {
+                    @Override
+                    public boolean checkFormat() {
+                        return ((id > 0) &&                         // 0. id
+                                (gameRecordWin >= 0) &&             // 4. game record win
+                                (gameRecordLoss >= 0) &&            // 5. game record loss
+                                (recentGameBilliardCount >= 0) &&   // 6. recent game player id
+                                (totalPlayTime >= 0) &&             // 7. total play time
+                                (totalCost >= 0))                   // 8. total cost
+                                ? true : false;
+                    }
 
-        // [lv/l]methodResult : 이 메소드의 결과 값 저장
-        int methodResult = 0;
+                    @Override
+                    public int requestQuery(SQLiteDatabase writable) {
 
-        // [check 1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
+                        ContentValues updateValue = new ContentValues();
+                        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);
+                        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);
+                        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, recentGameBilliardCount);
+                        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);
+                        updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);
 
-            // [check 2] : id, gameRecordWin, gameRecordLoss, recentGamePlayerId, recentPlayDate, totalPlayTime, totalCost 형식 확인
-            if ((id > 0)                                    // 0. id
-                    && (gameRecordWin >= 0)                 // 4. game record win
-                    && (gameRecordLoss >= 0)                // 5. game record loss
-                    && (recentGameBilliardCount >= 0)        // 6. recent game player id
-                    && (totalPlayTime >= 0)                 // 7. total play time
-                    && (totalCost >= 0)) {                  // 8. total cost
+                        String selection = UserTableSetting.Entry._ID + " LIKE ?";
+                        String[] selectionArgs = {id + ""};
 
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
-                SQLiteDatabase updateDb = this.getDbOpenHelper().getWritableDatabase();
+                        return writable.update(
+                                UserTableSetting.Entry.TABLE_NAME,
+                                updateValue,
+                                selection,
+                                selectionArgs
+                        );
+                    }
 
-                // [lv/C]ContentValues : 매개변수 값을 담을 객체 생성과 초기화
-                ContentValues updateValue = new ContentValues();
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_WIN, gameRecordWin);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_GAME_RECORD_LOSS, gameRecordLoss);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_RECENT_GAME_BILLIARD_COUNT, recentGameBilliardCount);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_PLAY_TIME, totalPlayTime);
-                updateValue.put(UserTableSetting.Entry.COLUMN_NAME_TOTAL_COST, totalCost);
+                    @Override
+                    public void successRequest(int result) {
+                        numberOfUpdatedRows[0] = result;
+                    }
 
-                // [lv/i]methodResult : update query 문을 실행한 결과
-                methodResult = updateDb.update(UserTableSetting.Entry.TABLE_NAME, updateValue, UserTableSetting.Entry._ID + "=" + id, null);
+                    @Override
+                    public void errorFormat() {
+                        AppDbLog.printFormatErrorLog(CLASS_NAME, UserData.class.getSimpleName());
+                    }
+                }
+        );
 
-                // [lv/C]SQLiteDatabase : close
-                updateDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들이 형식에 맞지 않아요.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-
-        return methodResult;
+        return numberOfUpdatedRows[0];
     } // End of method [updateContent]
 
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
-    /**
-     * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 user 테이블의 모든 내용을 삭제한다.
-     *
-     * <p>
-     * project_blue.db 의 user 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
-     *
-     * @return user 테이블의 데이터를 삭제한 개수 or 실패
-     */
+    // ==================================================== Delete Query ====================================================
     public int deleteAllContent() {
 
-        final String METHOD_NAME = "[deleteAllContent] ";
+        final int numberOfDeletedRows[] = {0};
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 삭제합니다.");
+        appDbSetting2.requestDeleteQuery(
+                new AppDbSetting2.DeleteQueryListener() {
+                    @Override
+                    public boolean checkFormat() {
+                        return true;
+                    }
 
-        // [lv/l]methodResult : 이 메소드의 결과 값 저장
-        int methodResult = 0;
+                    @Override
+                    public int requestQuery(SQLiteDatabase writable) {
+                        return writable.delete(
+                                UserTableSetting.Entry.TABLE_NAME,
+                                null,
+                                null
+                        );
+                    }
 
-        // [check 1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
+                    @Override
+                    public void successRequest(int result) {
+                        numberOfDeletedRows[0] = result;
+                    }
 
-            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
-            SQLiteDatabase deleteDb = this.getDbOpenHelper().getWritableDatabase();
-
-            // [lv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
-            methodResult = deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, null, null);
-
-            // [lv/C]SQLiteDatabase : close
-            deleteDb.close();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-        return methodResult;
-
+                    @Override
+                    public void errorFormat() {
+                        AppDbLog.printFormatErrorLog(CLASS_NAME, UserData.class.getSimpleName());
+                    }
+                }
+        );
+        return numberOfDeletedRows[0];
     } // End of method [deleteAllContent]
 
 
-    /**
-     * [method] [delete] ProjectBlueDBHelper 로 writeableDatabase 를 가져와서 user 테이블의 모든 내용을 삭제한다.
-     *
-     * <p>
-     * project_blue.db 의 user 테이블에 데이터를 delete query 문을 실행한다.
-     *
-     * <p>
-     * 반환 값
-     * '-1' : 데이터베이스 문재 발생
-     * 0 이상 : 데이터베이스 delete query 실행 성공과 삭제한 데이터의 개수
-     *
-     * @param id user 의 id
-     * @return user 테이블의 데이터를 삭제한 개수 or 실패
-     */
     public int deleteContent(long id) {
 
-        final String METHOD_NAME = "[deleteContent] ";
+        final int numberOfDeletedRows[] = {0};
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<id> 에 해당하는 유저의 데이터를 삭제합니다.");
+        appDbSetting2.requestDeleteQuery(
+                new AppDbSetting2.DeleteQueryListener() {
+                    @Override
+                    public boolean checkFormat() {
+                        return (0 < id) ? true : false;
+                    }
 
-        // [lv/l]methodResult : 이 메소드의 결과 값 저장
-        int methodResult = 0;
+                    @Override
+                    public int requestQuery(SQLiteDatabase writable) {
 
-        // [check 1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
+                        String selection = UserTableSetting.Entry.TABLE_NAME + " LIKE ?";
+                        String[] selectionArgs = {id + ""};
+                        return writable.delete(
+                                UserTableSetting.Entry.TABLE_NAME,
+                                selection,
+                                selectionArgs
+                        );
+                    }
 
-            // [check 2] : id 는 0 보다 크다
-            if (id > 0) {
+                    @Override
+                    public void successRequest(int result) {
+                        numberOfDeletedRows[0] = result;
+                    }
 
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기
-                SQLiteDatabase deleteDb = this.getDbOpenHelper().getWritableDatabase();
+                    @Override
+                    public void errorFormat() {
+                        AppDbLog.printFormatErrorLog(CLASS_NAME, UserData.class.getSimpleName());
+                    }
+                }
+        );
 
-                // [lv/i]methodResult : delete query 문이 실행 된 결과를 받는다.
-                methodResult = deleteDb.delete(UserTableSetting.Entry.TABLE_NAME, UserTableSetting.Entry._ID + "=" + id, null);
-
-                // [lv/C]SQLiteDatabase : close
-                deleteDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수 id 가 형식에 맞지 않아요.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-        return methodResult;
-
+        return numberOfDeletedRows[0];
     } // End of method [deleteContent]
 
 

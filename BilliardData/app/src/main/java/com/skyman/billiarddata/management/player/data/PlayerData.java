@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PlayerData implements Serializable {
 
-    // 0. count
+    // 0. count (primary key/autoincrement)
     // 1. billiard count
     // 2. player id
     // 3. player name

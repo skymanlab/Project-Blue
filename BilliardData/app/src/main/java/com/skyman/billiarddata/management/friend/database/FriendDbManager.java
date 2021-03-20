@@ -272,126 +272,6 @@ public class FriendDbManager extends AppDbSetting {
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-
-    /**
-     * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 모두 가져온다.
-     *
-     * @return friend 테이블에 저장된 모든 데이터
-     */
-    public ArrayList<FriendData> loadAllContent() {
-
-        final String METHOD_NAME = "[loadAllContent] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 가져옵니다.");
-
-        // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
-        ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
-
-        // [check  1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
-
-            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
-            SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
-
-            // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
-            Cursor cursor = readDb.rawQuery(FriendTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
-
-            // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
-            while (cursor.moveToNext()) {
-
-                // [lv/C]FriendData : friend 테이블의 '한 행'의 정보를 담는다.
-                FriendData friendData = new FriendData();
-                friendData.setId(cursor.getLong(0));
-                friendData.setUserId(cursor.getLong(1));
-                friendData.setName(cursor.getString(2));
-                friendData.setGameRecordWin(cursor.getInt(3));
-                friendData.setGameRecordLoss(cursor.getInt(4));
-                friendData.setRecentGameBilliardCount(cursor.getLong(5));
-                friendData.setTotalPlayTime(cursor.getInt(6));
-                friendData.setTotalCost(cursor.getInt(7));
-
-                // [lv/C]ArrayList<friendData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
-                friendDataArrayList.add(friendData);
-            } // [cycle 1]
-
-            // [lv/C]SQLiteDatabase : close / end
-            readDb.close();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-        return friendDataArrayList;
-
-    } // End of method [loadAllContent]
-
-
-    /**
-     * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 해당 userId 가 같은 데이터를 모두 가져온다.
-     *
-     * @param userId [1] 친구를 추가한 user 의 id
-     * @return friend 테이블에 저장된 모든 데이터
-     */
-    public ArrayList<FriendData> loadAllContentByUserId(long userId) {
-
-        final String METHOD_NAME = "[loadAllContentByUserId] ";
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> 에 해당하는 데이터를 가져옵니다.");
-
-        // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
-        ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
-
-        // [check  1] : openDbHelper 가 초기화 되었다.
-        if (this.isInitializedDB()) {
-
-            // [check 2] : 매개변수 id 의 형식이 맞다
-            if (userId > 0) {
-
-                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
-                SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
-
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Query 문은 : " + FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId);
-
-                // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
-                Cursor cursor = readDb.rawQuery(FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId, null);
-
-                // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
-                while (cursor.moveToNext()) {
-
-                    // [lv/C]FriendData : friend 테이블의 '한 행'의 정보를 담는다.
-                    FriendData friendData = new FriendData();
-                    friendData.setId(cursor.getLong(0));
-                    friendData.setUserId(cursor.getLong(1));
-                    friendData.setName(cursor.getString(2));
-                    friendData.setGameRecordWin(cursor.getInt(3));
-                    friendData.setGameRecordLoss(cursor.getInt(4));
-                    friendData.setRecentGameBilliardCount(cursor.getLong(5));
-                    friendData.setTotalPlayTime(cursor.getInt(6));
-                    friendData.setTotalCost(cursor.getInt(7));
-
-                    // [lv/C]ArrayList<friendData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
-                    friendDataArrayList.add(friendData);
-
-                } // [cycle 1]
-
-                // [lv/C]SQLiteDatabase : close / end
-                readDb.close();
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
-        } // [check 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
-        return friendDataArrayList;
-
-    } // End of method [loadAllContentByUserId]
-
-
     /**
      * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 해당 userId 와 id 가 모두 같은 데이터를 가져온다.
      *
@@ -521,6 +401,126 @@ public class FriendDbManager extends AppDbSetting {
         return friendData;
 
     } // End of method [loadContentByIdAndUserId]
+
+
+    /**
+     * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 모두 가져온다.
+     *
+     * @return friend 테이블에 저장된 모든 데이터
+     */
+    public ArrayList<FriendData> loadAllContent() {
+
+        final String METHOD_NAME = "[loadAllContent] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 데이터를 가져옵니다.");
+
+        // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
+        ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
+
+        // [check  1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
+            SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
+
+            // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
+            Cursor cursor = readDb.rawQuery(FriendTableSetting.SQL_SELECT_TABLE_ALL_ITEM, null);
+
+            // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
+            while (cursor.moveToNext()) {
+
+                // [lv/C]FriendData : friend 테이블의 '한 행'의 정보를 담는다.
+                FriendData friendData = new FriendData();
+                friendData.setId(cursor.getLong(0));
+                friendData.setUserId(cursor.getLong(1));
+                friendData.setName(cursor.getString(2));
+                friendData.setGameRecordWin(cursor.getInt(3));
+                friendData.setGameRecordLoss(cursor.getInt(4));
+                friendData.setRecentGameBilliardCount(cursor.getLong(5));
+                friendData.setTotalPlayTime(cursor.getInt(6));
+                friendData.setTotalCost(cursor.getInt(7));
+
+                // [lv/C]ArrayList<friendData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
+                friendDataArrayList.add(friendData);
+            } // [cycle 1]
+
+            // [lv/C]SQLiteDatabase : close / end
+            readDb.close();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+        return friendDataArrayList;
+
+    } // End of method [loadAllContent]
+
+
+    /**
+     * [method] [select] ProjectBlueDBHelper 에서 readableDatabase 를 가져와 friend 테이블에 저장된 데이터를 해당 userId 가 같은 데이터를 모두 가져온다.
+     *
+     * @param userId [1] 친구를 추가한 user 의 id
+     * @return friend 테이블에 저장된 모든 데이터
+     */
+    public ArrayList<FriendData> loadAllContentByUserId(long userId) {
+
+        final String METHOD_NAME = "[loadAllContentByUserId] ";
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<userId> 에 해당하는 데이터를 가져옵니다.");
+
+        // [lv/C]ArrayList<friendData> : friend 테이블에 저장된 모든 데이커가 담길 ArrayList
+        ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
+
+        // [check  1] : openDbHelper 가 초기화 되었다.
+        if (this.isInitializedDB()) {
+
+            // [check 2] : 매개변수 id 의 형식이 맞다
+            if (userId > 0) {
+
+                // [lv/C]SQLiteDatabase : openDbHelper 를 이용하여 writeableDatabase 가져오기 / declaration & create
+                SQLiteDatabase readDb = super.getDbOpenHelper().getReadableDatabase();
+
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Query 문은 : " + FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId);
+
+                // [lv/C]Cursor : select query 문의 실행 결과가 담길 Cursor / use
+                Cursor cursor = readDb.rawQuery(FriendTableSetting.SQL_SELECT_WHERE_USER_ID + userId, null);
+
+                // [cycle 1] : cursor 의 객체의 moveToNext method 를 이용하여 가져온 데이터가 있을 때까지
+                while (cursor.moveToNext()) {
+
+                    // [lv/C]FriendData : friend 테이블의 '한 행'의 정보를 담는다.
+                    FriendData friendData = new FriendData();
+                    friendData.setId(cursor.getLong(0));
+                    friendData.setUserId(cursor.getLong(1));
+                    friendData.setName(cursor.getString(2));
+                    friendData.setGameRecordWin(cursor.getInt(3));
+                    friendData.setGameRecordLoss(cursor.getInt(4));
+                    friendData.setRecentGameBilliardCount(cursor.getLong(5));
+                    friendData.setTotalPlayTime(cursor.getInt(6));
+                    friendData.setTotalCost(cursor.getInt(7));
+
+                    // [lv/C]ArrayList<friendData> : 위 의 '한 행'의 내용을 배열 형태로 담는다.
+                    friendDataArrayList.add(friendData);
+
+                } // [cycle 1]
+
+                // [lv/C]SQLiteDatabase : close / end
+                readDb.close();
+
+            } else {
+                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "매개변수들의 형식이 맞지 않습니다.");
+            } // [check 2]
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "openDBHelper 가 생성되지 않았습니다. 초기화 해주세요.");
+        } // [check 1]
+
+        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "The method is complete!");
+        return friendDataArrayList;
+
+    } // End of method [loadAllContentByUserId]
+
 
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

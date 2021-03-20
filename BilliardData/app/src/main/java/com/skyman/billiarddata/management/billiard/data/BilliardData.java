@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class BilliardData implements Serializable {
 
-    // 0. count
+    // 0. count (primary key/autoincrement)
     // 1. date
     // 2. game mode
     // 3. player count

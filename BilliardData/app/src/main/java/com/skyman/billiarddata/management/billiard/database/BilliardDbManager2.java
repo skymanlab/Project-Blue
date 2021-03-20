@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.projectblue.database.AppDbLog;
 import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
@@ -36,6 +37,70 @@ public class BilliardDbManager2 {
 
 
     // ==================================================== Insert Query ====================================================
+    public long saveContent(String date,            // 1. date
+                            String gameMode,        // 2. game mode
+                            int playerCount,        // 3. player count
+                            long winnerId,          // 4. winner Id
+                            String winnerName,      // 5. winner name
+                            int playTime,           // 6. play time
+                            String score,           // 7. score
+                            int cost) {             // 8. cost
+
+        final long[] rowNumber = {0};
+
+        appDbSetting2.requestInsertQuery(
+                new AppDbSetting2.InsertQueryListener() {
+                    @Override
+                    public boolean checkFormat() {
+                        return (!date.equals("") &&
+                                !gameMode.equals("") &&
+                                (playerCount >= 0) &&
+                                (winnerId > 0) &&
+                                !winnerName.equals("") &&
+                                (playTime >= 0) &&
+                                !score.equals("") &&
+                                (cost >= 0)) ? true : false;
+                    }
+
+                    @Override
+                    public long requestQuery(SQLiteDatabase writable) {
+
+                        ContentValues insertValues = new ContentValues();
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_DATE, date);                    // 1. date
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_GAME_MODE, gameMode);           // 2. game mode
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAYER_COUNT, playerCount);     // 3. player count
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_ID, winnerId);           // 4. winner id
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_WINNER_NAME, winnerName);       // 5. winner name
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_PLAY_TIME, playTime);           // 6. play time
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_SCORE, score);                  // 7. score
+                        insertValues.put(BilliardTableSetting.Entry.COLUMN_NAME_COST, cost);                    // 8. cost
+
+                        return writable.insert(
+                                BilliardTableSetting.Entry.TABLE_NAME,
+                                null,
+                                insertValues
+                        );
+                    }
+
+                    @Override
+                    public void successRequest(long result) {
+                        rowNumber[0] = result;
+                    }
+
+                    @Override
+                    public void errorDatabase() {
+                        AppDbLog.printDatabaseErrorLog(CLASS_NAME, BilliardDbManager2.class.getSimpleName());
+                    }
+
+                    @Override
+                    public void errorFormat() {
+                        AppDbLog.printFormatErrorLog(CLASS_NAME, BilliardData.class.getSimpleName());
+                    }
+                }
+        );
+
+        return rowNumber[0];
+    } // End of method [saveContent]
 
     /**
      * BilliardData 에 담긴 데이터를 billiard 테이블에 저장한다.
@@ -95,7 +160,6 @@ public class BilliardDbManager2 {
         );
 
         return rowNumber[0];
-
     } // End of method [saveContent]
 
 
@@ -164,10 +228,10 @@ public class BilliardDbManager2 {
     /**
      * billiard 테이블에서 count 행에서 countOfBilliard 에 해당하는 열을 BilliardData 객체에 담아서 반환한다.
      *
-     * @param countOfBilliard
+     * @param count
      * @return
      */
-    public BilliardData loadContent(long countOfBilliard) {
+    public BilliardData loadContentByCount(long count) {
 
         final BilliardData[] billiardData = {new BilliardData()};
 
@@ -175,21 +239,14 @@ public class BilliardDbManager2 {
                 new AppDbSetting2.SelectQueryListener() {
                     @Override
                     public boolean checkFormat() {
-                        return (0 < countOfBilliard) ? true : false;
+                        return (0 < count) ? true : false;
                     }
 
                     @Override
                     public Cursor requestQuery(SQLiteDatabase readable) {
 
-                        String query = new StringBuilder()
-                                .append(BilliardTableSetting.SQL_SELECT_WHERE_COUNT)
-                                .append(" = ?")
-                                .toString();
-
-                        String[] selectionArgs = {countOfBilliard + ""};
-
                         return readable.rawQuery(
-                                BilliardTableSetting.SQL_SELECT_WHERE_COUNT + countOfBilliard,
+                                BilliardTableSetting.SQL_SELECT_WHERE_COUNT + count,
                                 null
                         );
                     }
@@ -199,7 +256,6 @@ public class BilliardDbManager2 {
 
                         if (result.moveToFirst()) {
 
-                            // [lv/C]BilliardData : billiard 테이블의 '한 행'의 정보를 담는다.
                             billiardData[0] = new BilliardData();
                             billiardData[0].setCount(result.getLong(0));
                             billiardData[0].setDate(result.getString(1));
@@ -394,10 +450,10 @@ public class BilliardDbManager2 {
     /**
      * count 행에서 countOfBilliard 에 해당하는 열을 삭제한다.
      *
-     * @param countOfBilliard billiardData 에서 count 값
+     * @param count billiardData 에서 count 값
      * @return 삭제된 행의 수
      */
-    public int deleteContent(int countOfBilliard) {
+    public int deleteContent(int count) {
 
         final int numberOfDeletedRows[] = {0};
 
@@ -405,14 +461,14 @@ public class BilliardDbManager2 {
                 new AppDbSetting2.DeleteQueryListener() {
                     @Override
                     public boolean checkFormat() {
-                        return (0 < countOfBilliard) ? true : false;
+                        return (0 < count) ? true : false;
                     }
 
                     @Override
                     public int requestQuery(SQLiteDatabase writable) {
 
                         String selection = BilliardTableSetting.Entry._COUNT + " LIKE ?";
-                        String[] selectionArgs = {countOfBilliard + ""};
+                        String[] selectionArgs = {count + ""};
 
                         return writable.delete(
                                 BilliardTableSetting.Entry.TABLE_NAME,
