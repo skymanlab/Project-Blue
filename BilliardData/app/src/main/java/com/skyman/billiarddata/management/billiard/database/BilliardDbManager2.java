@@ -453,7 +453,7 @@ public class BilliardDbManager2 {
      * @param count billiardData 에서 count 값
      * @return 삭제된 행의 수
      */
-    public int deleteContent(int count) {
+    public int deleteContentByCount(long count) {
 
         final int numberOfDeletedRows[] = {0};
 
@@ -491,7 +491,7 @@ public class BilliardDbManager2 {
         );
 
         return numberOfDeletedRows[0];
-    } // End of method [deleteAllContent]
+    } // End of method [deleteContentByCount]
 
 
     // ==================================================== Check Format ====================================================

@@ -530,7 +530,7 @@ public class UserInputFragment extends Fragment {
         Intent intent = new Intent(view.getContext(), UserManagerActivity.class);
 
         // [lv/C]Intent : SessionManager 를 통해 intent 에 'userData' 담는다.
-        SessionManager.setIntentOfUserData(intent, this.userData);
+        SessionManager.setUserDataFromIntent(intent, this.userData);
 
         // [method]getActivity : 해당 activity 를 stack 에서 삭제하기
         getActivity().finish();

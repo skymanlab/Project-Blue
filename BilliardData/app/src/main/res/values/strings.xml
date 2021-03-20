@@ -90,9 +90,10 @@
     <string name="billiardDisplay_title">당구 데이터 보기</string>
     <string name="billiardDisplay_button_delete">모든 내용 삭제</string>
     <string name="billiardDisplay_dialog_allDataDelete_title">삭제하시겠습니까?</string>
-    <string name="billiardDisplay_dialog_allDataDelete_message">저장되었던 게임에 대한 내용이 삭제됩니다.</string>
+    <string name="billiardDisplay_dialog_allDataDelete_message">저장되었던 게임에 대한 내용이 모두 삭제됩니다.</string>
     <string name="billiardDisplay_dialog_allDataDelete_positive">삭제</string>
     <string name="billiardDisplay_dialog_allDataDelete_negative">취소</string>
+    <string name="billiardDisplay_noticeUser_noData">저장된 데이터가 없습니다.</string>
 
     <!-- Activity : user manager -->
     <string name="user_manager_title">나의 정보</string>
@@ -243,22 +244,21 @@
     ===============================================================================================-
     -->
     <!-- Custom ListView : billiard data-->
-    <string name="c_lv_billiard_data_count">번호</string>
-    <string name="c_lv_billiard_data_count_default">#</string>
-    <string name="c_lv_billiard_data_date">####년 ##월 ##일</string>
-    <string name="c_lv_billiard_data_game_mode">종목</string>
-    <string name="c_lv_billiard_data_game_mode_default">X구</string>
-    <string name="c_lv_billiard_data_player_count">참가인원</string>
-    <string name="c_lv_billiard_data_player_count_default"># 명</string>
-    <string name="c_lv_billiard_data_play_time">경기 시간</string>
-    <string name="c_lv_billiard_data_play_time_default">### 분 </string>
-    <string name="c_lv_billiard_data_winner_name">승리자</string>
-    <string name="c_lv_billiard_data_winner_name_default">xxx</string>
-    <string name="c_lv_billiard_data_score">스코어</string>
-    <string name="c_lv_billiard_data_score_default">## : ##</string>
-    <string name="c_lv_billiard_data_cost">비용</string>
-    <string name="c_lv_billiard_data_cost_default">###,### 원</string>
-    <string name="c_lv_billiard_date"></string>
+    <string name="custom_lv_billiardData_count">번호</string>
+    <string name="custom_lv_billiardData_count_default">#</string>
+    <string name="custom_lv_billiardData_date">####년 ##월 ##일</string>
+    <string name="custom_lv_billiardData_gameMode">종목</string>
+    <string name="custom_lv_billiardData_gameMode_default">X구</string>
+    <string name="custom_lv_billiardData_playerCount">참가인원</string>
+    <string name="custom_lv_billiardData_playerCount_default"># 명</string>
+    <string name="custom_lv_billiardData_winnerName">승리자</string>
+    <string name="custom_lv_billiardData_winnerName_default">xxx</string>
+    <string name="custom_lv_billiardData_playTime">경기 시간</string>
+    <string name="custom_lv_billiardData_playTime_default">### 분 </string>
+    <string name="custom_lv_billiardData_score">스코어</string>
+    <string name="custom_lv_billiardData_score_default">## : ##</string>
+    <string name="custom_lv_billiardData_cost">비용</string>
+    <string name="custom_lv_billiardData_cost_default">###,### 원</string>
 
     <!-- Custom ListView : friend data -->
     <string name="c_lv_friend_data_game_record">전적</string>

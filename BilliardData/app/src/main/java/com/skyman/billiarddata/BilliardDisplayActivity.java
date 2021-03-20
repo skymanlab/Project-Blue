@@ -13,334 +13,383 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.SectionManager;
+import com.skyman.billiarddata.management.billiard.ListView.BilliardLvAdapter2;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.billiard.ListView.BilliardLvManager;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.util.ArrayList;
 
 
-public class BilliardDisplayActivity extends AppCompatActivity {
+public class BilliardDisplayActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME_LOG = "[Ac]_BilliardDisplayActivity";
+    private final String CLASS_NAME = BilliardDisplayActivity.class.getSimpleName();
 
-    // instance variable
-    private UserDbManager userDbManager = null;
-    private FriendDbManager friendDbManager = null;
-    private BilliardDbManager billiardDbManager = null;
-    private PlayerDbManager playerDbManager = null;
+    // instance variable : session
     private UserData userData = null;
-    private ArrayList<BilliardData> billiardDataArrayList = null;
+
+    // instance variable : load database
+    private ArrayList<BilliardData> billiardDataArrayList = new ArrayList<>();
+
+    // instance variable : database manager
+    private AppDbManager appDbManager;
+
+    // instance variable : widget
+    private ListView billiardListView;
+    private Button delete;
 
     // instance variable
-    private ListView allBilliardData;
-    private Button delete;
+    private BilliardLvAdapter2 billiardLvAdapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final String METHOD_NAME = "[onCreate] ";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_display);
 
-        // SessionManager 에서 userData 가져오기
-        this.userData = SessionManager.getUserDataInIntent(getIntent());
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "Intent 를 통해 user Data 를 가져왔습니다. 내용을 보겠습니다.");
-        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+        // session manager : userData
+        this.userData = SessionManager.getUserDataFromIntent(getIntent());
 
+        // AppDbManager
+        initAppDbManager();
 
-        // [method]createDbManager : user, friend, billiard 테이블 메니저 생성 및 초기화
-        createDbManager();
+        // Widget : connect -> init
+        connectWidget();
+        initWidget();
 
-        // [method]mappingOfWidget : activity_billiard_display layout 의 widget 을 mapping
-        mappingOfWidget();
-
-        // [check 1] : userData 가 있다.
-        if (this.userData != null) {
-
-            // [method]mappingAllBilliardDataToListView : billiard 테이블에서 가져온 모든 데이터를 ListView 에 뿌려준다.
-            mappingAllBilliardDataToListView();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
-        } // [check 1]
-
-        // [lv/C]Button : delete click listener
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // [method]showDialogWhetherDelete : billiard 테이블의 내용을 삭제하며 user 와 user 의 friend 데이터를 초기화한다.
-                showDialogWhetherDelete();
-
-            }
-        });
 
     }
 
     @Override
     protected void onDestroy() {
+
+        appDbManager.closeDb();
+
         super.onDestroy();
-
-        final String METHOD_NAME = "[onDestroy] ";
-
-        // [check 1] : user 테이블 메니저가 생성되었다.
-        if (this.userDbManager != null) {
-
-            // [iv/C]UserDbManager : user 테이블 메니저를 종료한다.
-            this.userDbManager.closeDb();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 테이블 메니저가 생성되지 않았습니다.");
-        } // [check 1]
-
-        // [check 2] : friend 테이블 메니저가 생성되었다.
-        if (this.friendDbManager != null) {
-
-            // [iv/C]FriendDbManager : friend 테이블 메니저를 종료한다.
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 테이블 메니저가 생성되지 않았습니다.");
-        } // [check 2]
-
-        // [check 3] : billiard 테이블 메니저가 생성되었다.
-        if (this.billiardDbManager != null) {
-
-            // [iv/C]BilliardDbManager : billiard 테이블 메니저를 종료한다.
-            this.billiardDbManager.closeDb();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블 메니저가 생성되지 않았습니다.");
-        } // [check 3]
-
-        // [check 4] : player 테이블 메니저가 생성되었다.
-        if (this.playerDbManager != null) {
-
-            // [iv/C]PlayerDbManager : player 테이블 메니저를 종료한다.
-            this.playerDbManager.closeDb();
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 테이블 메니저가 생성되지 않았습니다.");
-        } // [check 4]
-
     } // End of method [onDestroy]
 
-    /**
-     * [method] user, friend, billiard 테이블 메니저 생성
-     */
-    private void createDbManager() {
 
-        // [iv/C]UserDbManager : user 테이블 메니저 생성 및 초기화
-        this.userDbManager = new UserDbManager(this);
-        this.userDbManager.initDb();
+    @Override
+    public void initAppDbManager() {
 
-        // [iv/C]FriendDbManager : friend 테이블 메니저 생성 및 초기화
-        this.friendDbManager = new FriendDbManager(this);
-        this.friendDbManager.initDb();
+        appDbManager = new AppDbManager(this);
+        appDbManager.connectDb(
+                true,
+                true,
+                true,
+                true
+        );
 
-        // [iv/C]BilliardDbManger : billiard 테이블 메니저 생성 및 초기화
-        this.billiardDbManager = new BilliardDbManager(this);
-        this.billiardDbManager.initDb();
+    }
 
-        // [iv/C]PlayerDbManager : player 테이블 메니저 생성 및 초기화
-        this.playerDbManager = new PlayerDbManager(this);
-        this.playerDbManager.initDb();
+    @Override
+    public void connectWidget() {
 
-    } // End of method [createDbManager]
-
-
-    /**
-     * [method] activity_billiard_display layout 의 widget 을 mapping
-     */
-    private void mappingOfWidget() {
-
-        // [iv/C]ListView : allBilliardData mapping
-        this.allBilliardData = (ListView) findViewById(R.id.billiardDisplay_listView_allBilliardData);
+        // [iv/C]ListView : billiardListView mapping
+        this.billiardListView = (ListView) findViewById(R.id.billiardDisplay_listView_billiardList);
 
         // [iv/C]Button : delete mapping
         this.delete = (Button) findViewById(R.id.billiardDisplay_button_delete);
 
-    } // End of method [mappingOfWidget]
+    }
+
+    @Override
+    public void initWidget() {
+        final String METHOD_NAME = "[initWidget] ";
+
+        if (this.userData != null) {
+
+            // load : billiardDataArrayList
+            loadDataOfPlayerAndBilliard();
+
+            // init widget : billiardListView
+            initWidgetOfBilliardListView();
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
+        } // [check 1]
+
+        // widget (delete) : click listener
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setClickListenerOfDeleteButton();
+            }
+        });
+    }
 
 
-    /**
-     * [method] ListView 에 모든 billiardData 를 보여준다.
-     */
-    private void mappingAllBilliardDataToListView() {
+    private void loadDataOfPlayerAndBilliard() {
 
-        final String METHOD_NAME = "[mappingAllBilliardDataToListView] ";
+        final ArrayList<PlayerData>[] tempPlayerDataArrayList = new ArrayList[]{null};
 
-        // [lv/C]ArrayList<PlayerData> : user 의 id 와 name 으로 참가한 모든 경기를 가져오기 / player 테이블에서 playerId 와 playerName 으로 찾아야 한다.
-        ArrayList<PlayerData> playerDataArrayList = this.playerDbManager.loadAllContentByPlayerIdAndPlayerName(this.userData.getId(), this.userData.getName());
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "가져온 playerDataArrayLIst 를 확인하겠습니다.");
-        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
-
-        // ==============================================================================================================================================
-
-        // [iv/C]ArrayList<BilliardData> : 위의 playerDataArrayList 의 billiardCount 로 가져온 BilliardData 를 담을
-        this.billiardDataArrayList = new ArrayList<>();
-
-        // [cycle 1] : 참가한 경기 수 만큼
-        for (int index = 0; index < playerDataArrayList.size(); index++) {
-
-            // [lv/C]ArrayList<BilliardData> : playerData 의 billiardCount 로 가져온 BilliardData 를 추가한다.
-            this.billiardDataArrayList.add(this.billiardDbManager.loadAllContentByCount(playerDataArrayList.get(index).getBilliardCount()));
-
-        } // [cycle 1]
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "가져온 billiardDataArrayList 의 데이터를 알아보겠습니다.");
-        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.billiardDataArrayList);
-
-        // ==============================================================================================================================================
-
-        // [lv/C]BilliardLvManager : billiard 테이블의 모든 내용을 가져와 list view 와 연결하는 메니저 객체 생성
-        BilliardLvManager billiardLvManager = new BilliardLvManager(this.allBilliardData, this.billiardDbManager, this.userDbManager, this.playerDbManager, this.friendDbManager);
-
-        // [lv/C]BilliardLvManager : userData 의 id 로 모든 billiardData 와 userData 의 name 을 추가한다.
-        billiardLvManager.addData(billiardDataArrayList, this.userData);
-
-        // [lv/C]BilliardLvManager : allBilliardList 를 adapter 로 연결하기
-        billiardLvManager.setListViewToAdapter();
-
-        // [iv/C]ListView : allBilliardData 에 있는 개수로 마지막 item 을 선택하여 보여주기
-        this.allBilliardData.setSelection(this.allBilliardData.getCount());
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "allBilliardData 에 총 item 개수는 : " + this.allBilliardData.getCount());
-
-    } // End of method [mappingAllBilliardDataToListView]
-
-
-    /**
-     * [method] 삭제 버튼을 눌렀을 때 진짜 삭제할 건지 물어본다.
-     */
-    private void showDialogWhetherDelete() {
-
-        // [lv/C]AlertDialog : Builder 객체를 생성한다.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // [lv/C]AlertDialog : Builder 로 초기값 설정
-        builder.setTitle(R.string.billiardDisplay_dialog_allDataDelete_title)
-                .setMessage(R.string.billiardDisplay_dialog_allDataDelete_message)
-                .setPositiveButton(R.string.billiardDisplay_dialog_allDataDelete_positive, new DialogInterface.OnClickListener() {
+        // 나의 id 와 name 으로 (중복을 피하기 위해서)
+        // 내가 참가한 모든 경기에 대한 player list 가져오기
+        appDbManager.requestPlayerQuery(
+                new AppDbManager.PlayerQueryRequestListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-                        // [method]setClickListenerOfDeleteButton : billiard 테이블의 내용을 삭제하며 user 와 user 의 friend 데이터를 초기화한다.
-                        setClickListenerOfDeleteButton();
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=============>>> playerDataArrayList"
+
+                        );
+                        tempPlayerDataArrayList[0] = playerDbManager2.loadAllContentByPlayerIdAndPlayerName(userData.getId(), userData.getName());
+
+                        DeveloperManager.displayToPlayerData(
+                                CLASS_NAME,
+                                tempPlayerDataArrayList[0]
+                        );
                     }
-                })
-                .setNegativeButton(R.string.billiardDisplay_dialog_allDataDelete_negative, new DialogInterface.OnClickListener() {
+                }
+        );
+
+        // 위에서 가져온 player list 가 담긴 playerDataArrayList 에서
+        // 각각의 playerData 의 billiardCount 로
+        // 내가 참가한 게임 목록을 가져온다. (billiardDataArrayList 에 담긴다.)
+        appDbManager.requestBilliardQuery(
+                new AppDbManager.BilliardQueryRequestListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void requestQuery(BilliardDbManager2 billiardDbManager2) {
 
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=============>>> billiardDataArrayList"
+
+                        );
+
+                        billiardDataArrayList = new ArrayList<>();
+
+                        for (int index = 0; index < tempPlayerDataArrayList[0].size(); index++) {
+                            billiardDataArrayList.add(
+                                    billiardDbManager2.loadContentByCount(tempPlayerDataArrayList[0].get(index).getBilliardCount())
+                            );
+                        }
+
+                        DeveloperManager.displayToBilliardData(
+                                CLASS_NAME,
+                                billiardDataArrayList
+                        );
                     }
-                })
-                .show();
+                }
+        );
 
-    } // End of method [showDialogWhetherDelete]
+    } // End of method [loadDataOfPlayerAndBilliard]
+
+
+    private void initWidgetOfBilliardListView() {
+
+        billiardLvAdapter2 = new BilliardLvAdapter2(getSupportFragmentManager(), userData, billiardDataArrayList, appDbManager);
+
+        billiardListView.setAdapter(billiardLvAdapter2);
+
+        billiardListView.setSelection(billiardListView.getCount());
+
+    }
 
 
     /**
      * [method] delete Click Listener 설정
      */
     private void setClickListenerOfDeleteButton() {
-
         final String METHOD_NAME = "[setClickListenerOfDeleteButton] ";
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
 
-            // [cycle 1] : billiardDataArrayLst 의 개수만큼
-            for (int playerIndex = 0; playerIndex < billiardDataArrayList.size(); playerIndex++) {
+            // <사용자 확인>
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.billiardDisplay_dialog_allDataDelete_title)
+                    .setMessage(R.string.billiardDisplay_dialog_allDataDelete_message)
+                    .setPositiveButton(R.string.billiardDisplay_dialog_allDataDelete_positive,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                    deleteGameRelatedAllData();
 
-                int temp = this.playerDbManager.deleteContentByBilliardCount(this.billiardDataArrayList.get(playerIndex).getCount());
+                                }
+                            }
+                    )
+                    .setNegativeButton(R.string.billiardDisplay_dialog_allDataDelete_negative,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 테이블이 몇개 지워졌나요? = " + temp);
-
-            } // [cycle 1]
-
-
-            // [cycle 2] : billiardDataArrayList 의 개수만큼
-            for (int billiardIndex = 0; billiardIndex < billiardDataArrayList.size(); billiardIndex++) {
-
-                int temp = this.billiardDbManager.deleteContentByCount(this.billiardDataArrayList.get(billiardIndex).getCount());
-
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 테이블이 몇 개 지워졌나요? = " + temp);
-
-            } // [cycle 2]
-
-
-            // [lv/i]initDataOfUser : 해당 userId 로 user 의 데이터를 초기화한다.
-            int initDataOfUser = this.userDbManager.updateContent(this.userData.getId(),
-                    0,
-                    0,
-                    0,
-                    0,
-                    0);
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 의 데이터가 초기화 되었습니다. : " + initDataOfUser);
-
-
-            // [lv/i] : 해당 userId 로 모든 Friend 데이터를 초기값으로 변경 - 친구와 했던 모든 BilliardData 가 삭제되므로 모두 초기값으로 변경해야 한다.
-            int initDataOfFriend = this.friendDbManager.updateContentByUserId(this.userData.getId(),
-                    0,
-                    0,
-                    0,
-                    0,
-                    0);
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 friend 의 데이터가 초기화 되었습니다. : " + initDataOfFriend);
-
-
-            //=======================================================================================================
-
-
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== userData 초기화 후 변경 값 확인 =====================");
-            // [iv/C]UserData : 위에서 갱신된 user 의 데이터를 userId 로 가져온다.
-            this.userData = this.userDbManager.loadContent(this.userData.getId());
-            DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-
-
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== friend 초기화 후 변경 값 확인 =====================");
-            ArrayList<FriendData> tempFriendDataArrayList = this.friendDbManager.loadAllContentByUserId(this.userData.getId());
-            DeveloperManager.displayToFriendData(CLASS_NAME_LOG, tempFriendDataArrayList);
-
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== player 초기화 후 변경 값 확인 =====================");
-            ArrayList<PlayerData> tempPlayerDataArrayList = this.playerDbManager.loadAllContentByPlayerIdAndPlayerName(this.userData.getId(), this.userData.getName());
-            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, tempPlayerDataArrayList);
-
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "======================== billiard 초기화 후 변경 값 확인 =====================");
-            ArrayList<BilliardData> tempBilliardDataArrayList = this.billiardDbManager.loadAllContent();
-            DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, tempBilliardDataArrayList);
-
-
-            // [method]mappingAllBilliardDataToListView : billiard 테이블에서 가져온 모든 데이터를 ListView 에 뿌려준다.
-            mappingAllBilliardDataToListView();
+                                }
+                            }
+                    )
+                    .show();
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
+
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
+
+            // <사용자 알림>
+            Toast.makeText(
+                    this,
+                    R.string.billiardDisplay_noticeUser_noData,
+                    Toast.LENGTH_SHORT
+            ).show();
+
         } // [check 1]
 
     } // End of method [setClickListenerOfDeleteButton]
 
 
-    /**
-     * [method] 해당 문자열을 toast 로 보여준다.
-     */
-    private void toastHandler(String content) {
+    private void deleteGameRelatedAllData() {
+        final String METHOD_NAME = "[deleteGameRelatedAllData] ";
 
-        // [lv/C]Toast : toast 객체 생성
-        Toast myToast = Toast.makeText(this.getApplicationContext(), content, Toast.LENGTH_SHORT);
+        // <과정>
+        // 1. billiardDataArrayList 의 count 에 해당하는 player 테이블의 내용을 모두 삭제
+        // 2. billiardDataArrayList 의 count 에 해당하는 billiard 테이블의 내용을 모두 삭제
+        // 3. 나의 userData 에서 user 테이블의 모든 내용을 초기 상태의 데이터로 변경한다.
+        // 4. 나의 친구들의 모든 데이터를 초기 상태의 데이터로 변경한다.
+        // 5. 변경된 내용을 adapter 를 이용하여 ListView 반영하기
 
-        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
-        myToast.show();
+        // <1>
+        appDbManager.requestPlayerQuery(
+                new AppDbManager.PlayerQueryRequestListener() {
 
-    } // End of method [toastHandler]
+                    int numberOfDeletedRows = 0;
+
+                    @Override
+                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
+
+                        for (int index = 0; index < billiardDataArrayList.size(); index++) {
+                            numberOfDeletedRows += playerDbManager2.deleteContentByBilliardCount(billiardDataArrayList.get(index).getCount());
+                        }
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "player 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
+                        );
+                    }
+                }
+        );
+
+        // <2>
+        appDbManager.requestBilliardQuery(
+                new AppDbManager.BilliardQueryRequestListener() {
+                    @Override
+                    public void requestQuery(BilliardDbManager2 billiardDbManager2) {
+
+                        int numberOfDeletedRows = 0;
+
+                        for (int index = 0; index < billiardDataArrayList.size(); index++) {
+                            numberOfDeletedRows += billiardDbManager2.deleteContentByCount(billiardDataArrayList.get(index).getCount());
+                        }
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "billiard 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
+                        );
+                    }
+                }
+        );
+
+        // <3>
+        appDbManager.requestUserQuery(
+                new AppDbManager.UserQueryRequestListener() {
+                    @Override
+                    public void requestQuery(UserDbManager2 userDbManager2) {
+                        int numberOfUpdatedRows = userDbManager2.updateContent(
+                                userData.getId(),
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        );
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "user 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
+                        );
+                    }
+                }
+        );
+
+        // <4>
+        appDbManager.requestFriendQuery(
+                new AppDbManager.FriendQueryRequestListener() {
+                    @Override
+                    public void requestQuery(FriendDbManager2 friendDbManager2) {
+                        int numberOfUpdatedRows = friendDbManager2.updateContentByUserId(
+                                userData.getId(),
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        );
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "player 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
+                        );
+                    }
+                }
+        );
+
+
+        // <5>
+        appDbManager.requestQuery(
+                new AppDbManager.QueryRequestListener() {
+                    @Override
+                    public void requestUserQuery(UserDbManager2 userDbManager2) {
+
+                        // 새롭게 갱신된 내용 반영하기
+                        userData = userDbManager2.loadContent(userData.getId());
+
+                        DeveloperManager.displayToUserData(
+                                CLASS_NAME,
+                                userData
+                        );
+
+                    }
+
+                    @Override
+                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
+
+                    }
+
+                    @Override
+                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
+
+                        // 새롭게 갱신된 내용 반영하기
+                        // (주의) 데이터베이스에서 loadAllContent() 메소드의 반환 값을 billiardDataArrayList 에 '=' 연산자로 대입하면
+                        //        반환 값의 주소값만 가져와서 변경하므로
+                        //        기존의 billiardDataArrayList 에는 반영 안된다.
+                        //        그러므로 (1) 아래와 같은 방식으로 다시 추가하거나
+                        //                 (2) adapter 에 setter 메소드를 이용하여 다시 billiardDataArrayList 를 setter 해야지
+                        //        adapter 가 billiardDataArrayList 가 변경된지 알수 있다.
+                        billiardDataArrayList.clear();
+                        billiardDataArrayList.addAll(billiardDbManager2.loadAllContent());
+
+                        // adapter 에 변경된 데이터가 있다는 것을 알려준다.
+                        billiardLvAdapter2.notifyDataSetChanged();
+
+                        DeveloperManager.displayToBilliardData(
+                                CLASS_NAME,
+                                billiardDataArrayList
+                        );
+
+                    }
+
+                    @Override
+                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
+
+                    }
+                }
+        );
+    }
+
+
 }

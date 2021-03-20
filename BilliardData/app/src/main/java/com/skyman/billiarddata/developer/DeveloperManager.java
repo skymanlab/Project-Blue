@@ -35,77 +35,7 @@ public final class DeveloperManager {
     } // End of method [displayLog]
 
 
-    // ========================================================================================================
-
-
-    /**
-     * [method] BilliardData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
-     */
-    public static void displayToBilliardData(String className, BilliardData billiardData) {
-
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
-
-            // [check 2] : BilliardData 가 있다.
-            if (billiardData != null) {
-
-                Log.d(className, "billiardData / 0. count : " + billiardData.getCount());                      // 0. count
-                Log.d(className, "billiardData / 1. date : " + billiardData.getDate());                        // 1. date
-                Log.d(className, "billiardData / 2. gameMode : " + billiardData.getGameMode());                // 2. target score
-                Log.d(className, "billiardData / 3. playerCount : " + billiardData.getPlayerCount());          // 3. speciality
-                Log.d(className, "billiardData / 4. winnerId : " + billiardData.getWinnerId());                // 4. winner id
-                Log.d(className, "billiardData / 5. winnerName : " + billiardData.getWinnerName());            // 5. winner name
-                Log.d(className, "billiardData / 6. playTime : " + billiardData.getPlayTime());                // 6. play time
-                Log.d(className, "billiardData / 7. score : " + billiardData.getScore());                      // 7. score
-                Log.d(className, "billiardData / 8. cost : " + billiardData.getCost());                        // 8. cost
-
-            }  else {
-                Log.d(className, "billiardData 데이터가 없습니다.");
-            } // [check 2]
-
-        } // [check 1]
-
-    } // End of method [displayToBilliardData]
-
-
-    /**
-     * [method] ArrayList<BilliardData> 를 받아서, 모든 내용을 Log 로 출력한다.
-     */
-    public static void displayToBilliardData(String className, ArrayList<BilliardData> billiardDataArrayList) {
-
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
-
-            // [check 2] : billiardDataArrayList 가 있다.
-            if (billiardDataArrayList.size() != 0) {
-
-                // [cycle 1] : billiardDataArrayList 의 size 만큼
-                for (int index = 0; index < billiardDataArrayList.size(); index++) {
-
-                    Log.d(className, "----------------------------------- " + index + " -----------------------------------");
-
-                    Log.d(className, "billiardData / 0. count : " + billiardDataArrayList.get(index).getCount());                      // 0. count
-                    Log.d(className, "billiardData / 1. date : " + billiardDataArrayList.get(index).getDate());                        // 1. date
-                    Log.d(className, "billiardData / 2. gameMode : " + billiardDataArrayList.get(index).getGameMode());                // 2 target score
-                    Log.d(className, "billiardData / 3. playerCount : " + billiardDataArrayList.get(index).getPlayerCount());          // 3. speciality
-                    Log.d(className, "billiardData / 4. winnerId : " + billiardDataArrayList.get(index).getWinnerId());                // 4. winner id
-                    Log.d(className, "billiardData / 5. winnerName : " + billiardDataArrayList.get(index).getWinnerName());            // 5. winner name
-                    Log.d(className, "billiardData / 6. playTime : " + billiardDataArrayList.get(index).getPlayTime());                // 6. play time
-                    Log.d(className, "billiardData / 7. score : " + billiardDataArrayList.get(index).getScore());                      // 7. score
-                    Log.d(className, "billiardData / 8. cost : " + billiardDataArrayList.get(index).getCost());                        // 8. cost
-
-                } // [check 1]
-
-            } else {
-                Log.d(className, "billiardDataArrayList 데이터가 없습니다.");
-            } // [check 2]
-
-        } // [check 1]
-    }
-
-
-    // ========================================================================================================
-
+    // ================================================== UserData ==================================================
 
     /**
      * [method] UserData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
@@ -138,27 +68,35 @@ public final class DeveloperManager {
 
 
     /**
-     * [method] UserData 의 id, gameRecordWin, gameRecordLoss, recentPlayerId, recentPlayDate, totalPlayTime, totalCost 의 값을 Log 로 출력한다.
+     * [method] UserData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
      */
-    public static void displayToUserData(String className, long id, int gameRecordWin, int gameRecordLoss, long recentGameBilliardCount, int totalPlayTime, int totalCost) {
+    public static void displayToUserData(String className, ArrayList<UserData> userDataArrayList) {
 
-        // [check 1] : Log 를 출력해도 된다.
         if (DISPLAY_POWER == Display.ON) {
 
-            Log.d(className, "userData / 0. id : " + id);                                               // 0. id
-            Log.d(className, "userData / 4. gameRecordWin : " + gameRecordWin);                         // 4. game record win
-            Log.d(className, "userData / 5. gameRecordLoss : " + gameRecordLoss);                       // 5. game record loss
-            Log.d(className, "UserData / 6. recentGameBilliardCount : " + recentGameBilliardCount);     // 6. recent game billiard count
-            Log.d(className, "UserData / 7. totalPlayTime : " + totalPlayTime);                         // 7. total play time
-            Log.d(className, "UserData / 8. totalCost : " + totalCost);                                 // 8. total cost
+            Log.d(className, "=================================== userDataArrayList : START ===================================");
+            for (int index = 0; index < userDataArrayList.size(); index++) {
 
-        } // [check 1]
+                Log.d(className, "------>> " + index + " <<------");
+                Log.d(className, "UserData / 0. id : " + userDataArrayList.get(index).getId());                                                 // 0. id
+                Log.d(className, "UserData / 1. name : " + userDataArrayList.get(index).getName());                                             // 1. name
+                Log.d(className, "UserData / 2. targetScore : " + userDataArrayList.get(index).getTargetScore());                               // 2. target score
+                Log.d(className, "UserData / 3. speciality : " + userDataArrayList.get(index).getSpeciality());                                 // 3. speciality
+                Log.d(className, "UserData / 4. gameRecordWin : " + userDataArrayList.get(index).getGameRecordWin());                           // 4. game record win
+                Log.d(className, "UserData / 5. gameRecordLoss : " + userDataArrayList.get(index).getGameRecordLoss());                         // 5. game record loss
+                Log.d(className, "UserData / 6. recentGameBilliardCount : " + userDataArrayList.get(index).getRecentGameBilliardCount());       // 6. recent game billiard count
+                Log.d(className, "UserData / 7. totalPlayTime : " + userDataArrayList.get(index).getTotalPlayTime());                           // 7. total play time
+                Log.d(className, "UserData / 8. totalCost : " + userDataArrayList.get(index).getTotalCost());                                   // 8. total cost
+
+            }
+            Log.d(className, "=================================== userDataArrayList : END ===================================");
+
+        }
 
     } // End of method [displayToUserData]
 
 
-    // ========================================================================================================
-
+    // ================================================== FriendData ==================================================
 
     /**
      * [method] FriendData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
@@ -190,104 +128,127 @@ public final class DeveloperManager {
 
 
     /**
-     * [method] ArrayList<FriendData> 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
+     * friendDataArrayList
+     *
+     * @param className
+     * @param friendDataArrayList
      */
     public static void displayToFriendData(String className, ArrayList<FriendData> friendDataArrayList) {
 
+        if (DISPLAY_POWER == Display.ON) {
+
+            Log.d(className, "=================================== friendDataArrayList : START ===================================");
+            for (int index = 0; index < friendDataArrayList.size(); index++) {
+
+                Log.d(className, "------>> " + index + " <<------");
+                Log.d(className, "FriendData / 0. id : " + friendDataArrayList.get(index).getId());                                              // 0. id
+                Log.d(className, "FriendData / 1. userId : " + friendDataArrayList.get(index).getUserId());                                      // 1. user id
+                Log.d(className, "FriendData / 2. name : " + friendDataArrayList.get(index).getName());                                          // 2. name
+                Log.d(className, "FriendData / 3. gameRecordWin : " + friendDataArrayList.get(index).getGameRecordWin());                        // 3. game record win
+                Log.d(className, "FriendData / 4. gameRecordLoss : " + friendDataArrayList.get(index).getGameRecordLoss());                      // 4. game record loss
+                Log.d(className, "FriendData / 5. recentGameBilliardCount : " + friendDataArrayList.get(index).getRecentGameBilliardCount());    // 5. recent game billiard count
+                Log.d(className, "FriendData / 6. totalPlayTime : " + friendDataArrayList.get(index).getTotalPlayTime());                        // 6. total play time
+                Log.d(className, "FriendData / 7. totalCost : " + friendDataArrayList.get(index).getTotalCost());                                // 7. total cost
+            }
+            Log.d(className, "=================================== friendDataArrayList : END ===================================");
+        }
+    } // End of method [displayToFriendData]
+
+
+    // ================================================== BilliardData ==================================================
+
+    /**
+     * billiardData
+     *
+     * @param className
+     * @param billiardData
+     */
+    public static void displayToBilliardData(String className, BilliardData billiardData) {
+
         // [check 1] : Log 를 출력해도 된다.
         if (DISPLAY_POWER == Display.ON) {
 
-            // [check 2] : FriendDataArrayList 의 데이터가 있다.
-            if (friendDataArrayList.size() != 0) {
+            // [check 2] : BilliardData 가 있다.
+            if (billiardData != null) {
 
-                // [cycle 1] : friendDataArrayList 의 size 만큼 모든 내용을 확인한다.
-                for (int position = 0; position < friendDataArrayList.size(); position++) {
+                Log.d(className, "billiardData / 0. count : " + billiardData.getCount());                      // 0. count
+                Log.d(className, "billiardData / 1. date : " + billiardData.getDate());                        // 1. date
+                Log.d(className, "billiardData / 2. gameMode : " + billiardData.getGameMode());                // 2. target score
+                Log.d(className, "billiardData / 3. playerCount : " + billiardData.getPlayerCount());          // 3. speciality
+                Log.d(className, "billiardData / 4. winnerId : " + billiardData.getWinnerId());                // 4. winner id
+                Log.d(className, "billiardData / 5. winnerName : " + billiardData.getWinnerName());            // 5. winner name
+                Log.d(className, "billiardData / 6. playTime : " + billiardData.getPlayTime());                // 6. play time
+                Log.d(className, "billiardData / 7. score : " + billiardData.getScore());                      // 7. score
+                Log.d(className, "billiardData / 8. cost : " + billiardData.getCost());                        // 8. cost
 
-                    Log.d(className, "----------------------------------- " + position + " -----------------------------------");
-
-                    Log.d(className, "FriendData / 0. id : " + friendDataArrayList.get(position).getId());                                              // 0. id
-                    Log.d(className, "FriendData / 1. userId : " + friendDataArrayList.get(position).getUserId());                                      // 1. user id
-                    Log.d(className, "FriendData / 2. name : " + friendDataArrayList.get(position).getName());                                          // 2. name
-                    Log.d(className, "FriendData / 3. gameRecordWin : " + friendDataArrayList.get(position).getGameRecordWin());                        // 3. game record win
-                    Log.d(className, "FriendData / 4. gameRecordLoss : " + friendDataArrayList.get(position).getGameRecordLoss());                      // 4. game record loss
-                    Log.d(className, "FriendData / 5. recentGameBilliardCount : " + friendDataArrayList.get(position).getRecentGameBilliardCount());    // 5. recent game billiard count
-                    Log.d(className, "FriendData / 6. totalPlayTime : " + friendDataArrayList.get(position).getTotalPlayTime());                        // 6. total play time
-                    Log.d(className, "FriendData / 7. totalCost : " + friendDataArrayList.get(position).getTotalCost());                                // 7. total cost
-
-                } // [cycle 1]
-
-            }  else {
-                Log.d(className, "FriendDataArrayList 데이터가 없습니다.");
+            } else {
+                Log.d(className, "billiardData 데이터가 없습니다.");
             } // [check 2]
 
         } // [check 1]
 
-    } // End of method [displayToFriendData]
+    } // End of method [displayToBilliardData]
 
 
     /**
-     * [method] FriendData 의 id, gameRecordWin, gameRecordLoss, recentPlayDate, totalPlayTime, totalCost 의 값을 Log 로 출력한다.
+     * billiardDataArrayList
+     *
+     * @param className
+     * @param billiardDataArrayList
      */
-    public static void displayToFriendData(String className, long id, int gameRecordWin, int gameRecordLoss, long recentGameBilliardCount, int totalPlayTime, int totalCost) {
+    public static void displayToBilliardData(String className, ArrayList<BilliardData> billiardDataArrayList) {
 
-        // [check 1] : Log 를 출력해도 된다.
         if (DISPLAY_POWER == Display.ON) {
 
-            Log.d(className, "friendData / 0. id : " + id);                                             // 0. id
-            Log.d(className, "friendData / 3. gameRecordWin : " + gameRecordWin);                       // 3. game record win
-            Log.d(className, "friendData / 4. gameRecordLoss : " + gameRecordLoss);                     // 4. game record loss
-            Log.d(className, "friendData / 5. recentGameBilliardCount : " + recentGameBilliardCount);   // 5. recent game billiard count
-            Log.d(className, "friendData / 6. totalPlayTime : " + totalPlayTime);                       // 6. total play time
-            Log.d(className, "friendData / 7. totalCost : " + totalCost);                               // 7. total cost
+            Log.d(className, "=================================== billiardDataArrayList : START ===================================");
+            for (int index = 0; index < billiardDataArrayList.size(); index++) {
 
-        } // [check 1]
+                Log.d(className, "------>> " + index + " <<------");
+                Log.d(className, "billiardData / 0. count : " + billiardDataArrayList.get(index).getCount());                      // 0. count
+                Log.d(className, "billiardData / 1. date : " + billiardDataArrayList.get(index).getDate());                        // 1. date
+                Log.d(className, "billiardData / 2. gameMode : " + billiardDataArrayList.get(index).getGameMode());                // 2 target score
+                Log.d(className, "billiardData / 3. playerCount : " + billiardDataArrayList.get(index).getPlayerCount());          // 3. speciality
+                Log.d(className, "billiardData / 4. winnerId : " + billiardDataArrayList.get(index).getWinnerId());                // 4. winner id
+                Log.d(className, "billiardData / 5. winnerName : " + billiardDataArrayList.get(index).getWinnerName());            // 5. winner name
+                Log.d(className, "billiardData / 6. playTime : " + billiardDataArrayList.get(index).getPlayTime());                // 6. play time
+                Log.d(className, "billiardData / 7. score : " + billiardDataArrayList.get(index).getScore());                      // 7. score
+                Log.d(className, "billiardData / 8. cost : " + billiardDataArrayList.get(index).getCost());                        // 8. cost
 
-    } // End of method [displayToFriendData]
+            }
+            Log.d(className, "=================================== billiardDataArrayList : END ===================================");
+
+        }
+    }
 
 
-    // ========================================================================================================
-
+    // ================================================== PlayerData ==================================================
 
     /**
-     * [method] ArrayList<PlayerData> 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
+     * playerDataArrayList
+     *
+     * @param className
+     * @param playerDataArrayList
      */
     public static void displayToPlayerData(String className, ArrayList<PlayerData> playerDataArrayList) {
 
-        // [check 1] : Log 를 출력해도 된다.
         if (DISPLAY_POWER == Display.ON) {
 
-            // [check 2] : FriendDataArrayList 의 데이터가 있다.
-            if (playerDataArrayList.size() != 0) {
+            Log.d(className, "=================================== playerDataArrayList : START ===================================");
+            for (int index = 0; index < playerDataArrayList.size(); index++) {
 
-                // [cycle 1] : friendDataArrayList 의 size 만큼 모든 내용을 확인한다.
-                for (int index = 0; index < playerDataArrayList.size(); index++) {
+                Log.d(className, "------>> " + index + " <<------");
 
-                    Log.d(className, "----------------------------------- " + index + " -----------------------------------");
+                Log.d(className, "PlayerData / 0. count : " + playerDataArrayList.get(index).getCount());                       // 0. id
+                Log.d(className, "PlayerData / 1. billiardCount : " + playerDataArrayList.get(index).getBilliardCount());       // 1. billiard count
+                Log.d(className, "PlayerData / 2. playerId : " + playerDataArrayList.get(index).getPlayerId());                 // 2. player id
+                Log.d(className, "PlayerData / 3. playerName : " + playerDataArrayList.get(index).getPlayerName());             // 3. player name
+                Log.d(className, "PlayerData / 4. targetScore : " + playerDataArrayList.get(index).getTargetScore());           // 4. target score
+                Log.d(className, "PlayerData / 5. score : " + playerDataArrayList.get(index).getScore());                       // 5. score
 
-                    Log.d(className, "PlayerData / 0. count : " + playerDataArrayList.get(index).getCount());                       // 0. id
-                    Log.d(className, "PlayerData / 1. billiardCount : " + playerDataArrayList.get(index).getBilliardCount());       // 1. billiard count
-                    Log.d(className, "PlayerData / 2. playerId : " + playerDataArrayList.get(index).getPlayerId());                 // 2. player id
-                    Log.d(className, "PlayerData / 3. playerName : " + playerDataArrayList.get(index).getPlayerName());             // 3. player name
-                    Log.d(className, "PlayerData / 4. targetScore : " + playerDataArrayList.get(index).getTargetScore());           // 4. target score
-                    Log.d(className, "PlayerData / 5. score : " + playerDataArrayList.get(index).getScore());                       // 5. score
-
-                } // [cycle 1]
-
-            }  else {
-                Log.d(className, "FriendDataArrayList 데이터가 없습니다.");
-            } // [check 2]
-
-        } // [check 1]
+            }
+            Log.d(className, "=================================== playerDataArrayList : END ===================================");
+        }
 
     } // End of method [displayToPlayerData]
 
-
-    // ========================================================================================================
-
-
-    public static void displayDatabaseData(BilliardDbManager billiardDbManager, UserDbManager userDbManager, FriendDbManager friendDbManager, PlayerDbManager playerDbManager) {
-
-
-
-    } // End of method [displayDatabaseData]
 }

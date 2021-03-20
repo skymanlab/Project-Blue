@@ -43,10 +43,12 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private final int PLAYER_WIDGET_MAX_SIZE = 4;
 
     // instant variable
+    private UserData userData = null;
+
+    // instant variable
     private AppDbManager appDbManager;
 
     // instant variable
-    private UserData userData = null;
     private ArrayList<FriendData> friendDataArrayList = null;
     private ArrayList<PlayerData> playerDataArrayList = null;
 
@@ -78,16 +80,16 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_input);
 
-        // SessionManager : userData, friendDataArrayList 가져오기
-        this.userData = SessionManager.getUserDataInIntent(getIntent());
-        this.friendDataArrayList = SessionManager.getFriendPlayerListInIntent(getIntent());
+        // session manager : userData, friendDataArrayList(게임에 참가한 친구)
+        this.userData = SessionManager.getUserDataFromIntent(getIntent());
+        this.friendDataArrayList = SessionManager.getParticipatedFriendListInGameFromIntent(getIntent());
 
-        // sectionManager
+        // AppDbManager
+        initAppDbManager();
 
-        // widget
+        // Widget : connect -> init
         connectWidget();
         initWidget();
-
 
     } // End of method [onCreate]
 
@@ -127,9 +129,16 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
     } // End of method [onDestroy]
 
+
     @Override
     public void initAppDbManager() {
-
+        appDbManager = new AppDbManager(this);
+        appDbManager.connectDb(
+                true,
+                true,
+                true,
+                true
+        );
     }
 
     @Override
@@ -637,7 +646,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         // 6. 이동
         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-        SessionManager.setIntentOfUserData(intent, userData);
+        SessionManager.setUserDataFromIntent(intent, userData);
         finish();
         startActivity(intent);
 
@@ -1139,7 +1148,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
                         // [lv/C]Intent : intent 에 userData 를 담아서 보내기
-                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setUserDataFromIntent(intent, userData);
 
                         // [method]finish : 이 BilliardInputActivity 화면 종료
                         finish();
@@ -1152,18 +1161,5 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
     } // End of method [showDialogToCheckWhetherToMoveBDA]
 
-
-    /**
-     * [method] 해당 문자열을 toast 로 보여준다.
-     */
-    private void toastHandler(String content) {
-
-        // [lv/C]Toast : toast 객체 생성
-        Toast myToast = Toast.makeText(this.getApplicationContext(), content, Toast.LENGTH_SHORT);
-
-        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
-        myToast.show();
-
-    } // End of method [toastHandler]
 
 }

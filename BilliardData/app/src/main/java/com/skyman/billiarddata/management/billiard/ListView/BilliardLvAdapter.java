@@ -18,7 +18,6 @@ import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.PlayerList;
-import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
@@ -103,15 +102,15 @@ public class BilliardLvAdapter extends BaseAdapter {
         } // [check 1]
 
         // [lv/C]TextView : count, data, gameMode, playerCount, winnerName, playTime, score, cost mapping
-        LinearLayout countLinearLayout = (LinearLayout) convertView.findViewById(R.id.c_lv_billiard_data_ll_count);
-        TextView count = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_count);                            // 0. count
-        TextView date = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_date);                              // 1. date
-        TextView gameMode = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_game_mode);                     // 2. game mode
-        TextView playerCount = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_player_count);               // 3. player count
-        TextView winnerName = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_winner_name);                 // 4. winner name
-        TextView playTime = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_play_time);                     // 5. play time
-        TextView score = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_score);                            // 6. score
-        TextView cost = (TextView) convertView.findViewById(R.id.c_lv_billiard_data_cost);                              // 7. cost
+        LinearLayout countLinearLayout = (LinearLayout) convertView.findViewById(R.id.custom_lv_billiardData_count_wrapper);
+        TextView count = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_count);                            // 0. count
+        TextView date = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_date);                              // 1. date
+        TextView gameMode = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_gameMode);                     // 2. game mode
+        TextView playerCount = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_playerCount);               // 3. player count
+        TextView winnerName = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_winnerName);                 // 4. winner name
+        TextView playTime = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_playTime);                     // 5. play time
+        TextView score = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_score);                            // 6. score
+        TextView cost = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_cost);                              // 7. cost
 
         // [lv/C]BilliardData : 각 리스트에 뿌려줄 아이템을 받아오는데 BilliardData 재활용
         BilliardData billiardData = (BilliardData) getItem(position);
@@ -247,10 +246,10 @@ public class BilliardLvAdapter extends BaseAdapter {
                         // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 Intent 생성
                         Intent intent = new Intent(context, BilliardModifyActivity.class);
 
-                        SessionManager.setIntentOfUserData(intent, userData);
-                        SessionManager.setIntentOfBilliardData(intent, billiardData);
-                        SessionManager.setIntentOfFriendPlayerList(intent, friendDataArrayList);
-                        SessionManager.setIntentOfPlayerList(intent, playerDataArrayList);
+                        SessionManager.setBilliardDataFromIntent(intent, billiardData);                           // 게임 정보
+                        SessionManager.setUserDataFromIntent(intent, userData);                                   // 나의 정보
+                        SessionManager.setParticipatedFriendListInGameFromIntent(intent, friendDataArrayList);    // 게임에 참여한 친구
+                        SessionManager.setPlayerDataArrayListFromIntent(intent, playerDataArrayList);             // 게임에 참여한 모든 플레이어 : 나 + 게임에_참여한_친구
 
                         ((Activity) context).finish();
                         context.startActivity(intent);

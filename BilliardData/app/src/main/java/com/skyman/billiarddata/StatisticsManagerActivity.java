@@ -44,7 +44,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
         // ============================================================= intent, db =============================================================
         // [iv/C]UserData : 위 의 intent 로 "userData" 가져오기
-        this.userData = SessionManager.getUserDataInIntent(getIntent());
+        this.userData = SessionManager.getUserDataFromIntent(getIntent());
 
         // [method]createDbManager : user, billiard 메니저 생성 및 초기화
         createDbManager();

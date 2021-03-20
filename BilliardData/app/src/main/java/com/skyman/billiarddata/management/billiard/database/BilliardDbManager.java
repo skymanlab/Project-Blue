@@ -550,7 +550,7 @@ public class BilliardDbManager extends AppDbSetting {
      */
     public int deleteContentByCount(long count) {
 
-        final String METHOD_NAME = "[deleteContent] ";
+        final String METHOD_NAME = "[deleteContentByCount] ";
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<count> 에 해당하는 데이터를 삭제합니다.");
 

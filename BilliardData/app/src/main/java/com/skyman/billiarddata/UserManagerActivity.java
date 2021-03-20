@@ -54,10 +54,8 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
         setContentView(R.layout.activity_user_manager);
 
         // SessionManger 를 통해서 userData 가져오기
-        this.userData = SessionManager.getUserDataInIntent(getIntent());
+        this.userData = SessionManager.getUserDataFromIntent(getIntent());
         DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-
-
 
         // widget
         connectWidget();
@@ -223,7 +221,7 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
         final String METHOD_NAME = "[moveFragmentPage] ";
 
         // [lv/i]pageNumber : 위 의 intent 에서 pageNumber 값으로 가져오기 - 기본 값은 '-1' 이다.
-        int pageNumber = SessionManager.getPageNumberInIntent(intent);
+        int pageNumber = SessionManager.getPageNumberFromIntent(intent);
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "pageNumber : " + pageNumber + " 입니다.");
         switch (pageNumber) {

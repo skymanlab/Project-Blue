@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +35,6 @@ public class PlayerListDialog extends DialogFragment implements SectionManager.I
     private TextView[] targetScore;
     private TextView[] score;
     private ImageView close;
-
 
     // constructor
     public PlayerListDialog() {

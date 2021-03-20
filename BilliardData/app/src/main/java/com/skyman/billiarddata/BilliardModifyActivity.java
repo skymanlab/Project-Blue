@@ -82,16 +82,16 @@ public class BilliardModifyActivity extends AppCompatActivity {
 
         DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "intent 를 통해 가져온 값 확인하기");
         // [iv/C]BilliardData : 선택한 게임의 billiardData 가져오기
-        this.billiardData = SessionManager.getBilliardDataInIntent(intent);
+        this.billiardData = SessionManager.getBilliardDataFromIntent(intent);
 
         // [iv/C]UserData : 나의 정보를 가져오기
-        this.userData = SessionManager.getUserDataInIntent(intent);
+        this.userData = SessionManager.getUserDataFromIntent(intent);
 
         // [iv/C]ArrayList<FriendData> : 이 게임에 참가한 player 중 friend 해당하는 데이터를 가져오기
-        this.friendDataArrayList = SessionManager.getFriendPlayerListInIntent(intent);
+        this.friendDataArrayList = SessionManager.getParticipatedFriendListInGameFromIntent(intent);
 
         // [iv/C]ArrayList<PlayerData> : 이 게임에 참가한 모든 player 의 데이터를 가져오기
-        this.playerDataArrayList = SessionManager.getPlayerListInIntent(intent);
+        this.playerDataArrayList = SessionManager.getPlayerDataArrayListFromIntent(intent);
 
         // [check 1] : intent 로 가져온 데이터 입력받았다.
         if ((this.billiardData != null) && (this.userData != null) && (this.friendDataArrayList.size() != 0) && (this.playerDataArrayList.size() != 0)) {
@@ -148,7 +148,7 @@ public class BilliardModifyActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
                 // [lv/C]SessionManager : intent 에 변경된 userData 를 포함하기
-                SessionManager.setIntentOfUserData(intent, userData);
+                SessionManager.setUserDataFromIntent(intent, userData);
 
                 finish();
 
@@ -606,7 +606,7 @@ public class BilliardModifyActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
                         // [lv/C]SessionManager : intent 에 변경된 userData 를 포함하기
-                        SessionManager.setIntentOfUserData(intent, changedDataChecker.getUserData());
+                        SessionManager.setUserDataFromIntent(intent, changedDataChecker.getUserData());
 
                         finish();
 

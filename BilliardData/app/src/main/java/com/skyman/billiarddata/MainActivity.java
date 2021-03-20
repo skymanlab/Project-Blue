@@ -34,14 +34,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME_LOG = "[Ac]_MainActivity";
+    private final String CLASS_NAME = "[Ac]_MainActivity";
     private final int TEMP_ID = 1;
 
-    // instance variable
+    // instance variable : load database
     private UserData userData;
     private ArrayList<FriendData> friendDataArrayList;
 
-    // instance variable
+    // instance variable : database manager
     private AppDbManager appDbManager;
 
     // instance variable : widget
@@ -57,14 +57,10 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "====>>>> MainActivity <<<<=============="
-        );
-        // appDbManager
+        // AppDbManager
         initAppDbManager();
 
-        // widget : connect, init
+        // Widget : connect -> init
         connectWidget();
         initWidget();
 
@@ -73,7 +69,69 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        appDbManager.requestQuery(
+                new AppDbManager.QueryRequestListener() {
+
+                    @Override
+                    public void requestUserQuery(UserDbManager2 userDbManager2) {
+
+                        userData = userDbManager2.loadContent(TEMP_ID);
+                        DeveloperManager.displayToUserData(
+                                CLASS_NAME,
+                                userData
+                        );
+                    }
+
+                    @Override
+                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
+
+                        friendDataArrayList = friendDbManager2.loadAllContentByUserId(TEMP_ID);
+                        DeveloperManager.displayToFriendData(
+                                CLASS_NAME,
+                                friendDataArrayList
+                        );
+
+                    }
+
+                    @Override
+                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
+
+                        DeveloperManager.displayToBilliardData(
+                                CLASS_NAME,
+                                billiardDbManager2.loadAllContent()
+                        );
+                    }
+
+
+                    @Override
+                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
+
+                        DeveloperManager.displayToPlayerData(
+                                CLASS_NAME,
+                                playerDbManager2.loadAllContent()
+                        );
+                    }
+                }
+        );
+
+    } // End of method [onStart]
+
+
+    @Override
+    protected void onDestroy() {
+
+        appDbManager.closeDb();
+
+        super.onDestroy();
+    } // End of method [onDestroy]
+
+
+    @Override
     public void initAppDbManager() {
+
         appDbManager = new AppDbManager(this);
         appDbManager.connectDb(
                 true,
@@ -128,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                         // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setUserDataFromIntent(intent, userData);
                         startActivity(intent);
 
                     }
@@ -143,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                         // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
-                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setUserDataFromIntent(intent, userData);
                         startActivity(intent);
 
                     }
@@ -158,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                         // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
-                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setUserDataFromIntent(intent, userData);
                         startActivity(intent);
 
                     }
@@ -195,89 +253,6 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        appDbManager.requestQuery(
-                new AppDbManager.QueryRequestListener() {
-
-                    @Override
-                    public void requestUserQuery(UserDbManager2 userDbManager2) {
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME_LOG,
-                                "======>>>> userData"
-                        );
-                        userData = userDbManager2.loadContent(TEMP_ID);
-                        DeveloperManager.displayToUserData(
-                                CLASS_NAME_LOG,
-                                userData
-                        );
-                    }
-
-                    @Override
-                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME_LOG,
-                                "======>>>> friendDataArrayList"
-                        );
-
-                        friendDataArrayList = friendDbManager2.loadAllContentByUserId(TEMP_ID);
-                        DeveloperManager.displayToFriendData(
-                                CLASS_NAME_LOG,
-                                friendDataArrayList
-                        );
-
-                    }
-
-                    @Override
-                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME_LOG,
-                                "======>>>> billiardData"
-                        );
-
-                        BilliardData billiardData = billiardDbManager2.loadContentByCount(1);
-                        DeveloperManager.displayToBilliardData(
-                                CLASS_NAME_LOG,
-                                billiardData
-                        );
-                    }
-
-
-                    @Override
-                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME_LOG,
-                                "======>>>> billiardData"
-                        );
-
-                        ArrayList<PlayerData> playerDataArrayList = playerDbManager2.loadAllContentByBilliardCount(1);
-                        DeveloperManager.displayToPlayerData(
-                                CLASS_NAME_LOG,
-                                playerDataArrayList
-                        );
-                    }
-
-                }
-        );
-
-    } // End of method [onStart]
-
-
-    @Override
-    protected void onDestroy() {
-
-        appDbManager.closeDb();
-
-        super.onDestroy();
-    } // End of method [onDestroy]
-
-
     /**
      * [method] userDate -> FriendData 의 데이터 유무를 확인하고 모두 존재할 경우만 친구목록을 선택하여 BilliardInputActivity 로 넘어간다.
      */
@@ -289,16 +264,16 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         if (userData != null) {
 
             // [check 2] : 친구 목록이 있다.
-            if (friendDataArrayList.size() != 0) {
+            if (!friendDataArrayList.isEmpty()) {
 
                 // 친구 목록에서 같이 게임할 player 를 선택하는 AlertDialog
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
                 showDialogOfPlayerSelection();
 
             } else {
 
                 // 친구 등록을 할 건지 물어보는 AlertDialog
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "친구 목록이 없습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "친구 목록이 없습니다.");
                 showDialogOfFriendRegisterCheck();
 
             } // [check 2]
@@ -306,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         } else {
 
             // 사용자 등록을 할 건지 물어보는 AlertDialog
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
             showDialogOfUserRegisterCheck();
 
         } // [check 1]
@@ -359,31 +334,31 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                             // [check 2] : 친구 목록이 있다. / 다시 한 번 검사하는게 필요있니?
                             if (friendNameArray.length != 0) {
 
-                                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 친구를 출력합니다.");
-                                DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList.get(selectedIndex[0]));
+                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 친구를 출력합니다.");
+                                DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList.get(selectedIndex[0]));
 
                                 // [lv/C]Intent : BilliardInputActivity 로 이동하기 위한 Intent 생성
                                 Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
 
                                 // [lv/C]Intent : selectedIndex 의 FriendData 값을 serialize 화여 Intent 로 넘겨주기
-                                SessionManager.setIntentOfUserData(intent, userData);
+                                SessionManager.setUserDataFromIntent(intent, userData);
 
                                 // [lv/C]ArrayList<FriendData> : 선택 한 친구들을 추가하기
                                 ArrayList<FriendData> tempArrayList = new ArrayList<>();
                                 tempArrayList.add(friendDataArrayList.get(selectedIndex[0]));
 
                                 // [lv/C]SessionManager : 'playerList' 에 추가해야 한다.
-                                SessionManager.setIntentOfFriendPlayerList(intent, tempArrayList);
+                                SessionManager.setParticipatedFriendListInGameFromIntent(intent, tempArrayList);
 
                                 // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                                 startActivityForResult(intent, 101);
 
                             } else {
-                                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "친구 목록이 없습니다.");
+                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "친구 목록이 없습니다.");
                             } // [check 2]
 
                         } else {
-                            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
+                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
                         } // [check 1]
 
                     }
@@ -420,11 +395,11 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
                         // [lv/C]Intent : UserManagerActivity 에서 0번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
-                        SessionManager.setIntentOfPageNumber(intent, 0);
+                        SessionManager.setPageNumberFromIntent(intent, 0);
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
 
                     }
                 })
@@ -459,14 +434,14 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
                         // [lv/C]Intent : UserManagerActivity 에서 2번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
-                        SessionManager.setIntentOfPageNumber(intent, 2);
+                        SessionManager.setPageNumberFromIntent(intent, 2);
 
                         // [lv/C]Intent : SessionManager 를 통해서 이미 user 정보는 입력되었으므로, intent 에 user 정보를 추가하여 보낸다.
-                        SessionManager.setIntentOfUserData(intent, userData);
+                        SessionManager.setUserDataFromIntent(intent, userData);
 
                         // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
                         startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
 
                     }
                 })

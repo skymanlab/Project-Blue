@@ -37,11 +37,11 @@
 
             <!-- content 1. all billiard data -->
             <ListView
-                android:id="@+id/billiardDisplay_listView_allBilliardData"
+                android:id="@+id/billiardDisplay_listView_billiardList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundSecond"></ListView>
+                android:background="@color/colorBackgroundSecond" />
 
             <View
                 android:layout_width="match_parent"
