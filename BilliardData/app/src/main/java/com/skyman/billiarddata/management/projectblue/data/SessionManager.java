@@ -25,9 +25,7 @@ public class SessionManager {
     public static final String BILLIARD_DATA = "billiardData";
     public static final String PARTICIPATED_FRIEND_LIST_IN_GAME = "participatedFriendListInGame";   // 게임에 참여한 친구 목록
     public static final String PLAYER_DATA_ARRAY_LIST = "playerDataArrayList";                      // 게임에 참여한 플레이어 ( 나 + 게임에_참여한_친구 ) 목록
-
     public static final String PAGE_NUMBER = "pageNumber";
-    public static final String PLAYER_LIST = "playerList";
 
     // constructor
     private SessionManager() {

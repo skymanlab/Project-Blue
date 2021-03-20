@@ -24,12 +24,12 @@
     <string name="main_dialog_userRegisterCheck_positive">이동</string>
     <string name="main_dialog_userRegisterCheck_negative">취소</string>
     <string name="main_dialog_friendRegisterCheck_title">친구 등록을 하겠습니까?</string>
-    <string name="main_dialog_friendRegisterCheck_message">먼저 게임을 함께하는 친구를 등록해주세요. 친구 등록을 위해 해당 화면으로 이동합니다.</string>
+    <string name="main_dialog_friendRegisterCheck_message">먼저 게임을 함께할 친구를 등록해주세요. 친구 등록을 위해 해당 화면으로 이동합니다.</string>
     <string name="main_dialog_friendRegisterCheck_positive">이동</string>
     <string name="main_dialog_friendRegisterCheck_negative">취소</string>
-    <string name="main_dialog_playerSelection_title">친구 목록</string>
-    <string name="main_dialog_playerSelection_positive">게임 시작</string>
-    <string name="main_dialog_playerSelection_negative">취소</string>
+    <string name="main_dialog_playerChoiceInGame_title">친구 목록</string>
+    <string name="main_dialog_playerChoiceInGame_positive">게임 시작</string>
+    <string name="main_dialog_playerChoiceInGame_negative">취소</string>
 
     <!-- Activity : billiard input -->
     <string name="billiardInput_title">당구 데이터 입력</string>

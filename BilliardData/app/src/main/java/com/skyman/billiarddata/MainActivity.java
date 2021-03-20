@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +31,14 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME = "[Ac]_MainActivity";
-    private final int TEMP_ID = 1;
+    private final String CLASS_NAME = MainActivity.class.getSimpleName();
+    private final int TEMP_ID = 1;                                      //
+    private static final int NUMBER_OF_SELECTABLE_MAX_FRIEND = 3;       // 선택할 수 있는 최대 친구 수
 
     // instance variable : load database
     private UserData userData;
@@ -136,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         appDbManager.connectDb(
                 true,
                 true,
-                true,
-                true
+                false,
+                false
         );
     }
 
@@ -172,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         setClickListenerOfBilliardInputButton();
+
                     }
                 }
         );
@@ -184,9 +189,11 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+
+                        // sessionManager : set ( userData)
                         SessionManager.setUserDataFromIntent(intent, userData);
+
                         startActivity(intent);
 
                     }
@@ -199,9 +206,11 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+
+                        // sessionManager : set ( userData)
                         SessionManager.setUserDataFromIntent(intent, userData);
+
                         startActivity(intent);
 
                     }
@@ -214,9 +223,11 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
+
+                        // sessionManager : set ( userData)
                         SessionManager.setUserDataFromIntent(intent, userData);
+
                         startActivity(intent);
 
                     }
@@ -229,8 +240,12 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
+
                         Intent intent = new Intent(getApplicationContext(), AppSettingActivity.class);
+
+                        // sessionManager : set ( userData)
+                        SessionManager.setUserDataFromIntent(intent, userData);
+
                         startActivity(intent);
 
                     }
@@ -243,8 +258,8 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        // [lv/C]Intent : AppInfoActivity 로 이동하기 위한 intent 생성
                         Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
+
                         startActivity(intent);
 
                     }
@@ -257,7 +272,6 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
      * [method] userDate -> FriendData 의 데이터 유무를 확인하고 모두 존재할 경우만 친구목록을 선택하여 BilliardInputActivity 로 넘어간다.
      */
     private void setClickListenerOfBilliardInputButton() {
-
         final String METHOD_NAME = "[setClickListenerOfBilliardInputButton] ";
 
         // [check 1] : userData 가(나의 정보) 있다.
@@ -268,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                 // 친구 목록에서 같이 게임할 player 를 선택하는 AlertDialog
                 DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
-                showDialogOfPlayerSelection();
+                showDialogOfPlayerMultiChoice();
 
             } else {
 
@@ -290,116 +304,193 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     /**
-     * [method] 친구목록을 AlertDialog 의 setSingleChoiceItems 를 설정하고, 선택한 값을 intent 로 넘겨준다.
+     * AlertDialog : 게임에 참가하는 친구를 선택한다. 단 1명만
      */
-    private void showDialogOfPlayerSelection() {
+    private void showDialogOfPlayerSingleChoice() {
+        final String METHOD_NAME = "[showDialogOfParticipantsSingleSelection] ";
 
-        final String METHOD_NAME = "[showDialogOfPlayerSelection] ";
+        // 내가 등록한 친구 목록으로 alertDialog 에 넣을 친구 이름 만들기
+        final String[] friendNameList = createFriendNameList();
 
-        // [lv/C]ArrayList<String> : 친구 이름만 담길 배열
-        final ArrayList<String> friendNameList = new ArrayList<>();
-
-        // [cycle 1] : friendDataArrayList 에 담긴 name 을 friendNameList 에 담는다.
-        for (int position = 0; position < friendDataArrayList.size(); position++) {
-            friendNameList.add(friendDataArrayList.get(position).getName());
-        } // [cycle 1]
-
-        // [lv/C]CharSequence[] : friendNameList 를 AlertDialog 에 넘길 수 있도록 toArray 로 만들기
-        final CharSequence[] friendNameArray = friendNameList.toArray(new String[friendNameList.size()]);
-
-        // [lv/i]selectedIndex : 선택된 친구의 index 를 받아오기 위한 변수 생성 / 초기값은 0 으로
+        // 선택한 라디오 버튼의 위치
         final int[] selectedIndex = {0};
 
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // <사용자 확인>
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.main_dialog_playerChoiceInGame_title)
+                .setSingleChoiceItems(
+                        friendNameList,
+                        0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-        builder.setTitle(R.string.main_dialog_playerSelection_title)
-                .setSingleChoiceItems(friendNameArray, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                                // 친구 목록에서 선택한 친구의 위치값 (= friendDataArrayList 에서의 index)
+                                selectedIndex[0] = which;
 
-                        // [lv/i]selectedIndex : 선택 된 RadioButton 의 위치를 담는다.
-                        selectedIndex[0] = which;
+                            }
+                        }
+                )
+                .setPositiveButton(
+                        R.string.main_dialog_playerChoiceInGame_positive,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                })
-                .setPositiveButton(R.string.main_dialog_playerSelection_positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                                // <1>
+                                // 선택한 라디오 버튼의 위치로
+                                // 게임에 참가한 친구 목록에 추가 (1명만 됨)
+                                ArrayList<FriendData> participatedFriendListInGame = new ArrayList<>();
+                                participatedFriendListInGame.add(friendDataArrayList.get(selectedIndex[0]));
 
-                        // [check 1] : 유저 정보가 있다. / 다시 한 번 검사하는게 필요있니?
-                        if (userData != null) {
-
-                            // [check 2] : 친구 목록이 있다. / 다시 한 번 검사하는게 필요있니?
-                            if (friendNameArray.length != 0) {
-
-                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 친구를 출력합니다.");
-                                DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList.get(selectedIndex[0]));
-
-                                // [lv/C]Intent : BilliardInputActivity 로 이동하기 위한 Intent 생성
+                                // <2> 게임 시작
                                 Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
 
-                                // [lv/C]Intent : selectedIndex 의 FriendData 값을 serialize 화여 Intent 로 넘겨주기
+                                // sessionManger : set ( userData, participatedFriendListInGame )
                                 SessionManager.setUserDataFromIntent(intent, userData);
+                                SessionManager.setParticipatedFriendListInGameFromIntent(intent, participatedFriendListInGame);
 
-                                // [lv/C]ArrayList<FriendData> : 선택 한 친구들을 추가하기
-                                ArrayList<FriendData> tempArrayList = new ArrayList<>();
-                                tempArrayList.add(friendDataArrayList.get(selectedIndex[0]));
+                                // 이동
+                                startActivity(intent);
 
-                                // [lv/C]SessionManager : 'playerList' 에 추가해야 한다.
-                                SessionManager.setParticipatedFriendListInGameFromIntent(intent, tempArrayList);
-
-                                // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
-                                startActivityForResult(intent, 101);
-
-                            } else {
-                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "친구 목록이 없습니다.");
-                            } // [check 2]
-
-                        } else {
-                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
-                        } // [check 1]
-
-                    }
-                })
-                .setNegativeButton(R.string.main_dialog_playerSelection_negative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
+                            }
+                        }
+                )
+                .setNegativeButton(
+                        R.string.main_dialog_playerChoiceInGame_negative,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }
+                )
                 .show();
 
-    } // End of method [showDialogOfPlayerSelection]
+    } // End of method [showDialogOfParticipantsSingleSelection]
 
 
     /**
-     * [method] 유저 등록 화면으로 이동할 건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=0 값을 intent 로 넘긴다.
+     * AlertDialog : 게임에 참가하는 친구를 선택한다. 최대 인원(NUMBER_OF_SELECTABLE_MAX_FRIEND)까지만 선택할 수 있다.
+     */
+    private void showDialogOfPlayerMultiChoice() {
+
+        // 내가 등록한 친구 목록으로 alertDialog 에 넣을 친구 이름 만들기
+        final String[] friendNameList = createFriendNameList();
+
+        // 체크한 아이템이 무엇인가요?
+        final boolean[] isCheckedList = new boolean[friendDataArrayList.size()];
+        Arrays.fill(isCheckedList, false);
+
+        // <사용자 확인>
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.main_dialog_playerChoiceInGame_title)
+                .setMultiChoiceItems(
+                        friendNameList,
+                        null,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                                isCheckedList[which] = isChecked;
+
+                            }
+                        }
+                )
+                .setPositiveButton(
+                        R.string.main_dialog_playerChoiceInGame_positive,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // <1>
+                                // isCheckedList 가 true 인 친구를
+                                // 게임에 참가한 친구 목록에 추가하기
+                                ArrayList<FriendData> participatedFriendListInGame = new ArrayList<>();
+                                for (int index = 0; index < isCheckedList.length; index++) {
+                                    DeveloperManager.displayLog(
+                                            CLASS_NAME,
+                                            "< " + index + " > isChecked : " + isCheckedList[index]
+                                    );
+                                    if (isCheckedList[index]) {
+                                        participatedFriendListInGame.add(
+                                                friendDataArrayList.get(index)
+                                        );
+                                    }
+
+                                }
+
+                                DeveloperManager.displayToFriendData(
+                                        CLASS_NAME,
+                                        participatedFriendListInGame
+                                );
+
+                                // <2>
+                                // 게임에 참가할 수 있는 친구의 수가 3명 이하 인지 확인
+                                if (!(participatedFriendListInGame.size() <= NUMBER_OF_SELECTABLE_MAX_FRIEND)) {
+
+                                    String notice = new StringBuilder()
+                                            .append("선택할 수 있는 최대 인원은 ")
+                                            .append(NUMBER_OF_SELECTABLE_MAX_FRIEND)
+                                            .append(" 명 입니다.")
+                                            .toString();
+
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            notice,
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                    return;
+                                }
+
+                                // <2>
+                                // 게임 시작
+                                Intent intent = new Intent(getApplicationContext(), BilliardInputActivity.class);
+
+                                // sessionManger : set ( userData, participatedFriendListInGame )
+                                SessionManager.setUserDataFromIntent(intent, userData);
+                                SessionManager.setParticipatedFriendListInGameFromIntent(intent, participatedFriendListInGame);
+
+                                // 이동
+                                startActivity(intent);
+                            }
+                        }
+                )
+                .setNegativeButton(
+                        R.string.main_dialog_playerChoiceInGame_negative,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }
+                )
+                .show();
+    } // End of method [showDialogOfPlayerMultiSelection]
+
+
+    /**
+     * AlertDialog : 사용자 등록을 하기위해 이동한다. ( UserManagerActivity 의 UserInputFragment )
      */
     private void showDialogOfUserRegisterCheck() {
-
         final String METHOD_NAME = "[showDialogOfUserRegisterCheck] ";
 
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-        builder.setTitle(R.string.main_dialog_userRegisterCheck_title)
+        // <사용자 알림>
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.main_dialog_userRegisterCheck_title)
                 .setMessage(R.string.main_dialog_userRegisterCheck_message)
                 .setPositiveButton(R.string.main_dialog_userRegisterCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 생성
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
+
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
-                        // [lv/C]Intent : UserManagerActivity 에서 0번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
+                        // sessionManager : set ( pageNumber )
                         SessionManager.setPageNumberFromIntent(intent, 0);
 
-                        // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
-                        startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
+                        // 이동
+                        startActivity(intent);
 
                     }
                 })
@@ -414,34 +505,29 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     /**
-     * [method] 친구를 등록 할건지 물어보는 Dialog 를 띄우고, 다음화면을 누르면 UserManagerActivity 로 이동하면서 pageNumber=2 값을 intent 로 넘겨준다.
+     * AlertDialog : 친구등록을 하기위해 이동한다. ( UserManagerActivity 의 UserFriendFragment )
      */
     private void showDialogOfFriendRegisterCheck() {
-
         final String METHOD_NAME = "[showDialogOfFriendRegisterCheck] ";
 
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-        builder.setTitle(R.string.main_dialog_friendRegisterCheck_title)
+        // <사용자 알림>
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.main_dialog_friendRegisterCheck_title)
                 .setMessage(R.string.main_dialog_friendRegisterCheck_message)
                 .setPositiveButton(R.string.main_dialog_friendRegisterCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 생성
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
+
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
-                        // [lv/C]Intent : UserManagerActivity 에서 2번째 Fragment 로 이동하라고 intent 에 담아서 넘겨주기
+                        // sessionManager : set ( userData, pageNumber )
+                        SessionManager.setUserDataFromIntent(intent, userData);
                         SessionManager.setPageNumberFromIntent(intent, 2);
 
-                        // [lv/C]Intent : SessionManager 를 통해서 이미 user 정보는 입력되었으므로, intent 에 user 정보를 추가하여 보낸다.
-                        SessionManager.setUserDataFromIntent(intent, userData);
-
-                        // [method] : intent 와 요청코드를 담아서 UserManagerActivity 로 이동
-                        startActivityForResult(intent, 101);
-                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
+                        // 이동
+                        startActivity(intent);
 
                     }
                 })
@@ -452,6 +538,23 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                 })
                 .show();
 
-    } // End of method [showDialogOfFriendRegisterCheck]\
+    } // End of method [showDialogOfFriendRegisterCheck]
+
+
+    /**
+     * friendDataArrayList 에서 name 만 뽑아서 String 배열로 반환한다.
+     *
+     * @return 친구 이름 목록
+     */
+    private String[] createFriendNameList() {
+
+        String[] friendNameList = new String[friendDataArrayList.size()];
+
+        for (int index = 0; index < friendDataArrayList.size(); index++) {
+            friendNameList[index] = friendDataArrayList.get(index).getName();
+        }
+
+        return friendNameList;
+    }
 
 }
