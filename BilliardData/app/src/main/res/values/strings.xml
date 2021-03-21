@@ -63,7 +63,7 @@
     <string name="billiardInput_noticeUser_inputDataCheck_playTimeAndCost">경기시간과 비용은 0보다 큰 값을 입력해주세요.</string>
 
     <!-- Dialog : billiard modify -->
-    <string name="billiardModify_title">정보 수정</string>
+    <string name="billiardModify_title">당구 데이터 수정</string>
     <string name="billiardModify_count">번호</string>
     <string name="billiardModify_date">날짜</string>
     <string name="billiardModify_gameMode">종목</string>
@@ -80,7 +80,7 @@
     <string name="billiardModify_cost_unit">원</string>
     <string name="billiardModify_button_modify">수정</string>
     <string name="billiardModify_button_cancel">취소</string>
-    <!-- AlertDialog : billiard modify activity -->
+    <string name="billiardModify_noticeUser_noChangedData">변경된 데이터가 없습니다.</string>
     <string name="billiardModify_dialog_modifyData_title">수정하시겠습니까?</string>
     <string name="billiardModify_dialog_modifyData_message">수정된 내용을 저장합니다.</string>
     <string name="billiardModify_dialog_modifyData_positive">수정</string>

@@ -6,8 +6,33 @@ import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.user.data.UserData;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * <0>
+ * userData, billiardData, friendDataArrayList, playerDataArrayList 를
+ * setter 메소드를 이용하여 새로운 객체로 생성하고
+ * setInitData(), setCompleteSetting() 메소드를 초기 작업을 한다.
+ * </0>
+ *
+ *
+ * <1>
+ * 기존 userData, billiardData, friendDataArrayList, playerDataArrayList 는 변경하지 않고
+ * [ change_() 메소드를 통해서 ]
+ * 변경된 값이 있는지 검사하고 변경된 값이 있으면
+ * 이 클래스의 userData, billiardData, friendDataArrayList, playerDataArrayList 에 변경된 값을 대입한다.
+ * </1>
+ *
+ * <2>
+ * 그리고 변경된 값이 있으면 변경된 값이 있다는 것을
+ * isRangeError(), isEqualError(), isChanged() 를 통해서 확인 할 수 있다.
+ * </2>
+ *
+ * <3>
+ * 변경된 데이터는 각 getter 메소드를 통해서 가져갈 수 있다.
+ * </3>
+ */
 public class ChangedDataChecker {
 
     // constant
@@ -55,8 +80,58 @@ public class ChangedDataChecker {
         this.isChanged = false;
     }
 
+    // constructor
+    private ChangedDataChecker(Builder builder) {
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // 초기 데이터
+        this.userData = builder.userData;
+        this.billiardData = builder.billiardData;
+        this.friendDataArrayList = builder.friendDataArrayList;
+        this.playerDataArrayList = builder.playerDataArrayList;
+
+
+        this.initWinnerId = -100;
+        this.initWinnerName = new String();
+        this.initPlayTime = -100;
+        this.initScore = new int[builder.playerCount];
+        for (int index = 0; index < builder.playerCount; index++) {
+            this.initScore[index] = -100;
+        }
+        this.initCost = -100;
+
+        this.isCompleteSetting = false;
+        this.isRangeError = false;
+        this.isEqualError = false;
+        this.isChanged = false;
+
+    }
+
+    // getter
+    public boolean isEqualError() {
+        return isEqualError;
+    }
+
+    public boolean isRangeError() {
+        return isRangeError;
+    }
+
+    public BilliardData getBilliardData() {
+        return billiardData;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public ArrayList<PlayerData> getPlayerDataArrayList() {
+        return playerDataArrayList;
+    }
+
+    public ArrayList<FriendData> getFriendDataArrayList() {
+        return friendDataArrayList;
+    }
+
+    // ============================================================= 객체 생성 후 꼭 수행해야 하는 method =============================================================
 
 
     /**
@@ -198,9 +273,7 @@ public class ChangedDataChecker {
     } // End of method [setCompleteSetting]
 
 
-    public boolean isRangeError() {
-        return isRangeError;
-    }
+    // ============================================================= 아래의 메소드는 변경된 데이터가 있는지 체크하는 메소드이다. =============================================================
 
 
     /**
@@ -212,7 +285,6 @@ public class ChangedDataChecker {
      * </p>
      */
     public void setRangeError() {
-
         final String METHOD_NAME = "[setRangeError] ";
 
         // [lv/b]isRangeError : 범위 에러가 발생하였는가?
@@ -239,11 +311,6 @@ public class ChangedDataChecker {
 
         this.isRangeError = isRangeError;
     } // End of method [setRangeError]
-
-
-    public boolean isEqualError() {
-        return isEqualError;
-    }
 
 
     /**
@@ -294,19 +361,17 @@ public class ChangedDataChecker {
     } // End of method [setEqualError]
 
 
-    public BilliardData getBilliardData() {
-        return billiardData;
-    }
-
-
     /**
      * [method] [set] billiardData 를 복사하기
      *
      * @param billiardData 값 복사를 위한 원본 billiardData
      */
     public void setBilliardData(BilliardData billiardData) {
-
         final String METHOD_NAME = "[setBilliardData] ";
+
+        // BilliardModifyActivity 의 billiardData 의 주소값만 복사하면
+        // 기존 데이터가 변경되므로
+        // constructor 에서 객체 생성 후 하나하나 입력해 기존 데이터가 변경되는 것을 막는다.
 
         // [iv/C]BilliardData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
         this.billiardData.setCount(billiardData.getCount());                // 0. count
@@ -319,15 +384,11 @@ public class ChangedDataChecker {
         this.billiardData.setScore(billiardData.getScore());                // 7. score
         this.billiardData.setCost(billiardData.getCost());                  // 8. cost
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.billiardData 확인! ************");
-        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.billiardData);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "********************************************************");
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.billiardData 확인! ************");
+//        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, this.billiardData);
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "********************************************************");
 
     } // End of method [setBilliardData]
-
-    public UserData getUserData() {
-        return userData;
-    }
 
     /**
      * [method] [set] userData 를 복사하기
@@ -335,8 +396,11 @@ public class ChangedDataChecker {
      * @param userData 값 복사를 위한 원본 userData
      */
     public void setUserData(UserData userData) {
-
         final String METHOD_NAME = "[setUserData] ";
+
+        // BilliardModifyActivity 의 userData 의 주소값만 복사하면
+        // 기존 데이터가 변경되므로
+        // constructor 에서 객체 생성 후 하나하나 입력해 기존 데이터가 변경되는 것을 막는다.
 
         // [iv/C]UserData : 매개변수의 값들을 복사하여 새로운 객체를 만든다.
         this.userData.setId(userData.getId());                                              // 0. id
@@ -349,16 +413,11 @@ public class ChangedDataChecker {
         this.userData.setTotalPlayTime(userData.getTotalPlayTime());                        // 7. total play time
         this.userData.setTotalCost(userData.getTotalCost());                                // 8. total cost
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.userData 확인! ************");
-        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "****************************************************");
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.userData 확인! ************");
+//        DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "****************************************************");
 
     } // End of method [setUserData]
-
-
-    public ArrayList<FriendData> getFriendDataArrayList() {
-        return friendDataArrayList;
-    }
 
 
     /**
@@ -367,8 +426,11 @@ public class ChangedDataChecker {
      * @param friendDataArrayList 값 복사를 위한 원본 friendDataArrayList
      */
     public void setFriendDataArrayList(ArrayList<FriendData> friendDataArrayList) {
-
         final String METHOD_NAME = "[setFriendDataArrayList] ";
+
+        // BilliardModifyActivity 의 friendDataArrayList 의 주소값만 복사하면
+        // 기존 데이터가 변경되므로
+        // constructor 에서 객체 생성 후 하나하나 입력해 기존 데이터가 변경되는 것을 막는다.
 
         // [iv/C]ArrayList<FriendData> : 기존 데이터를 모두 지우기
         this.friendDataArrayList.clear();
@@ -392,22 +454,22 @@ public class ChangedDataChecker {
 
         } // [cycle 1]
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.friendDataArrayList 확인! ************");
-        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.friendDataArrayList);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.friendDataArrayList 확인! ************");
+//        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, this.friendDataArrayList);
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
 
     } // End of method [setFriendDataArrayList]
 
-    public ArrayList<PlayerData> getPlayerDataArrayList() {
-        return playerDataArrayList;
-    }
 
     /**
      * [method] [set] 이 게임에 참가한 모든 player 의 정보가 담긴 playerDataArrayList 를 복사한다.
      */
     public void setPlayerDataArrayList(ArrayList<PlayerData> playerDataArrayList) {
-
         final String METHOD_NAME = "[setPlayerDataArrayList] ";
+
+        // BilliardModifyActivity 의 playerDataArrayList 의 주소값만 복사하면
+        // 기존 데이터가 변경되므로
+        // constructor 에서 객체 생성 후 하나하나 입력해 기존 데이터가 변경되는 것을 막는다.
 
         // [iv/C]ArrayList<PlayerData> : 기존 데이터를 모두 지우기
         this.playerDataArrayList.clear();
@@ -429,9 +491,9 @@ public class ChangedDataChecker {
 
         } // [cycle 1]
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.playerDataArrayList 확인! ************");
-        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "************ 복사한 this.playerDataArrayList 확인! ************");
+//        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
+//        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "***************************************************************");
 
     } // End of method [setPlayerDataArrayList]
 
@@ -446,8 +508,7 @@ public class ChangedDataChecker {
     }
 
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
+    // ============================================================= 객체 생성 후 꼭 수행해야 하는 method =============================================================
 
     /**
      * [method] [Change] winnerName spinner 의 값이 변경되었으면 해당 데이터와 관련된 것들을 변경한다.
@@ -469,7 +530,6 @@ public class ChangedDataChecker {
      * @param changedWinnerPlayerIndex 변경된 승리자의 playerDataArrayList 에서의 위치
      */
     public void changeWinner(long changedWinnerId, String changedWinnerName, int changedWinnerPlayerIndex) {
-
         final String METHOD_NAME = "[changeWinner] ";
 
         // [check 1] : initWinnerId 와 initWinnerName 이 변경되지 않았다.
@@ -1022,4 +1082,54 @@ public class ChangedDataChecker {
 
         return isEqual;
     } // End of method [checkWhetherEqualOfTargetScoreAndScore]
+
+
+    public class Builder {
+
+        // instance variable
+        private int playerCount;
+        private UserData userData;
+        private BilliardData billiardData;
+        private ArrayList<FriendData> friendDataArrayList;
+        private ArrayList<PlayerData> playerDataArrayList;
+
+        // constructor
+        public Builder(int playerCount) {
+            this.playerCount = playerCount;
+
+        }
+
+        // setter
+        public Builder setPlayerCount(int playerCount) {
+            this.playerCount = playerCount;
+            return this;
+        }
+
+        public Builder setUserData(UserData userData) {
+            this.userData = userData;
+            return this;
+        }
+
+        public Builder setBilliardData(BilliardData billiardData) {
+            this.billiardData = billiardData;
+            return this;
+        }
+
+        public Builder setFriendDataArrayList(ArrayList<FriendData> friendDataArrayList) {
+            this.friendDataArrayList = friendDataArrayList;
+            return this;
+        }
+
+        public Builder setPlayerDataArrayList(ArrayList<PlayerData> playerDataArrayList) {
+            this.playerDataArrayList = playerDataArrayList;
+            return this;
+        }
+
+        // create
+        public ChangedDataChecker create() {
+            return new ChangedDataChecker(this);
+        }
+
+
+    }
 }

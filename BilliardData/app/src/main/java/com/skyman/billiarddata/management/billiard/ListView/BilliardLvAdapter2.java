@@ -186,7 +186,9 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                     @Override
                     public void requestQuery(FriendDbManager2 friendDbManager2) {
 
-                        for (int index = 0; index < playerDataArrayList.size(); index++) {
+                        // index 가 0 이면 나의 정보(userData) 이므로
+                        // index 가 1~3 까지가 friendData 이다.
+                        for (int index = 1; index < playerDataArrayList.size(); index++) {
                             friendDataArrayList.add(
                                     friendDbManager2.loadContentById(
                                             playerDataArrayList.get(index).getPlayerId()
@@ -214,8 +216,32 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                         SessionManager.setParticipatedFriendListInGameFromIntent(intent, friendDataArrayList);    // 게임에 참여한 친구
                         SessionManager.setPlayerDataArrayListFromIntent(intent, playerDataArrayList);             // 게임에 참여한 모든 플레이어 : 나 + 게임에_참여한_친구
 
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "===============================>"
+                        );
+                        DeveloperManager.displayToUserData(
+                                CLASS_NAME,
+                                userData
+                        );
+
+                        DeveloperManager.displayToBilliardData(
+                                CLASS_NAME,
+                                billiardData
+                        );
+
+                        DeveloperManager.displayToFriendData(
+                                CLASS_NAME,
+                                friendDataArrayList
+                        );
+                        DeveloperManager.displayToPlayerData(
+                                CLASS_NAME,
+                                playerDataArrayList
+                        );
+
                         ((Activity) context).finish();
                         context.startActivity(intent);
+
 
                     }
                 })

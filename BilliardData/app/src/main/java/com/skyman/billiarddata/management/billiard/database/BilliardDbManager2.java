@@ -348,7 +348,7 @@ public class BilliardDbManager2 {
      * @param billiardData 업데이트 할 데이터가 담겨있는 객체
      * @return 업데이트된 행의 수
      */
-    public int updateContent(BilliardData billiardData) {
+    public int updateContentByCount(BilliardData billiardData) {
 
         final int[] numberOfUpdatedRows = {0};
 
