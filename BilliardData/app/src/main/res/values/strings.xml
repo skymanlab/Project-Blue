@@ -287,10 +287,10 @@
    ===============================================================================================-
    -->
     <!-- ListView Adapter : BilliardLvAdapter -->
-    <string name="at_billiard_lv_adapter_check_modify_title">다음 진행 절차</string>
-    <string name="at_billiard_lv_adapter_check_modify_message">데이터 수정을 진행하시겠습니까?</string>
-    <string name="at_billiard_lv_adapter_bt_check_modify_positive">수정</string>
-    <string name="at_billiard_lv_adapter_bt_check_modify_negative">취소</string>
+    <string name="adapter_billiardLvAdapter_modifyCheck_title">수정하시겠습니까?</string>
+    <string name="adapter_billiardLvAdapter_modifyCheck_message">데이터 수정을 위한 화면으로 이동합니다.</string>
+    <string name="adapter_billiardLvAdapter_modifyCheck_positive">이동</string>
+    <string name="adapter_billiardLvAdapter_modifyCheck_negative">취소</string>
 
 
     <!--                                    layout

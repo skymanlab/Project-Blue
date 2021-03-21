@@ -200,9 +200,9 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         // <3>
         // <사용자 확인>
         new AlertDialog.Builder(context)
-                .setTitle(R.string.at_billiard_lv_adapter_check_modify_title)
-                .setMessage(R.string.at_billiard_lv_adapter_check_modify_message)
-                .setPositiveButton(R.string.at_billiard_lv_adapter_bt_check_modify_positive, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.adapter_billiardLvAdapter_modifyCheck_title)
+                .setMessage(R.string.adapter_billiardLvAdapter_modifyCheck_message)
+                .setPositiveButton(R.string.adapter_billiardLvAdapter_modifyCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -219,7 +219,7 @@ public class BilliardLvAdapter2 extends BaseAdapter {
 
                     }
                 })
-                .setNegativeButton(R.string.at_billiard_lv_adapter_bt_check_modify_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.adapter_billiardLvAdapter_modifyCheck_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
