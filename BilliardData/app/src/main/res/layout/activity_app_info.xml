@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/app_info_title"></TextView>
+                android:text="@string/appInfo_title"></TextView>
         </LinearLayout><!-- End of title -->
 
         <!-- content -->
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_app_name">
+                    android:text="@string/appInfo_appName">
 
                 </TextView>
 
@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/app_info_app_name_content"></TextView>
+                    android:text="@string/appInfo_appName_content"></TextView>
             </LinearLayout><!-- End of content 2 -->
 
             <!-- content 2. developer group-->
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_developer_group">
+                    android:text="@string/appInfo_developerGroup">
 
                 </TextView>
 
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/app_info_developer_group_content"></TextView>
+                    android:text="@string/appInfo_developerGroup_content"></TextView>
             </LinearLayout><!-- End of content 2 -->
 
             <!-- content 3. developer -->
@@ -105,7 +105,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_developer">
+                    android:text="@string/appInfo_developer">
 
                 </TextView>
 
@@ -120,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/app_info_developer_content"></TextView>
+                    android:text="@string/appInfo_developer_content"></TextView>
             </LinearLayout><!-- End of content 3 -->
 
             <!-- content 4. version -->
@@ -134,7 +134,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_version">
+                    android:text="@string/appInfo_version">
 
                 </TextView>
 
@@ -149,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/app_info_version_content"></TextView>
+                    android:text="@string/appInfo_version_content"></TextView>
             </LinearLayout><!-- End of content 4 -->
 
             <!-- content 5. main site -->
@@ -163,7 +163,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_main_site">
+                    android:text="@string/appInfo_mainSite">
 
                 </TextView>
 
@@ -175,12 +175,12 @@
                     android:background="?android:attr/listDivider" />
 
                 <TextView
-                    android:id="@+id/app_info_main_site"
+                    android:id="@+id/appInfo_mainSite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:text="@string/app_info_main_site_content"></TextView>
+                    android:text="@string/appInfo_mainSite_content"></TextView>
             </LinearLayout><!-- End of content 5 -->
 
             <!-- content 7. third site -->
@@ -194,7 +194,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info_second_site">
+                    android:text="@string/appInfo_secondSite">
 
                 </TextView>
 
@@ -206,12 +206,12 @@
                     android:background="?android:attr/listDivider" />
 
                 <TextView
-                    android:id="@+id/app_info_second_site"
+                    android:id="@+id/appInfo_secondSite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:text="@string/app_info_second_site_content"></TextView>
+                    android:text="@string/appInfo_secondSite_content"></TextView>
             </LinearLayout><!-- End of content 7 -->
         </LinearLayout><!-- End of content -->
 

@@ -108,20 +108,20 @@
     <string name="statistics_manager_chart_my_total_game_record_default">0전 0승 0패</string>
 
     <!-- Activity : app info -->
-    <string name="app_info_title">어플리케이션 정보</string>
-    <string name="app_info_app_name">어플이름</string>
-    <string name="app_info_app_name_content">당구 데이터</string>
-    <string name="app_info_developer_group">개발자 그룹</string>
-    <string name="app_info_developer_group_content">skymanlab.</string>
-    <string name="app_info_developer">개발자</string>
-    <string name="app_info_developer_content">장동익</string>
-    <string name="app_info_version">버전</string>
-    <string name="app_info_version_content">ⓥ 1.0.0</string>
-    <string name="app_info_main_site">블로그</string>
-    <string name="app_info_main_site_content">https://blog.naver.com/skyman13</string>
-    <string name="app_info_second_site">GitHub</string>
-    <string name="app_info_second_site_content">https://github.com/skymanlab</string>
-    <string name="app_info_step">조작 단계 ▼</string>
+    <string name="appInfo_title">어플리케이션 정보</string>
+    <string name="appInfo_appName">어플이름</string>
+    <string name="appInfo_appName_content">당구 데이터</string>
+    <string name="appInfo_developerGroup">개발자 그룹</string>
+    <string name="appInfo_developerGroup_content">skymanlab.</string>
+    <string name="appInfo_developer">개발자</string>
+    <string name="appInfo_developer_content">장동익</string>
+    <string name="appInfo_version">버전</string>
+    <string name="appInfo_version_content">ⓥ 1.0.0</string>
+    <string name="appInfo_mainSite">블로그</string>
+    <string name="appInfo_mainSite_content">https://blog.naver.com/skyman13</string>
+    <string name="appInfo_secondSite">GitHub</string>
+    <string name="appInfo_secondSite_content">https://github.com/skymanlab</string>
+    <string name="appInfo_step">조작 단계 ▼</string>
 
     <!-- Activity : app setting -->
     <string name="appSetting_title">설정</string>

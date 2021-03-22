@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AppInfoActivity extends AppCompatActivity {
+import com.skyman.billiarddata.management.SectionManager;
+
+public class AppInfoActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // instance variable
     private TextView mainSite;
@@ -19,8 +21,30 @@ public class AppInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_info);
 
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
+
+    }
+
+    @Override
+    public void initAppDbManager() {
+
+    }
+
+    @Override
+    public void connectWidget() {
+
+        this.mainSite = (TextView) findViewById(R.id.appInfo_mainSite);
+
+        this.secondSite = (TextView) findViewById(R.id.appInfo_secondSite);
+
+    }
+
+    @Override
+    public void initWidget() {
+
         // TextView : mainSite
-        this.mainSite = (TextView) findViewById(R.id.app_info_main_site);
         this.mainSite.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -34,7 +58,6 @@ public class AppInfoActivity extends AppCompatActivity {
         );
 
         // TextView : secondSite
-        this.secondSite = (TextView) findViewById(R.id.app_info_second_site);
         this.secondSite.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -46,5 +69,6 @@ public class AppInfoActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
 }
