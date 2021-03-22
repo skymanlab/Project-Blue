@@ -20,42 +20,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 public class BilliardInputActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME_LOG = "[Ac]_BilliardInputActivity";
-    private final int DEFAULT_TARGET_SCORE = 21;
+    private final String CLASS_NAME = BilliardInputActivity.class.getSimpleName();
     private final int PLAYER_WIDGET_MAX_SIZE = 4;
 
-    // instant variable
+    // instant variable : session
     private UserData userData = null;
-
-    // instant variable
-    private AppDbManager appDbManager;
 
     // instant variable
     private ArrayList<FriendData> friendDataArrayList = null;
     private ArrayList<PlayerData> playerDataArrayList = null;
 
-    private BilliardDbManager billiardDbManager = null;
-    private UserDbManager userDbManager = null;
-    private FriendDbManager friendDbManager = null;
-    private PlayerDbManager playerDbManager = null;
+    // instant variable
+    private AppDbManager appDbManager;
 
     // instance variable : player section widget
     private TextView playerName[] = new TextView[4];
@@ -96,42 +95,17 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
     @Override
     protected void onDestroy() {
-        final String METHOD_NAME = "[onDestroy] ";
+
+        appDbManager.closeDb();
+
         super.onDestroy();
-
-        // [check 1] : billiardDbManager 가 생성되었을 때만 closeDb method 실행
-        if (this.billiardDbManager != null) {
-            this.billiardDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
-        } // [check 1]
-
-        // [check 2] : userDbManager 가 생성되었을 때만 closeDB method 실행
-        if (this.userDbManager != null) {
-            this.userDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
-        } // [check 2]
-
-        // [check 3] : friendDbManager 가 생성되었을 때만 closeDB method 실행
-        if (this.friendDbManager != null) {
-            this.friendDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
-        } // [check 3]
-
-        // [check 4] : playerDbManager 가 생성되었을 때만 closeDB method 실행
-        if (this.playerDbManager != null) {
-            this.playerDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 메니저가 생성되지 않았습니다.");
-        } // [check 4]
 
     } // End of method [onDestroy]
 
 
     @Override
     public void initAppDbManager() {
+
         appDbManager = new AppDbManager(this);
         appDbManager.connectDb(
                 true,
@@ -139,6 +113,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 true,
                 true
         );
+
     }
 
     @Override
@@ -199,13 +174,8 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // [check 1] : userData, friendDataArrayList 의 내용이 있다.
         if ((this.userData != null) && (friendDataArrayList.size() > 0)) {
 
-            createDBManager();
-
-            // 게임에 참가한 선수 목록을 만들기 
+            // 게임에 참가한 선수 목록을 만들기
             this.playerDataArrayList = makePlayerDataArrayList(this.userData, this.friendDataArrayList);
-
-//            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "등록 된 player 의 정보를 확인합니다.");
-//            DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, this.playerDataArrayList);
 
             // 게임에 참가한 선수가 있을 때
             // 1. player list section 초기화
@@ -219,11 +189,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 initWidgetOfBilliardInputSection(this.playerDataArrayList, this.userData);
 
             } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 와 friendDataArrayList 를 player 등록된 사람이 없습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 와 friendDataArrayList 를 player 등록된 사람이 없습니다.");
             }
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "셋팅할 userData 와 friendDataArrayList 가 없습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "셋팅할 userData 와 friendDataArrayList 가 없습니다.");
         } // [check 1]
 
 
@@ -235,8 +205,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             @Override
             public void onClick(View v) {
 
-                // [method]setTextToDifferentDate : 다른 날짜로 변경할 수 있는 custom dialog 를 보여준다.
-                showDatePickerDialog();
+                showDialogOfDatePicker();
 
             }
         });
@@ -249,39 +218,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 // 입력한 데이터 저장하는 과정 진행
                 setClickListenerOfSave();
 
-
             }
         });
 
 
     }
-
-
-    // =============================================== DB manager ===============================================
-
-    /**
-     * [method] project_blue.db 의 billiard, user, friend 테이블을 관리하는 메니저를 생성한다.
-     */
-    private void createDBManager() {
-
-        // [iv/C]BilliardDBManager : billiard 테이블을 관리하는 메니저 생성과 초기화
-        this.billiardDbManager = new BilliardDbManager(this);
-        this.billiardDbManager.initDb();
-
-        // [iv/C]UserDbManager : user 테이블을 관리하는 메니저 생성과 초기화
-        this.userDbManager = new UserDbManager(this);
-        this.userDbManager.initDb();
-
-        // [iv/C]FriendDbManager : friend 테이블을 관리하는 메니저 생성과 초기화
-        this.friendDbManager = new FriendDbManager(this);
-        this.friendDbManager.initDb();
-
-        // [iv/C]PlayerDbManager : player 테이블을 관리하는 메니저 생성과 초기화
-        this.playerDbManager = new PlayerDbManager(this);
-        this.playerDbManager.initDb();
-
-    } // End of method [createDBManager]
-
 
     // =============================================== Player 초기내용 등록 ===============================================
 
@@ -335,12 +276,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     /**
      *
      */
-    private void showDatePickerDialog() {
+    private void showDialogOfDatePicker() {
 
         // 현재 날짜를 가져오기 위한 Calendar 객체
         Calendar calendar = Calendar.getInstance();
 
-        // 
         DatePickerDialog dialog = new DatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -348,7 +288,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         DeveloperManager.displayLog(
-                                CLASS_NAME_LOG,
+                                CLASS_NAME,
                                 "year : " + year + " / month : " + month + " / dayOfMonth : " + dayOfMonth
 
                         );
@@ -366,7 +306,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         );
         dialog.show();
 
-    } // End of method [showDatePickerDialog]
+    } // End of method [showDialogOfDatePicker]
 
 
     // =============================================== initWidget : player section ===============================================
@@ -502,23 +442,23 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         // [check 1] : player 의 데이터가 모두 입력 되었다.
         if (checkWhetherInputAllDataOfPlayerWidget(playerDataArrayList.size())) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player widget> 모든 데이터를 입력 받았습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력 받았습니다.");
 
             // [check 2] : player 의 score 가 범위에 맞게 입력되었다.
             if (checkWhetherInputWithinRangeOfPlayerScoreValue(playerDataArrayList.size())) {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<score> 범위에 맞는 데이터를 입력 받았습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 데이터를 입력 받았습니다.");
 
                 // [check 3] : billiard 의 데이터가 형식에 맞게 모두 입력 되었다.
                 if (checkWhetherInputAllDataOfBilliardWidget()) {
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard widget> 모든 데이터를 입력받았습니다.");
+                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력받았습니다.");
 
                     // [check 4] : winner 의 targetScore 와 score 가 같습니다.
                     if (checkWhetherEqualOfTargetScoreAndScore()) {
-                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 와 <score> 가 같으므로 승자가 맞습니다.");
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같으므로 승자가 맞습니다.");
 
                         // [check 5] : 경기시간(playTime)과 비용(cost)이 0 보다 큰 값만 입력했을 때만
                         if (checkInputRangeOfPlayTimeAndCost()) {
-                            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playTime> 와 <cost> 가 0 보다 큰 값이 입력되었습니다.");
+                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<playTime> 와 <cost> 가 0 보다 큰 값이 입력되었습니다.");
 
                             // <사용자 확인>
                             new AlertDialog.Builder(this)
@@ -542,7 +482,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
 
                         } else {
-                            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<playTime> 와 <cost> 은 0 보다 큰 값만 입력해야 되요!");
+                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<playTime> 와 <cost> 은 0 보다 큰 값만 입력해야 되요!");
                             // <사용자 알림>
                             Toast.makeText(
                                     this,
@@ -553,7 +493,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
                     } else {
 
-                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<targetScore> 와 <score> 가 같아야지만 승리자요!");
+                        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같아야지만 승리자요!");
                         // <사용자 알림>
                         Toast.makeText(
                                 this,
@@ -566,7 +506,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 } else {
 
                     // <사용자 알림>
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
+                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
                     Toast.makeText(
                             this,
                             R.string.billiardInput_noticeUser_billiardDataCheck,
@@ -578,7 +518,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             } else {
 
                 // <사용자 알림>
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
                 Toast.makeText(
                         this,
                         R.string.billiardInput_noticeUser_scoreRangeCheck,
@@ -590,7 +530,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         } else {
 
             // <사용자 알림>
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
             Toast.makeText(
                     this,
                     R.string.billiardInput_noticeUser_playerDataCheck,
@@ -621,35 +561,41 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         int cost = Integer.parseInt(this.cost.getText().toString());
 
         DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
+                CLASS_NAME,
                 "====================>>>>>> score : " + score
         );
 
         // 1. BilliardDbManager : Billiard Data 저장 및 count 값 가져오기
-        long billiardCount = saveBilliardData(this.billiardDbManager, date, gameMode, playerCount, winnerId, winnerName, playTime, score, cost);
+        long countOfBilliardData = saveBilliardData(date, gameMode, playerCount, winnerId, winnerName, playTime, score, cost);
 
         // 2-1. userData, friendDataArrayList, playerDataArrayList : 파라미터를 각 객체의 데이터에 반영하여 업데이트하기
-        setDataOfObjectsRelatedToThePlayer(winnerId, winnerName, playTime, cost, billiardCount);
+        setDataOfObjectsRelatedToThePlayer(winnerId, winnerName, playTime, cost, countOfBilliardData);
 
         // 2-2. playerDataArrayList : billiardCount, targetScore, score 내용 채우기
         setDataOfTargetScoreAndScore_PlayerDataArrayList();
-        setDataOfBilliardCount_PlayerDataArrayList(billiardCount);
+        setDataOfBilliardCount_PlayerDataArrayList(countOfBilliardData);
 
         // 3. PlayerDbManager : 모든 플레이어 데이터 업데이트
-        savePlayerData(this.playerDbManager, this.playerDataArrayList);
+        savePlayerData(playerDataArrayList);
 
         // 4. UserDbManager : 나의 데이터 업데이트
-        updateUserData(this.userDbManager, this.userData);
+        updateUserData(userData);
 
         // 5. FriendDbManager : 모든 친구 데이터 업데이트
-        updateFriendData(this.friendDbManager, this.friendDataArrayList);
+        updateFriendData(friendDataArrayList);
+
+        // <사용자 알림>
+        Toast.makeText(
+                this,
+                R.string.billiardInput_noticeUser_saveComplete,
+                Toast.LENGTH_SHORT
+        ).show();
 
         // 6. 이동
         Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
         SessionManager.setUserDataFromIntent(intent, userData);
         finish();
         startActivity(intent);
-
 
     } // End of method [saveData]
 
@@ -676,14 +622,14 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // [lv/b]inputAllData : 모든 player 의 데이터가 입력되었는가?
         boolean inputAllData = true;
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 player widget 에 모든 데이터가 입력되었는지를 검사합니다.");
+        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 player widget 에 모든 데이터가 입력되었는지를 검사합니다.");
 
         // [cycle 1] : 등록된 player 의 수 만큼
         for (int index = 0; index < playerCount; index++) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + index + "번째 playerName = " + this.playerName[index].getText().toString());
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + index + "번째 playerTargetScore = " + this.playerTargetScore[index].getSelectedItem().toString());
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + index + "번째 playerScore = " + this.playerScore[index].getText().toString());
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + index + "번째 playerName = " + this.playerName[index].getText().toString());
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + index + "번째 playerTargetScore = " + this.playerTargetScore[index].getSelectedItem().toString());
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + index + "번째 playerScore = " + this.playerScore[index].getText().toString());
 
             // [check 1] : playerName, playerTargetScore, playerScore 를 모두 입력 받았다.
             if (!this.playerName[index].getText().toString().equals("")
@@ -700,7 +646,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         } // [cycle 1]
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player widget 의 검사 결과는 = " + inputAllData);
+        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "player widget 의 검사 결과는 = " + inputAllData);
 
         return inputAllData;
 
@@ -720,7 +666,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private boolean checkWhetherInputWithinRangeOfPlayerScoreValue(int playerCount) {
         final String METHOD_NAME = "[checkWhetherInputWithinRangeOfPlayerScoreValue] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playerScore 의 범위를 검사합니다.");
+        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "playerScore 의 범위를 검사합니다.");
         // [lv/b]isWithinRange : 범위 내의 값인가요?
         boolean isWithinRange = true;
 
@@ -733,8 +679,8 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             // [lv/i]score : playerScore 의 값
             int score = Integer.parseInt(this.playerScore[index].getText().toString());
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + index + " 번째 targetScore = " + targetScore);
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + index + " 번째 score = " + score);
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + index + " 번째 targetScore = " + targetScore);
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + index + " 번째 score = " + score);
 
             // [check 1] : o <= score <= TargetScore
             if ((0 <= score) && (score <= targetScore)) {
@@ -748,7 +694,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         } // [cycle 1]
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "playerScore 의 검사 결과는 = " + isWithinRange);
+        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "playerScore 의 검사 결과는 = " + isWithinRange);
 
         return isWithinRange;
 
@@ -772,7 +718,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private boolean checkWhetherInputAllDataOfBilliardWidget() {
         final String METHOD_NAME = "[checkWhetherInputAllBilliardData] ";
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard widget 에 모든 데이터가 입력되었는지 검사합니다.");
+        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "billiard widget 에 모든 데이터가 입력되었는지 검사합니다.");
 
         // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다.
         if (!date.getText().toString().equals("")
@@ -782,11 +728,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 && !cost.getText().toString().equals("")
         ) {
             // 모두 입력 받았으면
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = true");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = true");
             return true;
         } else {
             // 하나라도 입력 안 받았으면
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = false");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = false");
             return false;
         } // [check 1]
 
@@ -812,11 +758,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // [check 1] : winner 의 위치의 targetScore 와 score 가 같다.
         if (targetScore == score) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같습니다.");
             return true;
         } else {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같지 않아요!");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같지 않아요!");
             return false;
         } // [check 1]
 
@@ -1014,12 +960,31 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     /**
      * Save Database : Billiard
      */
-    private long saveBilliardData(BilliardDbManager billiardDbManager, String date, String gameMode, int playerCount, long winnerId, String winnerName, int playTime, String score, int cost) {
+    private long saveBilliardData(String date, String gameMode, int playerCount, long winnerId, String winnerName, int playTime, String score, int cost) {
 
-        // [lv/l]billiardCount  : billiardDbManager 를 통해서 billiard 테이블에 저장한다. 그리고 그 결과로 넘어온 행의 값(=count) 을 받아온다.
-        long billiardCount = billiardDbManager.saveContent(date, gameMode, playerCount, winnerId, winnerName, playTime, score, cost);
+        final long[] countOfBilliardData = {0};
 
-        return billiardCount;
+        appDbManager.requestBilliardQuery(
+                new AppDbManager.BilliardQueryRequestListener() {
+                    @Override
+                    public void requestQuery(BilliardDbManager2 billiardDbManager2) {
+
+                        countOfBilliardData[0] = billiardDbManager2.saveContent(
+                                date,
+                                gameMode,
+                                playerCount,
+                                winnerId,
+                                winnerName,
+                                playTime,
+                                score,
+                                cost
+
+                        );
+                    }
+                }
+        );
+
+        return countOfBilliardData[0];
 
     } // End of method [saveBilliardData]
 
@@ -1027,27 +992,36 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     /**
      * Save Database : Player
      *
-     * @param playerDbManager
      * @param playerDataArrayList
      * @return player 테이블에 저정하면 얻는 count 값을 담은 배열
      */
-    private long[] savePlayerData(PlayerDbManager playerDbManager, ArrayList<PlayerData> playerDataArrayList) {
+    private long[] savePlayerData(ArrayList<PlayerData> playerDataArrayList) {
 
-        // [lv/l]count : 등록된 player 의 count 값들을 저장
-        long[] count = new long[playerDataArrayList.size()];
+        long rowNumberList[] = new long[playerDataArrayList.size()];
 
-        // [cycle 1] : 등록된 player 수 만큼
-        for (int index = 0; index < playerDataArrayList.size(); index++) {
-            count[index] = playerDbManager.saveContent(
-                    playerDataArrayList.get(index).getBilliardCount(),
-                    playerDataArrayList.get(index).getPlayerId(),
-                    playerDataArrayList.get(index).getPlayerName(),
-                    playerDataArrayList.get(index).getTargetScore(),
-                    playerDataArrayList.get(index).getScore()
-            );
-        } // [cycle 1]
+        appDbManager.requestPlayerQuery(
+                new AppDbManager.PlayerQueryRequestListener() {
+                    @Override
+                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-        return count;
+                        for (int index = 0; index < playerDataArrayList.size(); index++) {
+
+                            rowNumberList[index] = playerDbManager2.saveContent(
+                                    playerDataArrayList.get(index).getBilliardCount(),
+                                    playerDataArrayList.get(index).getPlayerId(),
+                                    playerDataArrayList.get(index).getPlayerName(),
+                                    playerDataArrayList.get(index).getTargetScore(),
+                                    playerDataArrayList.get(index).getScore()
+                            );
+
+                        }
+
+                    }
+                }
+        );
+
+        return rowNumberList;
+
     } // End of method [saveDataOfPlayer]
 
 
@@ -1056,19 +1030,26 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     /**
      * Update Database : User
      *
-     * @param userDbManager
      * @param userData
      */
-    private void updateUserData(UserDbManager userDbManager, UserData userData) {
+    private void updateUserData(UserData userData) {
 
-        userDbManager.updateContent(
-                userData.getId(),
-                userData.getGameRecordWin(),
-                userData.getGameRecordLoss(),
-                userData.getRecentGameBilliardCount(),
-                userData.getTotalPlayTime(),
-                userData.getTotalCost()
+        appDbManager.requestUserQuery(
+                new AppDbManager.UserQueryRequestListener() {
+                    @Override
+                    public void requestQuery(UserDbManager2 userDbManager2) {
+                        userDbManager2.updateContent(
+                                userData.getId(),
+                                userData.getGameRecordWin(),
+                                userData.getGameRecordLoss(),
+                                userData.getRecentGameBilliardCount(),
+                                userData.getTotalPlayTime(),
+                                userData.getTotalCost()
+                        );
+                    }
+                }
         );
+
 
     } // End of method [updateUserData]
 
@@ -1076,90 +1057,28 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     /**
      * Update Database : Friend
      */
-    private void updateFriendData(FriendDbManager friendDbManager, ArrayList<FriendData> friendDataArrayList) {
+    private void updateFriendData(ArrayList<FriendData> friendDataArrayList) {
 
-        // [cycle 1] : friend 의 수 만큼
-        for (int index = 0; index < friendDataArrayList.size(); index++) {
+        appDbManager.requestFriendQuery(
+                new AppDbManager.FriendQueryRequestListener() {
+                    @Override
+                    public void requestQuery(FriendDbManager2 friendDbManager2) {
 
-            friendDbManager.updateContentById(
-                    friendDataArrayList.get(index).getId(),
-                    friendDataArrayList.get(index).getGameRecordWin(),
-                    friendDataArrayList.get(index).getGameRecordLoss(),
-                    friendDataArrayList.get(index).getRecentGameBilliardCount(),
-                    friendDataArrayList.get(index).getTotalPlayTime(),
-                    friendDataArrayList.get(index).getTotalCost()
-            );
+                        for (int index = 0; index < friendDataArrayList.size(); index++) {
 
-        } // [cycle 1]
+                            friendDbManager2.updateContentById(
+                                    friendDataArrayList.get(index).getId(),
+                                    friendDataArrayList.get(index).getGameRecordWin(),
+                                    friendDataArrayList.get(index).getGameRecordLoss(),
+                                    friendDataArrayList.get(index).getRecentGameBilliardCount(),
+                                    friendDataArrayList.get(index).getTotalPlayTime(),
+                                    friendDataArrayList.get(index).getTotalCost()
+                            );
+                        }
+                    }
+                }
+        );
 
     } // End of method [saveDataFriendList]
-
-
-    // =============================================== Save Button : 후반 작업  ===============================================
-
-    /**
-     * 후반작업 1. 입력된 내용 모두 지우기
-     */
-    private void clearSection(int playerCount) {
-
-        // [cycle 1] : 등록된 player 수 만큼
-        for (int index = 0; index < playerCount; index++) {
-
-            // [iv/C]EditText : playerScore widget 을 초기화
-            this.playerScore[index].setText("");
-
-        } // [cycle 1]
-
-        // [iv/C]Spinner : gameMode widget 초기화
-        this.gameMode.setSelection(0);
-
-        // [iv/C]Spinner : playerNameList widget 초기화
-        this.playerNameList.setSelection(0);
-
-        // [iv/C]EditText : playTime widget 초기화
-        this.playTime.setText("");
-
-        // [iv/C]EditText : cost widget 초기화
-        this.cost.setText("");
-
-        // [iv/C]Button : input widget 을 클릭하지 못하도록
-        this.save.setEnabled(false);
-        this.save.setBackgroundResource(R.color.colorWidgetDisable);
-
-    } // End of method [clearSection]
-
-
-    /**
-     * 후반작업 2. BilliardDisplayActivity 이동 할 것인지 물어보기
-     */
-    private void showDialogToCheckWhetherToMoveBDA() {
-
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // [lv/C]AlertDialog : 초기값 설정 및 화면보기
-        builder.setTitle(R.string.billiardInput_dialog_nextActivityMove_title)
-                .setMessage(R.string.billiardInput_dialog_nextActivityMove_message)
-                .setPositiveButton(R.string.billiardInput_dialog_nextActivityMove_positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // [lv/C]Intent : BilliardDisplayActivity 로 이동하기 위한 intent 생성
-                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
-
-                        // [lv/C]Intent : intent 에 userData 를 담아서 보내기
-                        SessionManager.setUserDataFromIntent(intent, userData);
-
-                        // [method]finish : 이 BilliardInputActivity 화면 종료
-                        finish();
-
-                        // [method]startActivity : intent 설정 값으로 화면이동
-                        startActivity(intent);
-                    }
-                })
-                .show();
-
-    } // End of method [showDialogToCheckWhetherToMoveBDA]
-
 
 }

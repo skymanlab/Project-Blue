@@ -423,6 +423,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
 
     // ============================================================ 수정된 데이터를 데이터베이스에 반영하는 과정에 필요한 method ============================================================
+
     /**
      * [method] modify button click listener
      */
@@ -697,31 +698,28 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         // [lv/i]result : update 한 후의 결과를 저장
         int[] result = new int[friendDataArrayList.size()];
 
-        // [cycle 1] : 참가한 player 중 friend 의 수 만큼
-        for (int index = 0; index < friendDataArrayList.size(); index++) {
+        appDbManager.requestFriendQuery(
+                new AppDbManager.FriendQueryRequestListener() {
+                    @Override
+                    public void requestQuery(FriendDbManager2 friendDbManager2) {
 
-            int finalIndex = index;
+                        for (int index = 0; index < friendDataArrayList.size(); index++) {
 
-            appDbManager.requestFriendQuery(
-                    new AppDbManager.FriendQueryRequestListener() {
-                        @Override
-                        public void requestQuery(FriendDbManager2 friendDbManager2) {
-
-                            result[finalIndex] = friendDbManager2.updateContentById(
-                                    friendDataArrayList.get(finalIndex).getId(),
-                                    friendDataArrayList.get(finalIndex).getGameRecordWin(),
-                                    friendDataArrayList.get(finalIndex).getGameRecordLoss(),
-                                    friendDataArrayList.get(finalIndex).getRecentGameBilliardCount(),
-                                    friendDataArrayList.get(finalIndex).getTotalPlayTime(),
-                                    friendDataArrayList.get(finalIndex).getTotalCost()
+                            result[index] = friendDbManager2.updateContentById(
+                                    friendDataArrayList.get(index).getId(),
+                                    friendDataArrayList.get(index).getGameRecordWin(),
+                                    friendDataArrayList.get(index).getGameRecordLoss(),
+                                    friendDataArrayList.get(index).getRecentGameBilliardCount(),
+                                    friendDataArrayList.get(index).getTotalPlayTime(),
+                                    friendDataArrayList.get(index).getTotalCost()
                             );
 
                         }
+
                     }
-            );
+                }
+        );
 
-
-        } // [cycle 1]
 
     } // End of method [updateOfChangedAllFriendData]
 
@@ -737,25 +735,22 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         // [lv/i]result : update 한 후의 결과를 저장
         int[] result = new int[playerDataArrayList.size()];
 
-        // [cycle 1] : 참가한 player 중 friend 의 수 만큼
-        for (int index = 0; index < playerDataArrayList.size(); index++) {
+        appDbManager.requestPlayerQuery(
+                new AppDbManager.PlayerQueryRequestListener() {
+                    @Override
+                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-            int finalIndex = index;
+                        for (int index = 0; index < playerDataArrayList.size(); index++) {
 
-            appDbManager.requestPlayerQuery(
-                    new AppDbManager.PlayerQueryRequestListener() {
-                        @Override
-                        public void requestQuery(PlayerDbManager2 playerDbManager2) {
-
-                            result[finalIndex] = playerDbManager2.updateContentByCount(
-                                    playerDataArrayList.get(finalIndex)
+                            result[index] = playerDbManager2.updateContentByCount(
+                                    playerDataArrayList.get(index)
                             );
 
                         }
-                    }
-            );
 
-        } // [cycle 1]
+                    }
+                }
+        );
 
     } // End of method [updateOfChangedAllPlayerData]
 }

@@ -61,6 +61,7 @@
     <string name="billiardInput_noticeUser_scoreRangeCheck">플레이어의 점수는 수지보다 작은 값을 입력해주세요.</string>
     <string name="billiardInput_noticeUser_winnerScoreCheck">승리자는 수지와 점수가 같아야 합니다.</string>
     <string name="billiardInput_noticeUser_inputDataCheck_playTimeAndCost">경기시간과 비용은 0보다 큰 값을 입력해주세요.</string>
+    <string name="billiardInput_noticeUser_saveComplete">저장이 완료되었습니다.</string>
 
     <!-- Dialog : billiard modify -->
     <string name="billiardModify_title">당구 데이터 수정</string>
