@@ -14,7 +14,6 @@ public class FriendData implements Serializable {
     // 7. total cost
 
     // constructor
-    public static final String CLASS_NAME = "friendData";
     public static final String ID = "id";
     public static final String USER_ID = "userId";
     public static final String NAME = "name";

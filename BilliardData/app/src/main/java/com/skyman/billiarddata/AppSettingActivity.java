@@ -9,36 +9,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.file.FileConstants;
 import com.skyman.billiarddata.management.file.FileExport;
 import com.skyman.billiarddata.management.file.FileImport;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
 
-import java.util.ArrayList;
-
-public class AppSettingActivity extends AppCompatActivity {
+public class AppSettingActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final String CLASS_NAME_LOG = AppSettingActivity.class.getSimpleName();
+    private static final String CLASS_NAME = AppSettingActivity.class.getSimpleName();
+
+    // instance variable : session
+    private UserData userData = null;
 
     // instance variable
-    private LinearLayout dataExportWrapper;
-    private LinearLayout dataImportWrapper;
+    private AppDbManager appDbManager;
 
-    // instance variable
-    private UserDbManager userDbManager;
-    private BilliardDbManager billiardDbManager;
-    private PlayerDbManager playerDbManager;
-    private FriendDbManager friendDbManager;
+    // instance variable : widget
+    private LinearLayout dataBackupExportWrapper;
+    private LinearLayout dataBackupImportWrapper;
 
     // instance variable
     private FileExport fileExport = null;
@@ -49,48 +44,16 @@ public class AppSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_setting);
 
-        // create db manager
-        createDBManager();
+        // sessionManager : getter ( userData )
+        userData = SessionManager.getUserDataFromIntent(getIntent());
 
-        // LinearLayout : dataExport
-        dataExportWrapper = (LinearLayout) findViewById(R.id.app_setting_data_export_wrapper);
-        dataExportWrapper.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        // appDbManager
+        initAppDbManager();
 
-                        // '파일 내보내기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
-                        fileExport = new FileExport(
-                                AppSettingActivity.this,
-                                userDbManager,
-                                billiardDbManager,
-                                playerDbManager,
-                                friendDbManager);
-                        fileExport.init();
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
 
-                    }
-                }
-        );
-
-        // LinearLayout : dataImport
-        dataImportWrapper = (LinearLayout) findViewById(R.id.app_setting_data_import_wrapper);
-        dataImportWrapper.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // '파일 가져오기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
-                        fileImport = new FileImport(
-                                AppSettingActivity.this,
-                                userDbManager,
-                                billiardDbManager,
-                                playerDbManager,
-                                friendDbManager
-                        );
-                        fileImport.init();
-                    }
-                }
-        );
     }
 
     @Override
@@ -106,12 +69,12 @@ public class AppSettingActivity extends AppCompatActivity {
                 // 파일이 만들어진 위치의 Uri 를 가져오기
                 uri = data.getData();
                 DeveloperManager.displayLog(
-                        CLASS_NAME_LOG,
+                        CLASS_NAME,
                         "==========================================>>>>>>>>>>>>>>>>>>> 내보내기"
                 );
 
                 DeveloperManager.displayLog(
-                        CLASS_NAME_LOG,
+                        CLASS_NAME,
                         "uri : " + uri.toString()
                 );
 
@@ -130,12 +93,12 @@ public class AppSettingActivity extends AppCompatActivity {
             if (data != null) {
                 uri = data.getData();
                 DeveloperManager.displayLog(
-                        CLASS_NAME_LOG,
+                        CLASS_NAME,
                         "==========================================>>>>>>>>>>>>>>>>>>> 가져오기 "
                 );
 
                 DeveloperManager.displayLog(
-                        CLASS_NAME_LOG,
+                        CLASS_NAME,
                         "uri : " + uri.toString()
                 );
 
@@ -152,61 +115,84 @@ public class AppSettingActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        final String METHOD_NAME = "[onDestroy] ";
+
+        appDbManager.closeDb();
+
         super.onDestroy();
+    }
 
-        // user
-        if (this.userDbManager != null) {
-            this.userDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 메니저가 생성되지 않았습니다.");
-        }
+    @Override
+    public void initAppDbManager() {
 
-
-        // friend
-        if (this.friendDbManager != null) {
-            this.friendDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friend 메니저가 생성되지 않았습니다.");
-        }
-
-
-        // Billiard
-        if (this.billiardDbManager != null) {
-            this.billiardDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "billiard 메니저가 생성되지 않았습니다.");
-        }
-
-        // player
-        if (this.playerDbManager != null) {
-            this.playerDbManager.closeDb();
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "player 메니저가 생성되지 않았습니다.");
-        }
+        appDbManager = new AppDbManager(this);
+        appDbManager.connectDb(
+                true,
+                true,
+                true,
+                true
+        );
 
     }
 
-    /**
-     * [method] user, friend 테이블을 관리하는 메니저를 생성한다.
-     */
-    private void createDBManager() {
+    @Override
+    public void connectWidget() {
 
-        // [iv/C]UserDbManager : user 테이블을 관리하는 매니저 생성과 초기화
-        this.userDbManager = new UserDbManager(this);
-        this.userDbManager.initDb();
+        dataBackupExportWrapper = (LinearLayout) findViewById(R.id.appSetting_dataBackUp_exportWrapper);
 
-        // [iv/C]FriendDbManager : friend 테이블을 관리하는 매니저 생성과 초기화
-        this.friendDbManager = new FriendDbManager(this);
-        this.friendDbManager.initDb();
+        dataBackupImportWrapper = (LinearLayout) findViewById(R.id.appSetting_dataBackUp_importWrapper);
+    }
 
-        // [iv/C]BilliardDbManager : billiard 테이블을 관리하는 매니저 생성과 초기화
-        this.billiardDbManager = new BilliardDbManager(this);
-        this.billiardDbManager.initDb();
+    @Override
+    public void initWidget() {
 
-        // [iv/C]PlayerDbManager : player 테이블을 관리하는 매니저 생성과 초기화
-        this.playerDbManager = new PlayerDbManager(this);
-        this.playerDbManager.initDb();
+        if (userData == null) {
+            DeveloperManager.displayLog(
+                    CLASS_NAME,
+                    "userData 가 생성되지 않았습니다."
+            );
+            return;
+        }
+
+        // LinearLayout : dataExport
+        dataBackupExportWrapper.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // '파일 내보내기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
+                        fileExport = new FileExport(AppSettingActivity.this, appDbManager, userData);
+                        fileExport.init();
+
+                    }
+                }
+        );
+
+        // LinearLayout : dataImport
+        dataBackupImportWrapper.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (userData != null) {
+
+                            // <사용자 알림>
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    R.string.appSetting_noticeUser_exitUserData,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                        } else {
+
+                            // '파일 가져오기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
+                            fileImport = new FileImport(AppSettingActivity.this, appDbManager);
+                            fileImport.init();
+                        }
+
+
+                    }
+                }
+        );
     }
 
 

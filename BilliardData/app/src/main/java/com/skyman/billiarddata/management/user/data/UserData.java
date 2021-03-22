@@ -15,7 +15,6 @@ public class UserData implements Serializable {
     // 8. total cost
 
     // constructor
-    public static final String CLASS_NAME = "userData";
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String TARGET_SCORE = "targetScore";

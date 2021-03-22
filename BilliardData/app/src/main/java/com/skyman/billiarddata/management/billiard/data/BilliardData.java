@@ -20,7 +20,6 @@ public class BilliardData implements Serializable {
     // 8. cost
 
     // constructor
-    public static final String CLASS_NAME = "billiardData";
     public static final String COUNT = "count";
     public static final String DATE = "date";
     public static final String GAME_MODE = "gameMode";

@@ -6,15 +6,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,23 +35,15 @@ public class FileImport {
     // constant
     private static final String CLASS_NAME_LOG = FileExport.class.getSimpleName();
 
-
     // instance variable
     private Activity activity;
-    private UserDbManager userDbManager;
-    private BilliardDbManager billiardDbManager;
-    private PlayerDbManager playerDbManager;
-    private FriendDbManager friendDbManager;
+    private AppDbManager appDbManager;
 
     // constructor
-    public FileImport(Activity activity, UserDbManager userDbManager, BilliardDbManager billiardDbManager, PlayerDbManager playerDbManager, FriendDbManager friendDbManager) {
+    public FileImport(Activity activity, AppDbManager appDbManager) {
 
         this.activity = activity;
-        // DB manager
-        this.userDbManager = userDbManager;
-        this.billiardDbManager = billiardDbManager;
-        this.playerDbManager = playerDbManager;
-        this.friendDbManager = friendDbManager;
+        this.appDbManager = appDbManager;
 
     }
 
@@ -66,53 +64,14 @@ public class FileImport {
         activity.startActivityForResult(intent, FileConstants.REQUEST_CODE_OPEN_FILE);
     }
 
-    public void saveDatabase(Uri uri) {
 
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "====----------------------------------->>>>>>>>>>>>>>>>>>>"
-        );
-
-        // 파일 내용 읽어오기
-        String data = readDataFromFile(uri);
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "file data : " + data
-        );
-
-        // JsonParser
-        JsonParser jsonParser = new JsonParser(data);
-        jsonParser.parseContent();
-
-        // data 를 parsing 실패 했을 때
-        if (!jsonParser.isCompletedParsing()) {
-
-            Toast.makeText(
-                    activity,
-                    "형식에 맞지 않은 파일입니다.",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            return;
-        }
-        jsonParser.print();
-
-        // 파싱한 데이터를 Database 에 저장하기
-        saveUserData(jsonParser.getUserDataArrayList());
-        saveFriendData(jsonParser.getFriendDataArrayList());
-        saveBilliardData(jsonParser.getBilliardDataArrayList());
-        savePlayerData(jsonParser.getPlayerDataArrayList());
-
-        // <사용자 알림>
-        Toast.makeText(
-                activity,
-                "데이터베이스에 저장되었습니다.",
-                Toast.LENGTH_SHORT
-        ).show();
-
-
-    }
-
+    /**
+     * openFile() 메소드로 선택한 file 의 uri 로
+     * 해당 file 의 내용을 읽어온다.
+     *
+     * @param uri 선택된 file 의 uri
+     * @return 선택된 file 의 내용
+     */
     private String readDataFromFile(Uri uri) {
 
         // data 담기
@@ -136,44 +95,195 @@ public class FileImport {
     }
 
 
-    private void saveUserData(ArrayList<UserData> userDataArrayList) {
+    // ==================================== SQLite Database ====================================
 
-        for (int index = 0; index < userDataArrayList.size(); index++) {
-            this.userDbManager.saveContent(userDataArrayList.get(index));
+    /**
+     * 해당 메소드를 이용하여 onActivityResult() 메소드로 넘어온
+     * 선택된 file 을 JsonParser 로 파싱하여 파싱이 완료되면
+     * SQLite Database 에 userData, friendDataArrayList, billiardDataArrayList, friendDataArrayList 를
+     * 각 테이블에 저장한다.
+     *
+     * @param uri 선택된 file 의 uri
+     */
+    public void saveDatabase(Uri uri) {
+
+        // <과정>
+        // 1. 선택된 파일의 내용을 읽어오기
+        // 2. 파일에서 읽어온 내용을 JsonParser 를 사용하여 파싱하기
+        // 3. 파싱에 실패하였으면 종료와 함계 사용자에게 알림
+        // 4. 파싱이 성공했으면 데이터베이스에 저장하기
+
+        DeveloperManager.displayLog(
+                CLASS_NAME_LOG,
+                "======>>>> save SQLite Database "
+        );
+
+        // <1>
+        // 파일 내용 읽어오기
+        String jsonData = readDataFromFile(uri);
+        DeveloperManager.displayLog(
+                CLASS_NAME_LOG,
+                "file data : " + jsonData
+        );
+
+        // <2>
+        // JsonParser 를 사용하여 파일 내용 파싱하기
+        JsonParser jsonParser = new JsonParser(jsonData);
+        jsonParser.parseContent();
+
+        // <3>
+        // data 를 parsing 실패 했을 때
+        if (!jsonParser.isCompletedParsing()) {
+
+            Toast.makeText(
+                    activity,
+                    R.string.etc_fileImport_noticeUser_errorParsing,
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+        jsonParser.print();
+
+        // <4>
+        // 파싱한 데이터를 Database 에 저장하기
+        try {
+
+            saveUserData(jsonParser.getUserData());
+            saveFriendData(jsonParser.getFriendDataArrayList());
+            saveBilliardData(jsonParser.getBilliardDataArrayList());
+            savePlayerData(jsonParser.getPlayerDataArrayList());
+
+            // <사용자 알림>
+            Toast.makeText(
+                    activity,
+                    R.string.etc_fileImport_noticeUser_completedImport,
+                    Toast.LENGTH_SHORT
+            ).show();
+
+        } catch (Exception e) {
+
+            // <사용자 알림>
+            Toast.makeText(
+                    activity,
+                    R.string.etc_fileImport_noticeUser_errorDatabase,
+                    Toast.LENGTH_SHORT
+            ).show();
+
         }
     }
 
-    private void saveBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
 
-        this.billiardDbManager.saveContentByImport(billiardDataArrayList);
+    /**
+     * SQLite Database: save userData
+     *
+     * @param userData
+     */
+    private void saveUserData(UserData userData) {
 
+        appDbManager.requestUserQuery(
+                new AppDbManager.UserQueryRequestListener() {
+                    @Override
+                    public void requestQuery(UserDbManager2 userDbManager2) {
+
+                        // primary key 를 포함하여
+                        // user 테이블에 userData 를 저장한다.
+                        // 그러면 primary key 가 autoincrement 되는 것이 아니라
+                        // 해당 primary key 로 저장된다.
+                        userDbManager2.saveContent(
+                                userData
+                        );
+
+                    }
+                }
+        );
     }
 
-    private void savePlayerData(ArrayList<PlayerData> playerDataArrayList) {
 
-        this.playerDbManager.saveContentByImport(playerDataArrayList);
-    }
-
+    /**
+     * SQLite Database: save friendDataArrayList
+     *
+     * @param friendDataArrayList
+     */
     private void saveFriendData(ArrayList<FriendData> friendDataArrayList) {
 
-        this.friendDbManager.saveContentByImport(friendDataArrayList);
+//        this.friendDbManager.saveContentByImport(friendDataArrayList);
+
+        appDbManager.requestFriendQuery(
+                new AppDbManager.FriendQueryRequestListener() {
+                    @Override
+                    public void requestQuery(FriendDbManager2 friendDbManager2) {
+
+                        for (int index = 0; index < friendDataArrayList.size(); index++) {
+
+                            // primary key 를 포함하여
+                            // friend 테이블에 friendData 를 저장한다.
+                            // 그러면 primary key 가 autoincrement 되는 것이 아니라
+                            // 해당 primary key 로 저장된다.
+                            friendDbManager2.saveContent(friendDataArrayList.get(index));
+
+                        }
+
+                    }
+                }
+        );
     }
 
-    public boolean checkFile(Uri uri) {
-        if (uri.toString().contains(FileConstants.FILE_NAME)) {
 
-            DeveloperManager.displayLog(
-                    CLASS_NAME_LOG,
-                    "checkFile : true"
-            );
-            return true;
-        } else {
+    /**
+     * SQLite Database: save billiardDataArrayList
+     *
+     * @param billiardDataArrayList
+     */
+    private void saveBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
 
-            DeveloperManager.displayLog(
-                    CLASS_NAME_LOG,
-                    "checkFile : false"
-            );
-            return false;
-        }
+//        this.billiardDbManager.saveContentByImport(billiardDataArrayList);
+
+        appDbManager.requestBilliardQuery(
+                new AppDbManager.BilliardQueryRequestListener() {
+                    @Override
+                    public void requestQuery(BilliardDbManager2 billiardDbManager2) {
+
+                        for (int index = 0; index < billiardDataArrayList.size(); index++) {
+
+                            // primary key 를 포함하여
+                            // billiard 테이블에 billiardData 를 저장한다.
+                            // 그러면 primary key 가 autoincrement 되는 것이 아니라
+                            // 해당 primary key 로 저장된다.
+                            billiardDbManager2.saveContent(billiardDataArrayList.get(index));
+
+                        }
+                    }
+                }
+        );
+
+
     }
+
+
+    /**
+     * SQLite Database: save playerDataArrayList
+     *
+     * @param playerDataArrayList
+     */
+    private void savePlayerData(ArrayList<PlayerData> playerDataArrayList) {
+
+//        this.playerDbManager.saveContentByImport(playerDataArrayList);
+
+        appDbManager.requestPlayerQuery(
+                new AppDbManager.PlayerQueryRequestListener() {
+                    @Override
+                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
+
+                        for (int index = 0; index < playerDataArrayList.size(); index++) {
+
+                            playerDbManager2.saveContent(playerDataArrayList.get(index));
+                        }
+                    }
+                }
+        );
+
+    }
+
+
 }

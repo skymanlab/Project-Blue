@@ -21,10 +21,10 @@ public class JsonParser {
     private String content;
 
     // instance variable
-    private ArrayList<UserData> userDataArrayList;
+    private UserData userData;
+    private ArrayList<FriendData> friendDataArrayList;
     private ArrayList<BilliardData> billiardDataArrayList;
     private ArrayList<PlayerData> playerDataArrayList;
-    private ArrayList<FriendData> friendDataArrayList;
 
     // instance variable
     private boolean isCompletedParsing;      // true:json 형태로 변환 완료 , false:형식에 맞지 않아 데이터 변환 불가능
@@ -35,7 +35,7 @@ public class JsonParser {
         this.content = content;
 
         // ArrayList
-        this.userDataArrayList = new ArrayList<>();
+        this.userData = new UserData();
         this.billiardDataArrayList = new ArrayList<>();
         this.playerDataArrayList = new ArrayList<>();
         this.friendDataArrayList = new ArrayList<>();
@@ -48,8 +48,8 @@ public class JsonParser {
         return isCompletedParsing;
     }
 
-    public ArrayList<UserData> getUserDataArrayList() {
-        return userDataArrayList;
+    public UserData getUserData() {
+        return userData;
     }
 
     public ArrayList<BilliardData> getBilliardDataArrayList() {
@@ -71,26 +71,26 @@ public class JsonParser {
         try {
 
             // content : String -> JSONObject
-            JSONObject jsonObject = new JSONObject(content);
+            JSONObject jsonData = new JSONObject(content);
 
             DeveloperManager.displayLog(CLASS_NAME_LOG, "-------------------------------------------------->>>>>>>>>>>>>>>");
-            DeveloperManager.displayLog(CLASS_NAME_LOG, "JSON : " +jsonObject.toString());
+            DeveloperManager.displayLog(CLASS_NAME_LOG, "JSON : " + jsonData.toString());
 
             // user
-            JSONArray userDataArray = jsonObject.getJSONArray(UserData.CLASS_NAME);
-            parseUserDataArray(userDataArray);
+            JSONObject userDataObject = jsonData.getJSONObject(UserData.class.getSimpleName());
+            parseUserDataObject(userDataObject);
+
+            // friend
+            JSONArray friendDataArray = jsonData.getJSONArray(FriendData.class.getSimpleName());
+            parseFriendDataArray(friendDataArray);
 
             // billiard
-            JSONArray billiardDataArray = jsonObject.getJSONArray(BilliardData.CLASS_NAME);
+            JSONArray billiardDataArray = jsonData.getJSONArray(BilliardData.class.getSimpleName());
             parseBilliardDataArray(billiardDataArray);
 
             // player
-            JSONArray playerDataArray = jsonObject.getJSONArray(PlayerData.CLASS_NAME);
+            JSONArray playerDataArray = jsonData.getJSONArray(PlayerData.class.getSimpleName());
             parsePlayerDataArray(playerDataArray);
-
-            // friend
-            JSONArray friendDataArray = jsonObject.getJSONArray(FriendData.CLASS_NAME);
-            parseFriendDataArray(friendDataArray);
 
             this.isCompletedParsing = true;
 
@@ -101,7 +101,7 @@ public class JsonParser {
 
 
     // ======================================================= userData =======================================================
-    private void parseUserDataArray(JSONArray userDataArray) {
+    private void parseUserDataObject(JSONObject userDataObject) {
 
         // 0. id
         // 1. name
@@ -115,25 +115,17 @@ public class JsonParser {
 
         try {
 
-            for (int index = 0; index < userDataArray.length(); index++) {
+            // jsonObject 의 내용으로 UserData 객체 생성
+            userData.setId(userDataObject.getLong(UserData.ID));
+            userData.setName(userDataObject.getString(UserData.NAME));
+            userData.setTargetScore(userDataObject.getInt(UserData.TARGET_SCORE));
+            userData.setSpeciality(userDataObject.getString(UserData.SPECIALITY));
+            userData.setGameRecordWin(userDataObject.getInt(UserData.GAME_RECORD_WIN));
+            userData.setGameRecordLoss(userDataObject.getInt(UserData.GAME_RECORD_LOSS));
+            userData.setRecentGameBilliardCount(userDataObject.getLong(UserData.RECENT_GAME_BILLIARD_COUNT));
+            userData.setTotalPlayTime(userDataObject.getInt(UserData.TOTAL_PLAY_TIME));
+            userData.setTotalCost(userDataObject.getInt(UserData.TOTAL_COST));
 
-                JSONObject jsonObject = userDataArray.getJSONObject(index);
-
-                // jsonObject 의 내용으로 UserData 객체 생성
-                UserData userData = new UserData();
-                userData.setId(jsonObject.getLong(UserData.ID));
-                userData.setName(jsonObject.getString(UserData.NAME));
-                userData.setTargetScore(jsonObject.getInt(UserData.TARGET_SCORE));
-                userData.setSpeciality(jsonObject.getString(UserData.SPECIALITY));
-                userData.setGameRecordWin(jsonObject.getInt(UserData.GAME_RECORD_WIN));
-                userData.setGameRecordLoss(jsonObject.getInt(UserData.GAME_RECORD_LOSS));
-                userData.setRecentGameBilliardCount(jsonObject.getLong(UserData.RECENT_GAME_BILLIARD_COUNT));
-                userData.setTotalPlayTime(jsonObject.getInt(UserData.TOTAL_PLAY_TIME));
-                userData.setTotalCost(jsonObject.getInt(UserData.TOTAL_COST));
-
-                //
-                userDataArrayList.add(userData);
-            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -258,24 +250,29 @@ public class JsonParser {
 
     public void print() {
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "===============================================================");
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= user =========================================");
-        // user
-        for (int index=0; index<userDataArrayList.size(); index++) {
-            DeveloperManager.displayToUserData(CLASS_NAME_LOG, userDataArrayList.get(index));
-        }
+        DeveloperManager.displayLog(CLASS_NAME_LOG, "======> JsonParser 로 파싱한 데이터 확인");
+        DeveloperManager.displayToUserData(
+                CLASS_NAME_LOG,
+                userData
+        );
 
         // billiard
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= billiard =========================================");
-        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, billiardDataArrayList);
+        DeveloperManager.displayToBilliardData(
+                CLASS_NAME_LOG,
+                billiardDataArrayList
+        );
 
         // player
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= player =========================================");
-        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+        DeveloperManager.displayToPlayerData(
+                CLASS_NAME_LOG,
+                playerDataArrayList
+        );
 
         // friend
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= friend =========================================");
-        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList);
+        DeveloperManager.displayToFriendData(
+                CLASS_NAME_LOG,
+                friendDataArrayList
+        );
 
     }
 

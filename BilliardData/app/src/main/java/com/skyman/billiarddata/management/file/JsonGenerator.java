@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class JsonGenerator {
 
     // instance variable
-    private ArrayList<UserData> userDataArrayList;
+    private UserData userData;
     private ArrayList<BilliardData> billiardDataArrayList;
     private ArrayList<PlayerData> playerDataArrayList;
     private ArrayList<FriendData> friendDataArrayList;
@@ -26,7 +26,7 @@ public class JsonGenerator {
     // constructor
     private JsonGenerator(Builder builder) {
         // 데이터
-        this.userDataArrayList = builder.userDataArrayList;
+        this.userData = builder.userData;
         this.billiardDataArrayList = builder.billiardDataArrayList;
         this.playerDataArrayList = builder.playerDataArrayList;
         this.friendDataArrayList = builder.friendDataArrayList;
@@ -49,35 +49,17 @@ public class JsonGenerator {
         JSONArray friendDataArray = new JSONArray();
 
         // user
-        for (int index = 0; index < userDataArrayList.size(); index++) {
-            userDataArray.put(
-                    createJsonObjectOfUserData(
-                            userDataArrayList.get(index)
-                    )
-            );
-        }
-        addDataArrayToJsonObject(UserData.CLASS_NAME, userDataArray);
-
-        // billiard
-        for (int index = 0; index < billiardDataArrayList.size(); index++) {
-            billiardDataArray.put(
-                    createJsonObjectOfBilliardData(
-                            billiardDataArrayList.get(index)
-                    )
-            );
-        }
-        addDataArrayToJsonObject(BilliardData.CLASS_NAME, billiardDataArray);
-
-        // player
-        for (int index = 0; index < playerDataArrayList.size(); index++) {
-            playerDataArray.put(
-                    createJsonObjectOfPlayerData(
-                            playerDataArrayList.get(index)
-                    )
-            );
-        }
-        addDataArrayToJsonObject(PlayerData.CLASS_NAME, playerDataArray);
-
+//        for (int index = 0; index < userDataArrayList.size(); index++) {
+//            userDataArray.put(
+//                    createJsonObjectOfUserData(
+//                            userDataArrayList.get(index)
+//                    )
+//            );
+//        }
+//        userDataArray.put(
+//                createJsonObjectOfUserData(userData)
+//        );
+        addDataArrayToJsonObject(UserData.class.getSimpleName(), createJsonObjectOfUserData(userData));
 
         // friend
         for (int index = 0; index < friendDataArrayList.size(); index++) {
@@ -87,10 +69,40 @@ public class JsonGenerator {
                     )
             );
         }
-        addDataArrayToJsonObject(FriendData.CLASS_NAME, friendDataArray);
+        addDataArrayToJsonObject(FriendData.class.getSimpleName(), friendDataArray);
+
+        // billiard
+        for (int index = 0; index < billiardDataArrayList.size(); index++) {
+            billiardDataArray.put(
+                    createJsonObjectOfBilliardData(
+                            billiardDataArrayList.get(index)
+                    )
+            );
+        }
+        addDataArrayToJsonObject(BilliardData.class.getSimpleName(), billiardDataArray);
+
+        // player
+        for (int index = 0; index < playerDataArrayList.size(); index++) {
+            playerDataArray.put(
+                    createJsonObjectOfPlayerData(
+                            playerDataArrayList.get(index)
+                    )
+            );
+        }
+        addDataArrayToJsonObject(PlayerData.class.getSimpleName(), playerDataArray);
 
     }
 
+
+    public void addDataArrayToJsonObject(String arrayKey, JSONObject data) {
+
+        try {
+            jsonObject.put(arrayKey, data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void addDataArrayToJsonObject(String arrayKey, JSONArray dataArray) {
 
@@ -225,7 +237,7 @@ public class JsonGenerator {
     public static class Builder {
 
         // instance variable
-        private ArrayList<UserData> userDataArrayList;
+        private UserData userData;
         private ArrayList<BilliardData> billiardDataArrayList;
         private ArrayList<PlayerData> playerDataArrayList;
         private ArrayList<FriendData> friendDataArrayList;
@@ -236,8 +248,8 @@ public class JsonGenerator {
         }
 
         // setter
-        public Builder setUserDataArrayList(ArrayList<UserData> userDataArrayList) {
-            this.userDataArrayList = userDataArrayList;
+        public Builder setUserData(UserData userData) {
+            this.userData = userData;
             return this;
         }
 

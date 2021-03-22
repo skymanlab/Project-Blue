@@ -124,13 +124,14 @@
     <string name="app_info_step">조작 단계 ▼</string>
 
     <!-- Activity : app setting -->
-    <string name="app_setting_title">설정</string>
-    <string name="app_setting_data">데이터</string>
-    <string name="app_setting_data_export">내보내기</string>
-    <string name="app_setting_data_export_explanation">데이터베이스 -> file</string>
-    <string name="app_setting_data_import">가져오기</string>
-    <string name="app_setting_data_import_explanation">file -> 데이터베이스</string>
-    <string name="app_setting_"></string>
+    <string name="appSetting_title">설정</string>
+    <string name="appSetting_dataBackUp">데이터 백업</string>
+    <string name="appSetting_dataBackUp_export">내보내기</string>
+    <string name="appSetting_dataBackUp_export_explanation">데이터베이스 -> file</string>
+    <string name="appSetting_dataBackUp_import">가져오기</string>
+    <string name="appSetting_dataBackUp_import_explanation">file -> 데이터베이스</string>
+    <string name="appSetting_noticeUser_exitUserData">이미 사용자가 등록되어 있으므로 가져올 수 없습니다.</string>
+    <string name="appSetting_"></string>
 
 
     <!--                                Fragment
@@ -284,7 +285,7 @@
     <string name="c_gv_player_list_score">점수</string>
 
 
-    <!--                                    Adapter
+    <!--                                    Etc
    ===============================================================================================-
    -->
     <!-- ListView Adapter : BilliardLvAdapter -->
@@ -292,6 +293,12 @@
     <string name="adapter_billiardLvAdapter_modifyCheck_message">데이터 수정을 위한 화면으로 이동합니다.</string>
     <string name="adapter_billiardLvAdapter_modifyCheck_positive">이동</string>
     <string name="adapter_billiardLvAdapter_modifyCheck_negative">취소</string>
+
+
+    <!-- Util : FileImport-->
+    <string name="etc_fileImport_noticeUser_errorParsing">해당 파일의 내용을 가져올 수 없습니다.</string>
+    <string name="etc_fileImport_noticeUser_errorDatabase">오류가 발생하였습니다.</string>
+    <string name="etc_fileImport_noticeUser_completedImport">가져오기 완료 하였습니다.</string>
 
 
     <!--                                    layout

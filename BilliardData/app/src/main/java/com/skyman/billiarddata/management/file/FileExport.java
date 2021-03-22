@@ -1,7 +1,6 @@
 package com.skyman.billiarddata.management.file;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
@@ -9,20 +8,19 @@ import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,39 +29,31 @@ import java.util.Date;
 public class FileExport {
 
     // constant
-    private static final String CLASS_NAME_LOG = FileExport.class.getSimpleName();
+    private static final String CLASS_NAME = FileExport.class.getSimpleName();
 
     // instance variable
     private Activity activity;
-    private UserDbManager userDbManager;
-    private BilliardDbManager billiardDbManager;
-    private PlayerDbManager playerDbManager;
-    private FriendDbManager friendDbManager;
+    private AppDbManager appDbManager;
+    private UserData userData;
 
     // instance variable
-    private ArrayList<UserData> userDataArrayList;
+    private ArrayList<FriendData> friendDataArrayList;
     private ArrayList<BilliardData> billiardDataArrayList;
     private ArrayList<PlayerData> playerDataArrayList;
-    private ArrayList<FriendData> friendDataArrayList;
 
     // instance variable
     private JSONObject jsonData = null;
 
     // constructor
-    public FileExport(Activity activity, UserDbManager userDbManager, BilliardDbManager billiardDbManager, PlayerDbManager playerDbManager, FriendDbManager friendDbManager) {
+    public FileExport(Activity activity, AppDbManager appDbManager, UserData userData) {
 
         this.activity = activity;
-        // DB manager
-        this.userDbManager = userDbManager;
-        this.billiardDbManager = billiardDbManager;
-        this.playerDbManager = playerDbManager;
-        this.friendDbManager = friendDbManager;
+        this.appDbManager = appDbManager;
+        this.userData = userData;
 
-        // 생성
-        userDataArrayList = new ArrayList<>();
-        billiardDataArrayList = new ArrayList<>();
-        playerDataArrayList = new ArrayList<>();
-        friendDataArrayList = new ArrayList<>();
+        this.friendDataArrayList = new ArrayList<>();
+        this.billiardDataArrayList = new ArrayList<>();
+        this.playerDataArrayList = new ArrayList<>();
 
     }
 
@@ -76,7 +66,7 @@ public class FileExport {
         // 데이터 가져오기
         getDbAllData();
 
-        if (userDataArrayList.isEmpty()) {
+        if (userData == null) {
 
             Toast.makeText(
                     activity,
@@ -84,10 +74,15 @@ public class FileExport {
                     Toast.LENGTH_SHORT)
                     .show();
             return;
+
         }
 
         // 위에서 가져온 데이터로 Json object 생성하기
         jsonData = createJsonObject();
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                jsonData.toString()
+        );
 
         // 파일 저장할 장소 찾기 / 파일 만들기
         makeNewFile();
@@ -101,11 +96,29 @@ public class FileExport {
      */
     private void getDbAllData() {
 
-        // 가져오기
-        userDataArrayList = this.userDbManager.loadAllContent();
-        billiardDataArrayList = this.billiardDbManager.loadAllContent();
-        playerDataArrayList = this.playerDbManager.loadAllContent();
-        friendDataArrayList = this.friendDbManager.loadAllContent();
+        appDbManager.requestQuery(
+                new AppDbManager.QueryRequestListener() {
+                    @Override
+                    public void requestUserQuery(UserDbManager2 userDbManager2) {
+
+                    }
+
+                    @Override
+                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
+                        friendDataArrayList = friendDbManager2.loadAllContent();
+                    }
+
+                    @Override
+                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
+                        billiardDataArrayList = billiardDbManager2.loadAllContent();
+                    }
+
+                    @Override
+                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
+                        playerDataArrayList = playerDbManager2.loadAllContent();
+                    }
+                }
+        );
 
     }
 
@@ -120,7 +133,7 @@ public class FileExport {
 
         // SQLite 에서 가져온 데이터베이스의 모든 내용을 JSONObject 로 만들기
         JsonGenerator jsonGenerator = new JsonGenerator.Builder()
-                .setUserDataArrayList(userDataArrayList)
+                .setUserData(userData)
                 .setBilliardDataArrayList(billiardDataArrayList)
                 .setPlayerDataArrayList(playerDataArrayList)
                 .setFriendDataArrayList(friendDataArrayList)
@@ -150,12 +163,12 @@ public class FileExport {
 
         activity.startActivityForResult(intent, FileConstants.REQUEST_CODE_CREATE_FILE);
 
-
     }
 
 
     /**
      * 파일의 uri 에 jsonData 를 쓴다.
+     *
      * @param uri
      */
     public void writeJsonObject(Uri uri) {
@@ -168,7 +181,7 @@ public class FileExport {
 
         try {
 
-            ParcelFileDescriptor fileDescriptor = activity.getContentResolver().openFileDescriptor(uri, "wr");
+            ParcelFileDescriptor fileDescriptor = activity.getContentResolver().openFileDescriptor(uri, "w");
 
             // 해당 파일의 stream 열기
             FileOutputStream fileOutputStream = new FileOutputStream(fileDescriptor.getFileDescriptor());
@@ -202,23 +215,22 @@ public class FileExport {
      */
     public void print() {
 
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= user =========================================");
+        DeveloperManager.displayLog(CLASS_NAME, "========================================= user =========================================");
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "==================> 데이터 확인"
+        );
         // user
-        for (int index = 0; index < userDataArrayList.size(); index++) {
-            DeveloperManager.displayToUserData(CLASS_NAME_LOG, userDataArrayList.get(index));
-        }
+        DeveloperManager.displayToUserData(CLASS_NAME, userData);
 
         // billiard
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= billiard =========================================");
-        DeveloperManager.displayToBilliardData(CLASS_NAME_LOG, billiardDataArrayList);
+        DeveloperManager.displayToBilliardData(CLASS_NAME, billiardDataArrayList);
 
         // player
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= player =========================================");
-        DeveloperManager.displayToPlayerData(CLASS_NAME_LOG, playerDataArrayList);
+        DeveloperManager.displayToPlayerData(CLASS_NAME, playerDataArrayList);
 
         // friend
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "========================================= friend =========================================");
-        DeveloperManager.displayToFriendData(CLASS_NAME_LOG, friendDataArrayList);
+        DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList);
 
     }
 
