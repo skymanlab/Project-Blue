@@ -1,139 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment.user.UserFriendFragment">
 
-    <!-- main -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- title-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/F_userFriend_title"
-                android:textAlignment="center"></TextView>
-        </LinearLayout><!-- End of title-->
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
         <!-- content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
-            <!-- content 1. friend list -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <!-- content 1-1. title -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/F_userFriend_listSection_title"></TextView>
-                </LinearLayout><!-- End of content 1-1 -->
-
-                <!-- divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" /><!-- End of divider-->
-
-                <!-- content 1-2. list-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp">
-
-                    <ListView
-                        android:id="@+id/F_userFriend_listSection_listView_friendList"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"></ListView>
-                </LinearLayout><!-- End of content 1-2 -->
-            </LinearLayout><!-- End of content 1 -->
-
-            <!-- content 2. friend add -->
-            <LinearLayout
+            <!-- title-->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:layout_marginTop="20dp"
+                android:text="@string/F_userFriend_title"
+                android:textAlignment="center" />
 
-                <!-- content 2-1. title -->
+            <!-- content 2. friend add -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/F_userFriend_addSection_title"></TextView>
-                </LinearLayout>
+                        android:padding="5dp"
+                        android:text="@string/F_userFriend_addSection_title" />
 
-                <!-- divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" /><!-- End of divider-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?android:attr/listDivider" />
 
-                <!-- content 2-2. input -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:text="@string/F_userFriend_addSection_friendName"></TextView>
-
-                    <EditText
-                        android:id="@+id/F_userFriend_addSection_friendName"
+                    <!-- content 2-2. input -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"></EditText>
-                </LinearLayout><!-- End of content 2-2-->
+                        android:orientation="horizontal"
+                        android:padding="5dp">
 
-                <!-- content 2-3. button -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/F_userFriend_addSection_friendName" />
 
-                    <Button
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="?android:attr/listDivider" />
+
+                        <EditText
+                            android:id="@+id/F_userFriend_addSection_friendName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true" />
+                    </LinearLayout><!-- End of content 2-2-->
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/F_userFriend_addSection_button_addFriend"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorBackgroundPrimary"
                         android:text="@string/F_userFriend_addSection_button_addFriend"
-                        android:textColor="@color/colorTextPrimary"></Button>
-                </LinearLayout><!-- End of content 2-3 -->
-            </LinearLayout><!-- End of content 2 -->
+                        android:textColor="@color/colorTextPrimary"
+                        app:backgroundTint="@color/colorBackgroundPrimary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView><!-- End of content 2 -->
+
+
+            <!-- content 1. friend list -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/F_userFriend_listSection_title" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <ListView
+                        android:id="@+id/F_userFriend_listSection_listView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView><!-- End of content 1 -->
         </LinearLayout><!-- End of content-->
-
-    </LinearLayout><!-- End of main -->
-
-</FrameLayout>
+    </ScrollView>
+</LinearLayout>

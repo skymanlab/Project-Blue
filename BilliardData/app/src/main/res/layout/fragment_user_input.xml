@@ -1,213 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment.user.UserInputFragment">
 
 
-    <!-- main -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- title-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/F_userInput_title"
-                android:textAlignment="center"></TextView>
-        </LinearLayout><!-- End of title-->
+        android:fillViewport="true">
 
         <!-- content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:orientation="vertical">
 
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <!-- content 1. name -->
-            <LinearLayout
+            <!-- title-->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="3dp">
+                android:layout_marginTop="20dp"
+                android:text="@string/F_userInput_title"
+                android:textAlignment="center" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="start"
-                    android:text="@string/F_userInput_name"></TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="?android:attr/listDivider" />
-
-                <EditText
-                    android:id="@+id/F_userInput_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/F_userInput_name_hint"
-                    android:inputType="text"
-                    android:paddingLeft="10dp"
-                    android:singleLine="true"></EditText>
-            </LinearLayout><!-- End of content 1 -->
-
-            <!-- content 2. target score -->
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="3dp">
+                android:layout_margin="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="start"
-                    android:text="@string/F_userInput_targetScore"></TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="?android:attr/listDivider" />
-
-                <EditText
-                    android:id="@+id/F_userInput_targetScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/F_userInput_targetScore_hint"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="10dp"
-                    android:singleLine="true"></EditText>
-            </LinearLayout><!-- End of content 2 -->
-
-            <!-- content 3. speciality -->
-            <LinearLayout
-                android:id="@+id/userdata_speciality"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/colorBackgroundSecond"
-                android:gravity="center"
-                android:orientation="horizontal"
-
-                android:padding="3dp">
-
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="start"
-                    android:text="@string/F_userInput_speciality"></TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="?android:attr/listDivider" />
-
-                <RadioGroup
-                    android:id="@+id/F_userInput_speciality"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp">
 
-                    <RadioButton
-                        android:id="@+id/F_userInput_speciality_threeCushion"
+                    <!-- content 1. name -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:checked="true"
-                        android:text="@string/F_userInput_speciality_threeCushion" />
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/F_userInput_speciality_fourBall"
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="5dp"
+                            android:text="@string/F_userInput_name" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="?android:attr/listDivider" />
+
+                        <EditText
+                            android:id="@+id/F_userInput_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/F_userInput_name_hint"
+                            android:inputType="text"
+                            android:singleLine="true" />
+                    </LinearLayout><!-- End of content 1 -->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!-- content 2. target score -->
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/F_userInput_speciality_fourBall" />
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/F_userInput_speciality_pocketBall"
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="5dp"
+                            android:text="@string/F_userInput_targetScore" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="?android:attr/listDivider" />
+
+
+                        <EditText
+                            android:id="@+id/F_userInput_targetScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/F_userInput_targetScore_hint"
+                            android:inputType="numberDecimal"
+                            android:singleLine="true" />
+                    </LinearLayout><!-- End of content 2 -->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!-- content 3. speciality -->
+                    <LinearLayout
+                        android:id="@+id/userdata_speciality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/F_userInput_speciality_pocketBall" />
-                </RadioGroup>
-            </LinearLayout><!-- End of content 3 -->
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-            <!-- content 4. input data button-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:gravity="bottom"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="5dp"
+                            android:text="@string/F_userInput_speciality" />
 
-                <Button
-                    android:id="@+id/F_userInput_button_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorBackgroundPrimary"
-                    android:text="@string/F_userInput_button_save"
-                    android:textColor="@color/colorTextPrimary"></Button>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="?android:attr/listDivider" />
 
-                <Button
-                    android:id="@+id/F_userInput_button_modify"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorWidgetDisable"
-                    android:enabled="false"
-                    android:text="@string/F_userInput_button_modify"
-                    android:textColor="@color/colorTextPrimary"></Button>
+                        <RadioGroup
+                            android:id="@+id/F_userInput_speciality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/F_userInput_button_delete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorWidgetDisable"
-                    android:enabled="false"
-                    android:text="@string/F_userInput_button_delete"
-                    android:textColor="@color/colorTextPrimary"></Button>
-            </LinearLayout>
+                            <RadioButton
+                                android:id="@+id/F_userInput_speciality_threeCushion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/F_userInput_speciality_threeCushion" />
 
-            <!-- End of content 4 -->
+                            <RadioButton
+                                android:id="@+id/F_userInput_speciality_fourBall"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/F_userInput_speciality_fourBall" />
+
+                            <RadioButton
+                                android:id="@+id/F_userInput_speciality_pocketBall"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/F_userInput_speciality_pocketBall" />
+                        </RadioGroup>
+                    </LinearLayout><!-- End of content 3 -->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!-- content 4. input data button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/F_userInput_button_save"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:text="@string/F_userInput_button_save"
+                            android:textColor="@color/colorTextPrimary"
+                            app:backgroundTint="@color/colorBackgroundPrimary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/F_userInput_button_modify"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:text="@string/F_userInput_button_modify"
+                            android:textColor="@color/colorTextPrimary"
+                            app:backgroundTint="@color/colorWidgetDisable" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/F_userInput_button_delete"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:text="@string/F_userInput_button_delete"
+                            android:textColor="@color/colorTextPrimary"
+                            app:backgroundTint="@color/colorWidgetDisable" />
+                    </LinearLayout><!-- End of content 4 -->
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout><!-- End of content -->
-    </LinearLayout><!-- End of main -->
-</FrameLayout>
+    </ScrollView>
+
+</LinearLayout>

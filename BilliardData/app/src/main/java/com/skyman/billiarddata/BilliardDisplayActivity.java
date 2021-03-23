@@ -300,7 +300,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                 new AppDbManager.UserQueryRequestListener() {
                     @Override
                     public void requestQuery(UserDbManager2 userDbManager2) {
-                        int numberOfUpdatedRows = userDbManager2.updateContent(
+                        int numberOfUpdatedRows = userDbManager2.updateContentById(
                                 userData.getId(),
                                 0,
                                 0,

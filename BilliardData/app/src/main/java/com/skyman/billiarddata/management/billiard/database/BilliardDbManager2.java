@@ -233,7 +233,7 @@ public class BilliardDbManager2 {
      */
     public BilliardData loadContentByCount(long count) {
 
-        final BilliardData[] billiardData = {new BilliardData()};
+        final BilliardData[] billiardData = {null};
 
         appDbSetting2.requestSelectQuery(
                 new AppDbSetting2.SelectQueryListener() {

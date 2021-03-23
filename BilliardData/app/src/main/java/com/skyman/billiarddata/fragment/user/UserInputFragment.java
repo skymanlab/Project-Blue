@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +17,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.SectionManager;
+import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager;
+import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager;
+import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -36,41 +47,38 @@ import java.util.ArrayList;
  * Use the {@link UserInputFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserInputFragment extends Fragment {
+public class UserInputFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME_LOG = "[F]_UserInputFragment";
+    private final String CLASS_NAME = "[F]_UserInputFragment";
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 범위
 
+    // constant
+    private static final String USER_DATA = "userData";
+
     // instance variable
-    private UserDbManager userDbManager;
-    private FriendDbManager friendDbManager;
-    private BilliardDbManager billiardDbManager;
-    private PlayerDbManager playerDbManager;
     private UserData userData;
+
+    // instance variable
+    private AppDbManager appDbManager;
 
     // instance variable
     private EditText name;
     private EditText targetScore;
     private RadioGroup speciality;
-    private Button save;
-    private Button modify;
-    private Button delete;
-
-    // constructor
-    public UserInputFragment(UserDbManager userDbManager, FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, PlayerDbManager playerDbManager, UserData userData) {
-        this.userDbManager = userDbManager;
-        this.friendDbManager = friendDbManager;
-        this.billiardDbManager = billiardDbManager;
-        this.playerDbManager = playerDbManager;
-        this.userData = userData;
-    }
+    private RadioButton specialityThreeCushion;
+    private RadioButton specialityFourBall;
+    private RadioButton specialityPocketBall;
+    private MaterialButton save;
+    private MaterialButton modify;
+    private MaterialButton delete;
 
     // constructor
     public UserInputFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -79,9 +87,12 @@ public class UserInputFragment extends Fragment {
      * @return A new instance of fragment UserInputData.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserInputFragment newInstance() {
-        UserInputFragment fragment = new UserInputFragment();
+    public static UserInputFragment newInstance(UserData userData) {
+
         Bundle args = new Bundle();
+
+        UserInputFragment fragment = new UserInputFragment();
+        args.putSerializable(USER_DATA, userData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -90,6 +101,7 @@ public class UserInputFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            userData = (UserData) getArguments().getSerializable(USER_DATA);
         }
     }
 
@@ -100,24 +112,73 @@ public class UserInputFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_user_input, container, false);
     }
 
+
     @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         final String METHOD_NAME = "[onViewCreated] ";
         super.onViewCreated(view, savedInstanceState);
 
-        // [method]mappingOfWidget : fragment_user_input.xml layout 의 widget mapping
-        mappingOfWidget(view);
+        // appDbManager
+        initAppDbManager();
 
-        // [check 1] : user 의 데이터가 있다.
-        if (userData != null) {
+        // widget : connect, init
+        connectWidget();
+        initWidget();
 
-            // [method]setWidgetWithUserData : userData 로 widget 초기값 셋팅
-            setWidgetWithUserData(view);
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "======================================>>>>>>>>>>>>>>>>>>>>> User input fragment"
+        );
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "나의 userData 데이터가 없습니다.");
-        } // [check 1]
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "userData Object = " + userData
+        );
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "appDbManager Object = " + appDbManager
+        );
+
+    }
+
+    @Override
+    public void initAppDbManager() {
+
+        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+
+    }
+
+    @Override
+    public void connectWidget() {
+
+        // [iv/C]TextView : name mapping
+        name = (EditText) getView().findViewById(R.id.F_userInput_name);
+
+        // [iv/C]TextView : targetScore mapping
+        targetScore = (EditText) getView().findViewById(R.id.F_userInput_targetScore);
+
+        // [iv/c]RadioGroup : speciality mapping
+        speciality = (RadioGroup) getView().findViewById(R.id.F_userInput_speciality);
+        specialityThreeCushion = (RadioButton) getView().findViewById(R.id.F_userInput_speciality_threeCushion);
+        specialityFourBall = (RadioButton) getView().findViewById(R.id.F_userInput_speciality_fourBall);
+        specialityPocketBall = (RadioButton) getView().findViewById(R.id.F_userInput_speciality_pocketBall);
+
+        // [iv/C]Button : save mapping
+        save = (MaterialButton) getView().findViewById(R.id.F_userInput_button_save);
+
+        // [iv/C]Button : modify mapping
+        modify = (MaterialButton) getView().findViewById(R.id.F_userInput_button_modify);
+
+        // [iv/C]Button : delete mapping
+        delete = (MaterialButton) getView().findViewById(R.id.F_userInput_button_delete);
+
+    }
+
+    @Override
+    public void initWidget() {
+        final String METHOD_NAME = "[initWidget] ";
 
         // [iv/C]Button : save button click listener
         save.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +186,7 @@ public class UserInputFragment extends Fragment {
             public void onClick(View v) {
 
                 // [method]setClickListenerOfSaveButton : widget 의 입력 값으로 user 테이블에 데이터를 저장한다.
-                setClickListenerOfSaveButton(view);
+                setClickListenerOfSaveButton();
 
             }
         });
@@ -136,7 +197,7 @@ public class UserInputFragment extends Fragment {
             public void onClick(View v) {
 
                 // [method]setClickListenerOfModifyButton : widget 의 입력 값으로 이미 저장된 user 데이터를 갱신한다.
-                setClickListenerOfModifyButton(view);
+                setClickListenerOfModifyButton();
 
             }
         });
@@ -147,41 +208,16 @@ public class UserInputFragment extends Fragment {
             public void onClick(View v) {
 
                 // [method]setClickListenerOfDeleteButton : user, friend, billiard 테이블의 데이터 중 현재 user 의 userId 값인 데이터를 삭제한다.
-                setClickListenerOfDeleteButton(view);
+                setClickListenerOfDeleteButton();
             }
         });
 
+        // userData 로 화면 표시
+        initWidgetWithUserData();
+
     }
 
-
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
-    /**
-     * [method] [set] activity_billiard_input.xml 의 widget 을 mapping(뜻: 하나의 값을 다른 값으로 대응시키는 것을 말한다.)
-     */
-    private void mappingOfWidget(View view) {
-
-        // [iv/C]TextView : name mapping
-        this.name = (EditText) view.findViewById(R.id.F_userInput_name);
-
-        // [iv/C]TextView : targetScore mapping
-        this.targetScore = (EditText) view.findViewById(R.id.F_userInput_targetScore);
-
-        // [iv/c]RadioGroup : speciality mapping
-        this.speciality = (RadioGroup) view.findViewById(R.id.F_userInput_speciality);
-
-        // [iv/C]Button : save mapping
-        this.save = (Button) view.findViewById(R.id.F_userInput_button_save);
-
-        // [iv/C]Button : modify mapping
-        this.modify = (Button) view.findViewById(R.id.F_userInput_button_modify);
-
-        // [iv/C]Button : delete mapping
-        this.delete = (Button) view.findViewById(R.id.F_userInput_button_delete);
-
-    } // End of method [mappingOfWidget]
-
 
     /**
      * [method] [set] UserData 가 있어서 화면 재설정한다. 입력 값들은 userData 의 값으로, 버튼들은 비활성화 활성화
@@ -197,65 +233,62 @@ public class UserInputFragment extends Fragment {
      * 버튼 활성화 색 : R.color.colorBackgroundPrimary
      * 버튼 비활성화 색 : R.color.colorWidgetDisable
      */
-    private void setWidgetWithUserData(View view) {
+    private void initWidgetWithUserData() {
+        final String METHOD_NAME = "[initWidgetWithUserData] ";
 
-        final String METHOD_NAME = "[setWidgetWithUserData] ";
+        if (userData != null) {
 
-        // [iv/C]Text : userData 의 getName 으로 셋팅 / 변경하지 못 하도록 설정
-        this.name.setText(this.userData.getName());
-        this.name.setEnabled(false);
+            // userData 의 내용을 화면에 표시하기
 
-        // [iv/C]Text : userData 의 getTargetScore 으로 셋팅 / targetScore 의 variable type 는 int 이다. setText 는 String 으로 해야 하므로 +"" 으로 String 으로 변경한다.
-        this.targetScore.setText(this.userData.getTargetScore() + "");
+            // <1> name widget : userData 의 getName 으로 셋팅 / 변경하지 못 하도록 설정
+            this.name.setText(this.userData.getName());
+            this.name.setEnabled(false);
 
-        // [iv/C]Text : userData 의 getSpeciality 로 셋팅
-        setCheckedRadioButtonWithUserData(view, this.userData.getSpeciality());
+            // <2> targetScore widget : userData 의 getTargetScore 으로 셋팅 / targetScore 의 variable type 는 int 이다. setText 는 String 으로 해야 하므로 +"" 으로 String 으로 변경한다.
+            this.targetScore.setText(this.userData.getTargetScore() + "");
 
-        // [iv/C]Button : save 버튼을 disable 하고, R.color.colorWidgetDisable 로 비활성화 상태로 변경
-        this.save.setBackgroundResource(R.color.colorWidgetDisable);
-        this.save.setEnabled(false);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "save button 을 비활성화 상태로 변경하였습니다.");
+            // <3> speciality widget : userData 의 getSpeciality 로 셋팅
+            setCheckedRadioButtonWithUserData(this.userData.getSpeciality());
 
+            // <4> save widget :  disable 하고, R.color.colorWidgetDisable 로 비활성화 상태로 변경
+            this.save.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorWidgetDisable));
+            this.save.setEnabled(false);
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "save button 을 비활성화 상태로 변경하였습니다.");
 
-        // [iv/C]Button : modify 버튼을 enable 하고, R.color.colorBackgroundPrimary 로 활성화 상태로 변경
-        this.modify.setBackgroundResource(R.color.colorBackgroundPrimary);
-        this.modify.setEnabled(true);
-        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "modify button 을 활성화 상태로 변경하였습니다.");
+            // <5> modify widget : enable 하고, R.color.colorBackgroundPrimary 로 활성화 상태로 변경
+            this.modify.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorBackgroundPrimary));
+            this.modify.setEnabled(true);
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "modify button 을 활성화 상태로 변경하였습니다.");
 
-        // delete 버튼 : enable / R.color.colorBackgroundPrimary 로 상태 변경
-        this.delete.setBackgroundResource(R.color.colorBackgroundPrimary);
-        this.delete.setEnabled(true);
+            // <6> delete widget : enable / R.color.colorBackgroundPrimary 로 상태 변경
+            this.delete.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorBackgroundPrimary));
+            this.delete.setEnabled(true);
 
-    } // End of method [setWidget]
+        }
+
+    } // End of method [initWidgetWithUserData]
 
 
     /**
      * [method] [set] userData 의 getSpeciality 값으로 RadioButton 을 찾아서 check 하기
      *
-     * @param view              onViewCreated 의 view 매개변수
      * @param specialityContent userData 의 getSpeciality 값
      */
-    private void setCheckedRadioButtonWithUserData(View view, String specialityContent) {
-
+    private void setCheckedRadioButtonWithUserData(String specialityContent) {
         final String METHOD_NAME = "[setCheckedRadioButtonWithUserData] ";
-
-        // [lv/C]RadioButton : RadioGroup 에 속해있는 RadioButton widget mapping 하기
-        RadioButton specialityThreeCushion = (RadioButton) view.findViewById(R.id.F_userInput_speciality_threeCushion);
-        RadioButton specialityFourBall = (RadioButton) view.findViewById(R.id.F_userInput_speciality_fourBall);
-        RadioButton specialityPocketBall = (RadioButton) view.findViewById(R.id.F_userInput_speciality_pocketBall);
 
         // [check 1] : specialityContent 를 구분하여 그에 맞는 RadioButton 을 체크된 상태로 바꾸기
         switch (specialityContent) {
             case "3구":
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "3구가 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "3구가 선택되었습니다.");
                 specialityThreeCushion.setChecked(true);
                 break;
             case "4구":
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "4구가 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "4구가 선택되었습니다.");
                 specialityFourBall.setChecked(true);
                 break;
             case "포켓볼":
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "포켓볼이 선택되었습니다.");
+                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "포켓볼이 선택되었습니다.");
                 specialityPocketBall.setChecked(true);
                 break;
         } // [check 1]
@@ -263,62 +296,145 @@ public class UserInputFragment extends Fragment {
     } // End of method [setCheckedRadioButtonWithUserData]
 
 
+    // =========================================================== button click listener ===========================================================
+
     /**
      * [method] [set] save button 의 click listener 을 설정
      */
-    private void setClickListenerOfSaveButton(View view) {
-
+    private void setClickListenerOfSaveButton() {
         final String METHOD_NAME = "[setClickListenerOfSaveButton] ";
 
-        // [check 1] : userData 가 없다.
         if (this.userData == null) {
+            if (checkInputOfAllData()) {
+                if (checkRangeOfTargetScore()) {
 
-            // [lv/C]RadioButton : selectedSpeciality mapping
-            RadioButton selectedSpeciality = (RadioButton) view.findViewById(this.speciality.getCheckedRadioButtonId());
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.F_userInput_dialog_saveCheck_title)
+                            .setMessage(R.string.F_userInput_dialog_saveCheck_message)
+                            .setPositiveButton(
+                                    R.string.F_userInput_dialog_saveCheck_positive,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //
+                                            RadioButton selectedSpeciality = (RadioButton) getView().findViewById(speciality.getCheckedRadioButtonId());
 
-            // [check 2] : name, targetScore, speciality 가 모두 입력되었다.
-            if (checkInputAllData(selectedSpeciality.getText().toString())) {
+                                            // widget : 입력된 내용 가져오기
+                                            String contentOfName = removeWhitespaceOfName(name.getText().toString());
+                                            int contentOfTargetScore = Integer.parseInt(targetScore.getText().toString());
+                                            String contentOfSpeciality = selectedSpeciality.getText().toString();
 
-                // [check 3] :  < targetScore < 50 이다.
-                if (checkTargetScoreRange(view)) {
+                                            appDbManager.requestUserQuery(
+                                                    new AppDbManager.UserQueryRequestListener() {
+                                                        @Override
+                                                        public void requestQuery(UserDbManager2 userDbManager2) {
 
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "공백 제거 완료 = {" + removeWhitespaceOfName(name.getText().toString()) + "}");
+                                                            try {
 
-                    // [lv/l]resultSave : userDbManager 를 통해 첫 나의 데이터(userData)를 입력한다. / 그 결과값으로 1 를 얻는다.
-                    long resultSave = this.userDbManager.saveContent(
-                            this.name.getText().toString(),                                          // 1. name
-                            Integer.parseInt(this.targetScore.getText().toString()),                 // 2. target score
-                            selectedSpeciality.getText().toString(),                            // 3. speciality
-                            0,                                                   // 4. game record win
-                            0,                                                   // 5. game record loss
-                            0,                                             // 6. recent game billiard count
-                            0,                                                      // 7. total play time
-                            0                                                          // 8. total cost
-                    );
+                                                                long rowNumber = userDbManager2.saveContent(
+                                                                        contentOfName,
+                                                                        contentOfTargetScore,
+                                                                        contentOfSpeciality,
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                );
 
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장이 완료 되었습니다. 해당 유저의 id 는 " + resultSave + " 입니다.");
-//                    toastHandler(view, "당신의 아이디는 <" + resultSave + "> 입니다.");
+                                                                // 데이터베이스에
+                                                                if (rowNumber > 0) {
 
-                    // [iv/C]UserData : 위에서 갱신한 데이터를 가져오기
-                    this.userData = this.userDbManager.loadContent(resultSave);
-                    DeveloperManager.displayToUserData(CLASS_NAME_LOG, this.userData);
+                                                                    // Success (= 저장 성공!)
 
-                    // [method]moveUserManagerActivity : UserManagerActivity 로 이동
-                    moveUserManagerActivity(view);
+                                                                    // 기존의 userData 는 null 이고
+                                                                    // 위에서 저장된 userData 를 가져온다.
+                                                                    userData = userDbManager2.loadContent(rowNumber);
+
+                                                                    // userData 를 다른 Fragment 에 넘기기 위해서
+                                                                    // Bundle 에 데이터를 넣는다.
+                                                                    Bundle bundle = new Bundle();
+                                                                    bundle.putSerializable(UserData.class.getSimpleName(), userData);
+
+                                                                    // 다른 Fragment 에 알리기
+                                                                    getParentFragmentManager().setFragmentResult("save/UserInfo", bundle);
+                                                                    getParentFragmentManager().setFragmentResult("save/UserFriend", bundle);
+
+                                                                    // 지금 Fragment( UserInputFragment ) 에
+                                                                    // 위에서 가져온 userData 의 내용을
+                                                                    // 화면에 표시하기
+                                                                    initWidgetWithUserData();
+
+                                                                    // <사용자 알림>
+                                                                    Toast.makeText(
+                                                                            getContext(),
+                                                                            R.string.F_userInput_noticeUser_save_success,
+                                                                            Toast.LENGTH_SHORT
+                                                                    ).show();
+
+
+                                                                }
+
+                                                            } catch (Exception e) {
+
+                                                                // Fail (=저장 실패)
+
+                                                                e.printStackTrace();
+
+                                                                // widget 의 내용 지우기
+                                                                name.setText("");
+                                                                targetScore.setText("");
+                                                                specialityThreeCushion.setChecked(true);
+
+                                                                // <사용자 알림>
+                                                                Toast.makeText(
+                                                                        getContext(),
+                                                                        R.string.F_userInput_noticeUser_save_fail,
+                                                                        Toast.LENGTH_SHORT
+                                                                ).show();
+                                                            }
+
+                                                        }
+                                                    }
+                                            );
+
+                                        }
+                                    }
+                            )
+                            .setNegativeButton(
+                                    R.string.F_userInput_dialog_saveCheck_negative,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    }
+                            )
+                            .show();
 
                 } else {
-                    DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "0< targetScore <50 인 값을 입력해주세요.");
+
+                    // <사용자 알림>
+                    Toast.makeText(
+                            getContext(),
+                            R.string.F_userInput_noticeUser_checkRangeTargetScore,
+                            Toast.LENGTH_SHORT
+                    ).show();
+
                 } // [check 3]
 
             } else {
-                // [method]toastHandler : 모든 값을 입력해달라고 사용자에게 요구한다.
-                toastHandler(view, "모든 값을 입력해주세요.");
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name, targetScore, speciality 의 모든 값을 입력해주세요.");
+
+                // <사용자 알림>
+                Toast.makeText(
+                        getContext(),
+                        R.string.F_userInput_noticeUser_checkInputAllData,
+                        Toast.LENGTH_SHORT
+                ).show();
+
             } // [check 2]
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 있으므로 저장할 필요가 없습니다.");
-        } // [check 1]
+        }
 
     } // End of method [setClickListenerOfSaveButton]
 
@@ -326,61 +442,134 @@ public class UserInputFragment extends Fragment {
     /**
      * [method] [set] modify button 의 click listener 을 설정
      */
-    private void setClickListenerOfModifyButton(View view) {
-
+    private void setClickListenerOfModifyButton() {
         final String METHOD_NAME = "[setClickListenerOfModifyButton] ";
 
-        // [check 1] : userData 가 있다.
         if (this.userData != null) {
+            if (checkInputOfAllData()) {
+                if (checkRangeOfTargetScore()) {
 
-            // <사용자 확인>
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.F_userInput_dialog_modifyCheck_title)
-                    .setMessage(R.string.F_userInput_dialog_modifyCheck_message)
-                    .setPositiveButton(
-                            R.string.F_userInput_dialog_modifyCheck_positive,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                    // <사용자 확인>
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.F_userInput_dialog_modifyCheck_title)
+                            .setMessage(R.string.F_userInput_dialog_modifyCheck_message)
+                            .setPositiveButton(
+                                    R.string.F_userInput_dialog_modifyCheck_positive,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
-                                    // [lv/C]RadioButton : speciality 로 선택된 Button 의 id 값으로 RadioButton 을 mapping 한다.
-                                    RadioButton selectedSpeciality = (RadioButton) view.findViewById(speciality.getCheckedRadioButtonId());
+                                            try {
+                                                // [lv/C]RadioButton : speciality 로 선택된 Button 의 id 값으로 RadioButton 을 mapping 한다.
+                                                RadioButton selectedSpeciality = (RadioButton) getView().findViewById(speciality.getCheckedRadioButtonId());
 
-                                    // [lv/i]resultUpdate :  변경할 값을 updateContent method 를 이용하여 갱신하기
-                                    int resultUpdate = userDbManager.updateContent(
-                                            userData.getId(),
-                                            Integer.parseInt(targetScore.getText().toString()),
-                                            selectedSpeciality.getText().toString());
+                                                // 수정된 데이터 widget 에서 가져오기
+                                                int contentOfTargetScore = Integer.parseInt(targetScore.getText().toString());
+                                                String contentOfSpeciality = selectedSpeciality.getText().toString();
 
-                                    // [check 2] : result 값으로 update 잘 되었는지 판다
-                                    if (resultUpdate == 1) {
-                                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번재 내용이 수정되었습니다.");
-                                    } else {
-                                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "1번째 내용을 수정하는데 실패하였습니다.");
-                                    } // [check 2]
+                                                // user : 수정된 userData 를 엡데이트하기
+                                                appDbManager.requestUserQuery(
+                                                        new AppDbManager.UserQueryRequestListener() {
+                                                            @Override
+                                                            public void requestQuery(UserDbManager2 userDbManager2) {
 
-                                    // [iv/C]UserData : 위에서 갱신된 userData 를 user 메니저를 통해서 가져오기
-                                    userData = userDbManager.loadContent(userData.getId());
+                                                                int numberOfUpdatedRows = userDbManager2.updateContentById(
+                                                                        userData.getId(),
+                                                                        contentOfTargetScore,
+                                                                        contentOfSpeciality
+                                                                );
 
-                                    // [method]moveUserManagerActivity : UserManagerActivity 로 이동
-                                    moveUserManagerActivity(view);
-                                }
-                            }
-                    )
-                    .setNegativeButton(
-                            R.string.F_userInput_dialog_modifyCheck_negative,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            }
-                    )
-                    .show();
+                                                                DeveloperManager.displayLog(
+                                                                        CLASS_NAME,
+                                                                        "Database 에 저장된 데이터 가져오기"
+                                                                );
+                                                                DeveloperManager.displayToUserData(
+                                                                        CLASS_NAME,
+                                                                        userDbManager2.loadContent(userData.getId())
+                                                                );
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 수정할 필요가 없습니다. 첫 입력부터 해주세요.");
-        } // [check 1]
+                                                                if (numberOfUpdatedRows == 1) {
+
+                                                                    // Success (=업데이트 성공!)
+
+                                                                    // 업데이트 완료되었으므로 userData 에 반영하기
+                                                                    // 기존의 userData 에 반영해야 하므로 setter 메소드를 이용하여 입력한다.
+                                                                    userData.setTargetScore(contentOfTargetScore);
+                                                                    userData.setSpeciality(contentOfSpeciality);
+
+                                                                    // 다른 Fragment 에 알리기
+                                                                    getParentFragmentManager().setFragmentResult("modify/UserInfo", null);
+
+                                                                    // 현재 Fragment( UserInputFragment ) 에
+                                                                    // 변경된 userData 의 데이터를 화면에 표시하기
+                                                                    initWidgetWithUserData();
+
+                                                                    // <사용자 알림>
+                                                                    Toast.makeText(
+                                                                            getContext(),
+                                                                            R.string.F_userInput_noticeUser_modify_success,
+                                                                            Toast.LENGTH_SHORT
+                                                                    ).show();
+
+                                                                }
+                                                            }
+                                                        }
+                                                );
+
+                                            } catch (Exception e) {
+
+                                                // Fail (= 업데이트 실패!)
+
+                                                // 실패하였으므로 기존의 userData 의 내용을 화면에 다시 표시한다.
+                                                initWidgetWithUserData();
+
+                                                // <사용자 알림>
+                                                Toast.makeText(
+                                                        getContext(),
+                                                        R.string.F_userInput_noticeUser_modify_fail,
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+                                            }
+
+
+                                        }
+                                    }
+                            )
+                            .setNegativeButton(
+                                    R.string.F_userInput_dialog_modifyCheck_negative,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                            )
+                            .show();
+
+                } else {
+
+                    // <사용자 알림>
+                    Toast.makeText(
+                            getContext(),
+                            R.string.F_userInput_noticeUser_checkRangeTargetScore,
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                } // [check 3]
+
+            } else {
+
+                // <사용자 알림>
+                Toast.makeText(
+                        getContext(),
+                        R.string.F_userInput_noticeUser_checkInputAllData,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+            } // [check 2]
+
+
+        }
 
     } // End of method [setClickListenerOfModifyButton]
 
@@ -388,13 +577,17 @@ public class UserInputFragment extends Fragment {
     /**
      * [method] [set] delete button 의 click listener 을 설정
      */
-    private void setClickListenerOfDeleteButton(View view) {
-
+    private void setClickListenerOfDeleteButton() {
         final String METHOD_NAME = "[setClickListenerOfDeleteButton] ";
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "==================>?>> click"
+        );
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 있어서 삭제 시작");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "데이터가 있어서 삭제 시작");
 
             // <사용자 확인>
             new AlertDialog.Builder(getContext())
@@ -406,31 +599,151 @@ public class UserInputFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    // UserDbManager : 테이블의 모든 내용 삭제
-                                    // [lv/i]resultDeleteOfUser : 해당 userId 의 user 데이터를 삭제한 결과
-                                    int resultDeleteOfUser = userDbManager.deleteContent(userData.getId());
+                                    try {
 
-                                    // FriendDbManager : 테이블의 모든 내용 삭제
-                                    // [lv/i]resultDeleteOfUser : 해당 userId 의 friend 데이터를 모두 삭제한 결과
-                                    int resultDeleteOfFriend = friendDbManager.deleteContentByUserId(userData.getId());
+                                        // UserDbManager : 테이블의 모든 내용 삭제
+                                        // [lv/i]resultDeleteOfUser : 해당 userId 의 user 데이터를 삭제한 결과
+                                        appDbManager.requestUserQuery(
+                                                new AppDbManager.UserQueryRequestListener() {
+                                                    @Override
+                                                    public void requestQuery(UserDbManager2 userDbManager2) {
 
-                                    // [lv/C]ArrayList<playerData> : userData 의 id 와 name 으로 참가한 게임 목록 가져오기
-                                    ArrayList<PlayerData> playerDataArrayList = playerDbManager.loadAllContentByPlayerIdAndPlayerName(userData.getId(), userData.getName());
+                                                        userDbManager2.deleteContentById(userData.getId());
+                                                    }
+                                                }
+                                        );
 
-                                    // [cycle 1] : 게임에 참가한 player 수 만큼
-                                    for (int index = 0; index < playerDataArrayList.size(); index++) {
+                                        // FriendDbManager : 테이블의 모든 내용 삭제
+                                        // [lv/i]resultDeleteOfUser : 해당 userId 의 friend 데이터를 모두 삭제한 결과
+                                        appDbManager.requestFriendQuery(
+                                                new AppDbManager.FriendQueryRequestListener() {
+                                                    @Override
+                                                    public void requestQuery(FriendDbManager2 friendDbManager2) {
+                                                        friendDbManager2.deleteContentByUserId(userData.getId());
+                                                    }
+                                                }
+                                        );
 
-                                        billiardDbManager.deleteContentByCount(playerDataArrayList.get(index).getBilliardCount());
+                                        ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
+                                        appDbManager.requestPlayerQuery(
+                                                new AppDbManager.PlayerQueryRequestListener() {
+                                                    @Override
+                                                    public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-                                        playerDbManager.deleteContentByBilliardCount(playerDataArrayList.get(index).getBilliardCount());
+                                                        playerDataArrayList.addAll(
+                                                                playerDbManager2.loadAllContentByPlayerIdAndPlayerName(
+                                                                        userData.getId(),
+                                                                        userData.getName()
+                                                                )
+                                                        );
 
-                                    } // [cycle 1]
+                                                        for (int index = 0; index < playerDataArrayList.size(); index++) {
 
-                                    // [iv/C]UserData : user 데이터를 삭제하여 null 값으로 변경
-                                    userData = null;
+                                                            playerDbManager2.deleteContentByBilliardCount(
+                                                                    playerDataArrayList.get(index).getBilliardCount()
+                                                            );
 
-                                    // [method]moveUserManagerActivity : UserManagerActivity 로 이동
-                                    moveUserManagerActivity(view);
+                                                        }
+
+                                                    }
+                                                }
+                                        );
+
+                                        appDbManager.requestBilliardQuery(
+                                                new AppDbManager.BilliardQueryRequestListener() {
+                                                    @Override
+                                                    public void requestQuery(BilliardDbManager2 billiardDbManager2) {
+
+                                                        for (int index = 0; index < playerDataArrayList.size(); index++) {
+                                                            billiardDbManager2.deleteContentByCount(
+                                                                    playerDataArrayList.get(index).getBilliardCount()
+                                                            );
+                                                        }
+                                                    }
+                                                }
+                                        );
+
+                                        // 기존의 userData 가 삭제되었으므로
+                                        // userData 를 null 로
+                                        userData = null;
+
+                                        // 다른 Fragment 에 알려주기
+                                        getParentFragmentManager().setFragmentResult("delete/UserInfo", null);
+                                        getParentFragmentManager().setFragmentResult("delete/UserFriend", null);
+
+                                        // widget : 내용 지우기
+                                        name.setText("");
+                                        name.setEnabled(true);
+                                        targetScore.setText("");
+                                        specialityThreeCushion.setChecked(true);
+                                        save.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorBackgroundPrimary));
+                                        save.setEnabled(true);
+                                        modify.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorWidgetDisable));
+                                        modify.setEnabled(false);
+                                        delete.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorWidgetDisable));
+                                        delete.setEnabled(false);
+
+                                        // <사용자 알림>
+                                        Toast.makeText(
+                                                getContext(),
+                                                R.string.F_userInput_noticeUser_delete_success,
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+
+                                        DeveloperManager.displayLog(
+                                                CLASS_NAME,
+                                                "======================>>>> 데이터 확인"
+                                        );
+
+
+                                        appDbManager.requestQuery(
+                                                new AppDbManager.QueryRequestListener() {
+                                                    @Override
+                                                    public void requestUserQuery(UserDbManager2 userDbManager2) {
+                                                        DeveloperManager.displayToUserData(
+                                                                CLASS_NAME,
+                                                                userData
+                                                        );
+                                                    }
+
+                                                    @Override
+                                                    public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
+                                                        DeveloperManager.displayToFriendData(
+                                                                CLASS_NAME,
+                                                                friendDbManager2.loadAllContentByUserId(1)
+                                                        );
+                                                    }
+
+                                                    @Override
+                                                    public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
+                                                        DeveloperManager.displayToBilliardData(
+                                                                CLASS_NAME,
+                                                                billiardDbManager2.loadAllContent()
+                                                        );
+                                                    }
+
+                                                    @Override
+                                                    public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
+                                                        DeveloperManager.displayToPlayerData(
+                                                                CLASS_NAME,
+                                                                playerDbManager2.loadAllContent()
+                                                        );
+                                                    }
+                                                }
+                                        );
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+
+                                        // <사용자 알림>
+                                        Toast.makeText(
+                                                getContext(),
+                                                R.string.F_userInput_noticeUser_delete_fail,
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+
+                                    }
+
                                 }
                             }
                     )
@@ -447,38 +760,42 @@ public class UserInputFragment extends Fragment {
 
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터가 없어서 삭제 안함");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "데이터가 없어서 삭제 안함");
         } // [check 1]
 
     } // End of method [setClickListenerOfDeleteButton]
 
+
+    // =========================================================== ETC ===========================================================
 
     /**
      * [method] [check] name, targetScore, speciality 의 값이 모두 입력되었는지 검사하여 모두 입력 하였을 경우 true 를 반환한다.
      *
      * @return 모든 값이 입력되고 선택되었을 때 true 를 반환한다.
      */
-    private boolean checkInputAllData(String speciality) {
+    private boolean checkInputOfAllData() {
+        final String METHOD_NAME = "[checkInputOfAllData] ";
 
-        final String METHOD_NAME = "[checkInputAllData] ";
+        // [lv/C]RadioButton : selectedSpeciality mapping
+        RadioButton selectedSpeciality = (RadioButton) getView().findViewById(this.speciality.getCheckedRadioButtonId());
 
         // [check 1] : name, targetScore, specialityContent 가 모두 입력되었다.
         if (!this.name.getText().toString().equals("")
                 && !this.targetScore.getText().toString().equals("")
-                && !speciality.equals("")) {
+                && !selectedSpeciality.getText().toString().equals("")) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값이 입력되었습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 값이 입력되었습니다.");
             return true;
 
         } else {
 
             // return : 모든 값이 입력 안 되었으면
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
             return false;
 
         } // [check 1]
 
-    } // End of method [checkInputAllData]
+    } // End of method [checkInputOfAllData]
 
 
     /**
@@ -487,28 +804,24 @@ public class UserInputFragment extends Fragment {
      *
      * @return targetScore 가 범위안에 있으면 true 이다.
      */
-    private boolean checkTargetScoreRange(View view) {
+    private boolean checkRangeOfTargetScore() {
+        final String METHOD_NAME = "[checkRangeOfTargetScore] ";
         // targetScore : 입력 된 값이  0 < targetScore < 50  확인하기 위한
-
-        final String METHOD_NAME = "[checkTargetScoreRange] ";
 
         int targetScoreContent = Integer.parseInt(this.targetScore.getText().toString());
 
         // [check 1] : MIN_RANGE < targetScore < MAX_RANGE 안에 있다.
         if ((MIN_RANGE < targetScoreContent) && (targetScoreContent < MAX_RANGE)) {
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "targetScore 가 범위 안에 있습니다.");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 있습니다.");
             return true;
 
         } else {
-
-            toastHandler(view, MIN_RANGE + " < 수지 < " + MAX_RANGE + " 의 값을 입력해주세요.");
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "targetScore 가 범위 밖의 값입니다. ");
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 없습니다.");
             return false;
-
         } // [check 1]
 
-    } // End of method [checkTargetScoreRange]
+    } // End of method [checkRangeOfTargetScore]
 
 
     /**
@@ -520,38 +833,5 @@ public class UserInputFragment extends Fragment {
         return name.trim();
     } // End of method [removeWhitespaceOfName]
 
-
-    /**
-     * [method] [move] UserManagerActivity 로 이동
-     */
-    private void moveUserManagerActivity(View view) {
-
-        // [lv/C]Intent : UserManagerActivity 로 이동하기 위한 Intent 를 생성
-        Intent intent = new Intent(view.getContext(), UserManagerActivity.class);
-
-        // [lv/C]Intent : SessionManager 를 통해 intent 에 'userData' 담는다.
-        SessionManager.setUserDataFromIntent(intent, this.userData);
-
-        // [method]getActivity : 해당 activity 를 stack 에서 삭제하기
-        getActivity().finish();
-
-        // [method]startActivity : 위 의 intent 를 이용하여 activity 이동하기
-        startActivity(intent);
-
-    } // End of method [moveUserManagerActivity]
-
-
-    /**
-     * [method] 해당 문자열을 toast 로 보여준다.
-     */
-    private void toastHandler(View view, String content) {
-
-        // [lv/C]Toast : toast 객체 생성
-        Toast myToast = Toast.makeText(view.getContext(), content, Toast.LENGTH_SHORT);
-
-        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
-        myToast.show();
-
-    } // End of method [toastHandler]
 
 }

@@ -15,16 +15,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.friend.ListView.FriendLvAdapter;
+import com.skyman.billiarddata.management.friend.ListView.FriendLvAdapter2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.friend.ListView.FriendLvManager;
+import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 import java.util.ArrayList;
@@ -34,34 +40,32 @@ import java.util.ArrayList;
  * Use the {@link UserFriendFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserFriendFragment extends Fragment {
+public class UserFriendFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME_LOG = "[F]_UserFriendFragment";
+    private final String CLASS_NAME = UserFriendFragment.class.getSimpleName();
 
     // constant
     private static final String USER_DATA = "userData";
-    private static final String FRIEND_DATA_ARRAY_LIST = "friendDataArrayList;";
 
     // instance variable
-    private FriendDbManager friendDbManager;
-    private BilliardDbManager billiardDbManager;
     private UserData userData;
+
+    // instance variable
     private ArrayList<FriendData> friendDataArrayList;
 
     // instance variable
-    private ListView allFriendData;
+    private AppDbManager appDbManager;
+
+    // instance variable
     private EditText name;
     private Button friendAdd;
+    private ListView friendListView;
+
+    // instance variable
+    private FriendLvAdapter2 adapter2;
 
     // constructor
-    public UserFriendFragment(FriendDbManager friendDbManager, BilliardDbManager billiardDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
-        this.friendDbManager = friendDbManager;
-        this.billiardDbManager = billiardDbManager;
-        this.userData = userData;
-        this.friendDataArrayList = friendDataArrayList;
-    }
-
     public UserFriendFragment() {
         // Required empty public constructor
     }
@@ -73,9 +77,10 @@ public class UserFriendFragment extends Fragment {
      * @return A new instance of fragment UserFriend.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserFriendFragment newInstance() {
+    public static UserFriendFragment newInstance(UserData userData) {
         UserFriendFragment fragment = new UserFriendFragment();
         Bundle args = new Bundle();
+        args.putSerializable(USER_DATA, userData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,6 +89,7 @@ public class UserFriendFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            userData = (UserData) getArguments().getSerializable(USER_DATA);
         }
     }
 
@@ -98,8 +104,129 @@ public class UserFriendFragment extends Fragment {
         final String METHOD_NAME = "[onViewCreated] ";
         super.onViewCreated(view, savedInstanceState);
 
-        // [method]mappingOfWidget : fragment_user_friend layout 의 widget mapping
-        mappingOfWidget(view);
+        // appDbManager
+        initAppDbManager();
+
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
+
+        // user input fragment 의
+        // delete 한 결과를 받는다.
+        getParentFragmentManager().setFragmentResultListener(
+                "save/UserFriend",
+                this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=====> FragmentResultListener / User Friend"
+                        );
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "requestKey : " + requestKey
+                        );
+
+                        if (requestKey.equals("save/UserFriend")) {
+
+                            userData = (UserData) result.get(UserData.class.getSimpleName());
+
+                        }
+                    }
+                }
+        );
+
+
+        // user input fragment 의
+        // delete 한 결과를 받는다.
+        getParentFragmentManager().setFragmentResultListener(
+                "delete/UserFriend",
+                this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=====> FragmentResultListener / User Friend"
+                        );
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "requestKey : " + requestKey
+                        );
+
+                        if (requestKey.equals("delete/UserFriend")) {
+
+                            DeveloperManager.displayLog(
+                                    CLASS_NAME,
+                                    "======> 삭제 되었습니다. userData 객체는 : " + userData
+                            );
+                            DeveloperManager.displayToUserData(
+                                    CLASS_NAME,
+                                    userData
+                            );
+
+                            // 삭제된 내용을 반영하기 위해서
+                            // userData 를 null 로 변경한다.
+                            userData = null;
+
+                            // 등록된 친구도 모두 삭제 되었으므로 listView 에 적용하기
+                            friendDataArrayList.clear();
+                            adapter2.notifyDataSetChanged();
+
+                        }
+                    }
+                }
+        );
+
+    }
+
+
+    @Override
+    public void initAppDbManager() {
+        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+    }
+
+    @Override
+    public void connectWidget() {
+
+        // [iv/C]ListView : friendListView mapping
+        this.friendListView = (ListView) getView().findViewById(R.id.F_userFriend_listSection_listView);
+
+        // [iv/C]EditText : name mapping
+        this.name = (EditText) getView().findViewById(R.id.F_userFriend_addSection_friendName);
+
+        // [iv/C]Button : friendAdd mapping
+        this.friendAdd = (Button) getView().findViewById(R.id.F_userFriend_addSection_button_addFriend);
+
+    }
+
+    @Override
+    public void initWidget() {
+
+        friendDataArrayList = new ArrayList<>();
+        adapter2 = new FriendLvAdapter2(friendDataArrayList, appDbManager);
+
+        if (userData != null) {
+
+            appDbManager.requestFriendQuery(
+                    new AppDbManager.FriendQueryRequestListener() {
+                        @Override
+                        public void requestQuery(FriendDbManager2 friendDbManager2) {
+
+                            friendDataArrayList.addAll(
+                                    friendDbManager2.loadAllContentByUserId(userData.getId())
+                            );
+
+                            friendListView.setAdapter(adapter2);
+
+                        }
+                    }
+            );
+        }
+
 
         // [iv/C]Button : friendAdd button click listener
         this.friendAdd.setOnClickListener(new View.OnClickListener() {
@@ -112,46 +239,7 @@ public class UserFriendFragment extends Fragment {
             }
         });
 
-        // [lv/C]FriendLvManager : ListView 와 Adapter 를 관리하는 ListView 메니저 생성
-        FriendLvManager friendLvManager = new FriendLvManager(allFriendData, this.friendDbManager, this.billiardDbManager);
-
-        // [check 1] : user 정보가 있다.
-        if (this.userData != null) {
-            // [iv/C]ArrayList<FriendData> : 해당 userId 로 모든 친구들의 데이터를 가져오기
-            friendDataArrayList = friendDbManager.loadAllContentByUserId(this.userData.getId());
-
-            // [check 2] : friendDataArrayList 에 데이터가 있다.
-            if (friendDataArrayList.size() != 0) {
-
-                // [lv/C]FriendLvManager : 위에서 받은 friendDataArrayList 를 adapter 에 멤버 변수에 mapping
-                friendLvManager.setListViewOfFriendData(friendDataArrayList);
-
-            } else {
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "friendDataArrayList 에 있는 친구 데이터가 없습니다.");
-            } // [check 2]
-
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "user 정보가 저장되어 있지 않으므로 친구목록을 가져올 수 없습니다.");
-        } // [check 1]
     }
-
-
-    /**
-     * [method] widget mapping
-     */
-    private void mappingOfWidget(View view) {
-
-        // [iv/C]ListView : allFriendData mapping
-        this.allFriendData = (ListView) view.findViewById(R.id.F_userFriend_listSection_listView_friendList);
-
-        // [iv/C]EditText : name mapping
-        this.name = (EditText) view.findViewById(R.id.F_userFriend_addSection_friendName);
-
-        // [iv/C]Button : friendAdd mapping
-        this.friendAdd = (Button) view.findViewById(R.id.F_userFriend_addSection_button_addFriend);
-
-    } // End of method [mappingOfWidget]
-
 
     /**
      * [method] friendAdd button 의 click listener
@@ -166,117 +254,124 @@ public class UserFriendFragment extends Fragment {
             // [check 2] : name EditText 에 입력한 값이 있다.
             if (!name.getText().toString().equals("")) {
 
-                // [lv/l]newRowId : friend 테이블에 친구를 추가 하고, 결과값을 받는다.
-                long newRowId = friendDbManager.saveContent(
-                        userData.getId(),
-                        name.getText().toString(),
-                        0,
-                        0,
-                        0,
-                        0,
-                        0);
+                // <사용자 확인>
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.F_userFriend_dialog_friendAdd_title)
+                        .setMessage(R.string.F_userFriend_dialog_friendAdd_message)
+                        .setPositiveButton(R.string.F_userFriend_dialog_friendAdd_positive, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                // [method]checkNewRowId : newRowId 를 확인하여 역할 수행
-                checkNewRowId(newRowId);
+                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
 
-                // [iv/C]EditText : name 을 없앤다.
-                this.name.setText("");
+                                appDbManager.requestFriendQuery(
+                                        new AppDbManager.FriendQueryRequestListener() {
+                                            @Override
+                                            public void requestQuery(FriendDbManager2 friendDbManager2) {
 
-                // [lv/C]FragmentTransaction : Fragment 화면을 갱신하기 위한 방법
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
+                                                try {
 
+                                                    String contentOfFriendName = removeWhitespaceOfName(name.getText().toString());
+
+                                                    // 친구 추가
+                                                    long rowNumber = friendDbManager2.saveContent(
+                                                            userData.getId(),
+                                                            contentOfFriendName,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                    );
+
+                                                    if (rowNumber > 0) {
+
+                                                        // 등록된 친구 정보를 가져와서
+                                                        // friendDataArrayList 에 추가하기
+                                                        friendDataArrayList.clear();
+                                                        friendDataArrayList.addAll(
+                                                                friendDbManager2.loadAllContentByUserId(userData.getId())
+                                                        );
+
+                                                        // adapter 에게 friendDataArrayList 가 변경되었다고 알려주기
+                                                        adapter2.notifyDataSetChanged();
+
+                                                        // widget : 입력한 이름 지우기
+                                                        name.setText("");
+
+                                                        // <사용자 알림>
+                                                        Toast.makeText(
+                                                                getContext(),
+                                                                R.string.F_userFriend_noticeUser_friendAdd_success,
+                                                                Toast.LENGTH_SHORT
+                                                        ).show();
+
+                                                    }
+
+                                                } catch (Exception e) {
+
+                                                    e.printStackTrace();
+
+                                                    // <사용자 알림>
+                                                    Toast.makeText(
+                                                            getContext(),
+                                                            R.string.F_userFriend_noticeUser_friendAdd_error,
+                                                            Toast.LENGTH_SHORT
+                                                    ).show();
+
+                                                }
+
+                                            }
+                                        }
+                                );
+
+                                // [lv/C]FragmentTransaction : Fragment 화면을 갱신하기 위한 방법
+//                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                                transaction.detach(UserFriendFragment.this).attach(UserFriendFragment.this).commit();
+
+                            }
+                        })
+                        .setNegativeButton(R.string.F_userFriend_dialog_friendAdd_negative, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
 
             } else {
 
-                // [method]
-                toastHandler("이름을 입력해주세요.");
-                DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name 이 입력되지 않았습니다.");
+                // <사용자 알림>
+                Toast.makeText(
+                        getContext(),
+                        R.string.F_userFriend_noticeUser_checkInputAllData,
+                        Toast.LENGTH_SHORT
+                ).show();
+
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "저장된 user 데이터가 없습니다.");
 
             // <사용자 알림>
-            toastHandler("먼저 당신의 기본 정보를 입력해주세요.");
+            Toast.makeText(
+                    getContext(),
+                    R.string.F_userFriend_noticeUser_onUserData,
+                    Toast.LENGTH_SHORT
+            ).show();
 
-        } // [check 1]
+        }
 
     } // End of method [setClickListenerOfFriendAddButton]
 
 
     /**
-     * [method] friend 를 추가하고 나온 결과값 newRowId 확인
+     * [method] user 의 name 문자열의 공백을 제거
      */
-    private void checkNewRowId(long newRowId) {
+    private String removeWhitespaceOfName(String name) {
 
-        final String METHOD_NAME = "[checkNewRowId] ";
+//        return name.replace(" ", "");
+        return name.trim();
+    } // End of method [removeWhitespaceOfName]
 
-        // [check 1] : newRowId 는 어떤 값일까?
-        if (newRowId == -2) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "name 이 입력되지 않았습니다.");
-        } else if (newRowId == -1) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "데이터베이스 insert 를 실패하였습니다.");
-        } else if (newRowId == 0) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "수행이 되지 않았습니다.");
-        } else if (newRowId == 1) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "첫 번째 친구를 입력했습니다.");
-            showDialogToCheckWhetherFirstGameDataInput();
-        } else if (newRowId > 1) {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + newRowId + " 번째 친구를 입력했습니다.");
-        } // [check 1]
-
-    } // End of method [checkNewRowId]
-
-    /* method : AlertDialog - 등록된 친구가 없어서 화면이동을 물어보는  */
-
-    /**
-     * [method] 첫 friend 를 추가하였으므로 게임 데이터 입력을 할 건지 물어보는 dialog 를 보여준다.
-     */
-    private void showDialogToCheckWhetherFirstGameDataInput() {
-
-        final String METHOD_NAME = "[showDialogToCheckWhetherFirstGameDataInput] ";
-
-        // [lv/C]AlertDialog : Builder 객체 생성
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        // [lv/C]AlertDialog : 초기값 셋팅
-        builder.setTitle(R.string.F_userFriend_dialog_startFirstGame_title)
-                .setMessage(R.string.F_userFriend_dialog_startFirstGame_message)
-                .setPositiveButton(R.string.F_userFriend_dialog_startFirstGame_positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
-
-                        // Intent : pageNumber 에 해당 페이지 번호 값을 넣어서 화면 이동
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        getActivity().finish();
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton(R.string.F_userFriend_dialog_startFirstGame_negative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .show();
-
-    } // End of method [showDialogToCheckWhetherFirstGameDataInput]
-
-
-    /**
-     * [method] 해당 문자열을 toast 로 보여준다.
-     */
-    private void toastHandler(String content) {
-
-        // [lv/C]Toast : toast 객체 생성
-        Toast myToast = Toast.makeText(getContext(), content, Toast.LENGTH_SHORT);
-
-        // [lv/C]Toast : 위에서 생성한 객체를 보여준다.
-        myToast.show();
-
-    } // End of method [toastHandler]
 
 }

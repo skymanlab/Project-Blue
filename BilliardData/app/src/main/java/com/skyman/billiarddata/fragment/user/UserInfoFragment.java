@@ -9,12 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.data.UserDataFormatter;
 
@@ -25,14 +30,23 @@ import java.util.ArrayList;
  * Use the {@link UserInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserInfoFragment extends Fragment {
+public class UserInfoFragment extends Fragment implements SectionManager.Initializable {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     // constant
-    private final String CLASS_NAME_LOG = "[F]_UserInfoFragment";
+    private final String CLASS_NAME = UserInfoFragment.class.getSimpleName();
+
+    // constant
+    private static final String USER_DATA = "userData";
+
+    // instance variable
+    private UserData userData;
+
+    // instance variable
+    private BilliardData billiardData;
+
+    // instance variable
+    private AppDbManager appDbManager;
+
     // instance variable
     private TextView id;
     private TextView name;
@@ -42,21 +56,6 @@ public class UserInfoFragment extends Fragment {
     private TextView totalPlayTime;
     private TextView totalCost;
     private TextView recentPlayDate;
-    // instance variable
-    private BilliardDbManager billiardDbManager;
-    private UserData userData;
-    private ArrayList<FriendData> friendDataArrayList;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-    // constructor
-    public UserInfoFragment(BilliardDbManager billiardDbManager, UserData userData, ArrayList<FriendData> friendDataArrayList) {
-        this.billiardDbManager = billiardDbManager;
-        this.userData = userData;
-        this.friendDataArrayList = friendDataArrayList;
-    }
 
     // constructor
     public UserInfoFragment() {
@@ -67,16 +66,13 @@ public class UserInfoFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment UserInfo.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserInfoFragment newInstance(String param1, String param2) {
+    public static UserInfoFragment newInstance(UserData userData) {
         UserInfoFragment fragment = new UserInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(USER_DATA, userData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +81,7 @@ public class UserInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            userData = (UserData) getArguments().getSerializable(USER_DATA);
         }
     }
 
@@ -98,69 +93,217 @@ public class UserInfoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final String METHOD_NAME = "[onViewCreated] ";
         super.onViewCreated(view, savedInstanceState);
 
-        final String METHOD_NAME = "[getFormatOfCost] ";
+        // appDbManager
+        initAppDbManager();
 
-        // [method]mappingOfWidget : fragment_user_info layout 의 widget 을 mapping
-        mappingOfWidget(view);
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
 
-        // [check 1] : userData 가 있다.
-        if (this.userData != null) {
+        // user input fragment 의
+        // delete 한 결과를 받는다.
+        getParentFragmentManager().setFragmentResultListener(
+                "save/UserInfo",
+                this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=====> FragmentResultListener / User info"
+                        );
 
-            // [lv/C]BilliardData : userData 의 recentGameBilliardCount 로 해당 billiard 데이터 가져오기
-            BilliardData billiardData = this.billiardDbManager.loadAllContentByCount(this.userData.getRecentGameBilliardCount());
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "requestKey : " + requestKey
+                        );
 
-            // [method]displayUserData : userData 값을 widget 을 setText 하기
-            setInitialData(billiardData);
+                        if (requestKey.equals("save/UserInfo")) {
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME_LOG, METHOD_NAME + "userData 가 없으므로 초기 세팅으로");
-        } // [check 1]
+                            userData = (UserData) result.get(UserData.class.getSimpleName());
+                            initWidgetWithUserDataAndBilliardData();
+                        }
+                    }
+                }
+        );
+
+        // user input fragment 의
+        // userData 를 modify 한 결과를 받는다.
+        getParentFragmentManager().setFragmentResultListener(
+                "modify/UserInfo",
+                this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=====> FragmentResultListener / User info"
+                        );
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "requestKey : " + requestKey
+                        );
+
+                        if (requestKey.equals("modify/UserInfo")) {
+                            initWidgetWithUserDataAndBilliardData();
+                        }
+
+                    }
+                }
+        );
+
+        // user input fragment 의
+        // delete 한 결과를 받는다.
+        getParentFragmentManager().setFragmentResultListener(
+                "delete/UserInfo",
+                this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "=====> FragmentResultListener"
+                        );
+
+                        DeveloperManager.displayLog(
+                                CLASS_NAME,
+                                "requestKey : " + requestKey
+                        );
+
+                        if (requestKey.equals("delete/UserInfo")) {
+
+                            DeveloperManager.displayLog(
+                                    CLASS_NAME,
+                                    "======> 삭제 되었습니다. userData 객체는 : " + userData
+                            );
+                            DeveloperManager.displayToUserData(
+                                    CLASS_NAME,
+                                    userData
+                            );
+
+                            // userData 내용이 삭제되었으므로 userData 도 null 로 변경
+                            // (주의) userInput 에서 userData 에 null 로 변경하였더라도
+                            //        여기의 userData 는 여전히 UserManagerActivity 의 userData 를 가리키고 있으므로
+                            //        만약 이 Fragment 에서 userData 로 하는 작업이 있다면 UserManagerActivity 의 userData 를 사용하면 안되므로
+                            //        UserInfoFragment 의 userData 는 null 로 바꾸어 주어야 한다.
+                            userData = null;
+
+                            // 화면 내용 초기화
+                            id.setText("");
+                            name.setText("");
+                            targetScore.setText("");
+                            speciality.setText("");
+                            gameRecord.setText("");
+                            totalPlayTime.setText("");
+                            totalCost.setText("");
+                            recentPlayDate.setText("");
+
+                        }
+                    }
+                }
+        );
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "======================================>>>>>>>>>>>>>>>>>>>>> User info fragment"
+        );
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "userData Object = " + userData
+        );
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "appDbManager Object = " + appDbManager
+        );
 
     } // End of method [onViewCreated]
 
 
-    /**
-     * [method] widget mapping
-     */
-    private void mappingOfWidget(View view) {
+    @Override
+    public void initAppDbManager() {
+
+        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+
+    }
+
+    @Override
+    public void connectWidget() {
 
         // [iv/C]TextView : id mapping
-//        this.id = (TextView) view.findViewById(R.id.f_user_info_id);
+        this.id = (TextView) getView().findViewById(R.id.F_userInfo_id);
 
         // [iv/C]TextView : name mapping
-        this.name = (TextView) view.findViewById(R.id.f_user_info_name);
+        this.name = (TextView) getView().findViewById(R.id.F_userInfo_name);
 
         // [iv/C]TextView : targetScore mapping
-        this.targetScore = (TextView) view.findViewById(R.id.f_user_info_target_score);
+        this.targetScore = (TextView) getView().findViewById(R.id.F_userInfo_targetScore);
 
         // [iv/C]TextView : speciality mapping
-        this.speciality = (TextView) view.findViewById(R.id.f_user_info_speciality);
+        this.speciality = (TextView) getView().findViewById(R.id.F_userInfo_speciality);
 
         // [iv/C]TextView : gameRecord mapping
-        this.gameRecord = (TextView) view.findViewById(R.id.f_user_info_game_record);
-
-        // [iv/C]TextView : recentPlayDate mapping
-        this.recentPlayDate = (TextView) view.findViewById(R.id.f_user_info_recent_play_date);
+        this.gameRecord = (TextView) getView().findViewById(R.id.F_userInfo_gameRecord);
 
         // [iv/C]TextView : totalPlayTime mapping
-        this.totalPlayTime = (TextView) view.findViewById(R.id.f_user_info_total_play_time);
+        this.totalPlayTime = (TextView) getView().findViewById(R.id.F_userInfo_totalPlayTime);
 
         // [iv/C]TextView : totalCost mapping
-        this.totalCost = (TextView) view.findViewById(R.id.f_user_info_total_cost);
+        this.totalCost = (TextView) getView().findViewById(R.id.F_userInfo_totalCost);
 
-    } // End of method [mappingOfWidget]
+        // [iv/C]TextView : recentPlayDate mapping
+        this.recentPlayDate = (TextView) getView().findViewById(R.id.F_userInfo_recentPlayDate);
+
+    }
+
+    @Override
+    public void initWidget() {
+        final String METHOD_NAME = "[initWidget] ";
+
+        // [check 1] : userData 가 있다.
+        if (this.userData != null) {
+
+            appDbManager.requestBilliardQuery(
+                    new AppDbManager.BilliardQueryRequestListener() {
+                        @Override
+                        public void requestQuery(BilliardDbManager2 billiardDbManager2) {
+
+                            // 가장 최근에 한 게임에 대한 정보를 가져오기 위해서
+                            // userData 의 recentGameBilliardCount 에 해당하는
+                            // billiardData 가져오기
+                            billiardData = billiardDbManager2.loadContentByCount(userData.getRecentGameBilliardCount());
+
+                            DeveloperManager.displayLog(
+                                    CLASS_NAME,
+                                    "billiardData : " + billiardData
+                            );
+
+                            // userData 와 billiardData 로 widget 내용 채우기
+                            initWidgetWithUserDataAndBilliardData();
+
+                        }
+                    }
+            );
+
+        } else {
+            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 가 없으므로 초기 세팅으로");
+        } // [check 1]
+
+    }
 
 
     /**
      * [method] userData 의 값들을 mapping 된 widget 에 출력한다.
      */
-    private void setInitialData(BilliardData billiardData) {
+    private void initWidgetWithUserDataAndBilliardData() {
 
-        DeveloperManager.displayToUserData(CLASS_NAME_LOG, userData);
         // [iv/C]TextView : id 를 userData 의 getId 으로
-//        id.setText(userData.getId() + "");
+        id.setText(userData.getId() + "");
 
         // [iv/C]TextView : name 를 userData 의 getName 으로
         name.setText(userData.getName());
@@ -192,7 +335,6 @@ public class UserInfoFragment extends Fragment {
             this.recentPlayDate.setText("참가 게임 없음!");
 
         } // [check 1]
-
 
     } // End of method [setInitialData]
 }

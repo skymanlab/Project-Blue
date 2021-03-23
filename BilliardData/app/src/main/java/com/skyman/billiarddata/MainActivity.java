@@ -487,7 +487,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
                         // sessionManager : set ( pageNumber )
-                        SessionManager.setPageNumberFromIntent(intent, 0);
+                        SessionManager.setPageNumberFromIntent(intent, UserManagerActivity.USER_INPUT_FRAGMENT);
 
                         // 이동
                         startActivity(intent);
@@ -524,7 +524,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                         // sessionManager : set ( userData, pageNumber )
                         SessionManager.setUserDataFromIntent(intent, userData);
-                        SessionManager.setPageNumberFromIntent(intent, 2);
+                        SessionManager.setPageNumberFromIntent(intent, UserManagerActivity.USER_FRIEND_FRAGMENT);
 
                         // 이동
                         startActivity(intent);

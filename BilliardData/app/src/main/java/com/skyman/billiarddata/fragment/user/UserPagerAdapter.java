@@ -40,11 +40,11 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new UserInputFragment(this.userDbManager, this.friendDbManager, this.billiardDbManager, this.playerDbManager, this.userData);
+//                return new UserInputFragment(this.userDbManager, this.friendDbManager, this.billiardDbManager, this.playerDbManager, this.userData);
             case 1:
-                return new UserInfoFragment(this.billiardDbManager, this.userData, this.friendDataArrayList);
+//                return new UserInfoFragment(this.billiardDbManager, this.userData, this.friendDataArrayList);
             case 2:
-                return new UserFriendFragment(this.friendDbManager, this.billiardDbManager, this.userData, this.friendDataArrayList);
+//                return new UserFriendFragment(this.friendDbManager, this.billiardDbManager, this.userData, this.friendDataArrayList);
             default:
                 return null;
         }

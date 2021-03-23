@@ -326,7 +326,7 @@ public class UserDbManager2 {
 
 
     // ==================================================== Update Query ====================================================
-    public int updateContent(long id,
+    public int updateContentById(long id,
                              int targetScore,
                              String speciality) {
 
@@ -336,7 +336,10 @@ public class UserDbManager2 {
                 new AppDbSetting2.UpdateQueryListener() {
                     @Override
                     public boolean checkFormat() {
-                        return ((0 < id) && (0 <= targetScore) && !speciality.endsWith("")) ? true : false;
+
+                        return ((id > 0) &&
+                                (targetScore >= 0) &&
+                                !speciality.equals("")) ? true : false;
                     }
 
                     @Override
@@ -373,7 +376,7 @@ public class UserDbManager2 {
     } // End of method [updateContent]
 
 
-    public int updateContent(long id,
+    public int updateContentById(long id,
                              String name,
                              int targetScore,
                              String speciality) {
@@ -423,7 +426,7 @@ public class UserDbManager2 {
     } // End of method [updateContent]
 
 
-    public int updateContent(long id,
+    public int updateContentById(long id,
                              int gameRecordWin,
                              int gameRecordLoss,
                              long recentGameBilliardCount,
@@ -518,7 +521,7 @@ public class UserDbManager2 {
     } // End of method [deleteAllContent]
 
 
-    public int deleteContent(long id) {
+    public int deleteContentById(long id) {
 
         final int numberOfDeletedRows[] = {0};
 
@@ -532,7 +535,7 @@ public class UserDbManager2 {
                     @Override
                     public int requestQuery(SQLiteDatabase writable) {
 
-                        String selection = UserTableSetting.Entry.TABLE_NAME + " LIKE ?";
+                        String selection = UserTableSetting.Entry._ID + " LIKE ?";
                         String[] selectionArgs = {id + ""};
                         return writable.delete(
                                 UserTableSetting.Entry.TABLE_NAME,

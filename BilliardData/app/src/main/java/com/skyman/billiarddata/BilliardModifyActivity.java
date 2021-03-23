@@ -671,7 +671,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                     @Override
                     public void requestQuery(UserDbManager2 userDbManager2) {
 
-                        userDbManager2.updateContent(
+                        userDbManager2.updateContentById(
                                 changedUserData.getId(),
                                 changedUserData.getGameRecordWin(),
                                 changedUserData.getGameRecordLoss(),

@@ -1038,7 +1038,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 new AppDbManager.UserQueryRequestListener() {
                     @Override
                     public void requestQuery(UserDbManager2 userDbManager2) {
-                        userDbManager2.updateContent(
+                        userDbManager2.updateContentById(
                                 userData.getId(),
                                 userData.getGameRecordWin(),
                                 userData.getGameRecordLoss(),
