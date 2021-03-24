@@ -23,36 +23,40 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_manager_title"
+                android:text="@string/statisticsManager_title"
                 android:textAlignment="center"></TextView>
         </LinearLayout>
 
         <!-- content -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <!-- content 1. tab -->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/statistics_manager_tl_tab_bar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPagerTab" /><!-- End of content 1 -->
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <!-- divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/statisticsManager_tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPagerTab" />
 
-            <!-- content 2. pager-->
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/statistics_manager_pg_statistics_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" /><!-- End of content 2 -->
+                <!-- divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
 
-        </LinearLayout><!-- End of content-->
+                <!-- content 2. pager-->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/statisticsManager_viewPager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout><!-- End of content-->
+        </FrameLayout>
     </LinearLayout><!-- End of main-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

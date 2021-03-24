@@ -131,22 +131,26 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
         adapter = new UserViewPagerAdapter(this, userData);
         viewPager2.setAdapter(adapter);
         viewPager2.setOffscreenPageLimit(3);
-        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+        new TabLayoutMediator(
+                tabLayout,
+                viewPager2,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
 
-                switch (position) {
-                    case 0:
-                        tab.setText(getString(R.string.userManager_tabLayout_userInput));
-                        break;
-                    case 1:
-                        tab.setText(getString(R.string.userManager_tabLayout_userInfo));
-                        break;
-                    case 2:
-                        tab.setText(getString(R.string.userManager_tabLayout_userFriend));
+                        switch (position) {
+                            case 0:
+                                tab.setText(getString(R.string.userManager_tabLayout_userInput));
+                                break;
+                            case 1:
+                                tab.setText(getString(R.string.userManager_tabLayout_userInfo));
+                                break;
+                            case 2:
+                                tab.setText(getString(R.string.userManager_tabLayout_userFriend));
+                        }
+                    }
                 }
-            }
-        }).attach();
+        ).attach();
 
         moveFragmentPage();
 

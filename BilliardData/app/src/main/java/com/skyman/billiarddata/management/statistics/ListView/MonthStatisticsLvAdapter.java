@@ -16,14 +16,10 @@ import java.util.ArrayList;
 public class MonthStatisticsLvAdapter extends BaseAdapter {
 
     // instance variable
-    private ArrayList<MonthStatisticsData> monthStatisticsDataArrayList = new ArrayList<>();
+    private ArrayList<MonthStatisticsData> monthStatisticsDataArrayList;
 
     // constructor
-    public MonthStatisticsLvAdapter() {
-    }
-
-    // setter
-    public void setMonthStatisticsDataArrayList(ArrayList<MonthStatisticsData> monthStatisticsDataArrayList) {
+    public MonthStatisticsLvAdapter(ArrayList<MonthStatisticsData> monthStatisticsDataArrayList) {
         this.monthStatisticsDataArrayList = monthStatisticsDataArrayList;
     }
 
@@ -51,13 +47,14 @@ public class MonthStatisticsLvAdapter extends BaseAdapter {
         // view
         convertView = inflater.inflate(R.layout.custom_lv_month_statistics, parent, false);
 
-        // widget
-        MaterialTextView year = convertView.findViewById(R.id.c_lv_month_statistics_year);
-        MaterialTextView month = convertView.findViewById(R.id.c_lv_month_statistics_month);
-        MaterialTextView gameRecord = convertView.findViewById(R.id.c_lv_month_statistics_game_record);
-
         // monthStatisticsData
         MonthStatisticsData monthStatisticsData = (MonthStatisticsData) getItem(position);
+
+        // widget
+
+        MaterialTextView year = convertView.findViewById(R.id.custom_lv_monthStatistics_year);
+        MaterialTextView month = convertView.findViewById(R.id.custom_lv_monthStatistics_month);
+        MaterialTextView gameRecord = convertView.findViewById(R.id.custom_lv_monthStatistics_gameRecord);
 
         // setup widget
         year.setText(monthStatisticsData.getYear() + "년");
@@ -70,18 +67,6 @@ public class MonthStatisticsLvAdapter extends BaseAdapter {
         );
 
         return convertView;
-    }
-
-    private String convertToGameRecordFormat(int winCount, int lossCount) {
-        StringBuilder gameRecord = new StringBuilder()
-                .append(winCount + lossCount)
-                .append("전 ")
-                .append(winCount)
-                .append("승 ")
-                .append(lossCount)
-                .append("패");
-
-        return gameRecord.toString();
     }
 
 }

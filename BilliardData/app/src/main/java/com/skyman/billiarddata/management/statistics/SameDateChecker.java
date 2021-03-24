@@ -329,7 +329,7 @@ public class SameDateChecker implements Serializable {
         // instance variable
         private long billiardCount;
         private boolean isWinner;
-        private int index;      // count 가 차례대로 증가하는 값이 아닐 수 도 있으므로 이 같은 날짜인 billiard 는 배열에서 몇 번째인지를 알고 있어야 한다.
+        private int index;                          // sameDataChecker 와 1:1 대응되는 billiardDataArrayList 의 index
 
         // constructor
         public SameDateItem(long billiardCount, boolean isWinner, int index) {

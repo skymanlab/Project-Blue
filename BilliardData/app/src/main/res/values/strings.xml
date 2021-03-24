@@ -103,9 +103,9 @@
     <string name="userManager_tabLayout_userFriend">친구 목록</string>
 
     <!-- Activity : statistics manager -->
-    <string name="statistics_manager_title">통계</string>
-    <string name="statistics_manager_chart_my_total_game_record">총 전적</string>
-    <string name="statistics_manager_chart_my_total_game_record_default">0전 0승 0패</string>
+    <string name="statisticsManager_title">통계</string>
+    <string name="statisticsManager_tabLayout_calendar">달력</string>
+    <string name="statisticsManager_tabLayout_monthStatistics">차트</string>
 
     <!-- Activity : app info -->
     <string name="appInfo_title">어플리케이션 정보</string>
@@ -173,7 +173,6 @@
     <string name="F_userInput_noticeUser_"></string>
     <string name="F_userInput_"></string>
 
-
     <!-- Fragment : user info -->
     <string name="F_userInfo_title">나의 정보를 확인합니다.</string>
     <string name="F_userInfo_id">아이디</string>
@@ -218,13 +217,14 @@
 
     <!-- Fragment : calendar -->
     <string name="F_calendar_title">달력으로 확인해봐요.</string>
-    <string name="F_calendar_win">승리</string>
-    <string name="F_calendar_loss">패배</string>
+    <string name="F_calendar_explain_win"> : 승리</string>
+    <string name="F_calendar_explain_loss"> : 패배</string>
     <string name="F_calendar_"></string>
 
     <!-- Fragment : chart -->
     <string name="F_chart_title">차트로 확인해봐요.</string>
-    <string name="f_chart_"></string>
+    <string name="F_chart_myTotalGameRecord">총 전적</string>
+    <string name="F_chart_myTotalGameRecord_default">0전 0승 0패</string>
 
 
     <!--                                Dialog
@@ -247,6 +247,7 @@
     <string name="custom_dialog_gameRecord_playTime">게임 시간</string>
     <string name="custom_dialog_gameRecord_playTime_default">## 분</string>
     <string name="custom_dialog_gameRecord_playerList">참가자</string>
+    <string name="custom_dialog_gameRecord_playerList_explain">* 참가자 : 이름(수지)</string>
     <string name="custom_dialog_gameRecord_playerList_default"></string>
     <string name="custom_dialog_gameRecord_winner">승리자</string>
     <string name="custom_dialog_gameRecord_winner_default">### 님입니다.</string>
@@ -300,10 +301,10 @@
     <string name="c_lv_friend_data_bt_delete">삭제</string>
 
     <!-- Custom ListView : month statistics -->
-    <string name="c_lv_month_statistics_month_default">1월</string>
-    <string name="c_lv_month_statistics_game_record">전적</string>
-    <string name="c_lv_month_statistics_game_record_default">10전 2승 8패</string>
-    <string name="c_lv_month_statistics_"></string>
+    <string name="custom_lv_monthStatistics_month_default">1월</string>
+    <string name="custom_lv_monthStatistics_gameRecord">전적</string>
+    <string name="custom_lv_monthStatistics_gameRecord_default">10전 2승 8패</string>
+    <string name="custom_lv_monthStatistics_"></string>
 
     <!-- Custom GridView : player list -->
     <string name="c_gv_player_list_user_name">XXX 님</string>

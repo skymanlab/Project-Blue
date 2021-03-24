@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.statistics.MonthStatisticsData;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * Use the {@link ChartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChartFragment extends Fragment {
+public class ChartFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
     private static final String CLASS_NAME = ChartFragment.class.getSimpleName();
@@ -64,11 +65,12 @@ public class ChartFragment extends Fragment {
     public static ChartFragment newInstance(UserData userData,
                                             ArrayList<BilliardData> billiardDataArrayList,
                                             SameDateChecker sameDateChecker) {
-        ChartFragment fragment = new ChartFragment();
         Bundle args = new Bundle();
         args.putSerializable(USER_DATA, userData);
         args.putSerializable(BILLIARD_DATA_ARRAY_LIST, billiardDataArrayList);
         args.putSerializable(SAME_DATE_CHECKER, sameDateChecker);
+
+        ChartFragment fragment = new ChartFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,37 +96,61 @@ public class ChartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (userData == null) {
-            return;
-        }
+        // appDbManager
+        initAppDbManager();
 
-        if (billiardDataArrayList.size() == 0) {
-            return;
-        }
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
 
-        // month statistics 의 data 생성하기
-        monthStatisticsDataArrayList = new ArrayList<>();
+    }
 
-        createMonthStatisticsData();
+    @Override
+    public void initAppDbManager() {
 
-        printMonthStatisticsData();
+    }
 
-        // ListView adapter 생성
-        MonthStatisticsLvAdapter adapter = new MonthStatisticsLvAdapter();
-        adapter.setMonthStatisticsDataArrayList(monthStatisticsDataArrayList);
+    @Override
+    public void connectWidget() {
 
-        // ListView : monthStatistics
-        this.monthStatistics = (ListView) view.findViewById(R.id.F_chart_monthStatistics);
-        this.monthStatistics.setAdapter(adapter);
+        this.myTotalGameRecord = (TextView) getView().findViewById(R.id.F_chart_myTotalGameRecord);
 
-        // TextView : myTotalGameRecord
-        this.myTotalGameRecord = (TextView) view.findViewById(R.id.F_chart_myTotalGameRecord);
-        this.myTotalGameRecord.setText(
-                ProjectBlueDataFormatter.getFormatOfGameRecord(
-                        userData.getGameRecordWin(),
-                        userData.getGameRecordLoss()
-                )
+        this.monthStatistics = (ListView) getView().findViewById(R.id.F_chart_monthStatistics);
+
+    }
+
+    @Override
+    public void initWidget() {
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "=========>>>>>>>>>>>>>>>>>>========================================>>>>>>>>>>>>>>>>>>>>>>>>>> Chart fragment"
         );
+
+        if (userData != null) {
+            if (!billiardDataArrayList.isEmpty()) {
+
+                // month statistics 의 data 생성하기
+                monthStatisticsDataArrayList = new ArrayList<>();
+
+                createMonthStatisticsData();
+
+                // ListView adapter 생성
+                MonthStatisticsLvAdapter adapter = new MonthStatisticsLvAdapter(monthStatisticsDataArrayList);
+
+                // ListView : monthStatistics
+                this.monthStatistics.setAdapter(adapter);
+
+                // TextView : myTotalGameRecord
+                this.myTotalGameRecord.setText(
+                        ProjectBlueDataFormatter.getFormatOfGameRecord(
+                                userData.getGameRecordWin(),
+                                userData.getGameRecordLoss()
+                        )
+                );
+
+            }
+        }
 
     }
 
@@ -144,6 +170,7 @@ public class ChartFragment extends Fragment {
                 monthStatisticsData.setMonth(sameDateChecker.getMonthToIndex(index));
                 monthStatisticsData.setWinCount(sameDateChecker.getWinCountToIndex(index));
                 monthStatisticsData.setLossCount(sameDateChecker.getLossCountToIndex(index));
+                monthStatisticsData.setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDateChecker.getSameDateItemToIndex(index)));
 
                 monthStatisticsDataArrayList.add(monthStatisticsData);
                 continue;
@@ -169,6 +196,7 @@ public class ChartFragment extends Fragment {
 
                         monthStatisticsDataArrayList.get(innerIndex).setWinCount(winCount);
                         monthStatisticsDataArrayList.get(innerIndex).setLossCount(lossCount);
+                        monthStatisticsDataArrayList.get(innerIndex).setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDateChecker.getSameDateItemToIndex(index)));
 
                         isSame = true;
 
@@ -185,16 +213,29 @@ public class ChartFragment extends Fragment {
                     monthStatisticsData.setMonth(sameDateChecker.getMonthToIndex(index));
                     monthStatisticsData.setWinCount(sameDateChecker.getWinCountToIndex(index));
                     monthStatisticsData.setLossCount(sameDateChecker.getLossCountToIndex(index));
+                    monthStatisticsData.setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDateChecker.getSameDateItemToIndex(index)));
 
                     monthStatisticsDataArrayList.add(monthStatisticsData);
 
                 }
-
             }
+        }
 
+    }
+
+    private ArrayList<BilliardData> getBilliardDataArrayListToSameDateItemArrayList(ArrayList<SameDateChecker.SameDateItem> sameDateItemArrayList) {
+
+        ArrayList<BilliardData> billiardDataArrayListOfMonth = new ArrayList<>();
+
+        for (int index = 0; index < sameDateItemArrayList.size(); index++) {
+
+            billiardDataArrayListOfMonth.add(
+                    this.billiardDataArrayList.get(sameDateItemArrayList.get(index).getIndex())
+            );
 
         }
 
+        return billiardDataArrayListOfMonth;
     }
 
     /**
@@ -207,7 +248,7 @@ public class ChartFragment extends Fragment {
                 "================================= monthStatisticsDataArrayList - start ================================="
         );
 
-        for (int index= 0; index<monthStatisticsDataArrayList.size(); index++) {
+        for (int index = 0; index < monthStatisticsDataArrayList.size(); index++) {
 
             DeveloperManager.displayLog(
                     CLASS_NAME,
@@ -239,24 +280,22 @@ public class ChartFragment extends Fragment {
                     CLASS_NAME,
                     "loss count : " + monthStatisticsDataArrayList.get(index).getLossCount()
             );
+
+            for (int innerIndex = 0; innerIndex < monthStatisticsDataArrayList.get(index).getBilliardDataArrayList().size(); innerIndex++) {
+
+                DeveloperManager.displayLog(
+                        CLASS_NAME,
+                        "< " + index + " > 의 << " + innerIndex + " >> billiard count : " + monthStatisticsDataArrayList.get(index).getBilliardDataArrayList().get(innerIndex).getCount()
+                );
+
+
+            }
         }
 
         DeveloperManager.displayLog(
                 CLASS_NAME,
                 "================================= monthStatisticsDataArrayList - end ================================="
         );
-    }
-
-    private String convertToGameRecordFormat(int winCount, int lossCount){
-        StringBuilder gameRecord = new StringBuilder()
-                .append(winCount+lossCount)
-                .append("전 ")
-                .append(winCount)
-                .append("승 ")
-                .append(lossCount)
-                .append("패");
-
-        return gameRecord.toString();
     }
 
 }

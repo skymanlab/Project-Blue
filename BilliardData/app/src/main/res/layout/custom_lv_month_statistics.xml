@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/custom_lv_monthStatistics_contentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
@@ -30,17 +31,17 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/c_lv_month_statistics_year"
+                        android:id="@+id/custom_lv_monthStatistics_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="2021년"/>
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/c_lv_month_statistics_month"
+                        android:id="@+id/custom_lv_monthStatistics_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_lv_month_statistics_month_default"
+                        android:text="@string/custom_lv_monthStatistics_month_default"
                         android:textSize="20sp"
                         android:textColor="@color/cardview_dark_background"/>
                 </LinearLayout>
@@ -66,7 +67,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_lv_month_statistics_game_record"/>
+                        android:text="@string/custom_lv_monthStatistics_gameRecord"/>
 
                     <View
                         android:layout_width="1dp"
@@ -76,10 +77,10 @@
                         android:background="@color/cardview_dark_background" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/c_lv_month_statistics_game_record"
+                        android:id="@+id/custom_lv_monthStatistics_gameRecord"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/c_lv_month_statistics_game_record_default"/>
+                        android:text="@string/custom_lv_monthStatistics_gameRecord_default"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

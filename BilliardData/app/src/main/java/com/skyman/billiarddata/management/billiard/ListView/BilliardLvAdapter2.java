@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentManager;
 import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.dialog.PlayerList;
 import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
@@ -30,7 +29,6 @@ import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

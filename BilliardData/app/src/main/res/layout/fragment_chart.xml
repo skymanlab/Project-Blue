@@ -1,80 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".fragment.statistics.ChartFragment">
 
-    <!-- main -->
+    <!-- title-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/F_chart_title"
+        android:textAlignment="center" />
+
+    <!-- content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- title-->
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_margin="20dp"
+            app:cardCornerRadius="10dp">
 
-            <TextView
+            <!-- my total game record -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/F_chart_title"
-                android:textAlignment="center"></TextView>
-        </LinearLayout><!-- End of title-->
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <!-- content -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/F_chart_myTotalGameRecord" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="10dp">
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/cardview_dark_background" />
 
-                <!-- my total game record -->
-                <LinearLayout
+                <TextView
+                    android:id="@+id/F_chart_myTotalGameRecord"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:orientation="horizontal">
+                    android:text="@string/F_chart_myTotalGameRecord_default" />
+            </LinearLayout><!-- End of my total game record -->
+        </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/statistics_manager_chart_my_total_game_record"/>
+        <ListView
+            android:id="@+id/F_chart_monthStatistics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp" />
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/cardview_dark_background" />
+    </LinearLayout><!-- End of content-->
 
-                    <TextView
-                        android:id="@+id/F_chart_myTotalGameRecord"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/statistics_manager_chart_my_total_game_record_default"/>
-                </LinearLayout><!-- End of my total game record -->
-
-                <!-- -->
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <ListView
-                android:id="@+id/F_chart_monthStatistics"
-                android:layout_width="match_parent"
-                android:padding="5dp"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout><!-- End of content-->
-
-    </LinearLayout><!-- End of main -->
-</FrameLayout>
+</LinearLayout>

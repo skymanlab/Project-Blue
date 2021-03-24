@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/userManager_title"
-                android:textAlignment="center"></TextView>
+                android:textAlignment="center" />
         </LinearLayout>
 
         <!-- content -->
@@ -33,30 +33,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- content 1. tab -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/userManager_tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPagerTab" /><!-- End of content 1 -->
+                android:background="@color/colorPagerTab" />
 
-            <!-- divider -->
             <View
-                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?android:attr/listDivider" /><!-- End of divider -->
-
-            <!-- content 2. pager-->
-<!--            <androidx.viewpager.widget.ViewPager-->
-<!--                android:id="@+id/userManager_viewPager"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />&lt;!&ndash; End of content 2 &ndash;&gt;-->
+                android:background="?android:attr/listDivider" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/userManager_viewPager2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout><!-- End of content-->
     </LinearLayout><!-- End of main-->
