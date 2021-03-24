@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.user.database.UserDbManager2;
 

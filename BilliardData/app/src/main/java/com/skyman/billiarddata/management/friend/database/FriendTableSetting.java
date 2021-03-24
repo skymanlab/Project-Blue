@@ -2,7 +2,6 @@ package com.skyman.billiarddata.management.friend.database;
 
 import android.provider.BaseColumns;
 
-import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 public class FriendTableSetting {
 
@@ -20,7 +19,7 @@ public class FriendTableSetting {
 
     // class constant : if exists drop table
     public static final String SQL_DROP_TABLE_IF_EXISTS =
-            "DROP TABLE IF EXISTS " + Entry.TABLE_NAME ;
+            "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
     // class constant : select - all content
     public static final String SQL_SELECT_TABLE_ALL_ITEM =

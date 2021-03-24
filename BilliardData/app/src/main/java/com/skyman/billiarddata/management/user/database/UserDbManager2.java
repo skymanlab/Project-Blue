@@ -1,17 +1,10 @@
 package com.skyman.billiarddata.management.user.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.billiard.database.BilliardTableSetting;
 import com.skyman.billiarddata.management.projectblue.database.AppDbLog;
-import com.skyman.billiarddata.management.projectblue.database.AppDbSetting;
 import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
 import com.skyman.billiarddata.management.user.data.UserData;
 
@@ -327,8 +320,8 @@ public class UserDbManager2 {
 
     // ==================================================== Update Query ====================================================
     public int updateContentById(long id,
-                             int targetScore,
-                             String speciality) {
+                                 int targetScore,
+                                 String speciality) {
 
         final int numberOfUpdatedRows[] = {0};
 
@@ -377,9 +370,9 @@ public class UserDbManager2 {
 
 
     public int updateContentById(long id,
-                             String name,
-                             int targetScore,
-                             String speciality) {
+                                 String name,
+                                 int targetScore,
+                                 String speciality) {
 
 
         final int numberOfUpdatedRows[] = {0};
@@ -427,11 +420,11 @@ public class UserDbManager2 {
 
 
     public int updateContentById(long id,
-                             int gameRecordWin,
-                             int gameRecordLoss,
-                             long recentGameBilliardCount,
-                             int totalPlayTime,
-                             int totalCost) {
+                                 int gameRecordWin,
+                                 int gameRecordLoss,
+                                 long recentGameBilliardCount,
+                                 int totalPlayTime,
+                                 int totalCost) {
 
         final int numberOfUpdatedRows[] = {0};
 

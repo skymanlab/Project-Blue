@@ -20,11 +20,11 @@ import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.data.BilliardDataFormatter;
 import com.skyman.billiarddata.management.friend.data.FriendData;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
@@ -107,9 +107,9 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         gameMode.setText(billiardData.getGameMode());                                                               // 2. game mode
         playerCount.setText(billiardData.getPlayerCount() + "");                                                    // 3. player count
         winnerName.setText(billiardData.getWinnerName());                                                           // 5. winner name
-        playTime.setText(BilliardDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 6. play time
+        playTime.setText(ProjectBlueDataFormatter.getFormatOfPlayTime(billiardData.getPlayTime()));                    // 6. play time
         score.setText(billiardData.getScore());                                                                     // 7. score
-        cost.setText(BilliardDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 8. cost
+        cost.setText(ProjectBlueDataFormatter.getFormatOfCost(billiardData.getCost()));                                // 8. cost
 
         // countWrapper : background
         // userData 와 billiardData 를 이용하여

@@ -1,7 +1,6 @@
 package com.skyman.billiarddata.management.file;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
@@ -9,17 +8,13 @@ import android.widget.Toast;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
 import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import java.io.BufferedReader;

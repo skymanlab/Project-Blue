@@ -17,7 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class AppDbSetting2 {
 
     // constant
-    private final String CLASS_NAME_LOG = "[DbM]_ProjectBlueDBManager";
+    private final String CLASS_NAME = AppDbSetting2.class.getSimpleName();
 
     // instance variable
     private AppDbOpenHelper appDbOpenHelper;

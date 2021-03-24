@@ -16,14 +16,11 @@ import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
+import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.data.UserDataFormatter;
 
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -315,13 +312,13 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
         speciality.setText(userData.getSpeciality());
 
         // [iv/C]TextView : gameRecord 를 userData 의 getGameRecordWin 와 getGameRecordLoss 를 특정 문자열 형태로 바꾼 값으로
-        gameRecord.setText(UserDataFormatter.getFormatOfGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss()));
+        gameRecord.setText(ProjectBlueDataFormatter.getFormatOfGameRecord(userData.getGameRecordWin(), userData.getGameRecordLoss()));
 
         // [iv/C]TextView : totalPlayTime 를 userData 의 getTotalPlayTime 을 특정 문자열로 바꾼 값으로
-        totalPlayTime.setText(UserDataFormatter.getFormatOfPlayTime(userData.getTotalPlayTime()));
+        totalPlayTime.setText(ProjectBlueDataFormatter.getFormatOfPlayTime(userData.getTotalPlayTime()));
 
         // [iv/C]TextView : totalCost 를 userData 의 getTotalCost 을 특정 문자열로 바꾼 값으로
-        totalCost.setText(UserDataFormatter.getFormatOfCost(userData.getTotalCost()));
+        totalCost.setText(ProjectBlueDataFormatter.getFormatOfCost(userData.getTotalCost()));
 
         // [check 1] : 참가한 게임이 있다.
         if (billiardData != null) {

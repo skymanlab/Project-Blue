@@ -10,13 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.data.FriendDataFormatter;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
+import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 
 import java.util.ArrayList;
@@ -82,9 +79,9 @@ public class FriendLvAdapter2 extends BaseAdapter {
         // init widget
         id.setText(Long.toString(friendData.getId()));
         name.setText(friendData.getName());
-        gameRecord.setText(FriendDataFormatter.getFormatOfGameRecord(friendData.getGameRecordWin(), friendData.getGameRecordLoss()));
-        totalPlayTime.setText(FriendDataFormatter.getFormatOfPlayTime(Integer.toString(friendData.getTotalPlayTime())));
-        totalCost.setText(FriendDataFormatter.getFormatOfCost(Integer.toString(friendData.getTotalCost())));
+        gameRecord.setText(ProjectBlueDataFormatter.getFormatOfGameRecord(friendData.getGameRecordWin(), friendData.getGameRecordLoss()));
+        totalPlayTime.setText(ProjectBlueDataFormatter.getFormatOfPlayTime(Integer.toString(friendData.getTotalPlayTime())));
+        totalCost.setText(ProjectBlueDataFormatter.getFormatOfCost(Integer.toString(friendData.getTotalCost())));
 
         appDbManager.requestBilliardQuery(
                 new AppDbManager.BilliardQueryRequestListener() {

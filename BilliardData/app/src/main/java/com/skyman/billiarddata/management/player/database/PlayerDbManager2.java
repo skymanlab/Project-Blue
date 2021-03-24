@@ -1,16 +1,11 @@
 package com.skyman.billiarddata.management.player.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.player.data.PlayerData;
 import com.skyman.billiarddata.management.projectblue.database.AppDbLog;
-import com.skyman.billiarddata.management.projectblue.database.AppDbSetting;
 import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
 import com.skyman.billiarddata.management.user.database.UserTableSetting;
 

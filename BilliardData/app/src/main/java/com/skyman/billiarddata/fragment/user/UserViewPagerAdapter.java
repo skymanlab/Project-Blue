@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 
 public class UserViewPagerAdapter extends FragmentStateAdapter {

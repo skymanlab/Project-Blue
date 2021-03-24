@@ -2,30 +2,23 @@ package com.skyman.billiarddata;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.fragment.statistics.StatisticsPagerAdapter;
 import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
 import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.statistics.SameDateChecker;
 import com.skyman.billiarddata.management.statistics.SameDateCheckerMake;
 import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 

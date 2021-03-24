@@ -1,7 +1,6 @@
 package com.skyman.billiarddata.fragment.user;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.skyman.billiarddata.MainActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.friend.ListView.FriendLvAdapter;
 import com.skyman.billiarddata.management.friend.ListView.FriendLvAdapter2;
 import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
-import com.skyman.billiarddata.management.friend.ListView.FriendLvManager;
 import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;

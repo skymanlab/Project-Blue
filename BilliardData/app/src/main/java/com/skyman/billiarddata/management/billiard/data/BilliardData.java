@@ -1,6 +1,5 @@
 package com.skyman.billiarddata.management.billiard.data;
 
-import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 

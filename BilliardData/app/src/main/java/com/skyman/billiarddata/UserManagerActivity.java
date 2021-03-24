@@ -1,32 +1,20 @@
 package com.skyman.billiarddata;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.fragment.user.UserPagerAdapter;
 import com.skyman.billiarddata.fragment.user.UserViewPagerAdapter;
 import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager;
 import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbSetting2;
 import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager;
 
-import java.util.ArrayList;
 
 public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 

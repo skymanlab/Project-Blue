@@ -1,10 +1,6 @@
 package com.skyman.billiarddata.management.player.database;
 
 import android.provider.BaseColumns;
-import android.telephony.emergency.EmergencyNumber;
-
-import com.skyman.billiarddata.management.friend.database.FriendTableSetting;
-import com.skyman.billiarddata.management.user.database.UserTableSetting;
 
 public class PlayerTableSetting {
 
@@ -43,8 +39,8 @@ public class PlayerTableSetting {
     public static class Entry implements BaseColumns {
         public static final String TABLE_NAME = "player";
         public static final String COLUMN_NAME_BILLIARD_COUNT = "billiardCount";    // 1. count
-        public static final String COLUMN_NAME_PLAYER_ID ="playerId";               // 2. player id
-        public static final String COLUMN_NAME_PLAYER_NAME ="playerName";           // 3. player name
+        public static final String COLUMN_NAME_PLAYER_ID = "playerId";               // 2. player id
+        public static final String COLUMN_NAME_PLAYER_NAME = "playerName";           // 3. player name
         public static final String COLUMN_NAME_TARGET_SCORE = "targetScore";        // 4. target score
         public static final String COLUMN_NAME_SCORE = "score";                     // 5. score
 

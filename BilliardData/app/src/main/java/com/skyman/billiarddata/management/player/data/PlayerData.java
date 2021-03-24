@@ -13,8 +13,8 @@ public class PlayerData implements Serializable {
 
     // constructor
     public static final String COUNT = "count";
-    public static final String BILLIARD_COUNT= "billiardCount";
-    public static final String PLAYER_ID= "playerId";
+    public static final String BILLIARD_COUNT = "billiardCount";
+    public static final String PLAYER_ID = "playerId";
     public static final String PLAYER_NAME = "playerName";
     public static final String TARGET_SCORE = "targetScore";
     public static final String SCORE = "score";
