@@ -39,27 +39,23 @@ public class JsonGenerator {
         return jsonObject;
     }
 
-    //
-    public void createJsonObject() {
+
+    // ============================================== 사용자 사용 메소드 ==============================================
+
+    /**
+     * 모든 데이터를 형식에 맞게 JSON Object 로 만들어서 반환한다.
+     *
+     * @throws Exception 오류 발생 시
+     */
+    public void createJsonObject() throws Exception {
 
         // dataArray
-        JSONArray userDataArray = new JSONArray();
         JSONArray billiardDataArray = new JSONArray();
         JSONArray playerDataArray = new JSONArray();
         JSONArray friendDataArray = new JSONArray();
 
         // user
-//        for (int index = 0; index < userDataArrayList.size(); index++) {
-//            userDataArray.put(
-//                    createJsonObjectOfUserData(
-//                            userDataArrayList.get(index)
-//                    )
-//            );
-//        }
-//        userDataArray.put(
-//                createJsonObjectOfUserData(userData)
-//        );
-        addDataArrayToJsonObject(UserData.class.getSimpleName(), createJsonObjectOfUserData(userData));
+        jsonObject.put(UserData.class.getSimpleName(), createJsonObjectOfUserData(userData));
 
         // friend
         for (int index = 0; index < friendDataArrayList.size(); index++) {
@@ -69,7 +65,7 @@ public class JsonGenerator {
                     )
             );
         }
-        addDataArrayToJsonObject(FriendData.class.getSimpleName(), friendDataArray);
+        jsonObject.put(FriendData.class.getSimpleName(), friendDataArray);
 
         // billiard
         for (int index = 0; index < billiardDataArrayList.size(); index++) {
@@ -79,7 +75,7 @@ public class JsonGenerator {
                     )
             );
         }
-        addDataArrayToJsonObject(BilliardData.class.getSimpleName(), billiardDataArray);
+        jsonObject.put(BilliardData.class.getSimpleName(), billiardDataArray);
 
         // player
         for (int index = 0; index < playerDataArrayList.size(); index++) {
@@ -89,147 +85,109 @@ public class JsonGenerator {
                     )
             );
         }
-        addDataArrayToJsonObject(PlayerData.class.getSimpleName(), playerDataArray);
-
-    }
-
-
-    public void addDataArrayToJsonObject(String arrayKey, JSONObject data) {
-
-        try {
-            jsonObject.put(arrayKey, data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void addDataArrayToJsonObject(String arrayKey, JSONArray dataArray) {
-
-        try {
-            jsonObject.put(arrayKey, dataArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put(PlayerData.class.getSimpleName(), playerDataArray);
 
     }
 
 
     // ======================================================= userData =======================================================
-    public JSONObject createJsonObjectOfUserData(UserData userData) {
+    private JSONObject createJsonObjectOfUserData(UserData userData) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
+        // 0. id
+        // 1. name
+        // 2. target score
+        // 3. speciality
+        // 4. game record win
+        // 5. game record loss
+        // 6. recent game billiard count
+        // 7. total play time
+        // 8. total cost
 
-            // 0. id
-            // 1. name
-            // 2. target score
-            // 3. speciality
-            // 4. game record win
-            // 5. game record loss
-            // 6. recent game billiard count
-            // 7. total play time
-            // 8. total cost
-
-            jsonObject.put(UserData.ID, userData.getId());
-            jsonObject.put(UserData.NAME, userData.getName());
-            jsonObject.put(UserData.TARGET_SCORE, userData.getTargetScore());
-            jsonObject.put(UserData.SPECIALITY, userData.getSpeciality());
-            jsonObject.put(UserData.GAME_RECORD_WIN, userData.getGameRecordWin());
-            jsonObject.put(UserData.GAME_RECORD_LOSS, userData.getGameRecordLoss());
-            jsonObject.put(UserData.RECENT_GAME_BILLIARD_COUNT, userData.getRecentGameBilliardCount());
-            jsonObject.put(UserData.TOTAL_PLAY_TIME, userData.getTotalPlayTime());
-            jsonObject.put(UserData.TOTAL_COST, userData.getTotalCost());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put(UserData.ID, userData.getId());
+        jsonObject.put(UserData.NAME, userData.getName());
+        jsonObject.put(UserData.TARGET_SCORE, userData.getTargetScore());
+        jsonObject.put(UserData.SPECIALITY, userData.getSpeciality());
+        jsonObject.put(UserData.GAME_RECORD_WIN, userData.getGameRecordWin());
+        jsonObject.put(UserData.GAME_RECORD_LOSS, userData.getGameRecordLoss());
+        jsonObject.put(UserData.RECENT_GAME_BILLIARD_COUNT, userData.getRecentGameBilliardCount());
+        jsonObject.put(UserData.TOTAL_PLAY_TIME, userData.getTotalPlayTime());
+        jsonObject.put(UserData.TOTAL_COST, userData.getTotalCost());
 
         return jsonObject;
     }
 
 
     // ======================================================= billiardData =======================================================
-    public JSONObject createJsonObjectOfBilliardData(BilliardData billiardData) {
+    private JSONObject createJsonObjectOfBilliardData(BilliardData billiardData) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
 
-            // 0. count
-            // 1. date
-            // 2. game mode
-            // 3. player count
-            // 4. winner id
-            // 5. winner name
-            // 6. play time
-            // 7. score
-            // 8. cost
-            jsonObject.put(BilliardData.COUNT, billiardData.getCount());
-            jsonObject.put(BilliardData.DATE, billiardData.getDate());
-            jsonObject.put(BilliardData.GAME_MODE, billiardData.getGameMode());
-            jsonObject.put(BilliardData.PLAYER_COUNT, billiardData.getPlayerCount());
-            jsonObject.put(BilliardData.WINNER_ID, billiardData.getWinnerId());
-            jsonObject.put(BilliardData.WINNER_NAME, billiardData.getWinnerName());
-            jsonObject.put(BilliardData.PLAY_TIME, billiardData.getPlayTime());
-            jsonObject.put(BilliardData.SCORE, billiardData.getScore());
-            jsonObject.put(BilliardData.COST, billiardData.getCost());
+        // 0. count
+        // 1. date
+        // 2. game mode
+        // 3. player count
+        // 4. winner id
+        // 5. winner name
+        // 6. play time
+        // 7. score
+        // 8. cost
+        jsonObject.put(BilliardData.COUNT, billiardData.getCount());
+        jsonObject.put(BilliardData.DATE, billiardData.getDate());
+        jsonObject.put(BilliardData.GAME_MODE, billiardData.getGameMode());
+        jsonObject.put(BilliardData.PLAYER_COUNT, billiardData.getPlayerCount());
+        jsonObject.put(BilliardData.WINNER_ID, billiardData.getWinnerId());
+        jsonObject.put(BilliardData.WINNER_NAME, billiardData.getWinnerName());
+        jsonObject.put(BilliardData.PLAY_TIME, billiardData.getPlayTime());
+        jsonObject.put(BilliardData.SCORE, billiardData.getScore());
+        jsonObject.put(BilliardData.COST, billiardData.getCost());
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return jsonObject;
     }
 
 
     // ======================================================= playerData =======================================================
-    public JSONObject createJsonObjectOfPlayerData(PlayerData playerData) {
+    private JSONObject createJsonObjectOfPlayerData(PlayerData playerData) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
-            // 0. count
-            // 1. billiard count
-            // 2. player id
-            // 3. player name
-            // 4. target score
-            // 5. score
 
-            jsonObject.put(PlayerData.COUNT, playerData.getCount());
-            jsonObject.put(PlayerData.BILLIARD_COUNT, playerData.getBilliardCount());
-            jsonObject.put(PlayerData.PLAYER_ID, playerData.getPlayerId());
-            jsonObject.put(PlayerData.PLAYER_NAME, playerData.getPlayerName());
-            jsonObject.put(PlayerData.TARGET_SCORE, playerData.getTargetScore());
-            jsonObject.put(PlayerData.SCORE, playerData.getScore());
+        // 0. count
+        // 1. billiard count
+        // 2. player id
+        // 3. player name
+        // 4. target score
+        // 5. score
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put(PlayerData.COUNT, playerData.getCount());
+        jsonObject.put(PlayerData.BILLIARD_COUNT, playerData.getBilliardCount());
+        jsonObject.put(PlayerData.PLAYER_ID, playerData.getPlayerId());
+        jsonObject.put(PlayerData.PLAYER_NAME, playerData.getPlayerName());
+        jsonObject.put(PlayerData.TARGET_SCORE, playerData.getTargetScore());
+        jsonObject.put(PlayerData.SCORE, playerData.getScore());
+
         return jsonObject;
     }
 
 
     // ======================================================= friendData =======================================================
-    public JSONObject createJsonObjectOfFriendData(FriendData friendData) {
+    private JSONObject createJsonObjectOfFriendData(FriendData friendData) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
 
-            // 0. id
-            // 1. user id
-            // 2. name
-            // 3. game record win
-            // 4. game record loss
-            // 5. recent game billiard count
-            // 6. total play time
-            // 7. total cost
+        // 0. id
+        // 1. user id
+        // 2. name
+        // 3. game record win
+        // 4. game record loss
+        // 5. recent game billiard count
+        // 6. total play time
+        // 7. total cost
 
-            jsonObject.put(FriendData.ID, friendData.getId());
-            jsonObject.put(FriendData.USER_ID, friendData.getUserId());
-            jsonObject.put(FriendData.NAME, friendData.getName());
-            jsonObject.put(FriendData.GAME_RECORD_WIN, friendData.getGameRecordWin());
-            jsonObject.put(FriendData.GAME_RECORD_LOSS, friendData.getGameRecordLoss());
-            jsonObject.put(FriendData.RECENT_GAME_BILLIARD_COUNT, friendData.getRecentGameBilliardCount());
-            jsonObject.put(FriendData.TOTAL_PLAY_TIME, friendData.getTotalPlayTime());
-            jsonObject.put(FriendData.TOTAL_COST, friendData.getTotalCost());
+        jsonObject.put(FriendData.ID, friendData.getId());
+        jsonObject.put(FriendData.USER_ID, friendData.getUserId());
+        jsonObject.put(FriendData.NAME, friendData.getName());
+        jsonObject.put(FriendData.GAME_RECORD_WIN, friendData.getGameRecordWin());
+        jsonObject.put(FriendData.GAME_RECORD_LOSS, friendData.getGameRecordLoss());
+        jsonObject.put(FriendData.RECENT_GAME_BILLIARD_COUNT, friendData.getRecentGameBilliardCount());
+        jsonObject.put(FriendData.TOTAL_PLAY_TIME, friendData.getTotalPlayTime());
+        jsonObject.put(FriendData.TOTAL_COST, friendData.getTotalCost());
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return jsonObject;
     }
 

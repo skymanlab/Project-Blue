@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
@@ -19,7 +18,6 @@ import com.skyman.billiarddata.management.user.database.UserDbManager2;
 
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -58,24 +56,17 @@ public class FileExport {
     }
 
 
+    // ============================================== 사용자 사용 메소드 ==============================================
+
     /**
-     * 내보내기를 위한 초기 설정작업 실시
+     * 내보내기 초기 설정작업 실시
+     *
+     * @throws Exception 오류 발생 시
      */
-    public void init() {
+    public void init() throws Exception {
 
         // 데이터 가져오기
         getDbAllData();
-
-        if (userData == null) {
-
-            Toast.makeText(
-                    activity,
-                    "저장할 데이터가 없습니다.",
-                    Toast.LENGTH_SHORT)
-                    .show();
-            return;
-
-        }
 
         // 위에서 가져온 데이터로 Json object 생성하기
         jsonData = createJsonObject();
@@ -89,6 +80,58 @@ public class FileExport {
 
     }
 
+
+    /**
+     * uri 에 해당하는 파일에 jsonData 를 쓴다. 그리고 쓰기가 완료 되면 onSuccessListener 를 통해서 다음 과정을 진행한다.
+     *
+     * @param uri               파일 uri
+     * @param onSuccessListener 성공했을 때 다음 과정을 진행
+     * @throws IOException 파일의 스트림을 얻어오는 과정에서 오류가 발생했을 때
+     */
+    public void writeJsonObject(Uri uri, OnSuccessListener onSuccessListener) throws IOException {
+
+        if (jsonData == null) {
+            new RuntimeException("exportData() method 를 먼저 수행해주세요.");
+            return;
+        }
+
+        ParcelFileDescriptor fileDescriptor = activity.getContentResolver().openFileDescriptor(uri, "w");
+
+        // 해당 파일의 stream 열기
+        FileOutputStream fileOutputStream = new FileOutputStream(fileDescriptor.getFileDescriptor());
+
+        // 파일에 내용 쓰기
+        fileOutputStream.write(jsonData.toString().getBytes());
+
+        // close
+        fileOutputStream.close();
+        fileDescriptor.close();
+
+        // 성공했을 때
+        onSuccessListener.onSuccess();
+    }
+
+
+    public void print() {
+
+        DeveloperManager.displayLog(
+                CLASS_NAME,
+                "FileExport 의 userData, friendDataArrayList, billiardDataArrayList, playerDataArrayList 를 확인하겠습니다."
+        );
+
+        // user
+        DeveloperManager.displayToUserData(CLASS_NAME, userData);
+
+        // friend
+        DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList);
+
+        // billiard
+        DeveloperManager.displayToBilliardData(CLASS_NAME, billiardDataArrayList);
+
+        // player
+        DeveloperManager.displayToPlayerData(CLASS_NAME, playerDataArrayList);
+
+    }
 
     /**
      * 각각의 Db manager 를 이용하여
@@ -129,7 +172,7 @@ public class FileExport {
      *
      * @return
      */
-    private JSONObject createJsonObject() {
+    private JSONObject createJsonObject() throws Exception {
 
         // SQLite 에서 가져온 데이터베이스의 모든 내용을 JSONObject 로 만들기
         JsonGenerator jsonGenerator = new JsonGenerator.Builder()
@@ -166,72 +209,9 @@ public class FileExport {
     }
 
 
-    /**
-     * 파일의 uri 에 jsonData 를 쓴다.
-     *
-     * @param uri
-     */
-    public void writeJsonObject(Uri uri) {
-
-        if (jsonData == null) {
-
-            new RuntimeException("exportData() method 를 먼저 수행해주세요.");
-            return;
-        }
-
-        try {
-
-            ParcelFileDescriptor fileDescriptor = activity.getContentResolver().openFileDescriptor(uri, "w");
-
-            // 해당 파일의 stream 열기
-            FileOutputStream fileOutputStream = new FileOutputStream(fileDescriptor.getFileDescriptor());
-
-            // 파일에 내용 쓰기
-            fileOutputStream.write(jsonData.toString().getBytes());
-
-            // close
-            fileOutputStream.close();
-            fileDescriptor.close();
-
-            // <사용자 알림>
-
-            Toast.makeText(
-                    activity,
-                    "내보내기가 성공하였습니다.",
-                    Toast.LENGTH_SHORT)
-                    .show();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public interface OnSuccessListener {
+        void onSuccess();
     }
 
-
-    /**
-     *
-     */
-    public void print() {
-
-        DeveloperManager.displayLog(CLASS_NAME, "========================================= user =========================================");
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "==================> 데이터 확인"
-        );
-        // user
-        DeveloperManager.displayToUserData(CLASS_NAME, userData);
-
-        // billiard
-        DeveloperManager.displayToBilliardData(CLASS_NAME, billiardDataArrayList);
-
-        // player
-        DeveloperManager.displayToPlayerData(CLASS_NAME, playerDataArrayList);
-
-        // friend
-        DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList);
-
-    }
 
 }

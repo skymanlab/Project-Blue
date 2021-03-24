@@ -20,6 +20,8 @@ import com.skyman.billiarddata.management.projectblue.data.SessionManager;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 
+import java.io.IOException;
+
 public class AppSettingActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
@@ -36,8 +38,8 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
     private LinearLayout dataBackupImportWrapper;
 
     // instance variable
-    private FileExport fileExport = null;
-    private FileImport fileImport = null;
+    private FileExport fileExport;
+    private FileImport fileImport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,54 +64,94 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
 
         if (requestCode == FileConstants.REQUEST_CODE_CREATE_FILE && resultCode == Activity.RESULT_OK) {
 
-            Uri uri = null;
-
             if (data != null) {
 
                 // 파일이 만들어진 위치의 Uri 를 가져오기
-                uri = data.getData();
+                Uri uri = data.getData();
                 DeveloperManager.displayLog(
                         CLASS_NAME,
-                        "==========================================>>>>>>>>>>>>>>>>>>> 내보내기"
-                );
-
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "uri : " + uri.toString()
+                        "내보내기/uri : " + uri.toString()
                 );
 
                 // FileExport 의 객체가 생성되었을 때
                 // writeJsonObject() 메소드를 사용하여 해당 위치의 파일에
                 // 데이터베이스의 모든 내용이 담긴 JsonObject 를 파일에 쓴다.
                 if (fileExport != null) {
-                    fileExport.writeJsonObject(uri);
-                }
 
+                    try {
+
+                        fileExport.writeJsonObject(
+                                uri,
+                                new FileExport.OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        // <사용자 알림>
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                R.string.appSetting_dataBackUp_export_noticeUser_success,
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+                                }
+                        );
+
+                    } catch (IOException e) {
+
+                        // 오류 발생
+                        // <사용자 알림>
+                        Toast.makeText(
+                                getApplicationContext(),
+                                R.string.appSetting_dataBackUp_export_noticeUser_error,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        e.printStackTrace();
+                    }
+                }
             }
+
         } else if (requestCode == FileConstants.REQUEST_CODE_OPEN_FILE && resultCode == Activity.RESULT_OK) {
 
-            Uri uri = null;
-
             if (data != null) {
-                uri = data.getData();
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "==========================================>>>>>>>>>>>>>>>>>>> 가져오기 "
-                );
 
+                // 선택한 파일 uri
+                Uri uri = data.getData();
                 DeveloperManager.displayLog(
                         CLASS_NAME,
-                        "uri : " + uri.toString()
+                        "가져오기/uri : " + uri.toString()
                 );
 
                 if (fileImport != null) {
-                    fileImport.saveDatabase(uri);
+
+                    try {
+                        fileImport.saveDatabase(
+                                uri,
+                                new FileImport.OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        // <사용자 알림>
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                R.string.appSetting_dataBackUp_import_noticeUser_success,
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+                                }
+                        );
+                    } catch (Exception e) {
+                        // 오류 발생
+                        // <사용자 알림>
+                        Toast.makeText(
+                                getApplicationContext(),
+                                R.string.appSetting_dataBackUp_import_noticeUser_error,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        e.printStackTrace();
+                    }
                 }
 
             }
 
         }
-
 
     }
 
@@ -145,23 +187,43 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
     @Override
     public void initWidget() {
 
-        if (userData == null) {
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "userData 가 생성되지 않았습니다."
-            );
-            return;
-        }
-
-        // LinearLayout : dataExport
+        // '내보내기' 실행
         dataBackupExportWrapper.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        // '파일 내보내기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
-                        fileExport = new FileExport(AppSettingActivity.this, appDbManager, userData);
-                        fileExport.init();
+                        if (userData != null) {
+
+                            // '파일 내보내기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
+                            fileExport = new FileExport(AppSettingActivity.this, appDbManager, userData);
+
+                            try {
+
+                                fileExport.init();
+
+                            } catch (Exception e) {
+                                // 오류 발생
+                                // <사용자 알림>
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        R.string.appSetting_dataBackUp_export_noticeUser_error,
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                e.printStackTrace();
+                            }
+
+                        } else {
+
+                            // <사용자 알림>
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    R.string.appSetting_dataBackUp_export_noticeUser_noData,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                        }
 
                     }
                 }
@@ -178,7 +240,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                             // <사용자 알림>
                             Toast.makeText(
                                     getApplicationContext(),
-                                    R.string.appSetting_noticeUser_exitUserData,
+                                    R.string.appSetting_dataBackUp_import_noticeUser_noImport,
                                     Toast.LENGTH_SHORT
                             ).show();
 
@@ -187,8 +249,8 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                             // '파일 가져오기' 를 하기 위한 객체를 생성하고 초기 설정을 한다.
                             fileImport = new FileImport(AppSettingActivity.this, appDbManager);
                             fileImport.init();
-                        }
 
+                        }
 
                     }
                 }

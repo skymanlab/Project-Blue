@@ -41,6 +41,7 @@ public class JsonParser {
         this.friendDataArrayList = new ArrayList<>();
 
         this.isCompletedParsing = false;
+
     }
 
     // getter
@@ -65,38 +66,69 @@ public class JsonParser {
     }
 
 
-    //
-    public void parseContent() {
+    /**
+     * content 를 파싱하기
+     */
+    public void parseContent() throws JSONException {
 
-        try {
+        // content : String -> JSONObject
+        JSONObject jsonData = new JSONObject(content);
 
-            // content : String -> JSONObject
-            JSONObject jsonData = new JSONObject(content);
+        // user
+        JSONObject userDataObject = jsonData.getJSONObject(UserData.class.getSimpleName());
+        parseUserDataObject(userDataObject);
 
-            DeveloperManager.displayLog(CLASS_NAME_LOG, "-------------------------------------------------->>>>>>>>>>>>>>>");
-            DeveloperManager.displayLog(CLASS_NAME_LOG, "JSON : " + jsonData.toString());
+        // friend
+        JSONArray friendDataArray = jsonData.getJSONArray(FriendData.class.getSimpleName());
+        parseFriendDataArray(friendDataArray);
 
-            // user
-            JSONObject userDataObject = jsonData.getJSONObject(UserData.class.getSimpleName());
-            parseUserDataObject(userDataObject);
+        // billiard
+        JSONArray billiardDataArray = jsonData.getJSONArray(BilliardData.class.getSimpleName());
+        parseBilliardDataArray(billiardDataArray);
 
-            // friend
-            JSONArray friendDataArray = jsonData.getJSONArray(FriendData.class.getSimpleName());
-            parseFriendDataArray(friendDataArray);
+        // player
+        JSONArray playerDataArray = jsonData.getJSONArray(PlayerData.class.getSimpleName());
+        parsePlayerDataArray(playerDataArray);
 
-            // billiard
-            JSONArray billiardDataArray = jsonData.getJSONArray(BilliardData.class.getSimpleName());
-            parseBilliardDataArray(billiardDataArray);
+        this.isCompletedParsing = true;
 
-            // player
-            JSONArray playerDataArray = jsonData.getJSONArray(PlayerData.class.getSimpleName());
-            parsePlayerDataArray(playerDataArray);
+    }
 
-            this.isCompletedParsing = true;
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    /**
+     * 파싱된 데이터를 확인 합니다.
+     */
+    public void print() {
+
+        DeveloperManager.displayLog(
+                CLASS_NAME_LOG,
+                "JsonParser 의 content, userData, friendDataArrayList, billiardDataArrayList, playerDataArrayList 를 확인하겠습니다."
+        );
+
+        // user
+        DeveloperManager.displayToUserData(
+                CLASS_NAME_LOG,
+                userData
+        );
+
+        // billiard
+        DeveloperManager.displayToBilliardData(
+                CLASS_NAME_LOG,
+                billiardDataArrayList
+        );
+
+        // player
+        DeveloperManager.displayToPlayerData(
+                CLASS_NAME_LOG,
+                playerDataArrayList
+        );
+
+        // friend
+        DeveloperManager.displayToFriendData(
+                CLASS_NAME_LOG,
+                friendDataArrayList
+        );
+
     }
 
 
@@ -248,32 +280,5 @@ public class JsonParser {
         }
     }
 
-    public void print() {
-
-        DeveloperManager.displayLog(CLASS_NAME_LOG, "======> JsonParser 로 파싱한 데이터 확인");
-        DeveloperManager.displayToUserData(
-                CLASS_NAME_LOG,
-                userData
-        );
-
-        // billiard
-        DeveloperManager.displayToBilliardData(
-                CLASS_NAME_LOG,
-                billiardDataArrayList
-        );
-
-        // player
-        DeveloperManager.displayToPlayerData(
-                CLASS_NAME_LOG,
-                playerDataArrayList
-        );
-
-        // friend
-        DeveloperManager.displayToFriendData(
-                CLASS_NAME_LOG,
-                friendDataArrayList
-        );
-
-    }
 
 }

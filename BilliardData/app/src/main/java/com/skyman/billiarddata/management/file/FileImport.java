@@ -3,9 +3,7 @@ package com.skyman.billiarddata.management.file;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Toast;
 
-import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
@@ -16,6 +14,7 @@ import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.user.data.UserData;
 import com.skyman.billiarddata.management.user.database.UserDbManager2;
+
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -42,10 +41,55 @@ public class FileImport {
 
     }
 
-    // init
+    /**
+     * 파일 선택 화면을 연다.
+     */
     public void init() {
+
         openFile();
+
     }
+
+
+    /**
+     * 해당 메소드를 이용하여 onActivityResult() 메소드로 넘어온
+     * 선택된 file 을 JsonParser 로 파싱하여 파싱이 완료되면
+     * SQLite Database 에 userData, friendDataArrayList, billiardDataArrayList, friendDataArrayList 를
+     * 각 테이블에 저장한다.
+     *
+     * @param uri 선택된 file 의 uri
+     */
+    public void saveDatabase(Uri uri, OnSuccessListener onSuccessListener) throws Exception {
+
+        // <과정>
+        // 1. 선택된 파일의 내용을 읽어오기
+        // 2. 파일에서 읽어온 내용을 JsonParser 를 사용하여 파싱하기
+        // 3. 파싱에 실패하였으면 종료와 함계 사용자에게 알림
+        // 4. 파싱이 성공했으면 데이터베이스에 저장하기
+
+        // <1>
+        // 파일 내용 읽어오기
+        String jsonData = readDataFromFile(uri);
+        DeveloperManager.displayLog(
+                CLASS_NAME_LOG,
+                "파일의 내용 : " + jsonData
+        );
+
+        // <2>
+        // JsonParser 를 사용하여 파일 내용 파싱하기
+        JsonParser jsonParser = new JsonParser(jsonData);
+        jsonParser.parseContent();
+
+        // <4>
+        // 파싱한 데이터를 Database 에 저장하기
+        saveUserData(jsonParser.getUserData());
+        saveFriendData(jsonParser.getFriendDataArrayList());
+        saveBilliardData(jsonParser.getBilliardDataArrayList());
+        savePlayerData(jsonParser.getPlayerDataArrayList());
+
+        onSuccessListener.onSuccess();
+    }
+
 
     /**
      * 파일 열기
@@ -90,85 +134,6 @@ public class FileImport {
     }
 
 
-    // ==================================== SQLite Database ====================================
-
-    /**
-     * 해당 메소드를 이용하여 onActivityResult() 메소드로 넘어온
-     * 선택된 file 을 JsonParser 로 파싱하여 파싱이 완료되면
-     * SQLite Database 에 userData, friendDataArrayList, billiardDataArrayList, friendDataArrayList 를
-     * 각 테이블에 저장한다.
-     *
-     * @param uri 선택된 file 의 uri
-     */
-    public void saveDatabase(Uri uri) {
-
-        // <과정>
-        // 1. 선택된 파일의 내용을 읽어오기
-        // 2. 파일에서 읽어온 내용을 JsonParser 를 사용하여 파싱하기
-        // 3. 파싱에 실패하였으면 종료와 함계 사용자에게 알림
-        // 4. 파싱이 성공했으면 데이터베이스에 저장하기
-
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "======>>>> save SQLite Database "
-        );
-
-        // <1>
-        // 파일 내용 읽어오기
-        String jsonData = readDataFromFile(uri);
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "file data : " + jsonData
-        );
-
-        // <2>
-        // JsonParser 를 사용하여 파일 내용 파싱하기
-        JsonParser jsonParser = new JsonParser(jsonData);
-        jsonParser.parseContent();
-
-        // <3>
-        // data 를 parsing 실패 했을 때
-        if (!jsonParser.isCompletedParsing()) {
-
-            Toast.makeText(
-                    activity,
-                    R.string.etc_fileImport_noticeUser_errorParsing,
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            return;
-        }
-        jsonParser.print();
-
-        // <4>
-        // 파싱한 데이터를 Database 에 저장하기
-        try {
-
-            saveUserData(jsonParser.getUserData());
-            saveFriendData(jsonParser.getFriendDataArrayList());
-            saveBilliardData(jsonParser.getBilliardDataArrayList());
-            savePlayerData(jsonParser.getPlayerDataArrayList());
-
-            // <사용자 알림>
-            Toast.makeText(
-                    activity,
-                    R.string.etc_fileImport_noticeUser_completedImport,
-                    Toast.LENGTH_SHORT
-            ).show();
-
-        } catch (Exception e) {
-
-            // <사용자 알림>
-            Toast.makeText(
-                    activity,
-                    R.string.etc_fileImport_noticeUser_errorDatabase,
-                    Toast.LENGTH_SHORT
-            ).show();
-
-        }
-    }
-
-
     /**
      * SQLite Database: save userData
      *
@@ -202,8 +167,6 @@ public class FileImport {
      */
     private void saveFriendData(ArrayList<FriendData> friendDataArrayList) {
 
-//        this.friendDbManager.saveContentByImport(friendDataArrayList);
-
         appDbManager.requestFriendQuery(
                 new AppDbManager.FriendQueryRequestListener() {
                     @Override
@@ -222,6 +185,7 @@ public class FileImport {
                     }
                 }
         );
+
     }
 
 
@@ -231,8 +195,6 @@ public class FileImport {
      * @param billiardDataArrayList
      */
     private void saveBilliardData(ArrayList<BilliardData> billiardDataArrayList) {
-
-//        this.billiardDbManager.saveContentByImport(billiardDataArrayList);
 
         appDbManager.requestBilliardQuery(
                 new AppDbManager.BilliardQueryRequestListener() {
@@ -263,8 +225,6 @@ public class FileImport {
      */
     private void savePlayerData(ArrayList<PlayerData> playerDataArrayList) {
 
-//        this.playerDbManager.saveContentByImport(playerDataArrayList);
-
         appDbManager.requestPlayerQuery(
                 new AppDbManager.PlayerQueryRequestListener() {
                     @Override
@@ -280,5 +240,9 @@ public class FileImport {
 
     }
 
+
+    public interface OnSuccessListener {
+        void onSuccess();
+    }
 
 }

@@ -5,8 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-
     <!--                                Activity
     ===============================================================================================-
     -->
@@ -127,10 +125,15 @@
     <string name="appSetting_title">설정</string>
     <string name="appSetting_dataBackUp">데이터 백업</string>
     <string name="appSetting_dataBackUp_export">내보내기</string>
+    <string name="appSetting_dataBackUp_export_noticeUser_success">내보내기 성공</string>
+    <string name="appSetting_dataBackUp_export_noticeUser_error">오류가 발생하였습니다.</string>
+    <string name="appSetting_dataBackUp_export_noticeUser_noData">저장할 데이터가 없습니다.</string>
     <string name="appSetting_dataBackUp_export_explanation">데이터베이스 -> file</string>
     <string name="appSetting_dataBackUp_import">가져오기</string>
     <string name="appSetting_dataBackUp_import_explanation">file -> 데이터베이스</string>
-    <string name="appSetting_noticeUser_exitUserData">이미 사용자가 등록되어 있으므로 가져올 수 없습니다.</string>
+    <string name="appSetting_dataBackUp_import_noticeUser_success">가져오기 성공</string>
+    <string name="appSetting_dataBackUp_import_noticeUser_error">오류가 발생하였습니다.</string>
+    <string name="appSetting_dataBackUp_import_noticeUser_noImport">사용자가 등록되어 있어 수행할 수 없습니다.</string>
     <string name="appSetting_"></string>
 
 
@@ -327,8 +330,11 @@
     <string name="etc_fileImport_noticeUser_errorDatabase">오류가 발생하였습니다.</string>
     <string name="etc_fileImport_noticeUser_completedImport">가져오기 완료 하였습니다.</string>
 
+    <!-- FileExport -->
+    <string name="etc_fileExport_"></string>
 
-    <!--                                    layout
+
+    <!--                                    top bar
    ===============================================================================================-
    -->
     <!-- layout : top bar -->
