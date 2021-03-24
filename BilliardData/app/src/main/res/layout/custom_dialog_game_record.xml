@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -35,208 +36,286 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:padding="5dp"
         android:text="@string/custom_dialog_gameRecord_explain"
         android:textAlignment="center" />
 
     <!-- win or loss -->
-    <HorizontalScrollView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/colorPagerTab"
-        android:padding="5dp">
+        android:layout_marginBottom="10dp"
+        app:cardElevation="2dp">
 
-        <LinearLayout
-            android:id="@+id/custom_dialog_gameRecord_win_or_loss"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"></LinearLayout>
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
 
-    </HorizontalScrollView><!-- End of win or loss-->
+            <LinearLayout
+                android:id="@+id/custom_dialog_gameRecord_win_or_loss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+    </com.google.android.material.card.MaterialCardView><!-- End of win or loss-->
 
     <!-- content -->
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp">
-
-        <!-- content 1. 날짜 -->
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+        android:layout_marginBottom="10dp"
+        app:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundThird"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <TextView
-                android:layout_width="100dp"
+            <!-- date -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_date"></TextView>
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_date" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout><!-- End of date -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_date"
-                android:layout_width="wrap_content"
+            <!-- speciality -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        </LinearLayout><!-- End of content 1 -->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_speciality" />
 
-        <!-- content 2. speciality -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundSecond"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_speciality"></TextView>
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_speciality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of speciality -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_speciality"
-                android:layout_width="wrap_content"
+            <!-- playerList -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout><!-- End of content 2 -->
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <!-- content 3. play time-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundThird"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_playerList" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_playTime"></TextView>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_playerList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of playerList -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_playTime"
-                android:layout_width="wrap_content"
+            <!-- winner -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout><!-- End of content 3 -->
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <!-- content 4. winner -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundSecond"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_winner" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_winner"></TextView>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_winner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of winner -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_winner"
-                android:layout_width="wrap_content"
+            <!-- score -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout><!-- End of content 4 -->
+                android:orientation="horizontal"
+                android:padding="5dp">
 
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_score" />
 
-        <!-- content 5. score -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundThird"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_score"></TextView>
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of score -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_score"
-                android:layout_width="wrap_content"
+
+            <!-- play time -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout><!-- End of content 5 -->
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <!-- content 6. cost -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundSecond"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_playTime" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/custom_dialog_gameRecord_cost"></TextView>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_playTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of play time -->
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/custom_dialog_gameRecord_cost"
-                android:layout_width="wrap_content"
+
+            <!-- cost -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout><!-- End of content 6 -->
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-    </LinearLayout><!-- End of content -->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/custom_dialog_gameRecord_cost" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/custom_dialog_gameRecord_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout><!-- End of cost -->
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView><!-- End of content -->
 
 </LinearLayout>

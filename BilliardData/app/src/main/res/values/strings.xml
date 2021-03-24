@@ -246,6 +246,8 @@
     <string name="custom_dialog_gameRecord_speciality_default">3구, 4구, 포켓볼 중 하나</string>
     <string name="custom_dialog_gameRecord_playTime">게임 시간</string>
     <string name="custom_dialog_gameRecord_playTime_default">## 분</string>
+    <string name="custom_dialog_gameRecord_playerList">참가자</string>
+    <string name="custom_dialog_gameRecord_playerList_default"></string>
     <string name="custom_dialog_gameRecord_winner">승리자</string>
     <string name="custom_dialog_gameRecord_winner_default">### 님입니다.</string>
     <string name="custom_dialog_gameRecord_score">스코어</string>

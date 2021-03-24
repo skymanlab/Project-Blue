@@ -8,8 +8,10 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.fragment.statistics.StatisticsPagerAdapter;
+import com.skyman.billiarddata.management.SectionManager;
 import com.skyman.billiarddata.management.billiard.data.BilliardData;
 import com.skyman.billiarddata.management.billiard.database.BilliardDbManager;
+import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
 import com.skyman.billiarddata.management.statistics.SameDateChecker;
 import com.skyman.billiarddata.management.statistics.SameDateCheckerMake;
 import com.skyman.billiarddata.management.player.data.PlayerData;
@@ -20,27 +22,46 @@ import com.skyman.billiarddata.management.user.database.UserDbManager;
 
 import java.util.ArrayList;
 
-public class StatisticsManagerActivity extends AppCompatActivity {
+public class StatisticsManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
     private final String CLASS_NAME_LOG = "[Ac]_StatisticsManagerActivity";
 
     // instance variable
+    private UserData userData = null;
+
+    // instance variable
     private UserDbManager userDbManager = null;
     private PlayerDbManager playerDbManager = null;
     private BilliardDbManager billiardDbManager = null;
-    private UserData userData = null;
+
+    // instance variable
     private ArrayList<BilliardData> billiardDataArrayList = null;
     private SameDateChecker sameDateChecker = null;
+
+    // instance variable
+    private AppDbManager appDbManager;
 
     // instance variable
     private TabLayout statisticsTabBar;
     private ViewPager statisticsTabPager;
 
+    // getter
+    public AppDbManager getAppDbManager() {
+        return appDbManager;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_manager);
+
+        // appDbManger
+        initAppDbManager();
+
+        // widget : connect -> init
+        connectWidget();
+        initWidget();
 
         // ============================================================= intent, db =============================================================
         // [iv/C]UserData : 위 의 intent 로 "userData" 가져오기
@@ -48,7 +69,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
         // [method]createDbManager : user, billiard 메니저 생성 및 초기화
         createDbManager();
-        
+
         // ============================================================= db 에서 데이터 가져오기 =============================================================
         // [iv/C]ArrayList<BilliardData> : userData 의 userId 으로 billiard 테이블에서 모든 billiard 데이터를 가져오기
         this.billiardDataArrayList = getBilliardDataByUserId();
@@ -56,7 +77,7 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         // [lv/C]SameDateCheckerMake : sameDateChecker 를 만들기 위한 객체 생성
         SameDateCheckerMake sameDateCheckerMake = new SameDateCheckerMake();
 
-        if (0<this.billiardDataArrayList.size() ) {
+        if (0 < this.billiardDataArrayList.size()) {
 
             // [iv/C]SameDateChecker : userData 와 billiardDataArrayList 로 SameDateChecker 만들기
             this.sameDateChecker = sameDateCheckerMake.makeSameDateCheckerWithUserDataAndAllBilliardData(this.userData, this.billiardDataArrayList);
@@ -103,7 +124,6 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         });
 
 
-
     } // End of method [onCreate]
 
 
@@ -136,6 +156,29 @@ public class StatisticsManagerActivity extends AppCompatActivity {
 
     } // End of method [onDestroy]
 
+
+    @Override
+    public void initAppDbManager() {
+
+        appDbManager = new AppDbManager(this);
+        appDbManager.connectDb(
+                true,
+                false,
+                true,
+                true
+        );
+
+    }
+
+    @Override
+    public void connectWidget() {
+
+    }
+
+    @Override
+    public void initWidget() {
+
+    }
 
     /**
      * [method] user, billiard 메니저를 생성한다.
@@ -208,5 +251,4 @@ public class StatisticsManagerActivity extends AppCompatActivity {
         this.statisticsTabPager = (ViewPager) findViewById(R.id.statistics_manager_pg_statistics_pager);
 
     } // End of method [mappingOfWidget]
-
 }
