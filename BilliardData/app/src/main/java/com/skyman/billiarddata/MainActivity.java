@@ -11,15 +11,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager2;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.table.friend.data.FriendData;
+import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
+import com.skyman.billiarddata.table.user.database.UserDbManager2;
 
 import java.util.ArrayList;
 import java.util.Arrays;

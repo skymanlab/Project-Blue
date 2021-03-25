@@ -22,33 +22,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/F_userInfo_title"
                 android:textAlignment="center" />
 
-            <!-- content 1. default information -->
+            <!-- default information -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:orientation="vertical">
 
-                    <!-- content 1-0. id-->
+                    <!-- id-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_id"
                             android:textAlignment="textStart" />
@@ -58,31 +60,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_id"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-0 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of id -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-1. name-->
+                    <!--  name-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_name"
                             android:textAlignment="textStart" />
@@ -92,31 +89,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_name"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-1 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of name -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-2. target score-->
+                    <!-- target score-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_targetScore"
                             android:textAlignment="textStart" />
@@ -126,31 +118,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_targetScore"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-2 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of target score -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-3. speciality -->
+                    <!-- speciality -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_speciality"
                             android:textAlignment="textStart" />
@@ -160,31 +147,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_speciality"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-3 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of speciality -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-4. game record-->
+                    <!-- game record-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_gameRecord"
                             android:textAlignment="textStart" />
@@ -194,31 +176,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_gameRecord"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-4 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of game record -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-5. total time-->
+                    <!-- total time-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_totalPlayTime"
                             android:textAlignment="textStart" />
@@ -228,31 +205,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_totalPlayTime"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-5-->
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout><!-- End of total time -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-6. total cost-->
+                    <!-- total cost-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_totalCost"
                             android:textAlignment="textStart" />
@@ -262,31 +234,26 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_totalCost"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-6-->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of total cost -->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <!-- content 1-7. total cost-->
+                    <!-- total cost-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:paddingTop="10dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="15dp">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/F_userInfo_recentPlayDate"
                             android:textAlignment="textStart" />
@@ -296,16 +263,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="@android:color/black" />
 
                         <TextView
                             android:id="@+id/F_userInfo_recentPlayDate"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout><!-- End of content 1-7 -->
-
-                </LinearLayout><!-- End of content 1 -->
+                            android:layout_height="wrap_content" />
+                    </LinearLayout><!-- End of total cost -->
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout><!-- End of content-->

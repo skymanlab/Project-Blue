@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/custom_lv_billiardData_count_default"
             android:textAlignment="gravity"
-            android:textColor="@color/colorCustomTextPrimary"></TextView>
+            android:textColor="@color/colorCustomTextPrimary" />
     </LinearLayout><!-- End of content 1 -->
 
     <!-- content 2. information -->
@@ -32,21 +32,15 @@
         android:orientation="vertical">
 
         <!-- content 2-1. date -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/custom_lv_billiardData_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:background="@color/colorBackgroundPrimary"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/custom_lv_billiardData_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/custom_lv_billiardData_date"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorCustomTextPrimary"></TextView>
-        </LinearLayout><!-- End of content 2-1 -->
+            android:text="@string/custom_lv_billiardData_date"
+            android:textAlignment="center"
+            android:textColor="@color/colorCustomTextPrimary" />
 
         <!-- content 2-2. game mode, player count, winner name -->
         <LinearLayout
@@ -54,9 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackgroundPrimary"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:padding="2dp"
-            android:baselineAligned="false">
+            android:padding="2dp">
 
             <!-- content 2-2-1. game mode -->
             <LinearLayout
@@ -72,7 +66,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_gameMode"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_gameMode"
@@ -80,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_gameMode_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout><!-- End of content 2-2-1 -->
 
             <!-- content 2-2-2. player count -->
@@ -100,7 +94,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_playerCount"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_playerCount"
@@ -108,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_playerCount_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout><!-- End of content 2-2-2 -->
 
             <!-- content 2-2-3. play time-->
@@ -125,7 +119,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_winnerName"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_winnerName"
@@ -133,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_winnerName_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout><!-- End of content 2-2-3 -->
         </LinearLayout><!-- End of content 2-2 -->
 
@@ -149,9 +143,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackgroundPrimary"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:padding="2dp"
-            android:baselineAligned="false">
+            android:padding="2dp">
 
             <!-- content 2-3-1. play time -->
             <LinearLayout
@@ -167,7 +161,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_playTime"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_playTime"
@@ -175,15 +169,15 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_playTime_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout> <!-- End of content 2-3-1 -->
 
             <!-- content 2-3-2. score -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="2dp"
                 android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -194,7 +188,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_score"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_score"
@@ -202,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_score_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout><!-- End of content 2-3-2 -->
 
             <!-- content 2-3-3. cost -->
@@ -219,7 +213,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/custom_lv_billiardData_cost"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/custom_lv_billiardData_cost"
@@ -227,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/custom_lv_billiardData_cost_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center"/>
             </LinearLayout><!-- End of content 2-3-3 -->
         </LinearLayout><!-- End of content 2-3 -->
     </LinearLayout><!-- End of content 2 -->

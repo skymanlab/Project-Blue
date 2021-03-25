@@ -2,10 +2,10 @@ package com.skyman.billiarddata.developer;
 
 import android.util.Log;
 
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.friend.data.FriendData;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 

@@ -18,17 +18,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager2;
+import com.skyman.billiarddata.etc.DataTransformUtil;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.table.friend.data.FriendData;
+import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.DataFormatUtil;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
+import com.skyman.billiarddata.table.user.database.UserDbManager2;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,10 +53,10 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private AppDbManager appDbManager;
 
     // instance variable : player section widget
+    private LinearLayout playerWrapper[] = new LinearLayout[4];
     private TextView playerName[] = new TextView[4];
     private Spinner playerTargetScore[] = new Spinner[4];
     private EditText playerScore[] = new EditText[4];
-    private LinearLayout playerSection[] = new LinearLayout[4];
 
     // instance variable : billiard widget
     private TextView date;
@@ -114,51 +115,51 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     @Override
     public void connectWidget() {
 
-        // [iv/C]TextView : playerName 배열 mapping
-        this.playerName[0] = (TextView) findViewById(R.id.billiardInput_player_name_0);
-        this.playerName[1] = (TextView) findViewById(R.id.billiardInput_player_name_1);
-        this.playerName[2] = (TextView) findViewById(R.id.billiardInput_player_name_2);
-        this.playerName[3] = (TextView) findViewById(R.id.billiardInput_player_name_3);
+        // playerSection wrapper
+        this.playerWrapper[0] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_0);
+        this.playerWrapper[1] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_1);
+        this.playerWrapper[2] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_2);
+        this.playerWrapper[3] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_3);
 
-        // [iv/C]Spinner  : playerSpinner 배열 mapping
-        this.playerTargetScore[0] = (Spinner) findViewById(R.id.billiardInput_player_target_score_0);
-        this.playerTargetScore[1] = (Spinner) findViewById(R.id.billiardInput_player_target_score_1);
-        this.playerTargetScore[2] = (Spinner) findViewById(R.id.billiardInput_player_target_score_2);
-        this.playerTargetScore[3] = (Spinner) findViewById(R.id.billiardInput_player_target_score_3);
+        // playerSection name
+        this.playerName[0] = (TextView) findViewById(R.id.billiardInput_playerSection_name_0);
+        this.playerName[1] = (TextView) findViewById(R.id.billiardInput_playerSection_name_1);
+        this.playerName[2] = (TextView) findViewById(R.id.billiardInput_playerSection_name_2);
+        this.playerName[3] = (TextView) findViewById(R.id.billiardInput_playerSection_name_3);
 
-        // [iv/C]EditText : playerScore 배열 mapping
-        this.playerScore[0] = (EditText) findViewById(R.id.billiardInput_player_score_0);
-        this.playerScore[1] = (EditText) findViewById(R.id.billiardInput_player_score_1);
-        this.playerScore[2] = (EditText) findViewById(R.id.billiardInput_player_score_2);
-        this.playerScore[3] = (EditText) findViewById(R.id.billiardInput_player_score_3);
+        // playerSection targetScore
+        this.playerTargetScore[0] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_0);
+        this.playerTargetScore[1] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_1);
+        this.playerTargetScore[2] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_2);
+        this.playerTargetScore[3] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_3);
 
-        // [iv/C]LinearLayout : playerSection 배열 mapping
-        this.playerSection[0] = (LinearLayout) findViewById(R.id.billiardInput_ll_player_section_0);
-        this.playerSection[1] = (LinearLayout) findViewById(R.id.billiardInput_ll_player_section_1);
-        this.playerSection[2] = (LinearLayout) findViewById(R.id.billiardInput_ll_player_section_2);
-        this.playerSection[3] = (LinearLayout) findViewById(R.id.billiardInput_ll_player_section_3);
+        // playerSection score
+        this.playerScore[0] = (EditText) findViewById(R.id.billiardInput_playerSection_score_0);
+        this.playerScore[1] = (EditText) findViewById(R.id.billiardInput_playerSection_score_1);
+        this.playerScore[2] = (EditText) findViewById(R.id.billiardInput_playerSection_score_2);
+        this.playerScore[3] = (EditText) findViewById(R.id.billiardInput_playerSection_score_3);
 
         // [iv/C]TextView : date mapping / 날짜
         this.date = (TextView) findViewById(R.id.billiardInput_date);
 
         // [iv/C]TextView : reDate mapping / 날짜 다시
-        this.reDate = (TextView) findViewById(R.id.billiardInput_re_date);
+        this.reDate = (TextView) findViewById(R.id.billiardInput_billiardSection_date_button_re);
 
         // [iv/C]Spinner : gameMode mapping / 종목
-        this.gameMode = (Spinner) findViewById(R.id.billiardInput_sp_game_mode);
+        this.gameMode = (Spinner) findViewById(R.id.billiardInput_billiardSection_gameMode);
 
         // [iv/C]Spinner : winnerName mapping / 승자
-        this.playerNameList = (Spinner) findViewById(R.id.billiardInput_sp_player_name_list);
+        this.playerNameList = (Spinner) findViewById(R.id.billiardInput_spinner_playerNameList);
 
         // [iv/C]EditText : playTime mapping / 게임 시간
-        this.playTime = (EditText) findViewById(R.id.billiardInput_play_time);
+        this.playTime = (EditText) findViewById(R.id.billiardInput_billiardSection_playTime);
 
         // [iv/C]EditText : cost mapping / 비용
-        this.cost = (EditText) findViewById(R.id.billiardInput_cost);
+        this.cost = (EditText) findViewById(R.id.billiardInput_billiardSection_cost);
 
 
         // [iv/C]Button : input mapping / 입력 버튼
-        this.save = (Button) findViewById(R.id.billiardInput_bt_save);
+        this.save = (Button) findViewById(R.id.billiardInput_billiardSection_button_save);
 
     }
 
@@ -193,7 +194,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
 
         // [iv/C]TextView : date 의 오늘 날짜를 특정 형태로 만들어서 보여주기
-        this.date.setText(ProjectBlueDataFormatter.getFormatOfDate(new Date()));
+        this.date.setText(DataFormatUtil.formatOfDate(new Date()));
 
         // [iv/C]TextView : reDate widget 의 클릭 이벤트를 셋팅한다.
         this.reDate.setOnClickListener(new View.OnClickListener() {
@@ -344,7 +345,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         for (int hideIndex = playerDataArrayList.size(); hideIndex < PLAYER_WIDGET_MAX_SIZE; hideIndex++) {
 
             // [iv/C]LinearLayout : 등록 된 player 이외는 숨기기
-            this.playerSection[hideIndex].setVisibility(LinearLayout.GONE);
+            this.playerWrapper[hideIndex].setVisibility(LinearLayout.GONE);
 
         } // [cycle 2]
 
@@ -390,7 +391,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         setAdapterOfBilliardPlayerNameListSpinner(playerDataArrayList);
 
         // [iv/C]Spinner : gameMode spinner 의 기본값 설정
-        this.gameMode.setSelection(ProjectBlueDataFormatter.getSelectedIdOfBilliardGameModeSpinner(userData.getSpeciality()));
+        this.gameMode.setSelection(DataTransformUtil.getSelectedIdOfBilliardGameModeSpinner(userData.getSpeciality()));
 
     } // End o method [setInitialDataOfBilliardWidget]
 
@@ -551,7 +552,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         int playerCount = this.playerDataArrayList.size();
         long winnerId = this.playerDataArrayList.get(this.playerNameList.getSelectedItemPosition()).getPlayerId();
         String winnerName = this.playerNameList.getSelectedItem().toString();
-        String score = ProjectBlueDataFormatter.getFormatOfScore(getScoreArrayList(playerDataArrayList.size()));
+        String score = DataFormatUtil.formatOfScore(getScoreArrayList(playerDataArrayList.size()));
         int playTime = Integer.parseInt(this.playTime.getText().toString());
         int cost = Integer.parseInt(this.cost.getText().toString());
 

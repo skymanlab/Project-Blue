@@ -16,19 +16,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.data.ChangedDataChecker;
-import com.skyman.billiarddata.management.projectblue.data.ProjectBlueDataFormatter;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager2;
+import com.skyman.billiarddata.etc.DataTransformUtil;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.table.friend.data.FriendData;
+import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.ChangedDataChecker;
+import com.skyman.billiarddata.etc.DataFormatUtil;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
+import com.skyman.billiarddata.table.user.database.UserDbManager2;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
     private EditText cost;
 
     private Button modify;
+    private Button delete;
     private Button cancel;
 
 
@@ -90,17 +92,15 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         connectWidget();
         initWidget();
 
-
     } // End of method [onCreate]
 
 
     @Override
     protected void onDestroy() {
-        final String METHOD_NAME = "[onDestroy] ";
 
         appDbManager.closeDb();
-
         super.onDestroy();
+
     } // End of method [onDestroy]
 
 
@@ -189,6 +189,8 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         // [iv/C]Button : modify mapping
         this.modify = (Button) findViewById(R.id.billiardModify_button_modify);
 
+        this.delete = (Button) findViewById(R.id.billiardModify_button_delete);
+
         // [iv/C]Button : cancel mapping
         this.cancel = (Button) findViewById(R.id.billiardModify_button_cancel);
 
@@ -223,43 +225,62 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
             DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Intent 에서 아직 받아오지 않은 데이터가 있어요!");
         } // [check 1]
 
-        // [iv/C]Button : modify click listener setting
-        modify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                // [check 1] : intent 로 가져온 데이터 입력받았다.
-                if ((billiardData != null) && (userData != null) && !friendDataArrayList.isEmpty() && !playerDataArrayList.isEmpty()) {
+        // widget (modify) : click listener
+        modify.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    // [method] : 수정을 진행 여부를 묻는 AlertDialog 를 보여준다.
-//                    showDialogOfCheckModify(Integer.parseInt(playerCount.getText().toString()));
+                        // [check 1] : intent 로 가져온 데이터 입력받았다.
+                        if ((billiardData != null) && (userData != null) && !friendDataArrayList.isEmpty() && !playerDataArrayList.isEmpty()) {
 
-                    modifyData(Integer.parseInt(playerCount.getText().toString()));
+                            setClickListenerOfModifyButton(Integer.parseInt(playerCount.getText().toString()));
 
-                } else {
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Intent 에서 아직 받아오지 않은 데이터가 있어요!");
-                } // [check 1]
+                        } else {
+                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Intent 에서 아직 받아오지 않은 데이터가 있어요!");
+                        } // [check 1]
 
-            }
-        });
+                    }
+
+                }
+        );
+
+        // widget (delete) : click listener
+        delete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // [check 1] : intent 로 가져온 데이터 입력받았다.
+                        if ((billiardData != null) && (userData != null) && !friendDataArrayList.isEmpty() && !playerDataArrayList.isEmpty()) {
+
+
+                        }
+                    }
+                }
+        );
+
 
         // [iv/C]Button : cancel click listener setting
-        this.cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        this.cancel.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                // [lv/C]Intent : update 완료 후 BilliardDisplayActivity 로 이동하여 변경된 값 확인
-                Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
+                        // [lv/C]Intent : update 완료 후 BilliardDisplayActivity 로 이동하여 변경된 값 확인
+                        Intent intent = new Intent(getApplicationContext(), BilliardDisplayActivity.class);
 
-                // sessionManager : setter ( userData )
-                SessionManager.setUserDataFromIntent(intent, userData);
+                        // sessionManager : setter ( userData )
+                        SessionManager.setUserDataFromIntent(intent, userData);
 
-                finish();
+                        finish();
 
-                startActivity(intent);
+                        startActivity(intent);
 
-            }
-        });
+                    }
+                }
+        );
     }
 
 
@@ -337,7 +358,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         final String METHOD_NAME = "[setAdapterOfDateSpinner] ";
 
         // [lv/i]classificationDate : '####년 ##월 ##일' 형태의 날짜를 숫자만 구분하기
-        int[] classificationDate = ProjectBlueDataFormatter.changeDateToIntArrayType(billiardData.getDate());
+        int[] classificationDate = DataTransformUtil.changeDateToIntArrayType(billiardData.getDate());
 
         DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + " [0]=" + classificationDate[0] + " / [1]=" + classificationDate[1] + " / [2]=" + classificationDate[2]);
 
@@ -377,7 +398,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
         // [iv/C]Spinner : 위에서 만든 dateYearAdapter 연결하기 / 초기값 선택
         this.gameMode.setAdapter(gameModeAdapter);
-        this.gameMode.setSelection(ProjectBlueDataFormatter.getSelectedIdOfBilliardGameModeSpinner(billiardData.getGameMode()));
+        this.gameMode.setSelection(DataTransformUtil.getSelectedIdOfBilliardGameModeSpinner(billiardData.getGameMode()));
 
     } // End of method [setAdapterOfBilliardWidgetSpinner]
 
@@ -427,7 +448,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
     /**
      * [method] modify button click listener
      */
-    private void modifyData(int playerCount) {
+    private void setClickListenerOfModifyButton(int playerCount) {
 
         final String METHOD_NAME = "[modifyData] ";
 
@@ -587,7 +608,39 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
             DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "초기 데이터가 설정되지 않았어!");
         } // [check 1]
 
-    } // End of method [modifyData]
+    } // End of method [setClickListenerOfModifyButton]
+
+
+    private void setClickListenerOfDeleteButton() {
+
+        // <사용자 확인>
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.billiardModify_dialog_deleteData_title)
+                .setMessage(R.string.billiardModify_dialog_deleteData_message)
+                .setPositiveButton(
+                        R.string.billiardModify_dialog_deleteData_positive,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+
+
+                            }
+                        }
+                )
+                .setNegativeButton(
+                        R.string.billiardModify_dialog_deleteData_negative,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }
+                )
+                .show();
+
+    }
 
 
     /**

@@ -20,12 +20,12 @@ import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.StatisticsManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.statistics.SameDateChecker;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.etc.calendar.SameDate;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
     private static final String BILLIARD_DATA_ARRAY_LIST = "billiardDataArrayList";
 
     // instance variable
-    private ArrayList<SameDateChecker.SameDateItem> sameDateItemArrayList;
+    private ArrayList<SameDate.SameDateItem> sameDateItemArrayList;
     private ArrayList<BilliardData> billiardDataArrayList;
 
     // instance variable
@@ -60,7 +60,7 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
     private GameRecordDialog() {
     }
 
-    public static GameRecordDialog newInstance(ArrayList<SameDateChecker.SameDateItem> sameDateItemArrayList,
+    public static GameRecordDialog newInstance(ArrayList<SameDate.SameDateItem> sameDateItemArrayList,
                                                ArrayList<BilliardData> billiardDataArrayList) {
         Bundle args = new Bundle();
         args.putSerializable(SAME_DATE_ITEM_ARRAY_LIST, sameDateItemArrayList);
@@ -76,7 +76,7 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            sameDateItemArrayList = (ArrayList<SameDateChecker.SameDateItem>) getArguments().getSerializable(SAME_DATE_ITEM_ARRAY_LIST);
+            sameDateItemArrayList = (ArrayList<SameDate.SameDateItem>) getArguments().getSerializable(SAME_DATE_ITEM_ARRAY_LIST);
             billiardDataArrayList = (ArrayList<BilliardData>) getArguments().getSerializable(BILLIARD_DATA_ARRAY_LIST);
         }
     }
@@ -97,7 +97,6 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
         // widget : connect -> init
         connectWidget();
         initWidget();
-
 
     }
 

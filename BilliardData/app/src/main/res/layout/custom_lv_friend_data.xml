@@ -6,20 +6,14 @@
     android:padding="5dp">
 
     <!-- content 1. id -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/c_lv_friend_data_id"
         android:layout_width="30dp"
         android:layout_height="match_parent"
         android:background="@color/colorCustomBackgroundPrimary"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/c_lv_friend_data_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:textAlignment="gravity"
-            android:textColor="@color/colorCustomTextPrimary"></TextView>
-    </LinearLayout><!-- End of content 1 -->
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/colorCustomTextPrimary" />
 
     <!-- content 2. information -->
     <LinearLayout
@@ -30,21 +24,15 @@
         android:orientation="vertical">
 
         <!-- content 2-1. name -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/c_lv_friend_data_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:background="@color/colorCustomBackgroundPrimary"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/c_lv_friend_data_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="장동익"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorCustomTextPrimary"></TextView>
-        </LinearLayout><!-- End of content 2-1 -->
+            android:text="장동익"
+            android:textAlignment="center"
+            android:textColor="@color/colorCustomTextPrimary" />
 
         <!-- content 2-2. game record, recent play date -->
         <LinearLayout
@@ -68,7 +56,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_game_record"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c_lv_friend_data_game_record"
@@ -76,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_game_record_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
             </LinearLayout><!-- End of content 2-2-1 -->
 
             <!-- content 2-2-2. recent play date -->
@@ -94,7 +82,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_recent_play_date"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c_lv_friend_data_recent_play_date"
@@ -102,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_recent_play_date_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
             </LinearLayout><!-- End of content 2-2-2 -->
         </LinearLayout><!-- End of content 2-2 -->
 
@@ -134,7 +122,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_total_play_time"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c_lv_friend_data_total_play_time"
@@ -142,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_total_play_time_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
             </LinearLayout> <!-- End of content 2-3-1 -->
 
             <!-- content 2-3-2. total cost -->
@@ -160,7 +148,7 @@
                     android:background="@color/colorCustomTableColumnName"
                     android:text="@string/c_lv_friend_data_total_cost"
                     android:textAlignment="center"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c_lv_friend_data_total_cost"
@@ -168,31 +156,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorCustomTableColumn"
                     android:text="@string/c_lv_friend_data_total_cost_default"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
             </LinearLayout><!-- End of content 2-3-2 -->
-
         </LinearLayout><!-- End of content 2-3 -->
-
-
     </LinearLayout><!-- End of content 2 -->
-
-     <!--content 3. button
-    <LinearLayout
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="4dp">
-
-         content 3-1. delete
-        <Button
-            android:id="@+id/c_lv_friend_bt_delete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryBackground"
-            android:text="@string/c_lv_friend_data_bt_delete"
-            android:textColor="@color/colorTextPrimaryBackground"></Button>
-    </LinearLayout> End of content 3-->
-
-
-
 </LinearLayout>

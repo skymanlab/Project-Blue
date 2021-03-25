@@ -3,28 +3,35 @@ package com.skyman.billiarddata.fragment.user;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.friend.ListView.FriendLvAdapter2;
-import com.skyman.billiarddata.management.friend.data.FriendData;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.dialog.FriendListDialog;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.listView.BilliardLvAdapter2;
+import com.skyman.billiarddata.listView.FriendLvAdapter2;
+import com.skyman.billiarddata.table.friend.data.FriendData;
+import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 
@@ -53,6 +60,7 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
     // instance variable
     private EditText name;
     private Button friendAdd;
+    private ImageView more;
     private ListView friendListView;
 
     // instance variable
@@ -185,15 +193,16 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
     @Override
     public void connectWidget() {
 
-        // [iv/C]ListView : friendListView mapping
-        this.friendListView = (ListView) getView().findViewById(R.id.F_userFriend_listSection_listView);
-
         // [iv/C]EditText : name mapping
         this.name = (EditText) getView().findViewById(R.id.F_userFriend_addSection_friendName);
 
         // [iv/C]Button : friendAdd mapping
         this.friendAdd = (Button) getView().findViewById(R.id.F_userFriend_addSection_button_addFriend);
 
+        // [iv/C]ListView : friendListView mapping
+        this.friendListView = (ListView) getView().findViewById(R.id.F_userFriend_listSection_listView);
+
+        this.more = (ImageView) getView().findViewById(R.id.F_userFriend_button_more);
     }
 
     @Override
@@ -201,6 +210,7 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
 
         friendDataArrayList = new ArrayList<>();
         adapter2 = new FriendLvAdapter2(friendDataArrayList, appDbManager);
+        friendListView.setAdapter(adapter2);
 
         if (userData != null) {
 
@@ -213,24 +223,78 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
                                     friendDbManager2.loadAllContentByUserId(userData.getId())
                             );
 
-                            friendListView.setAdapter(adapter2);
 
                         }
                     }
             );
         }
 
+        // widget (friendAdd) : click listener
+        this.friendAdd.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-        // [iv/C]Button : friendAdd button click listener
-        this.friendAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                        // [method]setClickListenerOfFriendAddButton : 입력 받은 값으로 friend 데이터를 저장한다.
+                        setClickListenerOfFriendAddButton();
 
-                // [method]setClickListenerOfFriendAddButton : 입력 받은 값으로 friend 데이터를 저장한다.
-                setClickListenerOfFriendAddButton();
+                    }
+                }
+        );
 
-            }
-        });
+        // widget (more) : click listener
+        this.more.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                        popupMenu.setOnMenuItemClickListener(
+                                new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+
+                                        switch (item.getItemId()) {
+                                            case R.id.F_userFriend_menu1_seeMore:
+
+                                                FriendListDialog dialog = FriendListDialog.newInstance(friendDataArrayList);
+                                                dialog.setStyle(
+                                                        DialogFragment.STYLE_NO_TITLE,
+                                                        android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen
+                                                );
+                                                dialog.show(getActivity().getSupportFragmentManager(), BilliardLvAdapter2.class.getSimpleName());
+                                                return true;
+
+                                            default:
+                                                return false;
+                                        }
+                                    }
+                                }
+                        );
+
+                        MenuInflater inflater = popupMenu.getMenuInflater();
+                        inflater.inflate(R.menu.user_friend_menu_1, popupMenu.getMenu());
+
+                        popupMenu.show();
+
+//
+//                        androidx.appcompat.widget.PopupMenu popupMenu
+//                        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+//
+//                        MenuInflater inflater = popupMenu.getMenuInflater();
+//                        inflater.inflate(R.menu.user_friend_menu_1, popupMenu.getMenu());
+//
+//                        popupMenu.setOnMenuItemClickListener(
+//                                new PopupMenu.OnMenuItemClickListener() {
+//                                    @Override
+//                                    public boolean onMenuItemClick(MenuItem item) {
+//                                    }
+//                                }
+//                        );
+                    }
+                }
+        );
+
 
     }
 

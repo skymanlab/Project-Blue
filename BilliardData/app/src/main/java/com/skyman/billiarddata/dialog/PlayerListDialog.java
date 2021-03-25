@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.player.data.PlayerData;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.player.data.PlayerData;
 
 import java.util.ArrayList;
 

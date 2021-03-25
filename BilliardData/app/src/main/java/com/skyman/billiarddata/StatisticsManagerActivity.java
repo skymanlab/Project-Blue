@@ -9,16 +9,16 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.statistics.SameDateChecker;
-import com.skyman.billiarddata.management.statistics.SameDateCheckerMake;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.etc.calendar.SameDate;
+import com.skyman.billiarddata.etc.calendar.SameDateCheckerUtil;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
 
     // instance variable
     private ArrayList<BilliardData> billiardDataArrayList;
-    private SameDateChecker sameDateChecker;
+    private SameDate sameDate;
 
     // instance variable
     private AppDbManager appDbManager;
@@ -109,16 +109,16 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
 
             if (!billiardDataArrayList.isEmpty()) {
 
-                SameDateCheckerMake util = new SameDateCheckerMake();
+                SameDateCheckerUtil sameDateCheckerUtil = new SameDateCheckerUtil();
 
-                sameDateChecker = util.makeSameDateCheckerWithUserDataAndAllBilliardData(userData, billiardDataArrayList);
+                sameDate = sameDateCheckerUtil.createSameDate(userData, billiardDataArrayList);
 
             }
 
         }
 
         // tabLayout, viewPager2 설정
-        adapter = new StatisticsViewPagerAdapter(this, userData, billiardDataArrayList, sameDateChecker);
+        adapter = new StatisticsViewPagerAdapter(this, userData, billiardDataArrayList, sameDate);
         viewPager2.setAdapter(adapter);
         viewPager2.setOffscreenPageLimit(2);
         new TabLayoutMediator(

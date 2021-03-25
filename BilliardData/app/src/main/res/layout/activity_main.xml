@@ -6,140 +6,112 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- main -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <!-- title -->
+        <!-- main -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <!-- title -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/main_title"></TextView>
-        </LinearLayout><!-- End of title -->
+                android:padding="10dp"
+                android:text="@string/main_title" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            <!-- icon image-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:src="@drawable/icon_noline" />
 
-            <LinearLayout
+            <!-- billiard input -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_billiardInput"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_billiardInput"
+                app:cornerRadius="5dp" />
+
+            <!-- billiard display -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_billiardDisplay"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_billiardDisplay"
+                app:cornerRadius="5dp" />
+
+            <!-- user manager -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_userManager"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_userManager"
+                app:cornerRadius="5dp" />
+
+            <!-- statistics manager -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_statisticsManager"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_statisticsManager"
+                app:cornerRadius="5dp" />
+
+            <!-- setting -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_appSetting"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_appSetting"
+                app:cornerRadius="5dp" />
+
+            <!-- app info -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_button_appInfo"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_button_appInfo"
+                app:cornerRadius="5dp" />
+
+            <!-- footer -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-                <!-- content -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="top|center"
-                    android:orientation="vertical">
-
-                    <!-- content 1. icon image -->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:src="@drawable/icon_noline"></ImageView>
-
-                    <!-- content 2. billiard data input -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_billiardInput"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_billiardInput"
-                        app:cornerRadius="5dp" />
-
-                    <!-- content 3. billiard data display -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_billiardDisplay"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_billiardDisplay"
-                        app:cornerRadius="5dp" />
-
-                    <!-- content 4. user manager -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_userManager"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_userManager"
-                        app:cornerRadius="5dp" />
-
-                    <!-- content 4. statistics manager -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_statisticsManager"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_statisticsManager"
-                        app:cornerRadius="5dp" />
-
-                    <!-- content 5. setting -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_appSetting"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_appSetting"
-                        app:cornerRadius="5dp" />
-
-                    <!-- content 6. app info -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/main_button_appInfo"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/main_button_appInfo"
-                        app:cornerRadius="5dp" />
-
-                </LinearLayout><!-- End of content -->
-
-                <!-- footer -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_footer"
-                        android:textAlignment="center"></TextView>
-                </LinearLayout><!-- End of footer -->
-            </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout><!-- End of main -->
+                android:gravity="center_horizontal|bottom"
+                android:padding="5dp"
+                android:text="@string/main_footer" />
+        </LinearLayout><!-- End of content -->
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

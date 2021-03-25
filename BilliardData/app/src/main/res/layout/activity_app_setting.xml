@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AppSettingActivity">
+
     <!-- main -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,109 +13,113 @@
         android:orientation="vertical">
 
         <!-- title -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
-            android:gravity="top"
-            android:padding="10dp">
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/appSetting_title" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/appSetting_title"></TextView>
-        </LinearLayout><!-- End of title -->
-
-        <!-- content -->
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <TextView
+            <!-- content -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/appSetting_dataBackUp"
-                android:textColor="@android:color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <!-- content 1. data -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp">
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/appSetting_dataBackUp"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <!-- content 1. data -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardCornerRadius="15dp">
 
                     <LinearLayout
-                        android:id="@+id/appSetting_dataBackUp_exportWrapper"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:orientation="vertical"
-                        android:paddingStart="25dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="25dp"
-                        android:paddingBottom="10dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/appSetting_dataBackUp_export"
+                        <LinearLayout
+                            android:id="@+id/appSetting_dataBackUp_exportWrapper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/appSetting_dataBackUp_export"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
+                            android:background="?attr/selectableItemBackground"
+                            android:orientation="vertical"
+                            android:paddingStart="25dp"
+                            android:paddingTop="15dp"
+                            android:paddingEnd="25dp"
+                            android:paddingBottom="10dp">
 
-                        <TextView
+                            <TextView
+                                android:id="@+id/appSetting_dataBackUp_export"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appSetting_dataBackUp_export"
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appSetting_dataBackUp_export_explanation" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20sp"
+                            android:background="?android:attr/listDivider" />
+
+                        <LinearLayout
+                            android:id="@+id/appSetting_dataBackUp_importWrapper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/appSetting_dataBackUp_export_explanation" />
+                            android:background="?attr/selectableItemBackground"
+                            android:orientation="vertical"
+                            android:paddingStart="25dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="25dp"
+                            android:paddingBottom="15dp">
+
+                            <TextView
+                                android:id="@+id/appSetting_data_import"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appSetting_dataBackUp_import"
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appSetting_dataBackUp_import_explanation" />
+                        </LinearLayout>
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView><!-- End of content 1. data -->
+            </LinearLayout><!-- End of content -->
+        </ScrollView>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20sp"
-                        android:background="?android:attr/listDivider" />
-
-                    <LinearLayout
-                        android:id="@+id/appSetting_dataBackUp_importWrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:orientation="vertical"
-                        android:paddingStart="25dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="25dp"
-                        android:paddingBottom="15dp">
-
-                        <TextView
-                            android:id="@+id/appSetting_data_import"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/appSetting_dataBackUp_import"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/appSetting_dataBackUp_import_explanation" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView><!-- End of content 1. data -->
-
-        </LinearLayout><!-- End of content -->
     </LinearLayout><!-- End of main -->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.skyman.billiarddata.management.SectionManager;
+import com.skyman.billiarddata.etc.SectionManager;
 
 public class AppInfoActivity extends AppCompatActivity implements SectionManager.Initializable {
 

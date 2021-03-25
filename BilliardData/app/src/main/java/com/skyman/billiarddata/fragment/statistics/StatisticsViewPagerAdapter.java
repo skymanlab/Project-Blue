@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.statistics.SameDateChecker;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.etc.calendar.SameDate;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 
@@ -16,14 +16,14 @@ public class StatisticsViewPagerAdapter extends FragmentStateAdapter {
     // instance variable
     private UserData userData;
     private ArrayList<BilliardData> billiardDataArrayList;
-    private SameDateChecker sameDateChecker;
+    private SameDate sameDate;
 
     // constructor
-    public StatisticsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDateChecker sameDateChecker) {
+    public StatisticsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDate sameDate) {
         super(fragmentActivity);
         this.userData = userData;
         this.billiardDataArrayList = billiardDataArrayList;
-        this.sameDateChecker = sameDateChecker;
+        this.sameDate = sameDate;
     }
 
     @NonNull
@@ -32,9 +32,9 @@ public class StatisticsViewPagerAdapter extends FragmentStateAdapter {
 
         switch (position) {
             case 0:
-                return CalendarFragment.newInstance(userData, billiardDataArrayList, sameDateChecker);
+                return CalendarFragment.newInstance(userData, billiardDataArrayList, sameDate);
             case 1:
-                return ChartFragment.newInstance(userData, billiardDataArrayList, sameDateChecker);
+                return ChartFragment.newInstance(userData, billiardDataArrayList, sameDate);
             default:
                 return null;
         }

@@ -2,26 +2,31 @@ package com.skyman.billiarddata;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.billiard.ListView.BilliardLvAdapter2;
-import com.skyman.billiarddata.management.billiard.data.BilliardData;
-import com.skyman.billiarddata.management.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.management.friend.database.FriendDbManager2;
-import com.skyman.billiarddata.management.player.data.PlayerData;
-import com.skyman.billiarddata.management.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
-import com.skyman.billiarddata.management.user.database.UserDbManager2;
+import com.skyman.billiarddata.dialog.BilliardLvExplainDialog;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.listView.BilliardLvAdapter2;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
+import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
+import com.skyman.billiarddata.table.player.data.PlayerData;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
+import com.skyman.billiarddata.table.user.database.UserDbManager2;
 
 import java.util.ArrayList;
 
@@ -41,6 +46,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
     private AppDbManager appDbManager;
 
     // instance variable : widget
+    private ImageView more;
     private ListView billiardListView;
     private Button delete;
 
@@ -90,7 +96,8 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
     @Override
     public void connectWidget() {
 
-        // [iv/C]ListView : billiardListView mapping
+        this.more = (ImageView) findViewById(R.id.billiardDisplay_button_more);
+
         this.billiardListView = (ListView) findViewById(R.id.billiardDisplay_listView_billiardList);
 
         // [iv/C]Button : delete mapping
@@ -114,13 +121,44 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
         } // [check 1]
 
+        // widget (more) : click listener
+        more.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popupMenu = new PopupMenu(BilliardDisplayActivity.this, v);
+                        MenuInflater inflater = popupMenu.getMenuInflater();
+                        inflater.inflate(R.menu.billliard_display_menu_1, popupMenu.getMenu());
+
+                        popupMenu.setOnMenuItemClickListener(
+                                new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        switch (item.getItemId()) {
+                                            case R.id.billiardDisplay_menu1_billiardLvExplain:
+                                                BilliardLvExplainDialog dialog = BilliardLvExplainDialog.newInstance();
+                                                dialog.show(getSupportFragmentManager(), BilliardLvExplainDialog.class.getSimpleName());
+                                                return true;
+                                            default:
+                                                return false;
+                                        }
+                                    }
+                                }
+                        );
+                        popupMenu.show();
+                    }
+                }
+        );
+
         // widget (delete) : click listener
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setClickListenerOfDeleteButton();
-            }
-        });
+        delete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setClickListenerOfDeleteButton();
+                    }
+                }
+        );
     }
 
 

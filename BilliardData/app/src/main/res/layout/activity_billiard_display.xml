@@ -14,56 +14,82 @@
         android:orientation="vertical">
 
         <!-- title -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:text="@string/billiardDisplay_title"
+            android:textAlignment="center" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/billiardDisplay_title"
-                android:textAlignment="center"></TextView>
-        </LinearLayout><!-- End of title -->
-
-        <!-- content -->
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
 
-            <!-- content 1. all billiard data -->
-            <ListView
-                android:id="@+id/billiardDisplay_listView_billiardList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorBackgroundSecond" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="?android:attr/listDivider" />
-
-            <!-- content 2. button -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="10dp">
 
-                <Button
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/billiardDisplay_listView_title" />
+
+                    <ImageView
+                        android:id="@+id/billiardDisplay_button_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/button_more" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/darker_gray" />
+
+                <ListView
+                    android:id="@+id/billiardDisplay_listView_billiardList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="?android:attr/listDivider" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/billiardDisplay_button_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBackgroundPrimary"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/billiardDisplay_button_delete"
-                    android:textColor="@color/colorTextPrimary"></Button>
-            </LinearLayout><!-- End of content 2 -->
+                    app:backgroundTint="@color/colorBackgroundPrimary" />
 
-        </LinearLayout><!-- End of content -->
+            </LinearLayout><!-- End of content -->
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout><!-- End of main -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

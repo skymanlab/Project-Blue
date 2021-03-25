@@ -10,10 +10,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.fragment.user.UserViewPagerAdapter;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 
 public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable {

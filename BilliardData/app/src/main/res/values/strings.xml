@@ -31,22 +31,19 @@
 
     <!-- Activity : billiard input -->
     <string name="billiardInput_title">당구 데이터 입력</string>
-    <string name="billiardInput_player_name">### 님</string>
-    <string name="billiardInput_player_target_score">수지</string>
-    <string name="billiardInput_player_score">점수</string>
-    <string name="billiardInput_target_score">수지</string>
-    <string name="billiardInput_speciality">종목</string>
-    <string name="billiardInput_date">날짜</string>
-    <string name="billiardInput_date_content">날짜 데이터를 셋팅 중입니다.</string>
-    <string name="billiardInput_date_re">다시</string>
-    <string name="billiardInput_winner">승자</string>
-    <string name="billiardInput_score">스코어</string>
-    <string name="billiardInput_score_colon">:</string>
-    <string name="billiardInput_play_time">경기시간</string>
-    <string name="billiardInput_play_time_unit">분</string>
-    <string name="billiardInput_cost">가격</string>
-    <string name="billiardInput_cost_unit">원</string>
-    <string name="billiardInput_bt_save">저장</string>
+    <string name="billiardInput_playerSection_Name">### 님</string>
+    <string name="billiardInput_playerSection_targetScore">수지</string>
+    <string name="billiardInput_playerSection_score">점수</string>
+    <string name="billiardInput_billiardSection_gameMode">종목</string>
+    <string name="billiardInput_billiardSection_date">날짜</string>
+    <string name="billiardInput_billiardSection_date_content">날짜 데이터를 셋팅 중입니다.</string>
+    <string name="billiardInput_billiardSection_date_button_re">변경</string>
+    <string name="billiardInput_billiardSection_winner">승자</string>
+    <string name="billiardInput_billiardSection_playTime">경기시간</string>
+    <string name="billiardInput_billiardSection_playTime_unit">분</string>
+    <string name="billiardInput_billiardSection_cost">가격</string>
+    <string name="billiardInput_billiardSection_cost_unit">원</string>
+    <string name="billiardInput_billiardSection_button_save">저장</string>
     <string name="billiardInput_dialog_saveData_title">저장하시겠습니까?</string>
     <string name="billiardInput_dialog_saveData_message">입력된 내용을 저장합니다.</string>
     <string name="billiardInput_dialog_saveData_positive">저장</string>
@@ -78,21 +75,31 @@
     <string name="billiardModify_cost">비용</string>
     <string name="billiardModify_cost_unit">원</string>
     <string name="billiardModify_button_modify">수정</string>
+    <string name="billiardModify_button_delete">삭제</string>
     <string name="billiardModify_button_cancel">취소</string>
     <string name="billiardModify_noticeUser_noChangedData">변경된 데이터가 없습니다.</string>
     <string name="billiardModify_dialog_modifyData_title">수정하시겠습니까?</string>
     <string name="billiardModify_dialog_modifyData_message">수정된 내용을 저장합니다.</string>
     <string name="billiardModify_dialog_modifyData_positive">수정</string>
     <string name="billiardModify_dialog_modifyData_negative">취소</string>
+    <string name="billiardModify_dialog_deleteData_title">삭제하시겠습니까?</string>
+    <string name="billiardModify_dialog_deleteData_message">게임 내용을 삭제합니다. 모든 내용이 삭제되므로 주위해주세요.</string>
+    <string name="billiardModify_dialog_deleteData_positive">삭제</string>
+    <string name="billiardModify_dialog_deleteData_negative">취소</string>
 
     <!-- Activity : billiard display -->
     <string name="billiardDisplay_title">당구 데이터 보기</string>
+    <string name="billiardDisplay_listView_title">목록 ▼</string>
+    <string name="billiardDisplay_listView_explain_1">번호를 클릭하면 수정할 수 있습니다.</string>
+    <string name="billiardDisplay_listView_explain_2">참가자 수를 클릭하면 참가자에 대한 정보를 확인할 수 있습니다</string>
     <string name="billiardDisplay_button_delete">모든 내용 삭제</string>
     <string name="billiardDisplay_dialog_allDataDelete_title">삭제하시겠습니까?</string>
     <string name="billiardDisplay_dialog_allDataDelete_message">저장되었던 게임에 대한 내용이 모두 삭제됩니다.</string>
     <string name="billiardDisplay_dialog_allDataDelete_positive">삭제</string>
     <string name="billiardDisplay_dialog_allDataDelete_negative">취소</string>
     <string name="billiardDisplay_noticeUser_noData">저장된 데이터가 없습니다.</string>
+    <string name="billiardDisplay_menu1_billiardLvExplain">사용자 설명</string>
+    <string name="billiardDisplay_"></string>
 
     <!-- Activity : user manager -->
     <string name="userManager_title">나의 정보</string>
@@ -216,6 +223,7 @@
     <string name="F_userFriend_noticeUser_friendAdd_success">친구 추가를 성공하였습니다.</string>
     <string name="F_userFriend_noticeUser_friendAdd_error">오류가 발생하였습니다.</string>
     <string name="F_userFriend_noticeUser_onUserData">먼저 나의 정보를 입력해주세요.</string>
+    <string name="F_userFriend_menu1_seeMore">자세히 보기</string>
     <string name="F_userFriend_"></string>
 
     <!-- Fragment : calendar -->
@@ -233,13 +241,6 @@
     <!--                                Dialog
     ===============================================================================================-
     -->
-    <!-- Dialog : re date-->
-    <string name="c_di_re_date_title">날짜 셋팅</string>
-    <string name="c_di_re_date_year">년도</string>
-    <string name="c_di_re_date_month">월</string>
-    <string name="c_di_re_date_day">일</string>
-    <string name="c_di_re_date_bt_modify">변경</string>
-
     <!-- Dialog : game record -->
     <string name="custom_dialog_gameRecord_title">게임 기록</string>
     <string name="custom_dialog_gameRecord_explain">버튼을 클릭하여 해당 경기에 대한 내용을 확인하세요.</string>
@@ -270,6 +271,14 @@
     <string name="custom_dialog_playerList_target_score_default">##</string>
     <string name="custom_dialog_playerList_score">점수</string>
     <string name="custom_dialog_playerList_score_default">##</string>
+
+    <!-- Dialog : billiard lv explain-->
+    <string name="custom_dialog_billiardLvExplain_title">사용 설명서</string>
+    <string name="custom_dialog_billiardLvExplain_"></string>
+
+    <!-- Dialog : friend list -->
+    <string name="custom_dialog_friend_list_title">친구 목록</string>
+    <string name="custom_dialog_friend_list_"></string>
 
 
     <!--                                Custom Layout
@@ -323,15 +332,6 @@
     <string name="adapter_billiardLvAdapter_modifyCheck_message">데이터 수정을 위한 화면으로 이동합니다.</string>
     <string name="adapter_billiardLvAdapter_modifyCheck_positive">이동</string>
     <string name="adapter_billiardLvAdapter_modifyCheck_negative">취소</string>
-
-
-    <!-- Util : FileImport-->
-    <string name="etc_fileImport_noticeUser_errorParsing">해당 파일의 내용을 가져올 수 없습니다.</string>
-    <string name="etc_fileImport_noticeUser_errorDatabase">오류가 발생하였습니다.</string>
-    <string name="etc_fileImport_noticeUser_completedImport">가져오기 완료 하였습니다.</string>
-
-    <!-- FileExport -->
-    <string name="etc_fileExport_"></string>
 
 
     <!--                                    top bar

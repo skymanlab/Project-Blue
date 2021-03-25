@@ -13,208 +13,195 @@
         android:orientation="vertical">
 
         <!-- title -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
-            android:gravity="top"
-            android:padding="10dp">
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/appInfo_title" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/appInfo_title"></TextView>
-        </LinearLayout><!-- End of title -->
-
-        <!-- content -->
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-
-            <!-- content 1. app name -->
+            <!-- content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_appName">
-
-                </TextView>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
-
-                <TextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/appInfo_appName_content"></TextView>
-            </LinearLayout><!-- End of content 2 -->
+                    android:layout_margin="20dp"
+                    app:cardElevation="2dp">
 
-            <!-- content 2. developer group-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_developerGroup">
+                        <!-- content 1. app name -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                </TextView>
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_appName" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/appInfo_developerGroup_content"></TextView>
-            </LinearLayout><!-- End of content 2 -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_appName_content" />
+                        </LinearLayout><!-- End of content 2 -->
 
-            <!-- content 3. developer -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                        <!-- content 2. developer group-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_developer">
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_developerGroup" />
 
-                </TextView>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_developerGroup_content" />
+                        </LinearLayout><!-- End of content 2 -->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/appInfo_developer_content"></TextView>
-            </LinearLayout><!-- End of content 3 -->
+                        <!-- content 3. developer -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-            <!-- content 4. version -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_developer" />
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_version">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-                </TextView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_developer_content" />
+                        </LinearLayout><!-- End of content 3 -->
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
+                        <!-- content 4. version -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/appInfo_version_content"></TextView>
-            </LinearLayout><!-- End of content 4 -->
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_version" />
 
-            <!-- content 5. main site -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundSecond"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_mainSite">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_version_content" />
+                        </LinearLayout><!-- End of content 4 -->
 
-                </TextView>
+                        <!-- content 5. main site -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_mainSite" />
 
-                <TextView
-                    android:id="@+id/appInfo_mainSite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="@string/appInfo_mainSite_content"></TextView>
-            </LinearLayout><!-- End of content 5 -->
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-            <!-- content 7. third site -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundThird"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                            <TextView
+                                android:id="@+id/appInfo_mainSite"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:text="@string/appInfo_mainSite_content" />
+                        </LinearLayout><!-- End of content 5 -->
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appInfo_secondSite">
+                        <!-- content 7. third site -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                </TextView>
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/appInfo_secondSite" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="?android:attr/listDivider" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/appInfo_secondSite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="@string/appInfo_secondSite_content"></TextView>
-            </LinearLayout><!-- End of content 7 -->
-        </LinearLayout><!-- End of content -->
+                            <TextView
+                                android:id="@+id/appInfo_secondSite"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:text="@string/appInfo_secondSite_content" />
+                        </LinearLayout><!-- End of content 7 -->
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout><!-- End of content -->
+        </ScrollView>
 
     </LinearLayout><!-- End of main -->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

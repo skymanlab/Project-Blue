@@ -12,13 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.management.SectionManager;
-import com.skyman.billiarddata.management.file.FileConstants;
-import com.skyman.billiarddata.management.file.FileExport;
-import com.skyman.billiarddata.management.file.FileImport;
-import com.skyman.billiarddata.management.projectblue.data.SessionManager;
-import com.skyman.billiarddata.management.projectblue.database.AppDbManager;
-import com.skyman.billiarddata.management.user.data.UserData;
+import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.etc.file.FileConstants;
+import com.skyman.billiarddata.etc.file.FileExport;
+import com.skyman.billiarddata.etc.file.FileImport;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.io.IOException;
 
