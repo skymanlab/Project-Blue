@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.skyman.billiarddata">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -9,7 +11,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AppSettingActivity"></activity>
+        <activity android:name=".AdMobActivity"></activity>
+        <activity android:name=".AppSettingActivity" />
         <activity android:name=".BilliardModifyActivity" />
         <activity android:name=".StatisticsManagerActivity" />
         <activity android:name=".AppInfoActivity" />
@@ -23,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- AdMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9668325238172702~5850877654" />
     </application>
 
 </manifest>

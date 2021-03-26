@@ -126,7 +126,8 @@
     <string name="appInfo_mainSite_content">https://blog.naver.com/skyman13</string>
     <string name="appInfo_secondSite">GitHub</string>
     <string name="appInfo_secondSite_content">https://github.com/skymanlab</string>
-    <string name="appInfo_step">조작 단계 ▼</string>
+    <string name="appInfo_adMob">광고보기</string>
+
 
     <!-- Activity : app setting -->
     <string name="appSetting_title">설정</string>
