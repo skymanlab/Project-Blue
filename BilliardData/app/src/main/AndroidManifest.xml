@@ -6,12 +6,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icon"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdMobActivity"></activity>
         <activity android:name=".AppSettingActivity" />
         <activity android:name=".BilliardModifyActivity" />
         <activity android:name=".StatisticsManagerActivity" />
@@ -31,6 +30,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9668325238172702~5850877654" />
+
     </application>
 
 </manifest>

@@ -28,6 +28,9 @@
     <string name="main_dialog_playerChoiceInGame_title">친구 목록</string>
     <string name="main_dialog_playerChoiceInGame_positive">게임 시작</string>
     <string name="main_dialog_playerChoiceInGame_negative">취소</string>
+    <string name="main_noticeUser_choicePlayer">1명이상은 선택해주세요.</string>
+    <string name="main_adMob_test"></string>
+    <string name="main_"></string>
 
     <!-- Activity : billiard input -->
     <string name="billiardInput_title">당구 데이터 입력</string>
@@ -42,6 +45,7 @@
     <string name="billiardInput_billiardSection_playTime">경기시간</string>
     <string name="billiardInput_billiardSection_playTime_unit">분</string>
     <string name="billiardInput_billiardSection_cost">가격</string>
+    <string name="billiardInput_billiardSection_cost_hint">마지막 경기가 아니면 0원을 입력하세요. 그리고 마지막 경기에 금액을 입력해주세요.</string>
     <string name="billiardInput_billiardSection_cost_unit">원</string>
     <string name="billiardInput_billiardSection_button_save">저장</string>
     <string name="billiardInput_dialog_saveData_title">저장하시겠습니까?</string>
@@ -56,6 +60,7 @@
     <string name="billiardInput_noticeUser_scoreRangeCheck">플레이어의 점수는 수지보다 작은 값을 입력해주세요.</string>
     <string name="billiardInput_noticeUser_winnerScoreCheck">승리자는 수지와 점수가 같아야 합니다.</string>
     <string name="billiardInput_noticeUser_inputDataCheck_playTimeAndCost">경기시간과 비용은 0보다 큰 값을 입력해주세요.</string>
+    <string name="billiardInput_noticeUser_inputDataCheck_playTime">경기시간은 0보다 큰 값을 입력해주세요.</string>
     <string name="billiardInput_noticeUser_saveComplete">저장이 완료되었습니다.</string>
 
     <!-- Dialog : billiard modify -->
@@ -122,11 +127,19 @@
     <string name="appInfo_developer_content">장동익</string>
     <string name="appInfo_version">버전</string>
     <string name="appInfo_version_content">ⓥ 1.0.0</string>
-    <string name="appInfo_mainSite">블로그</string>
-    <string name="appInfo_mainSite_content">https://blog.naver.com/skyman13</string>
+    <string name="appInfo_blog_1">블로그 1</string>
+    <string name="appInfo_blog_1_content">https://skymanlab.blogspot.com</string>
+    <string name="appInfo_blog_2">블로그 2</string>
+    <string name="appInfo_blog_2_content">https://blog.naver.com/skyman13</string>
     <string name="appInfo_secondSite">GitHub</string>
     <string name="appInfo_secondSite_content">https://github.com/skymanlab</string>
-    <string name="appInfo_adMob">광고보기</string>
+    <string name="appInfo_button_adMob">광고보기</string>
+    <string name="appInfo_noticeUser_didNotLoadFullAd">광고가 로드되지 않았습니다.</string>
+    <string name="appInfo_noticeUser_loadFullAd">광고가 로드되었습니다.</string>
+    <string name="appInfo_noticeUser_errorAdMob">오류가 발생하였습니다.</string>
+    <string name="appInfo_adMob_smartBanner_testId">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="appInfo_adMob_smartBanner_realId">ca-app-pub-9668325238172702/4067162315</string>
+    <string name="appInfo_"></string>
 
 
     <!-- Activity : app setting -->

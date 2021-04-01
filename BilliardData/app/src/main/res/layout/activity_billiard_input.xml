@@ -505,9 +505,7 @@
                             <Spinner
                                 android:id="@+id/billiardInput_billiardSection_gameMode"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></Spinner>
+                                android:layout_height="wrap_content" />
                         </LinearLayout><!-- End of gameMode -->
 
                         <!-- winner -->
@@ -629,6 +627,12 @@
                         </LinearLayout><!-- End of button save-->
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView><!-- End of billiardSection -->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@string/billiardInput_billiardSection_cost_hint" />
 
             </LinearLayout><!-- End of content -->
         </ScrollView>

@@ -417,6 +417,15 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                                 // <2>
                                 // 게임에 참가할 수 있는 친구의 수가 3명 이하 인지 확인
+                                if (participatedFriendListInGame.isEmpty()) {
+                                    // <사용자 알림>
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            R.string.main_noticeUser_choicePlayer,
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                    return;
+                                }
                                 if (!(participatedFriendListInGame.size() <= NUMBER_OF_SELECTABLE_MAX_FRIEND)) {
 
                                     String notice = new StringBuilder()
@@ -425,6 +434,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                                             .append(" 명 입니다.")
                                             .toString();
 
+                                    // <사용자 알림>
                                     Toast.makeText(
                                             getApplicationContext(),
                                             notice,

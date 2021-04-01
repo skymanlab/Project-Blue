@@ -5,14 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <com.google.android.gms.ads.AdView-->
-<!--        android:id="@+id/custom_dialog_adMob_adView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        ads:adSize=""-->
-<!--        ads:adUnitId="ca-app-pub-3940256099942544/1033173712" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

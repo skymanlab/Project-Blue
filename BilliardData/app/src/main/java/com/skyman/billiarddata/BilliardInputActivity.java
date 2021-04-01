@@ -478,11 +478,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
 
                         } else {
-                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<playTime> 와 <cost> 은 0 보다 큰 값만 입력해야 되요!");
+                            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<playTime> 은 0 보다 큰 값만 입력해야 되요!");
                             // <사용자 알림>
                             Toast.makeText(
                                     this,
-                                    R.string.billiardInput_noticeUser_inputDataCheck_playTimeAndCost,
+                                    R.string.billiardInput_noticeUser_inputDataCheck_playTime,
                                     Toast.LENGTH_SHORT
                             ).show();
                         } // [check 5]
@@ -769,9 +769,10 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         try {
 
             int playTimeValue = Integer.parseInt(playTime.getText().toString());
-            int costValue = Integer.parseInt(cost.getText().toString());
+//            int costValue = Integer.parseInt(cost.getText().toString());
 
-            if (0 < playTimeValue && 0 < costValue) {
+//            if (0 < playTimeValue && 0 < costValue) {
+            if (0 < playTimeValue) {
                 return true;
             } else {
                 return false;
