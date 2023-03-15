@@ -1,3 +1,4 @@
 # ProjectBlue
 
-이클립스를 이용하여 jsp 페이지를 작성하였다.
+BilliardData : 안드로이드 앱 프로그램 - 출시 되었음
+ProjectBlue : jsp 프로그램
