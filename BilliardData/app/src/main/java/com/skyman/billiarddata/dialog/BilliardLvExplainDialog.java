@@ -68,7 +68,7 @@ public class BilliardLvExplainDialog extends DialogFragment implements SectionMa
     @Override
     public void connectWidget() {
 
-        close = (ImageView) getView().findViewById(R.id.custom_dialog_billiardLvExplain_button_close);
+        close = (ImageView) getView().findViewById(R.id.d_billiardLvExplain_button_close);
     }
 
     @Override

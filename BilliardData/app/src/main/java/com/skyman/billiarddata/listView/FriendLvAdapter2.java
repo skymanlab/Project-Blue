@@ -69,12 +69,12 @@ public class FriendLvAdapter2 extends BaseAdapter {
         // 7. total cost
 
         // connect widget
-        TextView id = (TextView) convertView.findViewById(R.id.c_lv_friend_data_id);                                // 0. id
-        TextView name = (TextView) convertView.findViewById(R.id.c_lv_friend_data_name);                            // 2. name
-        TextView gameRecord = (TextView) convertView.findViewById(R.id.c_lv_friend_data_game_record);               // 3&4. game record
-        TextView recentPlayDate = (TextView) convertView.findViewById(R.id.c_lv_friend_data_recent_play_date);      // 5. recent play date
-        TextView totalPlayTime = (TextView) convertView.findViewById(R.id.c_lv_friend_data_total_play_time);        // 6. total play time
-        TextView totalCost = (TextView) convertView.findViewById(R.id.c_lv_friend_data_total_cost);                 // 7. total cost
+        TextView id = (TextView) convertView.findViewById(R.id.clv_friend_data_id);                                // 0. id
+        TextView name = (TextView) convertView.findViewById(R.id.clv_friend_data_name);                            // 2. name
+        TextView gameRecord = (TextView) convertView.findViewById(R.id.clv_friend_data_game_record);               // 3&4. game record
+        TextView recentPlayDate = (TextView) convertView.findViewById(R.id.clv_friend_data_recent_play_date);      // 5. recent play date
+        TextView totalPlayTime = (TextView) convertView.findViewById(R.id.clv_friend_data_total_play_time);        // 6. total play time
+        TextView totalCost = (TextView) convertView.findViewById(R.id.clv_friend_data_total_cost);                 // 7. total cost
 
         // init widget
         id.setText(Long.toString(friendData.getId()));

@@ -120,30 +120,30 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
     public void connectWidget() {
 
         // [iv/C]Button : close mapping
-        this.close = (ImageView) getView().findViewById(R.id.custom_dialog_gameRecord_button_close);
+        this.close = (ImageView) getView().findViewById(R.id.d_gameRecord_button_close);
 
         // [iv/C]HorizontalScrollView : winOfLoss mapping
-        this.contentWrapper = (LinearLayout) getView().findViewById(R.id.custom_dialog_gameRecord_win_or_loss);
+        this.contentWrapper = (LinearLayout) getView().findViewById(R.id.d_gameRecord_win_or_loss);
 
         // [iv/C]TextView : date mapping
-        this.date = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_date);
+        this.date = (TextView) getView().findViewById(R.id.d_gameRecord_date);
 
         // [iv/C]TextView : speciality mapping
-        this.gameMode = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_speciality);
+        this.gameMode = (TextView) getView().findViewById(R.id.d_gameRecord_speciality);
 
-        this.playerList = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_playerList);
+        this.playerList = (TextView) getView().findViewById(R.id.d_gameRecord_playerList);
 
         // [iv/C]TextView : winner mapping
-        this.winnerName = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_winner);
+        this.winnerName = (TextView) getView().findViewById(R.id.d_gameRecord_winner);
 
         // [iv/C]TextView : score mapping
-        this.score = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_score);
+        this.score = (TextView) getView().findViewById(R.id.d_gameRecord_score);
 
         // [iv/C]TextView : playTime mapping
-        this.playTime = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_playTime);
+        this.playTime = (TextView) getView().findViewById(R.id.d_gameRecord_playTime);
 
         // [iv/C]TextView : cost mapping
-        this.cost = (TextView) getView().findViewById(R.id.custom_dialog_gameRecord_cost);
+        this.cost = (TextView) getView().findViewById(R.id.d_gameRecord_cost);
 
 
     }

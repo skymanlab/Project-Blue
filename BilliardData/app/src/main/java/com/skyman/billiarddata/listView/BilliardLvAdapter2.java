@@ -90,16 +90,16 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         // 8. cost
 
         // connect widget
-        LinearLayout countWrapper = (LinearLayout) convertView.findViewById(R.id.custom_lv_billiardData_count_wrapper);
-        TextView count = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_count);                            // 0. count
-        TextView date = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_date);                              // 1. date
-        TextView gameMode = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_gameMode);                      // 2. game mode
-        LinearLayout playerCountWrapper = (LinearLayout) convertView.findViewById(R.id.custom_lv_billiardData_playerCount_wrapper);
-        TextView playerCount = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_playerCount);                // 3. player count
-        TextView winnerName = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_winnerName);                  // 5. winner name
-        TextView playTime = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_playTime);                      // 6. play time
-        TextView score = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_score);                            // 7. score
-        TextView cost = (TextView) convertView.findViewById(R.id.custom_lv_billiardData_cost);                              // 8. cost
+        LinearLayout countWrapper = (LinearLayout) convertView.findViewById(R.id.clv_billiardData_count_wrapper);
+        TextView count = (TextView) convertView.findViewById(R.id.clv_billiardData_count);                            // 0. count
+        TextView date = (TextView) convertView.findViewById(R.id.clv_billiardData_date);                              // 1. date
+        TextView gameMode = (TextView) convertView.findViewById(R.id.clv_billiardData_gameMode);                      // 2. game mode
+        LinearLayout playerCountWrapper = (LinearLayout) convertView.findViewById(R.id.clv_billiardData_playerCount_wrapper);
+        TextView playerCount = (TextView) convertView.findViewById(R.id.clv_billiardData_playerCount);                // 3. player count
+        TextView winnerName = (TextView) convertView.findViewById(R.id.clv_billiardData_winnerName);                  // 5. winner name
+        TextView playTime = (TextView) convertView.findViewById(R.id.clv_billiardData_playTime);                      // 6. play time
+        TextView score = (TextView) convertView.findViewById(R.id.clv_billiardData_score);                            // 7. score
+        TextView cost = (TextView) convertView.findViewById(R.id.clv_billiardData_cost);                              // 8. cost
 
         // init widget :
         count.setText(billiardData.getCount() + "");                                                                // 0. count
@@ -200,9 +200,9 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         // <3>
         // <사용자 확인>
         new AlertDialog.Builder(context)
-                .setTitle(R.string.adapter_billiardLvAdapter_modifyCheck_title)
-                .setMessage(R.string.adapter_billiardLvAdapter_modifyCheck_message)
-                .setPositiveButton(R.string.adapter_billiardLvAdapter_modifyCheck_positive, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.lva_billiardLvAdapter_modifyCheck_title)
+                .setMessage(R.string.lva_billiardLvAdapter_modifyCheck_message)
+                .setPositiveButton(R.string.lva_billiardLvAdapter_modifyCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -243,7 +243,7 @@ public class BilliardLvAdapter2 extends BaseAdapter {
 
                     }
                 })
-                .setNegativeButton(R.string.adapter_billiardLvAdapter_modifyCheck_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.lva_billiardLvAdapter_modifyCheck_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

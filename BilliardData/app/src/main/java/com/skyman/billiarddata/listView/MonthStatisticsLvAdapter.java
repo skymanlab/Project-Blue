@@ -52,9 +52,9 @@ public class MonthStatisticsLvAdapter extends BaseAdapter {
 
         // widget
 
-        MaterialTextView year = convertView.findViewById(R.id.custom_lv_monthStatistics_year);
-        MaterialTextView month = convertView.findViewById(R.id.custom_lv_monthStatistics_month);
-        MaterialTextView gameRecord = convertView.findViewById(R.id.custom_lv_monthStatistics_gameRecord);
+        MaterialTextView year = convertView.findViewById(R.id.clv_monthStatistics_year);
+        MaterialTextView month = convertView.findViewById(R.id.clv_monthStatistics_month);
+        MaterialTextView gameRecord = convertView.findViewById(R.id.clv_monthStatistics_gameRecord);
 
         // setup widget
         year.setText(monthStatistics.getYear() + "년");

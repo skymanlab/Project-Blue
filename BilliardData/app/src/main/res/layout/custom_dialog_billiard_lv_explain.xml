@@ -13,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/custom_dialog_billiardLvExplain_title"
+            android:text="@string/d_billiardLvExplain_title"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/custom_dialog_billiardLvExplain_button_close"
+            android:id="@+id/d_billiardLvExplain_button_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"

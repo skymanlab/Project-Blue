@@ -96,49 +96,49 @@ public class PlayerListDialog extends DialogFragment implements SectionManager.I
         this.section = new LinearLayout[4];
 
         // [iv/C]LinearLayout : 모든 section mapping
-        this.section[0] = (LinearLayout) getView().findViewById(R.id.custom_dialog_playerList_section_0);
-        this.section[1] = (LinearLayout) getView().findViewById(R.id.custom_dialog_playerList_section_1);
-        this.section[2] = (LinearLayout) getView().findViewById(R.id.custom_dialog_playerList_section_2);
-        this.section[3] = (LinearLayout) getView().findViewById(R.id.custom_dialog_playerList_section_3);
+        this.section[0] = (LinearLayout) getView().findViewById(R.id.d_playerList_section_0);
+        this.section[1] = (LinearLayout) getView().findViewById(R.id.d_playerList_section_1);
+        this.section[2] = (LinearLayout) getView().findViewById(R.id.d_playerList_section_2);
+        this.section[3] = (LinearLayout) getView().findViewById(R.id.d_playerList_section_3);
 
         // [iv/C]TextView : name 은 4개
         this.name = new TextView[4];
 
         // [iv/C]TextView : 모든 name mapping
-        this.name[0] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_name_0);
-        this.name[1] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_name_1);
-        this.name[2] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_name_2);
-        this.name[3] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_name_3);
+        this.name[0] = (TextView) getView().findViewById(R.id.d_playerList_name_0);
+        this.name[1] = (TextView) getView().findViewById(R.id.d_playerList_name_1);
+        this.name[2] = (TextView) getView().findViewById(R.id.d_playerList_name_2);
+        this.name[3] = (TextView) getView().findViewById(R.id.d_playerList_name_3);
 
         // [iv/C]TextView : id 는 4개
         this.id = new TextView[4];
 
         // [iv/C]TextView : 모든 id mapping
-        this.id[0] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_id_0);
-        this.id[1] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_id_1);
-        this.id[2] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_id_2);
-        this.id[3] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_id_3);
+        this.id[0] = (TextView) getView().findViewById(R.id.d_playerList_id_0);
+        this.id[1] = (TextView) getView().findViewById(R.id.d_playerList_id_1);
+        this.id[2] = (TextView) getView().findViewById(R.id.d_playerList_id_2);
+        this.id[3] = (TextView) getView().findViewById(R.id.d_playerList_id_3);
 
         // [iv/C]TextView : targetScore 는 4개
         this.targetScore = new TextView[4];
 
         // [iv/C]TextView : 모든 targetScore mapping
-        this.targetScore[0] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_target_score_0);
-        this.targetScore[1] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_target_score_1);
-        this.targetScore[2] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_target_score_2);
-        this.targetScore[3] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_target_score_3);
+        this.targetScore[0] = (TextView) getView().findViewById(R.id.d_playerList_target_score_0);
+        this.targetScore[1] = (TextView) getView().findViewById(R.id.d_playerList_target_score_1);
+        this.targetScore[2] = (TextView) getView().findViewById(R.id.d_playerList_target_score_2);
+        this.targetScore[3] = (TextView) getView().findViewById(R.id.d_playerList_target_score_3);
 
         // [iv/C]TextView : score 는 4개
         this.score = new TextView[4];
 
         // [iv/C]TextView : 모든 score mapping
-        this.score[0] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_score_0);
-        this.score[1] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_score_1);
-        this.score[2] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_score_2);
-        this.score[3] = (TextView) getView().findViewById(R.id.custom_dialog_playerList_score_3);
+        this.score[0] = (TextView) getView().findViewById(R.id.d_playerList_score_0);
+        this.score[1] = (TextView) getView().findViewById(R.id.d_playerList_score_1);
+        this.score[2] = (TextView) getView().findViewById(R.id.d_playerList_score_2);
+        this.score[3] = (TextView) getView().findViewById(R.id.d_playerList_score_3);
 
         // [iv/C]Button : close mapping
-        this.close = (ImageView) getView().findViewById(R.id.custom_dialog_playerList_button_close);
+        this.close = (ImageView) getView().findViewById(R.id.d_playerList_button_close);
 
     }
 

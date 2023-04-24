@@ -256,120 +256,120 @@
     ===============================================================================================-
     -->
     <!-- Dialog : game record -->
-    <string name="custom_dialog_gameRecord_title">게임 기록</string>
-    <string name="custom_dialog_gameRecord_explain">버튼을 클릭하여 해당 경기에 대한 내용을 확인하세요.</string>
-    <string name="custom_dialog_gameRecord_date">날짜</string>
-    <string name="custom_dialog_gameRecord_date_default">####년 ##월 ##일</string>
-    <string name="custom_dialog_gameRecord_speciality">종목</string>
-    <string name="custom_dialog_gameRecord_speciality_default">3구, 4구, 포켓볼 중 하나</string>
-    <string name="custom_dialog_gameRecord_playTime">게임 시간</string>
-    <string name="custom_dialog_gameRecord_playTime_default">## 분</string>
-    <string name="custom_dialog_gameRecord_playerList">참가자</string>
-    <string name="custom_dialog_gameRecord_playerList_explain">* 참가자 : 이름(수지)</string>
-    <string name="custom_dialog_gameRecord_playerList_default"></string>
-    <string name="custom_dialog_gameRecord_winner">승리자</string>
-    <string name="custom_dialog_gameRecord_winner_default">### 님입니다.</string>
-    <string name="custom_dialog_gameRecord_score">스코어</string>
-    <string name="custom_dialog_gameRecord_score_default"># : #</string>
-    <string name="custom_dialog_gameRecord_cost">비용</string>
-    <string name="custom_dialog_gameRecord_cost_default">###,### 원</string>
-    <string name="custom_dialog_gameRecord_button_close">종료</string>
+    <string name="d_gameRecord_title">게임 기록</string>
+    <string name="d_gameRecord_explain">버튼을 클릭하여 해당 경기에 대한 내용을 확인하세요.</string>
+    <string name="d_gameRecord_date">날짜</string>
+    <string name="d_gameRecord_date_default">####년 ##월 ##일</string>
+    <string name="d_gameRecord_speciality">종목</string>
+    <string name="d_gameRecord_speciality_default">3구, 4구, 포켓볼 중 하나</string>
+    <string name="d_gameRecord_playTime">게임 시간</string>
+    <string name="d_gameRecord_playTime_default">## 분</string>
+    <string name="d_gameRecord_playerList">참가자</string>
+    <string name="d_gameRecord_playerList_explain">* 참가자 : 이름(수지)</string>
+    <string name="d_gameRecord_playerList_default"></string>
+    <string name="d_gameRecord_winner">승리자</string>
+    <string name="d_gameRecord_winner_default">### 님입니다.</string>
+    <string name="d_gameRecord_score">스코어</string>
+    <string name="d_gameRecord_score_default"># : #</string>
+    <string name="d_gameRecord_cost">비용</string>
+    <string name="d_gameRecord_cost_default">###,### 원</string>
+    <string name="d_gameRecord_button_close">종료</string>
 
     <!-- Dialog : player list-->
-    <string name="custom_dialog_playerList_title">선수 목록</string>
-    <string name="custom_dialog_playerList_explain">게임에 참가한 선수에 대한 정보입니다.</string>
-    <string name="custom_dialog_playerList_name">이름</string>
-    <string name="custom_dialog_playerList_id">아이디</string>
-    <string name="custom_dialog_playerList_id_default">###</string>
-    <string name="custom_dialog_playerList_target_score">수지</string>
-    <string name="custom_dialog_playerList_target_score_default">##</string>
-    <string name="custom_dialog_playerList_score">점수</string>
-    <string name="custom_dialog_playerList_score_default">##</string>
+    <string name="d_playerList_title">선수 목록</string>
+    <string name="d_playerList_explain">게임에 참가한 선수에 대한 정보입니다.</string>
+    <string name="d_playerList_name">이름</string>
+    <string name="d_playerList_id">아이디</string>
+    <string name="d_playerList_id_default">###</string>
+    <string name="d_playerList_target_score">수지</string>
+    <string name="d_playerList_target_score_default">##</string>
+    <string name="d_playerList_score">점수</string>
+    <string name="d_playerList_score_default">##</string>
 
     <!-- Dialog : billiard lv explain-->
-    <string name="custom_dialog_billiardLvExplain_title">사용 설명서</string>
-    <string name="custom_dialog_billiardLvExplain_"></string>
+    <string name="d_billiardLvExplain_title">사용 설명서</string>
+    <string name="d_billiardLvExplain_"></string>
 
     <!-- Dialog : friend list -->
-    <string name="custom_dialog_friend_list_title">친구 목록</string>
-    <string name="custom_dialog_friend_list_explanation">해당 자료는 나를 기준으로 나타낸 것입니다.</string>
+    <string name="d_friend_list_title">친구 목록</string>
+    <string name="d_friend_list_explanation">해당 자료는 나를 기준으로 나타낸 것입니다.</string>
 
 
     <!--                                Custom Layout
     ===============================================================================================-
     -->
     <!-- Custom ListView : billiard data-->
-    <string name="custom_lv_billiardData_count">번호</string>
-    <string name="custom_lv_billiardData_count_default">#</string>
-    <string name="custom_lv_billiardData_date">####년 ##월 ##일</string>
-    <string name="custom_lv_billiardData_gameMode">종목</string>
-    <string name="custom_lv_billiardData_gameMode_default">X구</string>
-    <string name="custom_lv_billiardData_playerCount">참가인원</string>
-    <string name="custom_lv_billiardData_playerCount_default"># 명</string>
-    <string name="custom_lv_billiardData_winnerName">승리자</string>
-    <string name="custom_lv_billiardData_winnerName_default">xxx</string>
-    <string name="custom_lv_billiardData_playTime">경기 시간</string>
-    <string name="custom_lv_billiardData_playTime_default">### 분 </string>
-    <string name="custom_lv_billiardData_score">스코어</string>
-    <string name="custom_lv_billiardData_score_default">## : ##</string>
-    <string name="custom_lv_billiardData_cost">비용</string>
-    <string name="custom_lv_billiardData_cost_default">###,### 원</string>
+    <string name="clv_billiardData_count">번호</string>
+    <string name="clv_billiardData_count_default">#</string>
+    <string name="clv_billiardData_date">####년 ##월 ##일</string>
+    <string name="clv_billiardData_gameMode">종목</string>
+    <string name="clv_billiardData_gameMode_default">X구</string>
+    <string name="clv_billiardData_playerCount">참가인원</string>
+    <string name="clv_billiardData_playerCount_default"># 명</string>
+    <string name="clv_billiardData_winnerName">승리자</string>
+    <string name="clv_billiardData_winnerName_default">xxx</string>
+    <string name="clv_billiardData_playTime">경기 시간</string>
+    <string name="clv_billiardData_playTime_default">### 분 </string>
+    <string name="clv_billiardData_score">스코어</string>
+    <string name="clv_billiardData_score_default">## : ##</string>
+    <string name="clv_billiardData_cost">비용</string>
+    <string name="clv_billiardData_cost_default">###,### 원</string>
 
     <!-- Custom ListView : friend data -->
-    <string name="c_lv_friend_data_game_record">나의 전적</string>
-    <string name="c_lv_friend_data_game_record_default">x전 y승 z패</string>
-    <string name="c_lv_friend_data_recent_play_date">최근 경기 날짜</string>
-    <string name="c_lv_friend_data_recent_play_date_default">xxxx년 xx월 xx일</string>
-    <string name="c_lv_friend_data_total_play_time">총 게임시간</string>
-    <string name="c_lv_friend_data_total_play_time_default">xxx분</string>
-    <string name="c_lv_friend_data_total_cost">총 비용</string>
-    <string name="c_lv_friend_data_total_cost_default">xxx,xxx원</string>
-    <string name="c_lv_friend_data_bt_delete">삭제</string>
+    <string name="clv_friend_data_game_record">나의 전적</string>
+    <string name="clv_friend_data_game_record_default">x전 y승 z패</string>
+    <string name="clv_friend_data_recent_play_date">최근 경기 날짜</string>
+    <string name="clv_friend_data_recent_play_date_default">xxxx년 xx월 xx일</string>
+    <string name="clv_friend_data_total_play_time">총 게임시간</string>
+    <string name="clv_friend_data_total_play_time_default">xxx분</string>
+    <string name="clv_friend_data_total_cost">총 비용</string>
+    <string name="clv_friend_data_total_cost_default">xxx,xxx원</string>
+    <string name="clv_friend_data_bt_delete">삭제</string>
 
     <!-- Custom ListView : month statistics -->
-    <string name="custom_lv_monthStatistics_month_default">1월</string>
-    <string name="custom_lv_monthStatistics_gameRecord">전적</string>
-    <string name="custom_lv_monthStatistics_gameRecord_default">10전 2승 8패</string>
-    <string name="custom_lv_monthStatistics_"></string>
+    <string name="clv_monthStatistics_month_default">1월</string>
+    <string name="clv_monthStatistics_gameRecord">전적</string>
+    <string name="clv_monthStatistics_gameRecord_default">10전 2승 8패</string>
+    <string name="clv_monthStatistics_"></string>
 
     <!-- Custom GridView : player list -->
-    <string name="c_gv_player_list_user_name">XXX 님</string>
-    <string name="c_gv_player_list_target_score">수지</string>
-    <string name="c_gv_player_list_score">점수</string>
+    <string name="cgv_player_list_user_name">XXX 님</string>
+    <string name="cgv_player_list_target_score">수지</string>
+    <string name="cgv_player_list_score">점수</string>
 
 
     <!--                                    Etc
    ===============================================================================================-
    -->
     <!-- ListView Adapter : BilliardLvAdapter -->
-    <string name="adapter_billiardLvAdapter_modifyCheck_title">수정하시겠습니까?</string>
-    <string name="adapter_billiardLvAdapter_modifyCheck_message">데이터 수정을 위한 화면으로 이동합니다.</string>
-    <string name="adapter_billiardLvAdapter_modifyCheck_positive">이동</string>
-    <string name="adapter_billiardLvAdapter_modifyCheck_negative">취소</string>
+    <string name="lva_billiardLvAdapter_modifyCheck_title">수정하시겠습니까?</string>
+    <string name="lva_billiardLvAdapter_modifyCheck_message">데이터 수정을 위한 화면으로 이동합니다.</string>
+    <string name="lva_billiardLvAdapter_modifyCheck_positive">이동</string>
+    <string name="lva_billiardLvAdapter_modifyCheck_negative">취소</string>
 
 
     <!--                                    top bar
    ===============================================================================================-
    -->
     <!-- layout : top bar -->
-    <string name="layout_topBar_rightButton_save">저장</string>
-    <string name="layout_topBar_title">타이틀</string>
+    <string name="tb_rightButton_save">저장</string>
+    <string name="tb_title">타이틀</string>
 
 
     <!--                        Applandeo Material Calendar View
     ===============================================================================================-
     -->
     <!-- material calendar view : translation - Day of the week -->
-    <string name="material_calendar_monday">월</string>
-    <string name="material_calendar_tuesday">화</string>
-    <string name="material_calendar_wednesday">수</string>
-    <string name="material_calendar_thursday">목</string>
-    <string name="material_calendar_friday">금</string>
-    <string name="material_calendar_saturday">토</string>
-    <string name="material_calendar_sunday">일</string>
+    <string name="amcv_monday">월</string>
+    <string name="amcv_tuesday">화</string>
+    <string name="amcv_wednesday">수</string>
+    <string name="amcv_thursday">목</string>
+    <string name="amcv_friday">금</string>
+    <string name="amcv_saturday">토</string>
+    <string name="amcv_sunday">일</string>
 
     <!-- material calendar view : translation - Month -->
-    <array name="material_calendar_months_array">
+    <array name="amcv_months_array">
         <item>1월</item>
         <item>2월</item>
         <item>3월</item>
@@ -385,8 +385,8 @@
     </array>
 
     <!-- material calendar view : translation - Bottom button -->
-    <string name="material_calendar_today_button">Today</string>
-    <string name="material_calendar_positive_button">OK</string>
-    <string name="material_calendar_negative_button">Cancel</string>
+    <string name="amcv_today_button">Today</string>
+    <string name="amcv_positive_button">OK</string>
+    <string name="amcv_negative_button">Cancel</string>
 
 </resources>

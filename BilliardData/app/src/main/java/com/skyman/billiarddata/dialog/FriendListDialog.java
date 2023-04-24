@@ -99,9 +99,9 @@ public class FriendListDialog extends DialogFragment implements SectionManager.I
     @Override
     public void connectWidget() {
 
-        close = (ImageView) getView().findViewById(R.id.custom_dialog_friendList_button_close);
+        close = (ImageView) getView().findViewById(R.id.d_friendList_button_close);
 
-        listView = (ListView) getView().findViewById(R.id.custom_dialog_friendList_listView);
+        listView = (ListView) getView().findViewById(R.id.d_friendList_listView);
 
     }
 
