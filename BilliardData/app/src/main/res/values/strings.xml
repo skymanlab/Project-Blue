@@ -238,7 +238,7 @@
     <string name="F_userFriend_noticeUser_friendAdd_error">오류가 발생하였습니다.</string>
     <string name="F_userFriend_noticeUser_onUserData">먼저 나의 정보를 입력해주세요.</string>
     <string name="F_userFriend_menu1_seeMore">자세히 보기</string>
-    <string name="F_userFriend_"></string>
+    <string name="F_userFriend_explanation">해당 자료는 나를 기준으로 나타낸 것입니다.</string>
 
     <!-- Fragment : calendar -->
     <string name="F_calendar_title">달력으로 확인해봐요.</string>
@@ -292,7 +292,7 @@
 
     <!-- Dialog : friend list -->
     <string name="custom_dialog_friend_list_title">친구 목록</string>
-    <string name="custom_dialog_friend_list_"></string>
+    <string name="custom_dialog_friend_list_explanation">해당 자료는 나를 기준으로 나타낸 것입니다.</string>
 
 
     <!--                                Custom Layout
@@ -316,7 +316,7 @@
     <string name="custom_lv_billiardData_cost_default">###,### 원</string>
 
     <!-- Custom ListView : friend data -->
-    <string name="c_lv_friend_data_game_record">전적</string>
+    <string name="c_lv_friend_data_game_record">나의 전적</string>
     <string name="c_lv_friend_data_game_record_default">x전 y승 z패</string>
     <string name="c_lv_friend_data_recent_play_date">최근 경기 날짜</string>
     <string name="c_lv_friend_data_recent_play_date_default">xxxx년 xx월 xx일</string>

@@ -137,6 +137,13 @@
                         android:layout_marginBottom="5dp"
                         android:background="?android:attr/listDivider" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/F_userFriend_explanation"
+                        />
+
                     <ListView
                         android:id="@+id/F_userFriend_listSection_listView"
                         android:layout_width="match_parent"

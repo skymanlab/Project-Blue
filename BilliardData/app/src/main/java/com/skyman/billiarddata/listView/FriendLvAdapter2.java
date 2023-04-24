@@ -79,7 +79,7 @@ public class FriendLvAdapter2 extends BaseAdapter {
         // init widget
         id.setText(Long.toString(friendData.getId()));
         name.setText(friendData.getName());
-        gameRecord.setText(DataFormatUtil.formatOfGameRecord(friendData.getGameRecordWin(), friendData.getGameRecordLoss()));
+        gameRecord.setText(DataFormatUtil.formatOfGameRecord(friendData.getGameRecordLoss(), friendData.getGameRecordWin()));
         totalPlayTime.setText(DataFormatUtil.formatOfPlayTime(Integer.toString(friendData.getTotalPlayTime())));
         totalCost.setText(DataFormatUtil.formatOfCost(Integer.toString(friendData.getTotalCost())));
 
@@ -88,9 +88,9 @@ public class FriendLvAdapter2 extends BaseAdapter {
                     @Override
                     public void requestQuery(BilliardDbManager2 billiardDbManager2) {
 
-                        // 최근에 게임을 하였으면
+                        // 최근에 게임을 하면
                         // 그 게임의 count(countOfBilliardData) 가 입력 되었을 것이고
-                        // count 는 0 보다 큰 값이 입력된다.
+                        // count 는 0 보다 큰 값이 입력 된다.
                         if (friendData.getRecentGameBilliardCount() > 0) {
 
                             // 최근 참가한 경기 Date 를 가져오기 위해서
