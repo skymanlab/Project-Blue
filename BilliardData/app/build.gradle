@@ -8,15 +8,15 @@ android {
         applicationId "com.skymanlab.billiarddata"
         minSdkVersion 27
         targetSdkVersion 31
-        versionCode 5
-        versionName "1.0.1"
+        versionCode 8
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -49,5 +49,5 @@ dependencies {
     implementation  'com.applandeo:material-calendar-view:1.7.0'
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:19.8.0'
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
 }

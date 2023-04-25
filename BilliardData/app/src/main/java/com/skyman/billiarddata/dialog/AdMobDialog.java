@@ -133,7 +133,6 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
                                     @Override
                                     public void onAdShowedFullScreenContent() {
                                         // Called when fullscreen content is shown.
-                                        Log.d("TAG", "The ad was shown.");
 
                                         DeveloperManager.displayLog(
                                                 CLASS_NAME,

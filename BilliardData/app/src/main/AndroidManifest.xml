@@ -18,7 +18,9 @@
         <activity android:name=".UserManagerActivity" />
         <activity android:name=".BilliardDisplayActivity" />
         <activity android:name=".BilliardInputActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +32,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9668325238172702~5850877654" />
-
     </application>
 
 </manifest>

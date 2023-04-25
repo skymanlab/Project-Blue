@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public final class DeveloperManager {
 
-    public static final Display DISPLAY_POWER = Display.ON;
+    public static final Display DISPLAY_POWER = Display.OFF;
 
     /**
      * [method] 해당 log message 를 Log 로 출력한다.
