@@ -121,12 +121,9 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
 
     @Override
     public void initWidget() {
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "=========>>>>>>>>>>>>>>>>>>========================================>>>>>>>>>>>>>>>>>>>>>>>>>> Chart fragment"
-        );
-
+        /*
+        1. 모든 게임 내용이 담긴 billiardDataArrayList
+         */
         if (userData != null) {
             if (!billiardDataArrayList.isEmpty()) {
 
@@ -135,6 +132,11 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
 
                 createMonthStatisticsData();
 
+                /*
+                1. 월별로 정리된 통계 데이터가 담긴 monthStaticsArrayList를 ListView와 연결시킬 adapter를 생성
+                2. ListView monthStatics 에 1번 adapter를 연결 -> 월별 전적 표시
+                3. userData 의 승리, 패배로 총 전적 표시
+                 */
                 // ListView adapter 생성
                 MonthStatisticsLvAdapter adapter = new MonthStatisticsLvAdapter(reverseOrder(monthStatisticsArrayList));
 
