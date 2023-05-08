@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.etc.calendar.SameDateChecker2;
 import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
@@ -112,8 +113,10 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
             if (!billiardDataArrayList.isEmpty()) {
 
                 SameDateCheckerUtil sameDateCheckerUtil = new SameDateCheckerUtil();
-
                 sameDate = sameDateCheckerUtil.createSameDate(userData, billiardDataArrayList);
+
+                SameDateChecker2 sameDateChecker2 = new SameDateChecker2();
+                sameDateChecker2.checkSameDate(userData, billiardDataArrayList);
 
             }
 

@@ -7,17 +7,14 @@ import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.user.data.UserData;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.function.Consumer;
 
 public class SameDateChecker2 {
 
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final Display CLASS_LOG_SWITCH = Display.ON;
     private static final String CLASS_NAME = "SameDateChecker2";
 
     // constant
@@ -164,9 +161,11 @@ public class SameDateChecker2 {
         if (
                 (userData.getId() == billiardData.getWinnerId()) &&
                         userData.getName().equals(billiardData.getWinnerName())) {
-            sameDate.getMyGameCounter().countOneMyWin();
+            sameDate.getMyGameCounter().plusOneWinCounter();
+            sameDate.getMyGameRecord().add(Record.WIN);
         } else {
-            sameDate.getMyGameCounter().countOneMyLoss();
+            sameDate.getMyGameCounter().plusOneLossCounter();
+            sameDate.getMyGameRecord().add(Record.LOSS);
         }
     }
 
@@ -268,21 +267,26 @@ public class SameDateChecker2 {
                 for (int index = 0; index < sameDate2ArrayList.size(); index++) {
                     Log.d(CLASS_NAME, "---- " + index + "번째 ----");
 
-                    Log.d(CLASS_NAME, " Counter / myWinCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyWinCounter());
-                    Log.d(CLASS_NAME, " Counter / myLossCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyLossCounter());
-                    Log.d(CLASS_NAME, " Counter / gameTotalCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalGameCounter());
-                    Log.d(CLASS_NAME, " Date / year : " + sameDate2ArrayList.get(index).getGameDate().getYear());
-                    Log.d(CLASS_NAME, " Date / month : " + sameDate2ArrayList.get(index).getGameDate().getMonth());
-                    Log.d(CLASS_NAME, " Date / day : " + sameDate2ArrayList.get(index).getGameDate().getDay());
+                    Log.d(CLASS_NAME, "Date / year : " + sameDate2ArrayList.get(index).getGameDate().getYear());
+                    Log.d(CLASS_NAME, "Date / month : " + sameDate2ArrayList.get(index).getGameDate().getMonth());
+                    Log.d(CLASS_NAME, "Date / day : " + sameDate2ArrayList.get(index).getGameDate().getDay());
+                    Log.d(CLASS_NAME, "Counter / winCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getWinCounter());
+                    Log.d(CLASS_NAME, "Counter / lossCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getLossCounter());
+                    Log.d(CLASS_NAME, "Counter / totalGameCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalGameCounter());
 
-                    StringBuffer referenceCount = new StringBuffer();
-                    referenceCount.append(" Reference / count : ");
-                    StringBuffer referenceIndex = new StringBuffer();
-                    referenceIndex.append(" Reference / index : ");
+                    StringBuilder record = new StringBuilder();
+                    record.append("Record : ");
+                    StringBuilder referenceCount = new StringBuilder();
+                    referenceCount.append("Reference / count : ");
+                    StringBuilder referenceIndex = new StringBuilder();
+                    referenceIndex.append("Reference / index : ");
                     for (int rIndex = 0; rIndex < sameDate2ArrayList.get(index).getReferenceArrayList().size(); rIndex++) {
-                        referenceCount.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getCount() + ", ");
-                        referenceIndex.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getIndex() + ", ");
+
+                        record.append("[" + sameDate2ArrayList.get(index).getMyGameRecord().get(rIndex) + "]");
+                        referenceCount.append("[" + sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getCount() + "]");
+                        referenceIndex.append("[" + sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getIndex() + "]");
                     }
+                    Log.d(CLASS_NAME, record.toString());
                     Log.d(CLASS_NAME, referenceCount.toString());
                     Log.d(CLASS_NAME, referenceIndex.toString());
                 }

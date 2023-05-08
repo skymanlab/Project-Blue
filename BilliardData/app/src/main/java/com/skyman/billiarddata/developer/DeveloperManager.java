@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public final class DeveloperManager {
 
-    public static final Display PROJECT_LOG_SWITCH = Display.OFF;
+    public static final Display PROJECT_LOG_SWITCH = Display.ON;
 
 
 //    public static void displayLog(String className, String logMessage) {
