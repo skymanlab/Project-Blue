@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentResultListener;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.dialog.FriendListDialog;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.listView.BilliardLvAdapter2;
@@ -43,7 +44,8 @@ import java.util.ArrayList;
 public class UserFriendFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME = UserFriendFragment.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "UserFriendFragment";
 
     // constant
     private static final String USER_DATA = "userData";
@@ -120,15 +122,6 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "=====> FragmentResultListener / User Friend"
-                        );
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "requestKey : " + requestKey
-                        );
 
                         if (requestKey.equals("save/UserFriend")) {
 
@@ -148,26 +141,9 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "=====> FragmentResultListener / User Friend"
-                        );
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "requestKey : " + requestKey
-                        );
 
                         if (requestKey.equals("delete/UserFriend")) {
 
-                            DeveloperManager.displayLog(
-                                    CLASS_NAME,
-                                    "======> 삭제 되었습니다. userData 객체는 : " + userData
-                            );
-                            DeveloperManager.displayToUserData(
-                                    CLASS_NAME,
-                                    userData
-                            );
 
                             // 삭제된 내용을 반영하기 위해서
                             // userData 를 null 로 변경한다.
@@ -318,8 +294,6 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
                         .setPositiveButton(R.string.F_userFriend_dialog_friendAdd_positive, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "게임 데이터를 입력하기 위해서 MainActivity 로 이동합니다.");
 
                                 appDbManager.requestFriendQuery(
                                         new AppDbManager.FriendQueryRequestListener() {

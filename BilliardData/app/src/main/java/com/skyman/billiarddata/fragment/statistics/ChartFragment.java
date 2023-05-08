@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.etc.DataFormatUtil;
@@ -32,7 +34,8 @@ import java.util.ArrayList;
 public class ChartFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final String CLASS_NAME = ChartFragment.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "ChartFragment";
 
     // constant
     private static final String USER_DATA = "userData";
@@ -244,131 +247,43 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
     /**
      * monthStaticsArrayList를 역순으로 바꾼다.
      */
-    private ArrayList<MonthStatistics> reverseOrder(ArrayList<MonthStatistics> monthStatisticsArrayList){
+    private ArrayList<MonthStatistics> reverseOrder(ArrayList<MonthStatistics> monthStatisticsArrayList) {
         ArrayList<MonthStatistics> reverseOrderArrayList = new ArrayList<>();
 
-        for (int index= monthStatisticsArrayList.size()-1 ; index >=0 ; index--) {
+        for (int index = monthStatisticsArrayList.size() - 1; index >= 0; index--) {
             reverseOrderArrayList.add(monthStatisticsArrayList.get(index));
         }
 
-        printMonthStatisticsData(reverseOrderArrayList);
+        printLog(reverseOrderArrayList);
         return reverseOrderArrayList;
     }
 
     /**
      * MonthStatisticsData 를 로그로 출력한다.
      */
-    private void printMonthStatisticsData() {
+    private void printLog(ArrayList<MonthStatistics> monthStatisticsArrayList) {
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+                Log.d(CLASS_NAME, "[monthStatisticsDataArrayList 내용 확인]");
 
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "================================= monthStatisticsDataArrayList - start ================================="
-        );
+                for (int index = 0; index < monthStatisticsArrayList.size(); index++) {
 
-        for (int index = 0; index < monthStatisticsArrayList.size(); index++) {
+                    Log.d(CLASS_NAME, "---- " + index + "번째 ----");
+                    Log.d(CLASS_NAME, "year : " + monthStatisticsArrayList.get(index).getYear());
+                    Log.d(CLASS_NAME, "month : " + monthStatisticsArrayList.get(index).getMonth());
+                    Log.d(CLASS_NAME, "winCount : " + monthStatisticsArrayList.get(index).getWinCount());
+                    Log.d(CLASS_NAME, "lossCount : " + monthStatisticsArrayList.get(index).getLossCount());
 
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "================================= " + index + " ================================="
-            );
+                    StringBuilder billiardCount = new StringBuilder();
+                    billiardCount.append("billiarData / count : ");
+                    for (int innerIndex = 0; innerIndex < monthStatisticsArrayList.get(index).getBilliardDataArrayList().size(); innerIndex++) {
 
-            // year
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "year : " + monthStatisticsArrayList.get(index).getYear()
-            );
-
-            // month
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "month : " + monthStatisticsArrayList.get(index).getMonth()
-            );
-
-
-            // win count
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "win count : " + monthStatisticsArrayList.get(index).getWinCount()
-            );
-
-
-            // loss count
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "loss count : " + monthStatisticsArrayList.get(index).getLossCount()
-            );
-
-            for (int innerIndex = 0; innerIndex < monthStatisticsArrayList.get(index).getBilliardDataArrayList().size(); innerIndex++) {
-
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "< " + index + " > 의 << " + innerIndex + " >> billiard count : " + monthStatisticsArrayList.get(index).getBilliardDataArrayList().get(innerIndex).getCount()
-                );
-
-
+                        billiardCount.append("[" + monthStatisticsArrayList.get(index).getBilliardDataArrayList().get(innerIndex).getCount() + "]");
+                    }
+                    Log.d(CLASS_NAME, billiardCount.toString());
+                }
             }
-        }
 
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "================================= monthStatisticsDataArrayList - end ================================="
-        );
-    }
-    private void printMonthStatisticsData(ArrayList<MonthStatistics> monthStatisticsArrayList) {
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "================================= 역순 ArrayList - start ================================="
-        );
-
-        for (int index = 0; index < monthStatisticsArrayList.size(); index++) {
-
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "================================= " + index + " ================================="
-            );
-
-            // year
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "year : " + monthStatisticsArrayList.get(index).getYear()
-            );
-
-            // month
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "month : " + monthStatisticsArrayList.get(index).getMonth()
-            );
-
-
-            // win count
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "win count : " + monthStatisticsArrayList.get(index).getWinCount()
-            );
-
-
-            // loss count
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "loss count : " + monthStatisticsArrayList.get(index).getLossCount()
-            );
-
-            for (int innerIndex = 0; innerIndex < monthStatisticsArrayList.get(index).getBilliardDataArrayList().size(); innerIndex++) {
-
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "< " + index + " > 의 << " + innerIndex + " >> billiard count : " + monthStatisticsArrayList.get(index).getBilliardDataArrayList().get(innerIndex).getCount()
-                );
-
-
-            }
-        }
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "================================= monthStatisticsDataArrayList - end ================================="
-        );
     }
 
 }

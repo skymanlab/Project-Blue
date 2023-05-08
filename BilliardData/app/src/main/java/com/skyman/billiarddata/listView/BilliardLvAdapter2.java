@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import com.skyman.billiarddata.BilliardModifyActivity;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.dialog.PlayerListDialog;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -37,7 +38,8 @@ import java.util.ArrayList;
 public class BilliardLvAdapter2 extends BaseAdapter {
 
     // constant
-    private final String CLASS_NAME = BilliardLvAdapter2.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "BilliardLvAdapter2";
 
     // instance variable
     private FragmentManager fragmentManager;
@@ -214,25 +216,26 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                         SessionManager.setParticipatedFriendListInGameFromIntent(intent, friendDataArrayList);    // 게임에 참여한 친구
                         SessionManager.setPlayerDataArrayListFromIntent(intent, playerDataArrayList);             // 게임에 참여한 모든 플레이어 : 나 + 게임에_참여한_친구
 
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "===============================>"
-                        );
-                        DeveloperManager.displayToUserData(
+
+                        DeveloperManager.printLogUserData(
+                                CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 userData
                         );
 
-                        DeveloperManager.displayToBilliardData(
+                        DeveloperManager.printLogBilliardData(
+                                CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 billiardData
                         );
 
-                        DeveloperManager.displayToFriendData(
+                        DeveloperManager.printLogFriendData(
+                                CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 friendDataArrayList
                         );
-                        DeveloperManager.displayToPlayerData(
+                        DeveloperManager.printLogPlayerData(
+                                CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 playerDataArrayList
                         );

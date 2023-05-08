@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.etc.database.AppDbLog;
 import com.skyman.billiarddata.etc.database.AppDbSetting2;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 public class BilliardDbManager2 {
 
     // constant
-    private final String CLASS_NAME = BilliardDbManager2.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "BilliardDbManager2";
 
     // instance variable
     private AppDbSetting2 appDbSetting2;

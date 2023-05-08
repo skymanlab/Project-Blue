@@ -14,7 +14,27 @@ public class SameDate2 {
         referenceArrayList = new ArrayList<>();
     }
 
-    // inner class
+
+    ///////////////////////////////////////////////////
+    // method /////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    // method
+    public Counter getMyGameCounter() {
+        return myGameCounter;
+    }
+
+    public Date getGameDate() {
+        return gameDate;
+    }
+
+    public ArrayList<Reference> getReferenceArrayList() {
+        return referenceArrayList;
+    }
+
+
+    ///////////////////////////////////////////////////
+    // inner class ////////////////////////////////////
+    ///////////////////////////////////////////////////
     static class Counter {
         private int myWinCounter;
         private int myLossCounter;
@@ -109,16 +129,5 @@ public class SameDate2 {
         }
     }
 
-    // method
-    public Counter getMyGameCounter() {
-        return myGameCounter;
-    }
 
-    public Date getGameDate() {
-        return gameDate;
-    }
-
-    public ArrayList<Reference> getReferenceArrayList() {
-        return referenceArrayList;
-    }
 }

@@ -1,6 +1,9 @@
 package com.skyman.billiarddata.etc.file;
 
+import android.util.Log;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.friend.data.FriendData;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -15,7 +18,8 @@ import java.util.ArrayList;
 public class JsonParser {
 
     // constant
-    private static final String CLASS_NAME_LOG = JsonParser.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "FileImport";
 
     // instance variable
     private String content;
@@ -91,43 +95,6 @@ public class JsonParser {
         parsePlayerDataArray(playerDataArray);
 
         this.isCompletedParsing = true;
-
-    }
-
-
-    /**
-     * 파싱된 데이터를 확인 합니다.
-     */
-    public void print() {
-
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "JsonParser 의 content, userData, friendDataArrayList, billiardDataArrayList, playerDataArrayList 를 확인하겠습니다."
-        );
-
-        // user
-        DeveloperManager.displayToUserData(
-                CLASS_NAME_LOG,
-                userData
-        );
-
-        // billiard
-        DeveloperManager.displayToBilliardData(
-                CLASS_NAME_LOG,
-                billiardDataArrayList
-        );
-
-        // player
-        DeveloperManager.displayToPlayerData(
-                CLASS_NAME_LOG,
-                playerDataArrayList
-        );
-
-        // friend
-        DeveloperManager.displayToFriendData(
-                CLASS_NAME_LOG,
-                friendDataArrayList
-        );
 
     }
 
@@ -280,5 +247,16 @@ public class JsonParser {
         }
     }
 
+
+    /**
+     * 파싱된 데이터를 확인 합니다.
+     */
+    public void printLog(UserData userData, ArrayList<FriendData> friendDataArrayList, ArrayList<BilliardData> billiardDataArrayList, ArrayList<PlayerData> playerDataArrayList) {
+
+        DeveloperManager.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
+        DeveloperManager.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
+        DeveloperManager.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
+        DeveloperManager.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
+    }
 
 }

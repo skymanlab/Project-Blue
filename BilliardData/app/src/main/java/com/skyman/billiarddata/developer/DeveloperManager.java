@@ -14,210 +14,225 @@ import java.util.ArrayList;
  */
 public final class DeveloperManager {
 
-    public static final Display DISPLAY_POWER = Display.OFF;
+    public static final Display PROJECT_LOG_SWITCH = Display.OFF;
+
+
+//    public static void displayLog(String className, String logMessage) {
+//        if (PROJECT_LOG_SWITCH == Display.ON)
+//            Log.d(className, logMessage);
+//    }
+
+    public static void printLog(Display CLASS_LOG_SWITCH, String className, String log) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                Log.d(className, log);
+    }
+
+
+    /////////////////////////////////////////////////////////
+    // userData /////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     /**
-     * [method] 해당 log message 를 Log 로 출력한다.
+     * userData 내용 Log 출력
+     *
+     * @param className
+     * @param userData
      */
-    public static void displayLog(String className, String logMessage) {
+    public static void printLogUserData(Display CLASS_LOG_SWITCH, String className, UserData userData) {
 
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+                if (userData != null) {
 
-            Log.d(className, logMessage);
+                    Log.d(className, "[userData 내용 확인]");
+                    Log.d(className, "userData / 0. id : " + userData.getId());                                                 // 0. id
+                    Log.d(className, "userData / 1. name : " + userData.getName());                                             // 1. name
+                    Log.d(className, "userData / 2. targetScore : " + userData.getTargetScore());                               // 2. target score
+                    Log.d(className, "userData / 3. speciality : " + userData.getSpeciality());                                 // 3. speciality
+                    Log.d(className, "userData / 4. gameRecordWin : " + userData.getGameRecordWin());                           // 4. game record win
+                    Log.d(className, "userData / 5. gameRecordLoss : " + userData.getGameRecordLoss());                         // 5. game record loss
+                    Log.d(className, "userData / 6. recentGameBilliardCount : " + userData.getRecentGameBilliardCount());       // 6. recent game billiard count
+                    Log.d(className, "userData / 7. totalPlayTime : " + userData.getTotalPlayTime());                           // 7. total play time
+                    Log.d(className, "userData / 8. totalCost : " + userData.getTotalCost());                                   // 8. total cost
 
-        } // [check 1]
-
-    } // End of method [displayLog]
-
-
-    // ================================================== UserData ==================================================
-
-    /**
-     * [method] UserData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
-     */
-    public static void displayToUserData(String className, UserData userData) {
-
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
-
-            // [check 2] : UserData 가 있다.
-            if (userData != null) {
-
-                Log.d(className, "UserData / 0. id : " + userData.getId());                                                 // 0. id
-                Log.d(className, "UserData / 1. name : " + userData.getName());                                             // 1. name
-                Log.d(className, "UserData / 2. targetScore : " + userData.getTargetScore());                               // 2. target score
-                Log.d(className, "UserData / 3. speciality : " + userData.getSpeciality());                                 // 3. speciality
-                Log.d(className, "UserData / 4. gameRecordWin : " + userData.getGameRecordWin());                           // 4. game record win
-                Log.d(className, "UserData / 5. gameRecordLoss : " + userData.getGameRecordLoss());                         // 5. game record loss
-                Log.d(className, "UserData / 6. recentGameBilliardCount : " + userData.getRecentGameBilliardCount());       // 6. recent game billiard count
-                Log.d(className, "UserData / 7. totalPlayTime : " + userData.getTotalPlayTime());                           // 7. total play time
-                Log.d(className, "UserData / 8. totalCost : " + userData.getTotalCost());                                   // 8. total cost
-
-            } else {
-                Log.d(className, "UserData 데이터가 없습니다.");
-            } // [check 2]
-
-        } // [check 1]
-
-    } // End of method [displayToUserData]
-
-
-    /**
-     * [method] UserData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
-     */
-    public static void displayToUserData(String className, ArrayList<UserData> userDataArrayList) {
-
-        if (DISPLAY_POWER == Display.ON) {
-
-            Log.d(className, "=================================== userDataArrayList : START ===================================");
-            for (int index = 0; index < userDataArrayList.size(); index++) {
-
-                Log.d(className, "------>> " + index + " <<------");
-                Log.d(className, "UserData / 0. id : " + userDataArrayList.get(index).getId());                                                 // 0. id
-                Log.d(className, "UserData / 1. name : " + userDataArrayList.get(index).getName());                                             // 1. name
-                Log.d(className, "UserData / 2. targetScore : " + userDataArrayList.get(index).getTargetScore());                               // 2. target score
-                Log.d(className, "UserData / 3. speciality : " + userDataArrayList.get(index).getSpeciality());                                 // 3. speciality
-                Log.d(className, "UserData / 4. gameRecordWin : " + userDataArrayList.get(index).getGameRecordWin());                           // 4. game record win
-                Log.d(className, "UserData / 5. gameRecordLoss : " + userDataArrayList.get(index).getGameRecordLoss());                         // 5. game record loss
-                Log.d(className, "UserData / 6. recentGameBilliardCount : " + userDataArrayList.get(index).getRecentGameBilliardCount());       // 6. recent game billiard count
-                Log.d(className, "UserData / 7. totalPlayTime : " + userDataArrayList.get(index).getTotalPlayTime());                           // 7. total play time
-                Log.d(className, "UserData / 8. totalCost : " + userDataArrayList.get(index).getTotalCost());                                   // 8. total cost
-
+                } else {
+                    Log.d(className, "userData 가 null 입니다.");
+                }
             }
-            Log.d(className, "=================================== userDataArrayList : END ===================================");
-
-        }
-
-    } // End of method [displayToUserData]
-
-
-    // ================================================== FriendData ==================================================
+    }
 
     /**
-     * [method] FriendData 의 정보를 받아서, 모든 내용을 Log 로 출력한다.
+     * userDataArrayList 내용 Log 출력
+     *
+     * @param className
+     * @param userDataArrayList
      */
-    public static void displayToFriendData(String className, FriendData friendData) {
+    public static void printLogUserData(Display CLASS_LOG_SWITCH, String className, ArrayList<UserData> userDataArrayList) {
 
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (userDataArrayList.size() != 0) {
 
-            // [check 2] : FriendData 가 있다.
-            if (friendData != null) {
+                    Log.d(className, "[userDataArrayList 내용 확인]");
+                    for (int index = 0; index < userDataArrayList.size(); index++) {
 
-                Log.d(className, "FriendData / 0. id : " + friendData.getId());                                             // 0. id
-                Log.d(className, "FriendData / 1. userId : " + friendData.getUserId());                                     // 1. user id
-                Log.d(className, "FriendData / 2. name : " + friendData.getName());                                         // 2. name
-                Log.d(className, "FriendData / 3. gameRecordWin : " + friendData.getGameRecordWin());                       // 3. game record win
-                Log.d(className, "FriendData / 4. gameRecordLoss : " + friendData.getGameRecordLoss());                     // 4. game record loss
-                Log.d(className, "FriendData / 5. recentGameBilliardCount : " + friendData.getRecentGameBilliardCount());   // 5. recent game billiard count
-                Log.d(className, "FriendData / 6. totalPlayTime : " + friendData.getTotalPlayTime());                       // 6. total play time
-                Log.d(className, "FriendData / 7. totalCost : " + friendData.getTotalCost());                               // 7. total cost
+                        Log.d(className, "---- " + index + "번째 ----");
+                        Log.d(className, "userData / 0. id : " + userDataArrayList.get(index).getId());                                                 // 0. id
+                        Log.d(className, "userData / 1. name : " + userDataArrayList.get(index).getName());                                             // 1. name
+                        Log.d(className, "userData / 2. targetScore : " + userDataArrayList.get(index).getTargetScore());                               // 2. target score
+                        Log.d(className, "userData / 3. speciality : " + userDataArrayList.get(index).getSpeciality());                                 // 3. speciality
+                        Log.d(className, "userData / 4. gameRecordWin : " + userDataArrayList.get(index).getGameRecordWin());                           // 4. game record win
+                        Log.d(className, "userData / 5. gameRecordLoss : " + userDataArrayList.get(index).getGameRecordLoss());                         // 5. game record loss
+                        Log.d(className, "userData / 6. recentGameBilliardCount : " + userDataArrayList.get(index).getRecentGameBilliardCount());       // 6. recent game billiard count
+                        Log.d(className, "userData / 7. totalPlayTime : " + userDataArrayList.get(index).getTotalPlayTime());                           // 7. total play time
+                        Log.d(className, "userData / 8. totalCost : " + userDataArrayList.get(index).getTotalCost());                                   // 8. total cost
 
-            } else {
-                Log.d(className, "FriendData 데이터가 없습니다.");
-            } // [check 2]
+                    }
 
-        } // [check 1]
+                } else {
+                    Log.d(className, "userDataArrayList 의 size 가 0 입니다.");
+                }
 
-    } // End of method [displayToFriendData]
+    }
 
+
+    /////////////////////////////////////////////////////////
+    // friendData ///////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     /**
-     * friendDataArrayList
+     * friendData 내용 Log 출력
+     *
+     * @param className
+     * @param friendData
+     */
+    public static void printLogFriendData(Display CLASS_LOG_SWITCH, String className, FriendData friendData) {
+
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (friendData != null) {
+
+                    Log.d(className, "[friendData 내용 확인]");
+                    Log.d(className, "friendData / 0. id : " + friendData.getId());                                             // 0. id
+                    Log.d(className, "friendData / 1. userId : " + friendData.getUserId());                                     // 1. user id
+                    Log.d(className, "friendData / 2. name : " + friendData.getName());                                         // 2. name
+                    Log.d(className, "friendData / 3. gameRecordWin : " + friendData.getGameRecordWin());                       // 3. game record win
+                    Log.d(className, "friendData / 4. gameRecordLoss : " + friendData.getGameRecordLoss());                     // 4. game record loss
+                    Log.d(className, "friendData / 5. recentGameBilliardCount : " + friendData.getRecentGameBilliardCount());   // 5. recent game billiard count
+                    Log.d(className, "friendData / 6. totalPlayTime : " + friendData.getTotalPlayTime());                       // 6. total play time
+                    Log.d(className, "friendData / 7. totalCost : " + friendData.getTotalCost());                               // 7. total cost
+
+                } else {
+                    Log.d(className, "friendData 가 null 입니다.");
+                }
+
+    }
+
+    /**
+     * friendDataArrayList 내용 Log 출력
      *
      * @param className
      * @param friendDataArrayList
      */
-    public static void displayToFriendData(String className, ArrayList<FriendData> friendDataArrayList) {
+    public static void printLogFriendData(Display CLASS_LOG_SWITCH, String className, ArrayList<FriendData> friendDataArrayList) {
 
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (friendDataArrayList.size() != 0) {
 
-            Log.d(className, "=================================== friendDataArrayList : START ===================================");
-            for (int index = 0; index < friendDataArrayList.size(); index++) {
+                    Log.d(className, "[friendDataArrayList 내용 확인]");
+                    for (int index = 0; index < friendDataArrayList.size(); index++) {
 
-                Log.d(className, "------>> " + index + " <<------");
-                Log.d(className, "FriendData / 0. id : " + friendDataArrayList.get(index).getId());                                              // 0. id
-                Log.d(className, "FriendData / 1. userId : " + friendDataArrayList.get(index).getUserId());                                      // 1. user id
-                Log.d(className, "FriendData / 2. name : " + friendDataArrayList.get(index).getName());                                          // 2. name
-                Log.d(className, "FriendData / 3. gameRecordWin : " + friendDataArrayList.get(index).getGameRecordWin());                        // 3. game record win
-                Log.d(className, "FriendData / 4. gameRecordLoss : " + friendDataArrayList.get(index).getGameRecordLoss());                      // 4. game record loss
-                Log.d(className, "FriendData / 5. recentGameBilliardCount : " + friendDataArrayList.get(index).getRecentGameBilliardCount());    // 5. recent game billiard count
-                Log.d(className, "FriendData / 6. totalPlayTime : " + friendDataArrayList.get(index).getTotalPlayTime());                        // 6. total play time
-                Log.d(className, "FriendData / 7. totalCost : " + friendDataArrayList.get(index).getTotalCost());                                // 7. total cost
-            }
-            Log.d(className, "=================================== friendDataArrayList : END ===================================");
-        }
-    } // End of method [displayToFriendData]
+                        Log.d(className, "---- " + index + "번째 ----");
+                        Log.d(className, "friendData / 0. id : " + friendDataArrayList.get(index).getId());                                              // 0. id
+                        Log.d(className, "friendData / 1. userId : " + friendDataArrayList.get(index).getUserId());                                      // 1. user id
+                        Log.d(className, "friendData / 2. name : " + friendDataArrayList.get(index).getName());                                          // 2. name
+                        Log.d(className, "friendData / 3. gameRecordWin : " + friendDataArrayList.get(index).getGameRecordWin());                        // 3. game record win
+                        Log.d(className, "friendData / 4. gameRecordLoss : " + friendDataArrayList.get(index).getGameRecordLoss());                      // 4. game record loss
+                        Log.d(className, "friendData / 5. recentGameBilliardCount : " + friendDataArrayList.get(index).getRecentGameBilliardCount());    // 5. recent game billiard count
+                        Log.d(className, "friendData / 6. totalPlayTime : " + friendDataArrayList.get(index).getTotalPlayTime());                        // 6. total play time
+                        Log.d(className, "friendData / 7. totalCost : " + friendDataArrayList.get(index).getTotalCost());                                // 7. total cost
+                    }
+
+                } else {
+                    Log.d(className, "friendDataArrayList 의 size 가 0 입니다.");
+                }
+
+    }
 
 
-    // ================================================== BilliardData ==================================================
+    /////////////////////////////////////////////////////////
+    // billiardData /////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     /**
-     * billiardData
+     * billiardData 내용 Log 출력
      *
      * @param className
      * @param billiardData
      */
-    public static void displayToBilliardData(String className, BilliardData billiardData) {
+    public static void printLogBilliardData(Display CLASS_LOG_SWITCH, String className, BilliardData billiardData) {
 
-        // [check 1] : Log 를 출력해도 된다.
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (billiardData != null) {
 
-            // [check 2] : BilliardData 가 있다.
-            if (billiardData != null) {
+                    Log.d(className, "[billiardData 내용 확인]");
+                    Log.d(className, "billiardData / 0. count : " + billiardData.getCount());                      // 0. count
+                    Log.d(className, "billiardData / 1. date : " + billiardData.getDate());                        // 1. date
+                    Log.d(className, "billiardData / 2. gameMode : " + billiardData.getGameMode());                // 2. target score
+                    Log.d(className, "billiardData / 3. playerCount : " + billiardData.getPlayerCount());          // 3. speciality
+                    Log.d(className, "billiardData / 4. winnerId : " + billiardData.getWinnerId());                // 4. winner id
+                    Log.d(className, "billiardData / 5. winnerName : " + billiardData.getWinnerName());            // 5. winner name
+                    Log.d(className, "billiardData / 6. playTime : " + billiardData.getPlayTime());                // 6. play time
+                    Log.d(className, "billiardData / 7. score : " + billiardData.getScore());                      // 7. score
+                    Log.d(className, "billiardData / 8. cost : " + billiardData.getCost());                        // 8. cost
 
-                Log.d(className, "billiardData / 0. count : " + billiardData.getCount());                      // 0. count
-                Log.d(className, "billiardData / 1. date : " + billiardData.getDate());                        // 1. date
-                Log.d(className, "billiardData / 2. gameMode : " + billiardData.getGameMode());                // 2. target score
-                Log.d(className, "billiardData / 3. playerCount : " + billiardData.getPlayerCount());          // 3. speciality
-                Log.d(className, "billiardData / 4. winnerId : " + billiardData.getWinnerId());                // 4. winner id
-                Log.d(className, "billiardData / 5. winnerName : " + billiardData.getWinnerName());            // 5. winner name
-                Log.d(className, "billiardData / 6. playTime : " + billiardData.getPlayTime());                // 6. play time
-                Log.d(className, "billiardData / 7. score : " + billiardData.getScore());                      // 7. score
-                Log.d(className, "billiardData / 8. cost : " + billiardData.getCost());                        // 8. cost
+                } else {
+                    Log.d(className, "billiardData 가 null 입니다.");
+                }
 
-            } else {
-                Log.d(className, "billiardData 데이터가 없습니다.");
-            } // [check 2]
-
-        } // [check 1]
-
-    } // End of method [displayToBilliardData]
-
+    }
 
     /**
-     * billiardDataArrayList
+     * billiardDataArrayList 내용 Log 출력
      *
      * @param className
      * @param billiardDataArrayList
      */
-    public static void displayToBilliardData(String className, ArrayList<BilliardData> billiardDataArrayList) {
+    public static void printLogBilliardData(Display CLASS_LOG_SWITCH, String className, ArrayList<BilliardData> billiardDataArrayList) {
 
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (billiardDataArrayList.size() != 0) {
 
-            Log.d(className, "=================================== billiardDataArrayList : START ===================================");
-            for (int index = 0; index < billiardDataArrayList.size(); index++) {
+                    Log.d(className, "[billiardDataArrayList 내용 확인]");
+                    for (int index = 0; index < billiardDataArrayList.size(); index++) {
 
-                Log.d(className, "------>> " + index + " <<------");
-                Log.d(className, "billiardData / 0. count : " + billiardDataArrayList.get(index).getCount());                      // 0. count
-                Log.d(className, "billiardData / 1. date : " + billiardDataArrayList.get(index).getDate());                        // 1. date
-                Log.d(className, "billiardData / 2. gameMode : " + billiardDataArrayList.get(index).getGameMode());                // 2 target score
-                Log.d(className, "billiardData / 3. playerCount : " + billiardDataArrayList.get(index).getPlayerCount());          // 3. speciality
-                Log.d(className, "billiardData / 4. winnerId : " + billiardDataArrayList.get(index).getWinnerId());                // 4. winner id
-                Log.d(className, "billiardData / 5. winnerName : " + billiardDataArrayList.get(index).getWinnerName());            // 5. winner name
-                Log.d(className, "billiardData / 6. playTime : " + billiardDataArrayList.get(index).getPlayTime());                // 6. play time
-                Log.d(className, "billiardData / 7. score : " + billiardDataArrayList.get(index).getScore());                      // 7. score
-                Log.d(className, "billiardData / 8. cost : " + billiardDataArrayList.get(index).getCost());                        // 8. cost
+                        Log.d(className, "---- " + index + "번째 ----");
+                        Log.d(className, "billiardData / 0. count : " + billiardDataArrayList.get(index).getCount());                      // 0. count
+                        Log.d(className, "billiardData / 1. date : " + billiardDataArrayList.get(index).getDate());                        // 1. date
+                        Log.d(className, "billiardData / 2. gameMode : " + billiardDataArrayList.get(index).getGameMode());                // 2 target score
+                        Log.d(className, "billiardData / 3. playerCount : " + billiardDataArrayList.get(index).getPlayerCount());          // 3. speciality
+                        Log.d(className, "billiardData / 4. winnerId : " + billiardDataArrayList.get(index).getWinnerId());                // 4. winner id
+                        Log.d(className, "billiardData / 5. winnerName : " + billiardDataArrayList.get(index).getWinnerName());            // 5. winner name
+                        Log.d(className, "billiardData / 6. playTime : " + billiardDataArrayList.get(index).getPlayTime());                // 6. play time
+                        Log.d(className, "billiardData / 7. score : " + billiardDataArrayList.get(index).getScore());                      // 7. score
+                        Log.d(className, "billiardData / 8. cost : " + billiardDataArrayList.get(index).getCost());                        // 8. cost
 
-            }
-            Log.d(className, "=================================== billiardDataArrayList : END ===================================");
+                    }
 
-        }
+                } else {
+                    Log.d(className, "billiardDataArrayList 의 size 가 0 입니다.");
+                }
+
     }
 
 
-    // ================================================== PlayerData ==================================================
+    /////////////////////////////////////////////////////////
+    // PlayerData ///////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     /**
      * playerDataArrayList
@@ -225,26 +240,29 @@ public final class DeveloperManager {
      * @param className
      * @param playerDataArrayList
      */
-    public static void displayToPlayerData(String className, ArrayList<PlayerData> playerDataArrayList) {
+    public static void printLogPlayerData(Display CLASS_LOG_SWITCH, String className, ArrayList<PlayerData> playerDataArrayList) {
 
-        if (DISPLAY_POWER == Display.ON) {
+        if (PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON)
+                if (playerDataArrayList.size() != 0) {
 
-            Log.d(className, "=================================== playerDataArrayList : START ===================================");
-            for (int index = 0; index < playerDataArrayList.size(); index++) {
+                    Log.d(className, "[billiardDataArrayList 내용 확인]");
+                    for (int index = 0; index < playerDataArrayList.size(); index++) {
 
-                Log.d(className, "------>> " + index + " <<------");
+                        Log.d(className, "---- " + index + "번째 ----");
+                        Log.d(className, "PlayerData / 0. count : " + playerDataArrayList.get(index).getCount());                       // 0. id
+                        Log.d(className, "PlayerData / 1. billiardCount : " + playerDataArrayList.get(index).getBilliardCount());       // 1. billiard count
+                        Log.d(className, "PlayerData / 2. playerId : " + playerDataArrayList.get(index).getPlayerId());                 // 2. player id
+                        Log.d(className, "PlayerData / 3. playerName : " + playerDataArrayList.get(index).getPlayerName());             // 3. player name
+                        Log.d(className, "PlayerData / 4. targetScore : " + playerDataArrayList.get(index).getTargetScore());           // 4. target score
+                        Log.d(className, "PlayerData / 5. score : " + playerDataArrayList.get(index).getScore());                       // 5. score
 
-                Log.d(className, "PlayerData / 0. count : " + playerDataArrayList.get(index).getCount());                       // 0. id
-                Log.d(className, "PlayerData / 1. billiardCount : " + playerDataArrayList.get(index).getBilliardCount());       // 1. billiard count
-                Log.d(className, "PlayerData / 2. playerId : " + playerDataArrayList.get(index).getPlayerId());                 // 2. player id
-                Log.d(className, "PlayerData / 3. playerName : " + playerDataArrayList.get(index).getPlayerName());             // 3. player name
-                Log.d(className, "PlayerData / 4. targetScore : " + playerDataArrayList.get(index).getTargetScore());           // 4. target score
-                Log.d(className, "PlayerData / 5. score : " + playerDataArrayList.get(index).getScore());                       // 5. score
+                    }
 
-            }
-            Log.d(className, "=================================== playerDataArrayList : END ===================================");
-        }
+                } else {
+                    Log.d(className, "playerDataArrayList 의 size 가 0 입니다.");
+                }
 
-    } // End of method [displayToPlayerData]
+    }
 
 }

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentResultListener;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
@@ -30,7 +31,8 @@ import com.skyman.billiarddata.table.user.data.UserData;
 public class UserInfoFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private final String CLASS_NAME = UserInfoFragment.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "UserInfoFragment";
 
     // constant
     private static final String USER_DATA = "userData";
@@ -108,16 +110,6 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "=====> FragmentResultListener / User info"
-                        );
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "requestKey : " + requestKey
-                        );
-
                         if (requestKey.equals("save/UserInfo")) {
 
                             userData = (UserData) result.get(UserData.class.getSimpleName());
@@ -135,16 +127,6 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "=====> FragmentResultListener / User info"
-                        );
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "requestKey : " + requestKey
-                        );
-
                         if (requestKey.equals("modify/UserInfo")) {
                             initWidgetWithUserDataAndBilliardData();
                         }
@@ -161,26 +143,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "=====> FragmentResultListener"
-                        );
-
-                        DeveloperManager.displayLog(
-                                CLASS_NAME,
-                                "requestKey : " + requestKey
-                        );
-
                         if (requestKey.equals("delete/UserInfo")) {
-
-                            DeveloperManager.displayLog(
-                                    CLASS_NAME,
-                                    "======> 삭제 되었습니다. userData 객체는 : " + userData
-                            );
-                            DeveloperManager.displayToUserData(
-                                    CLASS_NAME,
-                                    userData
-                            );
 
                             // userData 내용이 삭제되었으므로 userData 도 null 로 변경
                             // (주의) userInput 에서 userData 에 null 로 변경하였더라도
@@ -204,20 +167,6 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
                 }
         );
 
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "======================================>>>>>>>>>>>>>>>>>>>>> User info fragment"
-        );
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "userData Object = " + userData
-        );
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "appDbManager Object = " + appDbManager
-        );
 
     } // End of method [onViewCreated]
 
@@ -260,7 +209,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
 
     @Override
     public void initWidget() {
-        final String METHOD_NAME = "[initWidget] ";
+        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[initWidget() 수행 중]");
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
@@ -275,11 +224,6 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
                             // billiardData 가져오기
                             billiardData = billiardDbManager2.loadContentByCount(userData.getRecentGameBilliardCount());
 
-                            DeveloperManager.displayLog(
-                                    CLASS_NAME,
-                                    "billiardData : " + billiardData
-                            );
-
                             // userData 와 billiardData 로 widget 내용 채우기
                             initWidgetWithUserDataAndBilliardData();
 
@@ -288,7 +232,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
             );
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userData 가 없으므로 초기 세팅으로");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "userData 가 null 입니다. : 초기 셋팅 필요 없음.");
         } // [check 1]
 
     }

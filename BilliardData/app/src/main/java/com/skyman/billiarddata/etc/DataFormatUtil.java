@@ -1,6 +1,9 @@
 package com.skyman.billiarddata.etc;
 
+import android.util.Log;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
@@ -13,11 +16,12 @@ import java.util.StringTokenizer;
 public class DataFormatUtil {
 
     // constant
-    public static final String CLASS_NAME = DataFormatUtil.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "DataFormatUtil";
 
     // constant
-    public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
     public static final String DATE_DASH_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT = "yyyy년 MM월 dd일";
     public static final String DATE_FORMAT_2 = "{0}년 {1}월 {2}일";
 
 
@@ -25,18 +29,18 @@ public class DataFormatUtil {
 
     /**
      * [method] [Date] date 를 받아서 날짜 형태로 문자열 만들기
-     * [format] ####년 ##월 ##일
+     * [format] yyyy-MM-dd
      *
      * @param date 날짜
-     * @return '####년 ##월 ##일' 형태로 반환된 문자열
+     * @return 'yyyy-MM-dd' 형태로 반환된 문자열
      */
     public static String formatOfDashDate(Date date) {
         final String METHOD_NAME = "[formatOfDashDate] ";
 
         // [lv/C]SimpleDateFormat : 특정 날짜 형태로 만들 문자열을 가지고 객체 생성
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_DASH_FORMAT);
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "결과 : " + formatter.format(date));
 
+        printLog("Date 변환 결과 확인", formatter.format(date));
         return new SimpleDateFormat(DATE_DASH_FORMAT).format(date);
 
     } // End of method [formatOfDashDate]
@@ -44,10 +48,10 @@ public class DataFormatUtil {
 
     /**
      * [method] [Date] date 를 받아서 날짜 형태로 문자열 만들기
-     * [format] ####년 ##월 ##일
+     * [format] yyyy년 MM월 dd일
      *
      * @param date 날짜
-     * @return '####년 ##월 ##일' 형태로 반환된 문자열
+     * @return 'yyyy년 MM월 dd일' 형태로 반환된 문자열
      */
     public static String formatOfDate(Date date) {
 
@@ -55,8 +59,8 @@ public class DataFormatUtil {
 
         // [lv/C]SimpleDateFormat : 특정 날짜 형태로 만들 문자열을 가지고 객체 생성
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "결과 : " + formatter.format(date));
 
+        printLog("Date 변환 결과 확인", formatter.format(date));
         return formatter.format(date);
 
     } // End of method [getFormatOfDate]
@@ -64,14 +68,14 @@ public class DataFormatUtil {
 
     /**
      * [method] [date] year, month, day 값을 받아서 MessageFormat 을 이용하여
-     * '####년 ?#월 ##일'로 만들어 반환한다.
+     * 'yyyy년 MM월 dd일'로 만들어 반환한다.
      * <p>
      * (주의) 해당 변환은 '2020년 8월 9일' 형태로 변환됨. 즉, 08월이 아니라, 8월로 09일이 아니라 9일로 변환된다.
      *
      * @param year
      * @param month
      * @param day
-     * @return 해당 포맷으로 변환된 문자열
+     * @return 'yyyy년 MM월 dd일' 형태로 반환된 문자열
      */
     public static String formatOfDate(String year, String month, String day) {
 
@@ -105,8 +109,7 @@ public class DataFormatUtil {
                 .append("패")
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/GameRecord 변환 결과 : " + temp);
-
+        printLog("GameRecord 변환 결과 확인", temp.toString());
         return temp;
     } // End of method [getFormatOfGameRecord]
 
@@ -130,8 +133,7 @@ public class DataFormatUtil {
                 .append(score_2)
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/Score 변환 결과 : " + temp);
-
+        printLog("scores 변환 결과 확인", temp.toString());
         return temp;
     } // End of method [formatOfScore]
 
@@ -154,8 +156,7 @@ public class DataFormatUtil {
             temp.append(scores.get(index));
         }
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/Score 변환 결과 : " + temp);
-
+        printLog("scores 변환 결과 확인", temp.toString());
         return temp.toString();
     } // End of method [formatOfScore]
 
@@ -178,8 +179,7 @@ public class DataFormatUtil {
             temp.append(scores[index]);
         }
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/Score 변환 결과 : " + temp);
-
+        printLog("scores 변환 결과 확인", temp.toString());
         return temp.toString();
     } // End of method [formatOfScore]
 
@@ -201,7 +201,7 @@ public class DataFormatUtil {
                 .append(" 분")
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/PlayTime 변환 결과 : " + temp);
+        printLog("playTiem 변환 결과 확인", temp);
 
         return temp;
     } // End of method [formatOfPlayTime]
@@ -222,7 +222,7 @@ public class DataFormatUtil {
                 .append(" 분")
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/PlayTime 변환 결과 : " + temp);
+        printLog("playTiem 변환 결과 확인", temp);
 
         return temp;
     } // End of method [formatOfPlayTime]
@@ -247,9 +247,9 @@ public class DataFormatUtil {
                 .append(" 원")
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/Cost 변환 결과 : " + temp);
-
+        printLog("[cost 변환 결과 확인]", temp);
         return temp;
+
     } // End of method [formatOfCost]
 
     /**
@@ -271,9 +271,17 @@ public class DataFormatUtil {
                 .append(" 원")
                 .toString();
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "Format/Cost 변환 결과 : " + temp);
-
+        printLog("[cost 변환 결과 확인]", temp);
         return temp;
+
     } // End of method [formatOfCost]
+
+    public static void printLog(String title, String log) {
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+                Log.d(CLASS_NAME, title);
+                Log.d(CLASS_NAME, log);
+            }
+    }
 
 }

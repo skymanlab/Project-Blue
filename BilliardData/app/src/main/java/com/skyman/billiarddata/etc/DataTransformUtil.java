@@ -1,13 +1,15 @@
 package com.skyman.billiarddata.etc;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 
 import java.util.StringTokenizer;
 
 public class DataTransformUtil {
 
     // constant
-    public static final String CLASS_NAME = DataTransformUtil.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "DataTransformUtil";
 
     // constant
     public static final String DATE_DELIMITER = "년월일 ";
@@ -58,7 +60,7 @@ public class DataTransformUtil {
             case "포켓볼":
                 return 2;
             default:
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "현재 목록 중에 있는 값이 없네요.");
+                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "현재 목록 중에 있는 값이 없네요.");
                 return -1;
         }
 

@@ -3,8 +3,10 @@ package com.skyman.billiarddata.etc.file;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -27,7 +29,8 @@ import java.util.Objects;
 public class FileImport {
 
     // constant
-    private static final String CLASS_NAME_LOG = FileExport.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "FileImport";
 
     // instance variable
     private Activity activity;
@@ -70,10 +73,7 @@ public class FileImport {
         // <1>
         // 파일 내용 읽어오기
         String jsonData = readDataFromFile(uri);
-        DeveloperManager.displayLog(
-                CLASS_NAME_LOG,
-                "파일의 내용 : " + jsonData
-        );
+        printLog(jsonData);
 
         // <2>
         // JsonParser 를 사용하여 파일 내용 파싱하기
@@ -240,9 +240,23 @@ public class FileImport {
 
     }
 
+    public void printLog(String jsonData) {
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+                Log.d(CLASS_NAME, "[uri로 가져온 파일 내용]");
+                Log.d(CLASS_NAME, jsonData);
+            }
+
+    }
+
+
+    ////////////////////////////////////////////
+    // interface ///////////////////////////////
+    ////////////////////////////////////////////
 
     public interface OnSuccessListener {
         void onSuccess();
     }
+
 
 }

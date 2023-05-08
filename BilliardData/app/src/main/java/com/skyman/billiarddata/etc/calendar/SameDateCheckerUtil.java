@@ -1,6 +1,9 @@
 package com.skyman.billiarddata.etc.calendar;
 
+import android.util.Log;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.user.data.UserData;
 
@@ -10,7 +13,8 @@ import java.util.StringTokenizer;
 public class SameDateCheckerUtil {
 
     // constant
-    private final String CLASS_NAME = SameDateCheckerUtil.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "SameDateCheckerUtil";
     private final String DATE_DELIMITER = "년월일 ";
 
     /**
@@ -39,7 +43,7 @@ public class SameDateCheckerUtil {
             // check 1 : checkedDate[index] 의 값이 false 일 때 - 체크 안 된 date
             if (!sameDate.getCheckedDateToIndex(index)) {
 
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> ======================= 기준 날짜(index) " + index + " 번째 date : " + billiardDataArrayList.get(index).getDate() + " =======================");
+                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> ======================= 기준 날짜(index) " + index + " 번째 date : " + billiardDataArrayList.get(index).getDate() + " =======================");
 
                 // DateChecker : 위 의 check 1 을 수행 하였으므로 기준 날짜(index 번째)를 true 로 - checkedDate
                 sameDate.setCheckedDateToTrue(index);
@@ -53,34 +57,34 @@ public class SameDateCheckerUtil {
 
                     // [lv/C]SameDateChecker : 기준 날짜(index)가 승리했다. 따라서 기준 날짜(index)의 winCount 값을 +1 한다.
                     sameDate.addOneToWinCount(index);
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  기준 날짜(index)는 내가 승리한 게임입니다. 기준 날짜(index)의 winCount 를 +1 을 수행하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  기준 날짜(index)는 내가 승리한 게임입니다. 기준 날짜(index)의 winCount 를 +1 을 수행하였습니다.");
 
                     // [lv/C]SameDateChecker : 기준 날짜(index)가 승리했다. 따라서 기준 날짜(index)에 SameDateItem 항목을 만들어서 추가한다.
                     sameDate.addSameDateItemToIndex(index, new SameDate.SameDateItem(billiardDataArrayList.get(index).getCount(), true, index));
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)의 billiard count 와 승리 여부(true)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)의 billiard count 와 승리 여부(true)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
 
                 } else {
 
                     // [lv/C]SameDateChecker : 기준 날짜(index)가 패배했다. 따라서 기준 날짜(index)의 lossCount 값을 +1 한다.
                     sameDate.addOneToLossCount(index);
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)는 내가 패배한 게임입니다. 기준 날짜의 lossCount 를 +1 을 수행하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)는 내가 패배한 게임입니다. 기준 날짜의 lossCount 를 +1 을 수행하였습니다.");
 
                     // [lv/C]SameDateChecker : 기준 날짜(index)가 승리했다. 따라서 기준 날짜(index)에 SameDateItem 항목을 만들어서 추가한다.
                     sameDate.addSameDateItemToIndex(index, new SameDate.SameDateItem(billiardDataArrayList.get(index).getCount(), false, index));
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)의 billiard count 와 승리 여부(false)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 기준 날짜(index)의 billiard count 와 승리 여부(false)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
 
                 } // [check 2]
 
                 // cycle 2 : [index+1] 인 배열부터 배열 끝 까지 date 가 같은지 비교
                 for (int nextIndex = index + 1; nextIndex < billiardDataArrayList.size(); nextIndex++) {
 
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> >>>>>>>>>>>>>>>> 비교 날짜(nextIndex)는 " + nextIndex + " 입니다. >>>>>>>>>>>>>>>> ");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> >>>>>>>>>>>>>>>> 비교 날짜(nextIndex)는 " + nextIndex + " 입니다. >>>>>>>>>>>>>>>> ");
                     compareIndexWithNextIndex(userData, billiardDataArrayList, sameDate, index, nextIndex);
 
                 } // cycle 2
 
             } else {
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> =======================  기준 날짜(index) " + index + " 번째는 이미 검사하였습니다.  ======================= ");
+                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> =======================  기준 날짜(index) " + index + " 번째는 이미 검사하였습니다.  ======================= ");
             } // check 1
 
         } // cycle 1
@@ -115,30 +119,30 @@ public class SameDateCheckerUtil {
 
                     // [lv/C]SameDateChecker : 비교 날짜(nextIndex)가 승리했다. 따라서 기준 날짜(index)의 winCount 값을 +1 한다. / 비교 날짜(nextIndex)의 winCount 값은 0 그대로이다.
                     sameDate.addOneToWinCount(index);
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  비교 날짜(nextIndex)는 내가 승리한 게임입니다. 기준 날짜(index)의 winCount 를 +1 을 수행하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  비교 날짜(nextIndex)는 내가 승리한 게임입니다. 기준 날짜(index)의 winCount 를 +1 을 수행하였습니다.");
 
                     // [lv/C]SameDateChecker : 비교 날짜(nextIndex)가 승리했다. 따라서 기준 날짜(index)에 SameDateItem 항목을 만들어서 추가한다.
                     sameDate.addSameDateItemToIndex(index, new SameDate.SameDateItem(billiardDataArrayList.get(nextIndex).getCount(), true, nextIndex));
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 billiard count 와 승리 여부(true)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 billiard count 와 승리 여부(true)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
 
                 } else {
 
                     // [lv/C]SameDateChecker : 비교 날짜(index)가 패배했다. 따라서 기준 날짜(index)의 lossCount 값을 +1 한다. / 비교 날짜(nextIndex)의 lossCount 값은 0 그대로이다.
                     sameDate.addOneToLossCount(index);
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  비교 날짜(nextIndex)는 내가 패배한 게임입니다. 기준 날짜(index)의 lossCount 를 +1 을 수행하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째>  비교 날짜(nextIndex)는 내가 패배한 게임입니다. 기준 날짜(index)의 lossCount 를 +1 을 수행하였습니다.");
 
                     // [lv/C]SameDateChecker : 비교 날짜(nextIndex)가 패배했다. 따라서 기준 날짜(index)에 SameDateItem 항목을 만들어서 추가한다.
                     sameDate.addSameDateItemToIndex(index, new SameDate.SameDateItem(billiardDataArrayList.get(nextIndex).getCount(), false, nextIndex));
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 billiard count 와 승리 여부(false)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
+                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 billiard count 와 승리 여부(false)를 담은 SameDateItem 을 기준 날짜(index)에 추가하였습니다.");
 
                 } // [check 3]
 
             } else {
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 date 는 기준 날짜(index)의 date 와 다릅니다. 다음 비교 날짜(nextIndex+1)를 비교합니다.");
+                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 date 는 기준 날짜(index)의 date 와 다릅니다. 다음 비교 날짜(nextIndex+1)를 비교합니다.");
             } // [check 2]
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 checkedDate 는 true 이므로 기준 날짜(index)의 date 와 비교하지 않아도 됩니다.");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "index<" + index + "번째> 비교 날짜(nextIndex)의 checkedDate 는 true 이므로 기준 날짜(index)의 date 와 비교하지 않아도 됩니다.");
         } // [check 1]
 
     } // End of method [compareIndexWithNextIndex]
@@ -156,18 +160,18 @@ public class SameDateCheckerUtil {
 
         final String METHOD_NAME = "[compareDateOfBilliardData] ";
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<" + index + "> index 번째 date : " + billiardDataArrayList.get(index).getDate() + " / nextIndex 번째 date : " + billiardDataArrayList.get(nextIndex).getDate());
+        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<" + index + "> index 번째 date : " + billiardDataArrayList.get(index).getDate() + " / nextIndex 번째 date : " + billiardDataArrayList.get(nextIndex).getDate());
         // [lv/b]isSameDate : 두 개의 날짜가 같은 날짜인지 구분
         boolean isSameDate;
 
         // [check 1] : index 번째와 nextIndex 번째의 date 가 같다.
         if (billiardDataArrayList.get(index).getDate().equals(billiardDataArrayList.get(nextIndex).getDate())) {
 
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<" + index + "> index 와 nextIndex 번째는 같은 날짜입니다.");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<" + index + "> index 와 nextIndex 번째는 같은 날짜입니다.");
             isSameDate = true;
 
         } else {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "<" + index + "> index 와 nextIndex 번째는 다른 날짜입니다.");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<" + index + "> index 와 nextIndex 번째는 다른 날짜입니다.");
             isSameDate = false;
         } // [check 1]
 
@@ -189,17 +193,17 @@ public class SameDateCheckerUtil {
 
         final String METHOD_NAME = "[compareUserNameWithWinner] ";
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "user 의 id = " + userId + ", name = " + userName + " / winner 의 id = " + winnerId + ", name = " + winnerName);
+        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "user 의 id = " + userId + ", name = " + userName + " / winner 의 id = " + winnerId + ", name = " + winnerName);
 
         // [lv/b]isSameName : userName 과 winner 를 비교한 결과
         boolean isSameName;
 
         // [check 1] : userName 이 승리했다.
         if ((userId == winnerId) && userName.equals(winnerName)) {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userName : " + userName + " 은 승리했습니다.");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userName : " + userName + " 은 승리했습니다.");
             isSameName = true;
         } else {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "userName : " + userName + " 은 패배했습니다.");
+            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userName : " + userName + " 은 패배했습니다.");
             isSameName = false;
         } // [check 1]
 
@@ -236,44 +240,48 @@ public class SameDateCheckerUtil {
 
 
     /**
-     * [method] billiardDataArrayList 를 가지고 각 날짜의 win 과 loss 카운트하여 DateChecker 를 만든다.
-     * 그리고 이 DateChecker 를 통해 기준 날짜의 EventDay 를 만들어 eventDayArrayList 에 추가한다.
-     * 마지막으로 이 eventDayArrayList 를 calendarView 에 설정한다.
+     * sameDate 내용 Log 출력
+     *
+     * @param sameDate
      */
     private void printLog(SameDate sameDate) {
 
-        final String METHOD_NAME = "[printLog] ";
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+                if (sameDate.getArraySize() != 0) {
 
-        // [check 1] : SameDateChecker 가 있다.
-        if (sameDate.getArraySize() != 0) {
+                    Log.d(CLASS_NAME, "[sameDate 내용 확인]");
 
-            // [cycle 1] : SameDateChecker 의 size 만큼
-            for (int index = 0; index < sameDate.getArraySize(); index++) {
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / isCheckedDate : " + sameDate.getStandardDateToIndex(index));
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / isStandardDate : " + sameDate.getStandardDateToIndex(index));
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / winCount : " + sameDate.getWinCountToIndex(index));
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / LossCount : " + sameDate.getLossCountToIndex(index));
-                DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / month : " + sameDate.getMonthToIndex(index));
+                    for (int index = 0; index < sameDate.getArraySize(); index++) {
 
-                // [lv/C]ArrayList<Long> : dateChecker 의 BilliardCounter 에서 같은 날짜의 billiard 테이블의 count 값이 담긴
-                ArrayList<SameDate.SameDateItem> sameDateItemArrayList = sameDate.getSameDateItemToIndex(index);
+                        Log.d(CLASS_NAME, "---- " + index + "번째 -----");
+                        Log.d(CLASS_NAME, "isCheckedDate : " + sameDate.getStandardDateToIndex(index));
+                        Log.d(CLASS_NAME, "isStandardDate : " + sameDate.getStandardDateToIndex(index));
+                        Log.d(CLASS_NAME, "winCount : " + sameDate.getWinCountToIndex(index));
+                        Log.d(CLASS_NAME, "LossCount : " + sameDate.getLossCountToIndex(index));
+                        Log.d(CLASS_NAME, "month : " + sameDate.getMonthToIndex(index));
 
-                // [cycle 2] : index 번째에 추가되어있는 같은 날짜의 데이터가 담긴 sameDateItemArrayList 의 size
-                for (int checkerIndex = 0; checkerIndex < sameDateItemArrayList.size(); checkerIndex++) {
 
-                    // index 번째에 추가되어있는 같은 날짜의 데이터가 담긴 sameDateItemArrayList 에서 billiard count 의 번호를 출력한다.
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / sameDateItemArrayList 의 " + checkerIndex + "  번재 / billiard 의 count 번호 => " + sameDateItemArrayList.get(checkerIndex).getBilliardCount());
-                    DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "기준 날짜인 " + index + " 번째 / sameDateItemArrayList 의 " + checkerIndex + "  번재 / billiard 의 count 번호의 isWinner => " + sameDateItemArrayList.get(checkerIndex).isWinner());
+                        StringBuilder billiardCount = new StringBuilder();
+                        StringBuffer isWinner = new StringBuffer();
 
-                } // [cycle 2]
+                        billiardCount.append("meDateItem / billiardCount : ");
+                        isWinner.append("sameDateItem / isWinner : ");
 
-            } // [cycle 1]
+                        for (int sdiIndex = 0; sdiIndex < sameDate.getSameDateItemToIndex(index).size(); sdiIndex++) {
 
-        } else {
-            DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "sameDateChecker 가 없습니다. 즉, billiardDataArrayList 가 없어서 만들어지지 않았습니다.  ");
-        } // [check 1]
+                            billiardCount.append("[" + sameDate.getSameDateItemToIndex(index).get(sdiIndex).getBilliardCount() + "]");
+                            isWinner.append("[" + sameDate.getSameDateItemToIndex(index).get(sdiIndex).isWinner() + "]");
 
-    } // End of method [printLog]
+                        }
+                        Log.d(CLASS_NAME, billiardCount.toString());
+                        Log.d(CLASS_NAME, isWinner.toString());
+                    }
+                } else {
+                    Log.d(CLASS_NAME, "sameDate 의 size 가 0 입니다.");
+                } // [check 1]
+            }
 
+    } //
 
 }

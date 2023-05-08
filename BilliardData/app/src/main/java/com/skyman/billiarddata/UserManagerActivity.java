@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.fragment.user.UserViewPagerAdapter;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.SessionManager;
@@ -19,7 +20,8 @@ import com.skyman.billiarddata.table.user.data.UserData;
 public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final String CLASS_NAME = "[Ac]_UserManagerActivity";
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "UserManagerActivity";
 
     // constant
     public static final int USER_INPUT_FRAGMENT = 0;
@@ -66,17 +68,17 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
         connectWidget();
         initWidget();
 
-        DeveloperManager.displayLog(
+        DeveloperManager.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "======================================>>>>>>>>>>>>>>>>>>>>> user manager activity 에서"
         );
 
-        DeveloperManager.displayLog(
+        DeveloperManager.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "userData Object = " + userData
         );
 
-        DeveloperManager.displayLog(
+        DeveloperManager.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "appDbManager Object = " + appDbManager
         );
@@ -151,7 +153,7 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
     private void moveFragmentPage() {
         final String METHOD_NAME = "[moveFragmentPage] ";
 
-        DeveloperManager.displayLog(CLASS_NAME, METHOD_NAME + "pageNumber : " + pageNumberOfFragment + " 입니다.");
+        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "pageNumber : " + pageNumberOfFragment + " 입니다.");
         switch (pageNumberOfFragment) {
 
             case USER_INPUT_FRAGMENT:

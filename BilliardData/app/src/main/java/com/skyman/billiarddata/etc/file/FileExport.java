@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -27,7 +29,8 @@ import java.util.Date;
 public class FileExport {
 
     // constant
-    private static final String CLASS_NAME = FileExport.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "FileExport";
 
     // instance variable
     private Activity activity;
@@ -70,10 +73,7 @@ public class FileExport {
 
         // 위에서 가져온 데이터로 Json object 생성하기
         jsonData = createJsonObject();
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                jsonData.toString()
-        );
+        printLog(jsonData);
 
         // 파일 저장할 장소 찾기 / 파일 만들기
         makeNewFile();
@@ -109,28 +109,6 @@ public class FileExport {
 
         // 성공했을 때
         onSuccessListener.onSuccess();
-    }
-
-
-    public void print() {
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "FileExport 의 userData, friendDataArrayList, billiardDataArrayList, playerDataArrayList 를 확인하겠습니다."
-        );
-
-        // user
-        DeveloperManager.displayToUserData(CLASS_NAME, userData);
-
-        // friend
-        DeveloperManager.displayToFriendData(CLASS_NAME, friendDataArrayList);
-
-        // billiard
-        DeveloperManager.displayToBilliardData(CLASS_NAME, billiardDataArrayList);
-
-        // player
-        DeveloperManager.displayToPlayerData(CLASS_NAME, playerDataArrayList);
-
     }
 
     /**
@@ -213,5 +191,23 @@ public class FileExport {
         void onSuccess();
     }
 
+    public void printLog(JSONObject jsonData) {
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+
+                Log.d(CLASS_NAME, "[jsonData 내용 확인]");
+                Log.d(CLASS_NAME, jsonData.toString());
+
+            }
+    }
+
+    public void printLog(UserData userData, ArrayList<FriendData> friendDataArrayList, ArrayList<BilliardData> billiardDataArrayList, ArrayList<PlayerData> playerDataArrayList) {
+
+        DeveloperManager.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
+        DeveloperManager.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
+        DeveloperManager.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
+        DeveloperManager.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
+
+    }
 
 }

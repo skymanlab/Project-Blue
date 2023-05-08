@@ -1,6 +1,9 @@
 package com.skyman.billiarddata.etc.calendar;
 
+import android.util.Log;
+
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,12 +11,14 @@ import java.util.ArrayList;
 public class SameDate implements Serializable {
 
     // constant
-    private static final String CLASS_NAME = SameDate.class.getSimpleName();
+
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "SameDate";
 
     // instance variable
     private boolean[] isCheckedDate;                                // 해당 billiardDate 객체의 date 가 검사되었는지 (for 구문을 돌면서 검사한 데이터는 넘어가기 위해서)
     private boolean[] isStandardDate;                               // 해당 billiardDate 객체의 date 가 기준 날짜인지 (기준 날짜 :
-     private int[] winCount;                                         // 기준 날짜일 때만 나의 승리 횟수를 카운트 한다.
+    private int[] winCount;                                         // 기준 날짜일 때만 나의 승리 횟수를 카운트 한다.
     private int[] lossCount;                                        // 기준 날짜일 때만 나의 패배 횟수를 카운트 한다.
     private int[] year;                                             // 기준 날짜일 때만 기준 날짜의 year 를 저장한다.
     private int[] month;                                            // 기준 날짜일 때만 기준 날짜의 month 를 저장한다.
@@ -37,6 +42,10 @@ public class SameDate implements Serializable {
 
     }
 
+
+    ///////////////////////////////////////////////////////
+    // method /////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     /**
      * [method] 배열 필드를 초기값을 설정한다.
@@ -65,7 +74,7 @@ public class SameDate implements Serializable {
 
         } // [cycle 1]
 
-    } // End of method[initArray]
+    } //
 
 
     // ========================================== isCheckedDate ==========================================
@@ -178,6 +187,7 @@ public class SameDate implements Serializable {
 
 
     // ========================================== year ==========================================
+
     /**
      * [method] year 의 index 번째에 값을 넣는다.
      * billiardData 의 date 에서 year 값만 저장한다.
@@ -192,7 +202,6 @@ public class SameDate implements Serializable {
     public int getYearToIndex(int index) {
         return year[index];
     }
-
 
 
     // ========================================== month ==========================================
@@ -251,85 +260,46 @@ public class SameDate implements Serializable {
 
 
     // ========================================== toString ==========================================
-    public void printData() {
+    public void printLog(SameDate sameDate) {
 
-        DeveloperManager.displayLog(CLASS_NAME, "=================================== SameDateChecker ===================================");
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
 
-        for (int index = 0; index < getArraySize(); index++) {
+                Log.d(CLASS_NAME, "[sameDate 내용 확인]");
 
-            DeveloperManager.displayLog(CLASS_NAME, "=================================== " + index + " ===================================");
+                for (int index = 0; index < getArraySize(); index++) {
 
-            // standard date
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "standard date : " + getStandardDateToIndex(index) + ""
-            );
+                    Log.d(CLASS_NAME, "---- " + index + "번째 ----");
+                    Log.d(CLASS_NAME, "isCheckedDate :" + getCheckedDateToIndex(index));
+                    Log.d(CLASS_NAME, "isStandardDate : " + getStandardDateToIndex(index));
+                    Log.d(CLASS_NAME, "year : " + getYearToIndex(index));
+                    Log.d(CLASS_NAME, "month : " + getMonthToIndex(index));
+                    Log.d(CLASS_NAME, "winCount : " + getWinCountToIndex(index));
+                    Log.d(CLASS_NAME, "lossCount : " + getLossCountToIndex(index));
 
-            // year
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "month : " + getYearToIndex(index) + ""
-            );
+                    // for 2: sameDateItemArrayList
+                    for (int sdiIndex = 0; sdiIndex < getSameDateItemToIndex(index).size(); sdiIndex++) {
 
-            // month
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "month : " + getMonthToIndex(index) + ""
-            );
+                        Log.d(CLASS_NAME, "sameDateItem / billiardCount : " + getSameDateItemToIndex(index).get(sdiIndex).getBilliardCount());
+                        Log.d(CLASS_NAME,  "sameDateItem / isWinner : " + getSameDateItemToIndex(index).get(sdiIndex).isWinner());
+                        Log.d(CLASS_NAME, "sameDateItem / index : " + getSameDateItemToIndex(index).get(sdiIndex).getIndex());
 
-            // win
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "win : " + getWinCountToIndex(index) + ""
-            );
+                    } //
 
-            // loss
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "loss : " + getLossCountToIndex(index) + ""
-            );
-
-            // checked Date
-            DeveloperManager.displayLog(
-                    CLASS_NAME,
-                    "checked date :" + getCheckedDateToIndex(index) + ""
-            );
-
-
-            // same Date item
-            for (int sdiIndex = 0; sdiIndex < getSameDateItemToIndex(index).size(); sdiIndex++) {
-
-                // is winner
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "==> same date / isWinner : " + getSameDateItemToIndex(index).get(sdiIndex).isWinner() + ""
-                );
-
-                // billiard count
-                DeveloperManager.displayLog(
-                        CLASS_NAME,
-                        "==> same date / billiardCount : " + getSameDateItemToIndex(index).get(sdiIndex).getBilliardCount() + ""
-                );
-            } // End of [for]
-        } // End of [for]
-
-        DeveloperManager.displayLog(
-                CLASS_NAME,
-                "============================================================================"
-        );
-
+                } //
+            }
     }
 
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-    // [inner class]
+    ///////////////////////////////////////////////////////
+    // inner class ////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     /**
-     *  SameDate 의 isStandardDate 가 true 이면
-     *  같은 날짜에 경기 데이터가 담긴 billiardData 를 참조하기 위한 billiardDataArrayList 의 순번(index)과
-     *  경기수(
-     *  나의 승리여부(나를 기준으로 정리한 데이터 이고, GameRecordDialog에서 필요한 데이터)가 담겨져 있다.
+     * SameDate 의 isStandardDate 가 true 이면
+     * 같은 날짜에 경기 데이터가 담긴 billiardData 를 참조하기 위한 billiardDataArrayList 의 순번(index)과
+     * 경기수(
+     * 나의 승리여부(나를 기준으로 정리한 데이터 이고, GameRecordDialog에서 필요한 데이터)가 담겨져 있다.
      */
     public static class SameDateItem {
 
@@ -357,5 +327,6 @@ public class SameDate implements Serializable {
         public int getIndex() {
             return index;
         }
-    } // End of Class [SameDateList]
+    } //
+
 }

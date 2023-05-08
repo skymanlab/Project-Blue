@@ -24,13 +24,15 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.developer.DeveloperManager;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.dialog.AdMobDialog;
 import com.skyman.billiarddata.etc.SectionManager;
 
 public class AppInfoActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final String CLASS_NAME = AppInfoActivity.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "AppInfoActivity";
 
     // constant
     private static final String TEST_ID = "ca-app-pub-3940256099942544/1033173712";

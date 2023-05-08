@@ -17,8 +17,8 @@ import java.util.function.Consumer;
 
 public class SameDateChecker2 {
 
-    private static final Display LOG_CLASS_POWER = Display.ON;
-    private static final String LOG_TAG = "SameDateChecker2";
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "SameDateChecker2";
 
     // constant
     private static final String DATE_DELIMITER = "년월일 ";
@@ -27,79 +27,87 @@ public class SameDateChecker2 {
     boolean isCheckedDate[];    // 검사 완료 여부
 //    boolean isBaseDate[];       // billiardData 의 date 가 기준 날짜(SameDate 에 들어가는 날짜) 인가? ==> 필요없어짐
 
-    public SameDateChecker2() {
-    }
 
-
+    /**
+     * billiardDataArrayList 의 billiarData 객체의 date 를 이용하여 같은 날짜를 검사하여
+     * sameDate2 객체를 만들고 이를 ArrayList 에 담아서 반환한다.
+     *
+     * @param userData              나의 승리 여부를 판별하기 위한
+     * @param billiardDataArrayList 모든 billiardData 를 담은 객체( 검사의 주체 date 정보를 담은 )
+     * @return sameDate2 객체가 담긴 ArrayList
+     */
     public ArrayList<SameDate2> checkSameDate(UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
 
         if (!billiardDataArrayList.isEmpty()) {
 
-            // SameDate2 객체가 담긴 ArrayList
-            ArrayList<SameDate2> sameDateArrayList = new ArrayList<>();
+            ArrayList<SameDate2> sameDateArrayList = new ArrayList<>();                     // SameDate2 객체가 담길 ArrayList - return 객체
+            List<String> dateList = new ArrayList<>();                                      // 날짜를 String 값으로 저장하기 위한 변수 : 정렬하기 위해서
 
-            // 날짜를 String 값으로 저장하기 위한 변수 : 정렬하기 위해서
-            List<String> dateList = new ArrayList<>();
-
-            // 검사를 진행하기 위해 필요한 맴버 변수 초기화
+            // initData() : 검사를 진행하기 위해 필요한 맴버 변수 초기화
             initData(billiardDataArrayList.size());
 
             for (int index = 0; index < billiardDataArrayList.size(); index++) {
 
-                // 검사되지 않은 날짜 일때 (즉, false 일때)
-                if (!isCheckedDate[index]) {        // 아직 검사되지 않은 날짜인지 확인하기
-                    isCheckedDate[index] = true;    // 검사 진행 중이므로 true로 변경
+                if (!isCheckedDate[index]) {                                                // if : 아직 검사되지 않은 날짜인지 확인하기
+                    // 진행 조건( isCheckedData=false ) : 검사되지 않은 날짜 일때
 
-                    // 검사 하고 있고 기준이 되는 날짜 일 때, sameDate2 객체 생성
-                    SameDate2 sameDate = new SameDate2();
+                    isCheckedDate[index] = true;                                            // isCheckedData : 검사 진행 중이므로 true로 변경
+                    SameDate2 sameDate = new SameDate2();                                   // sameDate : 검사 하고 있고 기준이 되는 날짜 일 때, sameDate2 객체 생성
 
-                    // SameDate2.Date 항목 추가
+                    // separateDate() : SameDate2.Date 항목 추가
                     separateDate(sameDate, billiardDataArrayList.get(index).getDate());
+
                     dateList.add(
                             billiardDataArrayList.get(index).getDate()
-                    );       // 정렬을 위한 date 문자열 저장
+                    );                                                                      // dateList : 정렬을 위한 date 문자열 저장
 
-                    // 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
+                    // checkMyWin() : 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
                     checkMyWin(sameDate, userData, billiardDataArrayList.get(index));
 
-                    // 참조 항목 추가
+                    // addReference() : sameDate2.Reference 항목 추가
                     addReference(sameDate, billiardDataArrayList.get(index), index);
 
                     for (int nextIndex = index + 1; nextIndex < billiardDataArrayList.size(); nextIndex++) {
 
-                        // 검사되지 않은 날짜 일때 (즉, false 일때)
-                        if (!isCheckedDate[nextIndex]) {           // 아직 검사되지 않은 날짜인지 확인하기
+                        // if 1 : 아직 검사되지 않은 날짜인지 확인하기
+                        if (!isCheckedDate[nextIndex]) {
+                            // 진행 조건( isCheckedDate=false ) : 검사되지 않은 날짜 일때
 
-                            // index번째와 nextIndex번째의 billiardData 의 date 가 같으면
-                            if (equalBaseDate(billiardDataArrayList, index, nextIndex)) {        // 기준 날짜와 같은지 확인하기
+                            // if 2 : 기준 날짜와 같은지 확인하기
+                            if (equalBaseDate(billiardDataArrayList, index, nextIndex)) {
+                                // 진행 조건( equalBaseDate()=true ) : index번째와 nextIndex번째의 billiardData 의 date 가 같으면
 
-                                isCheckedDate[nextIndex] = true;                                // 기준 날짜와 같으면 기준 날짜에 해당하는 sameDate2 객체에 추가하므로 이때 ture로 변경
+                                isCheckedDate[nextIndex] = true;                                                // isCheckedDate : 기준 날짜와 같으면 기준 날짜에 해당하는 sameDate2 객체에 추가하므로 이때 ture로 변경
 
-                                // 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
+                                // checkMyWin() : 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
                                 checkMyWin(sameDate, userData, billiardDataArrayList.get(nextIndex));
-                                // 참조 항목 추가
+                                // addReference() : sameDate2.Reference 항목 추가
                                 addReference(sameDate, billiardDataArrayList.get(nextIndex), nextIndex);
 
                             }
                         }
                     }
 
-                    sameDateArrayList.add(sameDate);        // 기준이 되는 날짜 추가
+                    sameDateArrayList.add(sameDate);                                            // sameDateArrayList : 모든 검사가 완료된 sameDate2 객체를 arrayList 에 추가
                 }
-
             }
             return sortDate(sameDateArrayList, dateList);
+
         } else {
             return null;
         }
-    }
+
+    } //
+
 
     /**
      * billiardDataArrayList의 1:1 대응되어 검사 여부를 확인하기 위한
      * isCheckedDate 배열을 생서하고 모두 false로 초기화한다.
+     *
      * @param size billiardDataArrayList의 size
      */
     private void initData(int size) {
+
         if (size != 0) {
             isCheckedDate = new boolean[size];
 
@@ -107,15 +115,10 @@ public class SameDateChecker2 {
                 isCheckedDate[index] = false;
             }
         }
-    }
+
+    } //
 
 
-    /**
-     * billiardData 의 date 를 년, 월, 일 단위로 분리하여
-     * SameDate2.Date 객체를 반환하기
-     *
-     * @return SameDate2.Date 객체
-     */
     /**
      * billiardData 의 date 를 년, 월, 일 단위로 분리하여
      * SameDate2.Date 객체에 추가 하기
@@ -125,12 +128,12 @@ public class SameDateChecker2 {
      */
     private void separateDate(SameDate2 sameDate, String date) {
 
-        // "yyyy년 MM월 dd일" 형태의 date 문자열을 "년월일"로 나누고, int 타입으로 변환 / delimiter(구분자) : DATE_DELIMITER = "년월일"
+        // tokenizer: "yyyy년 MM월 dd일" 형태의 date 문자열을 "년월일"로 나누고, int 타입으로 변환 / delimiter(구분자) -> DATE_DELIMITER = "년월일"
         StringTokenizer tokenizer = new StringTokenizer(date, DATE_DELIMITER);
 
         for (int index = 0; tokenizer.hasMoreTokens(); index++) {
 
-            // [lv/i]dateTokenList : 분할 된 토큰을 year, month, day 순으로 integer 로 parsing 한 값을 담는다.
+            // switch : 분할 된 토큰을 year, month, day 순으로 integer 로 parsing 한 값 sameDate2 객체에 담는다.
             switch (index) {
                 case 0:
                     sameDate.getGameDate().setYear(Integer.parseInt(tokenizer.nextToken()));
@@ -142,8 +145,9 @@ public class SameDateChecker2 {
                     sameDate.getGameDate().setDay(Integer.parseInt(tokenizer.nextToken()));
             }
 
-        } // [cycle 1]
+        }
         sameDate.getGameDate().setDate(date);
+
     }
 
 
@@ -226,23 +230,29 @@ public class SameDateChecker2 {
         }
         printLog(sortedArrayList);
         return sortedArrayList;
-    }
+
+    } //
 
 
     /**
      * 디버그 로그 보기 : dataList 내용 확인
+     *
      * @param dateList
      */
     public void printLog(List<String> dateList) {
-        if (DeveloperManager.DISPLAY_POWER == Display.ON)
-            if (LOG_CLASS_POWER == Display.ON) {
-                Log.d(LOG_TAG, "dateList 내용 확인");
+
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+
+                Log.d(CLASS_NAME, "dateList 내용 확인");
 
                 for (int index = 0; index < dateList.size(); index++) {
-                    Log.d(LOG_TAG, (index +1 ) +"번째 날짜 : " + dateList.get(index) );
+                    Log.d(CLASS_NAME, index + "번째 날짜 : " + dateList.get(index));
                 }
+
             }
-    }
+
+    } //
 
     /**
      * 디버그 로그 보기 : sameDateArrayList 내용 확인
@@ -250,35 +260,35 @@ public class SameDateChecker2 {
      * @param sameDate2ArrayList
      */
     public void printLog(ArrayList<SameDate2> sameDate2ArrayList) {
-        if (DeveloperManager.DISPLAY_POWER == Display.ON)
-            if (LOG_CLASS_POWER == Display.ON) {
-                Log.d(LOG_TAG, "[sameDataArrayList 내용 확인]");
 
+        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
+            if (CLASS_LOG_SWITCH == Display.ON) {
+
+                Log.d(CLASS_NAME, "[sameDataArrayList 내용 확인]");
                 for (int index = 0; index < sameDate2ArrayList.size(); index++) {
-                    Log.d(LOG_TAG, "---- " + index + "번째 ----");
+                    Log.d(CLASS_NAME, "---- " + index + "번째 ----");
 
-                    Log.d(LOG_TAG, " Counter/myWinCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyWinCounter());
-                    Log.d(LOG_TAG, " Counter/myLossCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyLossCounter());
-                    Log.d(LOG_TAG, " Counter/gameTotalCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalGameCounter());
-                    Log.d(LOG_TAG, " Date/year : " + sameDate2ArrayList.get(index).getGameDate().getYear());
-                    Log.d(LOG_TAG, " Date/month : " + sameDate2ArrayList.get(index).getGameDate().getMonth());
-
-                    StringBuffer days = new StringBuffer();
-                    days.append(" Date/days : " + sameDate2ArrayList.get(index).getGameDate().getDay());
-                    Log.d(LOG_TAG, days.toString());
+                    Log.d(CLASS_NAME, " Counter / myWinCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyWinCounter());
+                    Log.d(CLASS_NAME, " Counter / myLossCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getMyLossCounter());
+                    Log.d(CLASS_NAME, " Counter / gameTotalCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalGameCounter());
+                    Log.d(CLASS_NAME, " Date / year : " + sameDate2ArrayList.get(index).getGameDate().getYear());
+                    Log.d(CLASS_NAME, " Date / month : " + sameDate2ArrayList.get(index).getGameDate().getMonth());
+                    Log.d(CLASS_NAME, " Date / day : " + sameDate2ArrayList.get(index).getGameDate().getDay());
 
                     StringBuffer referenceCount = new StringBuffer();
-                    referenceCount.append(" Reference/count-");
+                    referenceCount.append(" Reference / count : ");
                     StringBuffer referenceIndex = new StringBuffer();
-                    referenceIndex.append(" Reference/index-");
+                    referenceIndex.append(" Reference / index : ");
                     for (int rIndex = 0; rIndex < sameDate2ArrayList.get(index).getReferenceArrayList().size(); rIndex++) {
-                        referenceCount.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getCount() + "-");
-                        referenceIndex.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getIndex() + "-");
+                        referenceCount.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getCount() + ", ");
+                        referenceIndex.append(sameDate2ArrayList.get(index).getReferenceArrayList().get(rIndex).getIndex() + ", ");
                     }
-
-                    Log.d(LOG_TAG, referenceCount.toString());
-                    Log.d(LOG_TAG, referenceIndex.toString());
+                    Log.d(CLASS_NAME, referenceCount.toString());
+                    Log.d(CLASS_NAME, referenceIndex.toString());
                 }
             }
-    }
+
+    } //
+
+
 }

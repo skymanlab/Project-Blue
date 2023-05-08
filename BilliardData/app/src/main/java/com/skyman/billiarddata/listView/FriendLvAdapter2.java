@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
+import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
 public class FriendLvAdapter2 extends BaseAdapter {
 
     // constant
-    private final String CLASS_NAME = FriendLvAdapter2.class.getSimpleName();
+    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final String CLASS_NAME = "FriendLvAdapter2";
 
     // instance variable
     private ArrayList<FriendData> friendDataArrayList;
