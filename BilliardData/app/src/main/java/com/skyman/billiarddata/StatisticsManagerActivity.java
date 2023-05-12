@@ -1,33 +1,43 @@
 package com.skyman.billiarddata;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Bundle;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.developer.Display;
-import com.skyman.billiarddata.etc.calendar.SameDateChecker2;
-import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
 import com.skyman.billiarddata.etc.SectionManager;
-import com.skyman.billiarddata.table.billiard.data.BilliardData;
-import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
-import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.etc.SessionManager;
 import com.skyman.billiarddata.etc.calendar.SameDate;
 import com.skyman.billiarddata.etc.calendar.SameDateCheckerUtil;
+import com.skyman.billiarddata.etc.database.AppDbManager;
+import com.skyman.billiarddata.etc.statistics.Date;
+import com.skyman.billiarddata.etc.statistics.Record;
+import com.skyman.billiarddata.etc.statistics.SameDateChecker2;
+import com.skyman.billiarddata.etc.statistics.StatisticsAnalysis;
+import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
+import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.player.data.PlayerData;
-import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
 import com.skyman.billiarddata.table.user.data.UserData;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class StatisticsManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final Display CLASS_LOG_SWITCH = Display.ON;
     private static final String CLASS_NAME = "StatisticsManagerActivity";
 
     // instance variable
@@ -116,7 +126,9 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
                 sameDate = sameDateCheckerUtil.createSameDate(userData, billiardDataArrayList);
 
                 SameDateChecker2 sameDateChecker2 = new SameDateChecker2();
-                sameDateChecker2.checkSameDate(userData, billiardDataArrayList);
+                StatisticsAnalysis analysis = new StatisticsAnalysis(appDbManager);
+                analysis.analyzeMonthTotalStats(sameDateChecker2.checkSameDate(userData, billiardDataArrayList), billiardDataArrayList);
+
 
             }
 

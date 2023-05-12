@@ -246,7 +246,7 @@ public final class DeveloperManager {
             if (CLASS_LOG_SWITCH == Display.ON)
                 if (playerDataArrayList.size() != 0) {
 
-                    Log.d(className, "[billiardDataArrayList 내용 확인]");
+                    Log.d(className, "[playerDataArrayList 내용 확인]");
                     for (int index = 0; index < playerDataArrayList.size(); index++) {
 
                         Log.d(className, "---- " + index + "번째 ----");

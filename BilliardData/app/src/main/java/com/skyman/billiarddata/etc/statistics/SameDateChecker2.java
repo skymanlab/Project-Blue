@@ -1,13 +1,15 @@
-package com.skyman.billiarddata.etc.calendar;
+package com.skyman.billiarddata.etc.statistics;
 
 import android.util.Log;
 
 import com.skyman.billiarddata.developer.DeveloperManager;
 import com.skyman.billiarddata.developer.Display;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
+import com.skyman.billiarddata.table.player.data.PlayerData;
 import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -40,8 +42,8 @@ public class SameDateChecker2 {
             ArrayList<SameDate2> sameDateArrayList = new ArrayList<>();                     // SameDate2 객체가 담길 ArrayList - return 객체
             List<String> dateList = new ArrayList<>();                                      // 날짜를 String 값으로 저장하기 위한 변수 : 정렬하기 위해서
 
-            // initData() : 검사를 진행하기 위해 필요한 맴버 변수 초기화
-            initData(billiardDataArrayList.size());
+            // initIsCheckDate() : 검사를 진행하기 위해 필요한 맴버 변수 초기화
+            initIsCheckDate(billiardDataArrayList.size());
 
             for (int index = 0; index < billiardDataArrayList.size(); index++) {
 
@@ -51,18 +53,21 @@ public class SameDateChecker2 {
                     isCheckedDate[index] = true;                                            // isCheckedData : 검사 진행 중이므로 true로 변경
                     SameDate2 sameDate = new SameDate2();                                   // sameDate : 검사 하고 있고 기준이 되는 날짜 일 때, sameDate2 객체 생성
 
-                    // separateDate() : SameDate2.Date 항목 추가
-                    separateDate(sameDate, billiardDataArrayList.get(index).getDate());
+                    // billiardData 의 date 를 파싱하여 sameDate 의 Date 객체에 입력
+                    sameDate.getGameDate().setDateByParsing(billiardDataArrayList.get(index).getDate());
 
                     dateList.add(
                             billiardDataArrayList.get(index).getDate()
                     );                                                                      // dateList : 정렬을 위한 date 문자열 저장
 
-                    // checkMyWin() : 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
+                    // checkMyWin() : Date 객체 / 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
                     checkMyWin(sameDate, userData, billiardDataArrayList.get(index));
 
-                    // addReference() : sameDate2.Reference 항목 추가
-                    addReference(sameDate, billiardDataArrayList.get(index), index);
+                    // Reference 객체 / billiardData 를 찾기 위한 참조 항목 추가
+                    sameDate.getReferenceArrayList().add(new Reference((int) billiardDataArrayList.get(index).getCount(), index));
+
+                    // TotalCount 객체 / 첫 기준 날짜가 되는 billiardData 의 cost 값 더하기
+                    sameDate.getTotalCost().addCost(billiardDataArrayList.get(index).getCost());
 
                     for (int nextIndex = index + 1; nextIndex < billiardDataArrayList.size(); nextIndex++) {
 
@@ -71,15 +76,17 @@ public class SameDateChecker2 {
                             // 진행 조건( isCheckedDate=false ) : 검사되지 않은 날짜 일때
 
                             // if 2 : 기준 날짜와 같은지 확인하기
-                            if (equalBaseDate(billiardDataArrayList, index, nextIndex)) {
+                            if (equalDate(billiardDataArrayList, index, nextIndex)) {
                                 // 진행 조건( equalBaseDate()=true ) : index번째와 nextIndex번째의 billiardData 의 date 가 같으면
 
                                 isCheckedDate[nextIndex] = true;                                                // isCheckedDate : 기준 날짜와 같으면 기준 날짜에 해당하는 sameDate2 객체에 추가하므로 이때 ture로 변경
 
-                                // checkMyWin() : 승리 여부 체크 후 해당 항목(승리, 패배) 업데이트
+                                // checkMyWin() : Date 객체 / 승리 여부 체크 후 해당 항목(승리, 패배)에 +1, Record 항목 입력
                                 checkMyWin(sameDate, userData, billiardDataArrayList.get(nextIndex));
-                                // addReference() : sameDate2.Reference 항목 추가
-                                addReference(sameDate, billiardDataArrayList.get(nextIndex), nextIndex);
+                                // Reference 객체 / billiardData 를 찾기 위한 참조 항목 추가
+                                sameDate.getReferenceArrayList().add(new Reference((int) billiardDataArrayList.get(nextIndex).getCount(), nextIndex));
+                                // TotalCount 객체 / 첫 기준 날짜가 되는 billiardData 의 cost 값 더하기
+                                sameDate.getTotalCost().addCost(billiardDataArrayList.get(nextIndex).getCost());
 
                             }
                         }
@@ -103,82 +110,39 @@ public class SameDateChecker2 {
      *
      * @param size billiardDataArrayList의 size
      */
-    private void initData(int size) {
+    private void initIsCheckDate(int size) {
 
         if (size != 0) {
             isCheckedDate = new boolean[size];
-
-            for (int index = 0; index < size; index++) {
-                isCheckedDate[index] = false;
-            }
+            Arrays.fill(isCheckedDate, false);
         }
 
     } //
 
 
-    /**
-     * billiardData 의 date 를 년, 월, 일 단위로 분리하여
-     * SameDate2.Date 객체에 추가 하기
-     *
-     * @param sameDate 분리된 년,월,일 단위가 담길 SameDate 객체
-     * @param date     billiardData 의 date
-     */
-    private void separateDate(SameDate2 sameDate, String date) {
-
-        // tokenizer: "yyyy년 MM월 dd일" 형태의 date 문자열을 "년월일"로 나누고, int 타입으로 변환 / delimiter(구분자) -> DATE_DELIMITER = "년월일"
-        StringTokenizer tokenizer = new StringTokenizer(date, DATE_DELIMITER);
-
-        for (int index = 0; tokenizer.hasMoreTokens(); index++) {
-
-            // switch : 분할 된 토큰을 year, month, day 순으로 integer 로 parsing 한 값 sameDate2 객체에 담는다.
-            switch (index) {
-                case 0:
-                    sameDate.getGameDate().setYear(Integer.parseInt(tokenizer.nextToken()));
-                    break;
-                case 1:
-                    sameDate.getGameDate().setMonth(Integer.parseInt(tokenizer.nextToken()));
-                    break;
-                case 2:
-                    sameDate.getGameDate().setDay(Integer.parseInt(tokenizer.nextToken()));
-            }
-
-        }
-        sameDate.getGameDate().setDate(date);
-
-    }
-
 
     /**
+     * 1. 승, 패 +1
      * userData 의 'id', 'name'과
      * billiardData 의 'winnerId', 'winnerName'을 비교하여
      * sameDate 의 Counter 객체에 나의 승리이면 winCounter를 +1, 나의 패배이면 lossCounter 를 +1 한다.
-     * 그리고 이 객체를 반환한다.
-     *
-     * @return 나의 승리 여부 (true : 나의 승리, false : 나의 패배)
+     * 2. 나의 전적 입력
+     * 나의 승,패 여부를 나타내는 Record 객체를 ArrayList 에 추가 하기
      */
     private void checkMyWin(SameDate2 sameDate, UserData userData, BilliardData billiardData) {
 
         if (
                 (userData.getId() == billiardData.getWinnerId()) &&
                         userData.getName().equals(billiardData.getWinnerName())) {
-            sameDate.getMyGameCounter().plusOneWinCounter();
+            sameDate.getMyGameCounter().addOneWinCounter();
             sameDate.getMyGameRecord().add(Record.WIN);
         } else {
-            sameDate.getMyGameCounter().plusOneLossCounter();
+            sameDate.getMyGameCounter().addOneLossCounter();
             sameDate.getMyGameRecord().add(Record.LOSS);
         }
     }
 
-    /**
-     * sameDate2 객체에 reference 객체를 추가한다.
-     *
-     * @param sameDate       reference 객체가 추가될
-     * @param billiardData   count 값을 가져올 billiardData 객체
-     * @param arrayListIndex 검사 진행중인 객체의 arrayList 의 index
-     */
-    private void addReference(SameDate2 sameDate, BilliardData billiardData, int arrayListIndex) {
-        sameDate.getReferenceArrayList().add(new SameDate2.Reference((int) billiardData.getCount(), arrayListIndex));
-    }
+//    private void relativeRecord (Counter counter, A)
 
     /**
      * 기준 날짜와 비교되는 날짜가 같은지를 비교하여 그 결과를 반환한다.
@@ -188,7 +152,7 @@ public class SameDateChecker2 {
      * @param comparedDateIndex
      * @return 같은 날짜이면 true, 다른 날짜 이면 false
      */
-    private boolean equalBaseDate(ArrayList<BilliardData> billiardDataArrayList, int baseDateIndex, int comparedDateIndex) {
+    private boolean equalDate(ArrayList<BilliardData> billiardDataArrayList, int baseDateIndex, int comparedDateIndex) {
 
         if (billiardDataArrayList.get(baseDateIndex).getDate().equals(
                 billiardDataArrayList.get(comparedDateIndex).getDate())
@@ -219,7 +183,7 @@ public class SameDateChecker2 {
 
             for (int sIndex = 0; sIndex < sameDateArrayList.size(); sIndex++) {
                 if (dateList.get(index).equals(
-                        sameDateArrayList.get(sIndex).getGameDate().getDate()
+                        sameDateArrayList.get(sIndex).getGameDate().toString()
                 )) {
 
                     sortedArrayList.add(sameDateArrayList.get(sIndex));
@@ -269,10 +233,10 @@ public class SameDateChecker2 {
 
                     Log.d(CLASS_NAME, "Date / year : " + sameDate2ArrayList.get(index).getGameDate().getYear());
                     Log.d(CLASS_NAME, "Date / month : " + sameDate2ArrayList.get(index).getGameDate().getMonth());
-                    Log.d(CLASS_NAME, "Date / day : " + sameDate2ArrayList.get(index).getGameDate().getDay());
+                    Log.d(CLASS_NAME, "Date / day : " + sameDate2ArrayList.get(index).getGameDate().getDayOfMonth());
                     Log.d(CLASS_NAME, "Counter / winCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getWinCounter());
                     Log.d(CLASS_NAME, "Counter / lossCounter : " + sameDate2ArrayList.get(index).getMyGameCounter().getLossCounter());
-                    Log.d(CLASS_NAME, "Counter / totalGameCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalGameCounter());
+                    Log.d(CLASS_NAME, "Counter / totalGameCounter: " + sameDate2ArrayList.get(index).getMyGameCounter().getTotalCounter());
 
                     StringBuilder record = new StringBuilder();
                     record.append("Record : ");
@@ -293,6 +257,4 @@ public class SameDateChecker2 {
             }
 
     } //
-
-
 }
