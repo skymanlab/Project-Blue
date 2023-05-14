@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.etc.DataFormatUtil;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class ChartFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "ChartFragment";
 
     // constant
@@ -262,8 +262,8 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
      * MonthStatisticsData 를 로그로 출력한다.
      */
     private void printLog(ArrayList<MonthStatistics> monthStatisticsArrayList) {
-        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
-            if (CLASS_LOG_SWITCH == Display.ON) {
+        if (DeveloperLog.PROJECT_LOG_SWITCH == LogSwitch.ON)
+            if (CLASS_LOG_SWITCH == LogSwitch.ON) {
                 Log.d(CLASS_NAME, "[monthStatisticsDataArrayList 내용 확인]");
 
                 for (int index = 0; index < monthStatisticsArrayList.size(); index++) {

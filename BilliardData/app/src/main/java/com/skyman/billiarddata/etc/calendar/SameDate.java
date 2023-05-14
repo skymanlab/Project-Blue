@@ -2,8 +2,8 @@ package com.skyman.billiarddata.etc.calendar;
 
 import android.util.Log;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class SameDate implements Serializable {
 
     // constant
 
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "SameDate";
 
     // instance variable
@@ -262,8 +262,8 @@ public class SameDate implements Serializable {
     // ========================================== toString ==========================================
     public void printLog(SameDate sameDate) {
 
-        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
-            if (CLASS_LOG_SWITCH == Display.ON) {
+        if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
+            if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
 
                 Log.d(CLASS_NAME, "[sameDate 내용 확인]");
 

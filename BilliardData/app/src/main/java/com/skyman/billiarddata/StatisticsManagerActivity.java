@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.SessionManager;
 import com.skyman.billiarddata.etc.calendar.SameDate;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class StatisticsManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.ON;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "StatisticsManagerActivity";
 
     // instance variable

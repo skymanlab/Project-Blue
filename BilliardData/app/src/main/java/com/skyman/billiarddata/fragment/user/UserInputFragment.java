@@ -20,8 +20,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public class UserInputFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "UserInputFragment";
     private final int MIN_RANGE = 0;            // 최소 범위
     private final int MAX_RANGE = 50;           // 최대 범위
@@ -119,17 +119,17 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
         initWidget();
 
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "======================================>>>>>>>>>>>>>>>>>>>>> User input fragment"
         );
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "userData Object = " + userData
         );
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "appDbManager Object = " + appDbManager
         );
@@ -246,12 +246,12 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
             // <4> save widget :  disable 하고, R.color.colorWidgetDisable 로 비활성화 상태로 변경
             this.save.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorWidgetDisable));
             this.save.setEnabled(false);
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "save button 을 비활성화 상태로 변경하였습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "save button 을 비활성화 상태로 변경하였습니다.");
 
             // <5> modify widget : enable 하고, R.color.colorBackgroundPrimary 로 활성화 상태로 변경
             this.modify.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorBackgroundPrimary));
             this.modify.setEnabled(true);
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "modify button 을 활성화 상태로 변경하였습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "modify button 을 활성화 상태로 변경하였습니다.");
 
             // <6> delete widget : enable / R.color.colorBackgroundPrimary 로 상태 변경
             this.delete.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.colorBackgroundPrimary));
@@ -273,15 +273,15 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
         // [check 1] : specialityContent 를 구분하여 그에 맞는 RadioButton 을 체크된 상태로 바꾸기
         switch (specialityContent) {
             case "3구":
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "3구가 선택되었습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "3구가 선택되었습니다.");
                 specialityThreeCushion.setChecked(true);
                 break;
             case "4구":
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "4구가 선택되었습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "4구가 선택되었습니다.");
                 specialityFourBall.setChecked(true);
                 break;
             case "포켓볼":
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "포켓볼이 선택되었습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "포켓볼이 선택되었습니다.");
                 specialityPocketBall.setChecked(true);
                 break;
         } // [check 1]
@@ -472,11 +472,11 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
                                                                         contentOfSpeciality
                                                                 );
 
-                                                                DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                                                                DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                                                         CLASS_NAME,
                                                                         "Database 에 저장된 데이터 가져오기"
                                                                 );
-                                                                DeveloperManager.printLogUserData(CLASS_LOG_SWITCH,
+                                                                DeveloperLog.printLogUserData(CLASS_LOG_SWITCH,
                                                                         CLASS_NAME,
                                                                         userDbManager2.loadContent(userData.getId())
                                                                 );
@@ -573,14 +573,14 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
     private void setClickListenerOfDeleteButton() {
         final String METHOD_NAME = "[setClickListenerOfDeleteButton] ";
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "==================>?>> click"
         );
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "데이터가 있어서 삭제 시작");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "데이터가 있어서 삭제 시작");
 
             // <사용자 확인>
             new AlertDialog.Builder(getContext())
@@ -683,7 +683,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
                                                 Toast.LENGTH_SHORT
                                         ).show();
 
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                                 CLASS_NAME,
                                                 "======================>>>> 데이터 확인"
                                         );
@@ -693,7 +693,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
                                                 new AppDbManager.QueryRequestListener() {
                                                     @Override
                                                     public void requestUserQuery(UserDbManager2 userDbManager2) {
-                                                        DeveloperManager.printLogUserData(
+                                                        DeveloperLog.printLogUserData(
                                                                 CLASS_LOG_SWITCH,
                                                                 CLASS_NAME,
                                                                 userData
@@ -702,7 +702,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
 
                                                     @Override
                                                     public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
-                                                        DeveloperManager.printLogFriendData(
+                                                        DeveloperLog.printLogFriendData(
                                                                 CLASS_LOG_SWITCH,
                                                                 CLASS_NAME,
                                                                 friendDbManager2.loadAllContentByUserId(1)
@@ -711,7 +711,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
 
                                                     @Override
                                                     public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
-                                                        DeveloperManager.printLogBilliardData(
+                                                        DeveloperLog.printLogBilliardData(
                                                                 CLASS_LOG_SWITCH,
                                                                 CLASS_NAME,
                                                                 billiardDbManager2.loadAllContent()
@@ -720,7 +720,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
 
                                                     @Override
                                                     public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
-                                                        DeveloperManager.printLogPlayerData(
+                                                        DeveloperLog.printLogPlayerData(
                                                                 CLASS_LOG_SWITCH,
                                                                 CLASS_NAME,
                                                                 playerDbManager2.loadAllContent()
@@ -757,7 +757,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
 
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "데이터가 없어서 삭제 안함");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "데이터가 없어서 삭제 안함");
         } // [check 1]
 
     } // End of method [setClickListenerOfDeleteButton]
@@ -781,13 +781,13 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
                 && !this.targetScore.getText().toString().equals("")
                 && !selectedSpeciality.getText().toString().equals("")) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 값이 입력되었습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 값이 입력되었습니다.");
             return true;
 
         } else {
 
             // return : 모든 값이 입력 안 되었으면
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 값이 입력되지 않았습니다. 모두 입력해야 합니다.");
             return false;
 
         } // [check 1]
@@ -810,11 +810,11 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
         // [check 1] : MIN_RANGE < targetScore < MAX_RANGE 안에 있다.
         if ((MIN_RANGE < targetScoreContent) && (targetScoreContent < MAX_RANGE)) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 있습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 있습니다.");
             return true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 없습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "targetScore 가 범위 안에 없습니다.");
             return false;
         } // [check 1]
 

@@ -17,8 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.DataTransformUtil;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
@@ -40,7 +40,7 @@ import java.util.Date;
 public class BilliardInputActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "BilliardInputActivity";
     private final int PLAYER_WIDGET_MAX_SIZE = 4;
 
@@ -187,11 +187,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 initWidgetOfBilliardInputSection(this.playerDataArrayList, this.userData);
 
             } else {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 와 friendDataArrayList 를 player 등록된 사람이 없습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 와 friendDataArrayList 를 player 등록된 사람이 없습니다.");
             }
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "셋팅할 userData 와 friendDataArrayList 가 없습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "셋팅할 userData 와 friendDataArrayList 가 없습니다.");
         } // [check 1]
 
 
@@ -285,7 +285,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "year : " + year + " / month : " + month + " / dayOfMonth : " + dayOfMonth
 
@@ -440,23 +440,23 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         // [check 1] : player 의 데이터가 모두 입력 되었다.
         if (checkWhetherInputAllDataOfPlayerWidget(playerDataArrayList.size())) {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력 받았습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력 받았습니다.");
 
             // [check 2] : player 의 score 가 범위에 맞게 입력되었다.
             if (checkWhetherInputWithinRangeOfPlayerScoreValue(playerDataArrayList.size())) {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 데이터를 입력 받았습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 데이터를 입력 받았습니다.");
 
                 // [check 3] : billiard 의 데이터가 형식에 맞게 모두 입력 되었다.
                 if (checkWhetherInputAllDataOfBilliardWidget()) {
-                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력받았습니다.");
+                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력받았습니다.");
 
                     // [check 4] : winner 의 targetScore 와 score 가 같습니다.
                     if (checkWhetherEqualOfTargetScoreAndScore()) {
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같으므로 승자가 맞습니다.");
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같으므로 승자가 맞습니다.");
 
                         // [check 5] : 경기시간(playTime)과 비용(cost)이 0 보다 큰 값만 입력했을 때만
                         if (checkInputRangeOfPlayTimeAndCost()) {
-                            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 와 <cost> 가 0 보다 큰 값이 입력되었습니다.");
+                            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 와 <cost> 가 0 보다 큰 값이 입력되었습니다.");
 
                             // <사용자 확인>
                             new AlertDialog.Builder(this)
@@ -480,7 +480,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
 
                         } else {
-                            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 은 0 보다 큰 값만 입력해야 되요!");
+                            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 은 0 보다 큰 값만 입력해야 되요!");
                             // <사용자 알림>
                             Toast.makeText(
                                     this,
@@ -491,7 +491,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
                     } else {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같아야지만 승리자요!");
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> 와 <score> 가 같아야지만 승리자요!");
                         // <사용자 알림>
                         Toast.makeText(
                                 this,
@@ -504,7 +504,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 } else {
 
                     // <사용자 알림>
-                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
+                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
                     Toast.makeText(
                             this,
                             R.string.billiardInput_noticeUser_billiardDataCheck,
@@ -516,7 +516,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             } else {
 
                 // <사용자 알림>
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
                 Toast.makeText(
                         this,
                         R.string.billiardInput_noticeUser_scoreRangeCheck,
@@ -528,7 +528,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         } else {
 
             // <사용자 알림>
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
             Toast.makeText(
                     this,
                     R.string.billiardInput_noticeUser_playerDataCheck,
@@ -558,7 +558,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         int playTime = Integer.parseInt(this.playTime.getText().toString());
         int cost = Integer.parseInt(this.cost.getText().toString());
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "====================>>>>>> score : " + score
         );
@@ -620,14 +620,14 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // [lv/b]inputAllData : 모든 player 의 데이터가 입력되었는가?
         boolean inputAllData = true;
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 player widget 에 모든 데이터가 입력되었는지를 검사합니다.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 player widget 에 모든 데이터가 입력되었는지를 검사합니다.");
 
         // [cycle 1] : 등록된 player 의 수 만큼
         for (int index = 0; index < playerCount; index++) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerName = " + this.playerName[index].getText().toString());
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerTargetScore = " + this.playerTargetScore[index].getSelectedItem().toString());
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerScore = " + this.playerScore[index].getText().toString());
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerName = " + this.playerName[index].getText().toString());
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerTargetScore = " + this.playerTargetScore[index].getSelectedItem().toString());
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + "번째 playerScore = " + this.playerScore[index].getText().toString());
 
             // [check 1] : playerName, playerTargetScore, playerScore 를 모두 입력 받았다.
             if (!this.playerName[index].getText().toString().equals("")
@@ -644,7 +644,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         } // [cycle 1]
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player widget 의 검사 결과는 = " + inputAllData);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player widget 의 검사 결과는 = " + inputAllData);
 
         return inputAllData;
 
@@ -664,7 +664,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private boolean checkWhetherInputWithinRangeOfPlayerScoreValue(int playerCount) {
         final String METHOD_NAME = "[checkWhetherInputWithinRangeOfPlayerScoreValue] ";
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerScore 의 범위를 검사합니다.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerScore 의 범위를 검사합니다.");
         // [lv/b]isWithinRange : 범위 내의 값인가요?
         boolean isWithinRange = true;
 
@@ -677,8 +677,8 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             // [lv/i]score : playerScore 의 값
             int score = Integer.parseInt(this.playerScore[index].getText().toString());
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + " 번째 targetScore = " + targetScore);
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + " 번째 score = " + score);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + " 번째 targetScore = " + targetScore);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + index + " 번째 score = " + score);
 
             // [check 1] : o <= score <= TargetScore
             if ((0 <= score) && (score <= targetScore)) {
@@ -692,7 +692,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
         } // [cycle 1]
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerScore 의 검사 결과는 = " + isWithinRange);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerScore 의 검사 결과는 = " + isWithinRange);
 
         return isWithinRange;
 
@@ -716,7 +716,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     private boolean checkWhetherInputAllDataOfBilliardWidget() {
         final String METHOD_NAME = "[checkWhetherInputAllBilliardData] ";
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiard widget 에 모든 데이터가 입력되었는지 검사합니다.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiard widget 에 모든 데이터가 입력되었는지 검사합니다.");
 
         // [check 1] : EditText 의 getText 으로 받아온 값으로 모두 입력 받은 것을 확인하였다.
         if (!date.getText().toString().equals("")
@@ -726,11 +726,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 && !cost.getText().toString().equals("")
         ) {
             // 모두 입력 받았으면
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = true");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = true");
             return true;
         } else {
             // 하나라도 입력 안 받았으면
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = false");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 billiard widget 을 검사한 결과 = false");
             return false;
         } // [check 1]
 
@@ -756,11 +756,11 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // [check 1] : winner 의 위치의 targetScore 와 score 가 같다.
         if (targetScore == score) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같습니다.");
             return true;
         } else {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같지 않아요!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "승리자의 <targetScore> 와 <score> 가 같지 않아요!");
             return false;
         } // [check 1]
 

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -29,7 +29,7 @@ import java.util.Objects;
 public class FileImport {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "FileImport";
 
     // instance variable
@@ -241,8 +241,8 @@ public class FileImport {
     }
 
     public void printLog(String jsonData) {
-        if (DeveloperManager.PROJECT_LOG_SWITCH == Display.ON)
-            if (CLASS_LOG_SWITCH == Display.ON) {
+        if (DeveloperLog.PROJECT_LOG_SWITCH == LogSwitch.ON)
+            if (CLASS_LOG_SWITCH == LogSwitch.ON) {
                 Log.d(CLASS_NAME, "[uri로 가져온 파일 내용]");
                 Log.d(CLASS_NAME, jsonData);
             }

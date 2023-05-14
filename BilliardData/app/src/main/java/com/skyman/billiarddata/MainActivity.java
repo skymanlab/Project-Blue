@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.data.FriendData;
@@ -28,7 +28,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "MainActivity";
     private final int TEMP_ID = 1;                                      //
     private static final int NUMBER_OF_SELECTABLE_MAX_FRIEND = 3;       // 선택할 수 있는 최대 친구 수
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     public void requestUserQuery(UserDbManager2 userDbManager2) {
 
                         userData = userDbManager2.loadContent(TEMP_ID);
-                        DeveloperManager.printLogUserData(
+                        DeveloperLog.printLogUserData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 userData
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     public void requestFriendQuery(FriendDbManager2 friendDbManager2) {
 
                         friendDataArrayList = friendDbManager2.loadAllContentByUserId(TEMP_ID);
-                        DeveloperManager.printLogFriendData(
+                        DeveloperLog.printLogFriendData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 friendDataArrayList
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void requestBilliardQuery(BilliardDbManager2 billiardDbManager2) {
 
-                        DeveloperManager.printLogBilliardData(
+                        DeveloperLog.printLogBilliardData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 billiardDbManager2.loadAllContent()
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void requestPlayerQuery(PlayerDbManager2 playerDbManager2) {
 
-                        DeveloperManager.printLogPlayerData(
+                        DeveloperLog.printLogPlayerData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 playerDbManager2.loadAllContent()
@@ -278,13 +278,13 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
             if (!friendDataArrayList.isEmpty()) {
 
                 // 친구 목록에서 같이 게임할 player 를 선택하는 AlertDialog
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "모든 정보가 입력되어 친구를 선택합니다.");
                 showDialogOfPlayerMultiChoice();
 
             } else {
 
                 // 친구 등록을 할 건지 물어보는 AlertDialog
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "친구 목록이 없습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "친구 목록이 없습니다.");
                 showDialogOfFriendRegisterCheck();
 
             } // [check 2]
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         } else {
 
             // 사용자 등록을 할 건지 물어보는 AlertDialog
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "나의 정보가 등록되어 있지 않습니다.");
             showDialogOfUserRegisterCheck();
 
         } // [check 1]
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                                 // 게임에 참가한 친구 목록에 추가하기
                                 ArrayList<FriendData> participatedFriendListInGame = new ArrayList<>();
                                 for (int index = 0; index < isCheckedList.length; index++) {
-                                    DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                                    DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                             CLASS_NAME,
                                             "< " + index + " > isChecked : " + isCheckedList[index]
                                     );
@@ -416,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
                                 }
 
-                                DeveloperManager.printLogFriendData(
+                                DeveloperLog.printLogFriendData(
                                         CLASS_LOG_SWITCH,
                                         CLASS_NAME,
                                         participatedFriendListInGame
@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
 
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 
@@ -526,7 +526,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
 
                         Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
 

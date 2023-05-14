@@ -19,8 +19,8 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.StatisticsManagerActivity;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class GameRecordDialog extends DialogFragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "GameRecordDialog";
 
     // constant
@@ -229,7 +229,7 @@ public class GameRecordDialog extends DialogFragment implements SectionManager.I
                                                         playerDataArrayList
                                                 )
                                         );
-                                        DeveloperManager.printLogPlayerData(CLASS_LOG_SWITCH,CLASS_NAME, playerDataArrayList);
+                                        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH,CLASS_NAME, playerDataArrayList);
                                     }
                                 }
                         );

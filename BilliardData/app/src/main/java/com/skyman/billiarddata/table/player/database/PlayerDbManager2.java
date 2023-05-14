@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.player.data.PlayerData;
 import com.skyman.billiarddata.etc.database.AppDbLog;
 import com.skyman.billiarddata.etc.database.AppDbSetting2;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PlayerDbManager2 {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "PlayerDbManager2";
 
     // instance variable

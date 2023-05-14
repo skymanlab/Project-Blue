@@ -23,8 +23,7 @@ import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.dialog.FriendListDialog;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.listView.BilliardLvAdapter2;
@@ -44,7 +43,7 @@ import java.util.ArrayList;
 public class UserFriendFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "UserFriendFragment";
 
     // constant

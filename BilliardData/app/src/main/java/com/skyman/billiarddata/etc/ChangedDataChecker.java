@@ -1,7 +1,7 @@
 package com.skyman.billiarddata.etc;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.friend.data.FriendData;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class ChangedDataChecker {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "ChangedDataChecker";
 
     // instance variable
@@ -152,30 +152,30 @@ public class ChangedDataChecker {
 
         // [iv/l]initWinnerId : billiardData 의 처음 winnerId 값 저장
         this.initWinnerId = this.billiardData.getWinnerId();
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winnerId 의 값 = " + this.initWinnerId);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winnerId 의 값 = " + this.initWinnerId);
 
         // [iv/C]String : initWinnerName / billiardData 의 처음 winnerName 값 저장
         this.initWinnerName = this.billiardData.getWinnerName();
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winnerName 의 값 = " + this.initWinnerName);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winnerName 의 값 = " + this.initWinnerName);
 
         // [iv/i]initPlayTime : billiardData 의 처음 winnerName 값 저장
         this.initPlayTime = this.billiardData.getPlayTime();
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 playTime 의 값 = " + this.initPlayTime);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 playTime 의 값 = " + this.initPlayTime);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerDataArrayList 로 구한 초기 score 들을 확입합니다.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerDataArrayList 로 구한 초기 score 들을 확입합니다.");
         // [cycle 1] : player 의 수 만큼
         for (int playerIndex = 0; playerIndex < this.playerDataArrayList.size(); playerIndex++) {
 
 
             this.initScore[playerIndex] = this.playerDataArrayList.get(playerIndex).getScore();
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + playerIndex + "번째 player 의 score = " + this.initScore[playerIndex]);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + playerIndex + "번째 player 의 score = " + this.initScore[playerIndex]);
 
             // [check 1] : 승리한 사람인가?
             if ((this.billiardData.getWinnerId() == this.playerDataArrayList.get(playerIndex).getPlayerId()) && (this.billiardData.getWinnerName().equals(this.playerDataArrayList.get(playerIndex).getPlayerName()))) {
 
                 // [iv/i]initWinnerPlayerIndex : 승리한 player 의 index 를 저장
                 this.initWinnerPlayerIndex = playerIndex;
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winner 는 playerDataArrayList 에서 index = " + this.initWinnerPlayerIndex);
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 winner 는 playerDataArrayList 에서 index = " + this.initWinnerPlayerIndex);
 
             } // [check 1]
 
@@ -183,7 +183,7 @@ public class ChangedDataChecker {
 
         // [iv/i]initCost : billiardData 의 처음 winnerName 값 저장
         this.initCost = this.billiardData.getCost();
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 cost 의 값 = " + this.initCost);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "초기 cost 의 값 = " + this.initCost);
 
     } // End of method [setInitData]
 
@@ -227,10 +227,10 @@ public class ChangedDataChecker {
 
                                             // [check 9] : index 번째 score 초기값 입력 완료
                                             if (this.initScore[index] >= 0) {
-                                                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initScore 중 " + index + " 번째는 통과했어!");
+                                                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initScore 중 " + index + " 번째는 통과했어!");
                                                 isCompletedSetting = true;
                                             } else {
-                                                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initScore 중 " + index + " 번째의 초기값이 설정되지 않았어!");
+                                                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initScore 중 " + index + " 번째의 초기값이 설정되지 않았어!");
                                                 isCompletedSetting = false;
                                                 break;
                                             } // [check 9]
@@ -238,35 +238,35 @@ public class ChangedDataChecker {
                                         } // [cycle 1]
 
                                     } else {
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initCost 초기값이 설정되지 않았어!");
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initCost 초기값이 설정되지 않았어!");
                                     } // [check 8]
 
                                 } else {
-                                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initCost 초기값이 설정되지 않았어!");
+                                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initCost 초기값이 설정되지 않았어!");
                                 } // [check 7]
 
                             } else {
-                                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initWinnerName 초기값이 설정되지 않았어!");
+                                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initWinnerName 초기값이 설정되지 않았어!");
                             } // [check 6]
 
                         } else {
-                            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initWinnerId 초기값이 설정되지 않았어!");
+                            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "initWinnerId 초기값이 설정되지 않았어!");
                         } // [check 5]
 
                     } else {
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerDataArrayList 입력 해줘!");
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "playerDataArrayList 입력 해줘!");
                     } // [check 4]
 
                 } else {
-                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "friendDataArrayList 입력 해줘!");
+                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "friendDataArrayList 입력 해줘!");
                 } // [check 3]
 
             } else {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 입력 해줘!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 입력 해줘!");
             } // [check 2]
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiardData 입력 해줘!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiardData 입력 해줘!");
         } // [check 1]
 
         this.isCompleteSetting = isCompletedSetting;
@@ -297,15 +297,15 @@ public class ChangedDataChecker {
             int targetScore = this.playerDataArrayList.get(index).getTargetScore();
             int score = this.playerDataArrayList.get(index).getScore();
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1. <player " + index + "> 의 <score> 값의 범위를 확인 중입니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1. <player " + index + "> 의 <score> 값의 범위를 확인 중입니다.");
             // [check 1] : 0 <= score <= targetScore 에서 벗어난 값
             if ((0 <= score) && (score <= targetScore)) {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1. <player " + index + "> 의 통과");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1. <player " + index + "> 의 통과");
             } else {
                 // 오류 발생
 
                 isRangeError = true;
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1.<player " + index + "> 의 <score> 가 범위 밖의 값이여!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_1.<player " + index + "> 의 <score> 가 범위 밖의 값이여!");
             } // [check 1]
 
         } // [cycle 1]
@@ -339,7 +339,7 @@ public class ChangedDataChecker {
             // [check 2] : winner 를 찾아서
             if ((winnerId == playerId) && (winnerName.equals(playerName))) {
 
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자>의 targetScore 와 score 값이 같은지 비교합니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자>의 targetScore 와 score 값이 같은지 비교합니다.");
 
                 int targetScore = this.playerDataArrayList.get(index).getTargetScore();
                 int score = this.playerDataArrayList.get(index).getScore();
@@ -347,11 +347,11 @@ public class ChangedDataChecker {
                 // [check 3] : 승리자의 score 가 targetScore 가 같나요?
                 if (score != targetScore) {
 
-                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자> 의 targetScore != score 에러 발생했어!");
+                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자> 의 targetScore != score 에러 발생했어!");
                     isEqualError = true;
 
                 } else {
-                    DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자> 통과");
+                    DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "check_2. <승리자> 통과");
                 } // [check 3]
 
             } // [check 2]
@@ -523,11 +523,11 @@ public class ChangedDataChecker {
         // [check 1] : initWinnerId 와 initWinnerName 이 변경되지 않았다.
         if ((changedWinnerId == this.initWinnerId) && (changedWinnerName.equals(this.initWinnerName))) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<승리자>가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<승리자>가 변경되지 않았어!");
 
         } else {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<승리자>가 변경되었습니다. 변경된 <승리자> 를 확인하겠습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<승리자>가 변경되었습니다. 변경된 <승리자> 를 확인하겠습니다.");
 
             // [iv/C]BilliardData : 기존 this.billiardData 의 winnerId 와 winnerName 을 변경한다. / this.billiardData
             this.billiardData.setWinnerId(changedWinnerId);
@@ -569,7 +569,7 @@ public class ChangedDataChecker {
                 // [iv/C]UserData : 기존값이 패배자여서 추가된 값이 없다. 그러므로 gameRecordWin 를  +1 증가한다. / 기존값이 패배자여서 +1된 값이었다. 그러므로 gameRecordLoss 을 -1 하여서 원상태로 복구한다.
                 this.userData.setGameRecordWin(this.userData.getGameRecordWin() + 1);
                 this.userData.setGameRecordLoss(this.userData.getGameRecordLoss() - 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 0 이 <패배자> -> <승리자>로 변경되었습니다. / userData");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 0 이 <패배자> -> <승리자>로 변경되었습니다. / userData");
                 break;
             case 1:
                 // player 1 이 <패배자> -> <승리자>로 변경됨 / friendDataArrayList.get(0)
@@ -577,7 +577,7 @@ public class ChangedDataChecker {
                 // [iv/C]ArrayList<FriendData> : 기존값이 패배자여서 추가된 값이 없다. 그러므로 gameRecordWin 를  +1 증가한다. / 기존값이 패배자여서 +1된 값이었다. 그러므로 gameRecordLoss 을 -1 하여서 원상태로 복구한다.
                 this.friendDataArrayList.get(0).setGameRecordWin(this.friendDataArrayList.get(0).getGameRecordWin() + 1);
                 this.friendDataArrayList.get(0).setGameRecordLoss(this.friendDataArrayList.get(0).getGameRecordLoss() - 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 1 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(0)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 1 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(0)");
                 break;
 
             case 2:
@@ -586,7 +586,7 @@ public class ChangedDataChecker {
                 // [iv/C]ArrayList<FriendData> : 기존값이 패배자여서 추가된 값이 없다. 그러므로 gameRecordWin 를  +1 증가한다. / 기존값이 패배자여서 +1된 값이었다. 그러므로 gameRecordLoss 을 -1 하여서 원상태로 복구한다.
                 this.friendDataArrayList.get(1).setGameRecordWin(this.friendDataArrayList.get(1).getGameRecordWin() + 1);
                 this.friendDataArrayList.get(1).setGameRecordLoss(this.friendDataArrayList.get(1).getGameRecordLoss() - 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 2 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(1)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 2 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(1)");
                 break;
 
             case 3:
@@ -595,11 +595,11 @@ public class ChangedDataChecker {
                 // [iv/C]ArrayList<FriendData> :기존값이 패배자여서 추가된 값이 없다. 그러므로 gameRecordWin 를  +1 증가한다. / 기존값이 패배자여서 +1된 값이었다. 그러므로 gameRecordLoss 을 -1 하여서 원상태로 복구한다.
                 this.friendDataArrayList.get(2).setGameRecordWin(this.friendDataArrayList.get(2).getGameRecordWin() + 1);
                 this.friendDataArrayList.get(2).setGameRecordLoss(this.friendDataArrayList.get(2).getGameRecordLoss() - 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 3 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(2)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 3 이 <패배자> -> <승리자>로 변경되었습니다. / friendDataArrayList.get(2)");
                 break;
 
             default:
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "이 게임에 참가한 player 가 아니예요!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "이 게임에 참가한 player 가 아니예요!");
                 break;
 
         } // [check 1]
@@ -627,7 +627,7 @@ public class ChangedDataChecker {
                 // [lv/C]UserData : 기존 승리자인 player 0 을 패배자로 변경 / 기존값이 승리자여서 +1된 값이었다. 그러므로 gameRecordWin 을 -1 하여서 원상태로 복구한다. / 기존값이 승리자여서 추가된 값이 없다. 그러므로 gameRecordLoss 를  +1 증가한다.
                 this.userData.setGameRecordWin(this.userData.getGameRecordWin() - 1);
                 this.userData.setGameRecordLoss(this.userData.getGameRecordLoss() + 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 0 이 <승리자> -> <패배자>로 변경되었습니다. / userData");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 0 이 <승리자> -> <패배자>로 변경되었습니다. / userData");
                 break;
 
             case 1:
@@ -636,7 +636,7 @@ public class ChangedDataChecker {
                 // [lv/C]ArrayList<FriendData> : 기존값이 승리자여서 +1된 값이었다. 그러므로 gameRecordWin 을 -1 하여서 원상태로 복구한다. / 기존값이 승리자여서 추가된 값이 없다. 그러므로 gameRecordLoss 를  +1 증가한다.
                 this.friendDataArrayList.get(0).setGameRecordWin(this.friendDataArrayList.get(0).getGameRecordWin() - 1);
                 this.friendDataArrayList.get(0).setGameRecordLoss(this.friendDataArrayList.get(0).getGameRecordLoss() + 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 1 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(0)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 1 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(0)");
                 break;
 
             case 2:
@@ -645,7 +645,7 @@ public class ChangedDataChecker {
                 // [lv/C]ArrayList<FriendData> : 기존값이 승리자여서 +1된 값이었다. 그러므로 gameRecordWin 을 -1 하여서 원상태로 복구한다. / 기존값이 승리자여서 추가된 값이 없다. 그러므로 gameRecordLoss 를  +1 증가한다.
                 this.friendDataArrayList.get(1).setGameRecordWin(this.friendDataArrayList.get(1).getGameRecordWin() - 1);
                 this.friendDataArrayList.get(1).setGameRecordLoss(this.friendDataArrayList.get(1).getGameRecordLoss() + 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 2 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(1)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 2 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(1)");
                 break;
 
             case 3:
@@ -654,11 +654,11 @@ public class ChangedDataChecker {
                 // [lv/C]ArrayList<FriendData> : 기존값이 승리자여서 +1된 값이었다. 그러므로 gameRecordWin 을 -1 하여서 원상태로 복구한다. / 기존값이 승리자여서 추가된 값이 없다. 그러므로 gameRecordLoss 를  +1 증가한다.
                 this.friendDataArrayList.get(2).setGameRecordWin(this.friendDataArrayList.get(2).getGameRecordWin() - 1);
                 this.friendDataArrayList.get(2).setGameRecordLoss(this.friendDataArrayList.get(2).getGameRecordLoss() + 1);
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 3 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(2)");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player 3 이 <승리자> -> <패배자>로 변경되었습니다. / friendDataArrayList.get(2)");
                 break;
 
             default:
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "이 게임에 참가한 player 가 아니예요!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "이 게임에 참가한 player 가 아니예요!");
                 break;
 
         } // [check 1]
@@ -683,7 +683,7 @@ public class ChangedDataChecker {
         // [check 1] : 기존 gameMode 가 변경되었다.
         if (!changedGameMode.equals(this.billiardData.getGameMode())) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<gameMode> 가 변경되었습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<gameMode> 가 변경되었습니다.");
 
             // [iv/C]BilliardData : 변경된 changedGameMode 로 변경하기
             this.billiardData.setGameMode(changedGameMode);
@@ -692,7 +692,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<gameMode> 가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<gameMode> 가 변경되지 않았어!");
         } // [check 1]
 
     } // End of method [changeGameMode]
@@ -719,7 +719,7 @@ public class ChangedDataChecker {
         // [check 1] : 기존 playTime 이 변경되었다.
         if (changedPlayTime != this.initPlayTime) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 이 변경되었습니다. / 기존 initPlayTime = " + this.initPlayTime + " / 변경된 playTime = " + changedPlayTime);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 이 변경되었습니다. / 기존 initPlayTime = " + this.initPlayTime + " / 변경된 playTime = " + changedPlayTime);
 
             // [iv/C]BilliardData : 이 게임의 기존 playTime(initPlayTime) 을 변경된 playTime(changePlayTime) 으로 변경한다. / this.billiardData
             this.billiardData.setPlayTime(changedPlayTime);
@@ -739,7 +739,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<playTime> 가 변경되지 않았어!");
         } // [check 1]
 
     } // End of method [changePlayTime]
@@ -766,7 +766,7 @@ public class ChangedDataChecker {
         // [check 1] : 기존 cost 가 변경되었다.
         if (changedCost != this.initCost) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<cost> 가 변경되었습니다. / 기존 initCost = " + this.initCost + " / 변경된 cost = " + changedCost);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<cost> 가 변경되었습니다. / 기존 initCost = " + this.initCost + " / 변경된 cost = " + changedCost);
 
             // [lv/C]BilliardData : 이 게임의 기존 cost(initCost) 를 변경된 cost(changeCost) 로 변경한다. / this.billiardData
             this.billiardData.setCost(changedCost);
@@ -786,7 +786,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<cost> 가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<cost> 가 변경되지 않았어!");
         } // [check 1]
 
     } // End of method [changeCost]
@@ -812,7 +812,7 @@ public class ChangedDataChecker {
             // [check 1] : targetScore 값이 변경되었다.
             if (changedTargetScores[index] != this.playerDataArrayList.get(index).getTargetScore()) {
 
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
 
                 // [lv/C]ArrayList<PlayerData> : 기존 targetScore 값을 changeTargetScore 값으로 변경한다.
                 this.playerDataArrayList.get(index).setTargetScore(changedTargetScores[index]);
@@ -821,7 +821,7 @@ public class ChangedDataChecker {
                 this.isChanged = true;
 
             } else {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
             } // [check 1]
 
         } // [cycle 1]
@@ -847,7 +847,7 @@ public class ChangedDataChecker {
         // [check 1] : targetScore 값이 변경되었다.
         if (changedTargetScore != this.playerDataArrayList.get(index).getTargetScore()) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경었습니다.");
 
             // [lv/C]ArrayList<PlayerData> : 기존 targetScore 값을 changeTargetScore 값으로 변경한다.
             this.playerDataArrayList.get(index).setTargetScore(changedTargetScore);
@@ -856,7 +856,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<targetScore> <" + index + ">번째 값은 변경되지 않았어! ");
         } // [check 1]
 
     } // End of method [changeTargetScore]
@@ -887,7 +887,7 @@ public class ChangedDataChecker {
             // [check 1] : 기존 score 값이 변경되었다.
             if (changedScores[index] != this.initScore[index]) {
 
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
 
                 // [lv/C]ArrayList<PlayerData> : 해당 player 의 score 값을 changeScore 값으로 변경
                 playerDataArrayList.get(index).setScore(changedScores[index]);
@@ -900,7 +900,7 @@ public class ChangedDataChecker {
 
             } else {
 
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
 
                 // [lv/C]ArrayList<String> : changeScoreList 에 기존 score(this.initScore) 값을 추가
                 changedScoreList.add(this.initScore[index] + "");
@@ -914,7 +914,7 @@ public class ChangedDataChecker {
 
         // [check 2] : billiardData 의 score 가 변경되었다.
         if (!changedScoreFormat.equals(this.billiardData.getScore())) {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다. / 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat);
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다. / 변경 전 = " + this.billiardData.getScore() + " /  변경 후 = " + changedScoreFormat);
 
             // [lv/C]BilliardCount : 위에서 다시 설정한 player 들의 score 값으로 billiard 의 score 값으로 변경하기
             this.billiardData.setScore(changedScoreFormat);
@@ -923,7 +923,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
         } // [check 2]
 
     } // End of method [changeScores]
@@ -950,7 +950,7 @@ public class ChangedDataChecker {
         // [check 1] : 기존 score 값이 변경되었다.
         if (changedScore != this.initScore[index]) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값이 변경되었습니다.");
             // [lv/C]ArrayList<PlayerData> : 해당 player 의 score 값을 changeScore 값으로 변경
             playerDataArrayList.get(index).setScore(changedScore);
 
@@ -962,7 +962,7 @@ public class ChangedDataChecker {
 
         } else {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + index + "> 의 <score> 값은 변경되지 않았어!");
 
             // [lv/i]scores : index 번째에 기존의 score(this.initScore) 를 추가한다.
             score = this.initScore[index];
@@ -996,7 +996,7 @@ public class ChangedDataChecker {
         // [check 2] : billiardData 의 score 가 변경되었다.
         if (!finalChangedScoreFormat.equals(this.billiardData.getScore())) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되었습니다.");
             // [lv/C]BilliardCount : 위에서 만든 finalChangedScoreFormat 으로 변경하기
             this.billiardData.setScore(finalChangedScoreFormat);
 
@@ -1004,7 +1004,7 @@ public class ChangedDataChecker {
             this.isChanged = true;
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard> 의 <score> 가 변경되지 않았어!");
         } // [check 2]
 
     } // End of method [changeScoreOfBilliardData]
@@ -1023,13 +1023,13 @@ public class ChangedDataChecker {
         // [check 1] : 0 <= changeScore <= targetScore
         if ((0 <= score) && (score <= targetScore)) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "변경된 <score> 값이 범위 안의 값이다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "변경된 <score> 값이 범위 안의 값이다.");
             // [lv/b]isWithinRange : 범위 안의 값이다.
             isWithinRange = true;
 
         } else {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "변경된 <score> 값이 잘못된 범위의 값이여!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "변경된 <score> 값이 잘못된 범위의 값이여!");
             // [lv/b]isWithinRange : 범위 안의 값이 아니여유!
             isWithinRange = false;
 
@@ -1052,7 +1052,7 @@ public class ChangedDataChecker {
         // [check 1] : player 의 id 및 name 이 winnerId 와 winnerName 이 같다.
         if ((changeWinnerId == this.playerDataArrayList.get(changeWinnerPlayerIndex).getPlayerId()) && (changeWinnerName.equals(this.playerDataArrayList.get(changeWinnerPlayerIndex).getPlayerName()))) {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 는 winner 입니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 는 winner 입니다.");
 
             // [check 2] : winner 의 targetScore 와 score 가 같다.
             if (playerDataArrayList.get(changeWinnerPlayerIndex).getTargetScore() == playerDataArrayList.get(changeWinnerPlayerIndex).getScore()) {
@@ -1061,11 +1061,11 @@ public class ChangedDataChecker {
                 isEqual = true;
 
             } else {
-                DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 은 targetScore 와 score 값이 달라요!");
+                DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 은 targetScore 와 score 값이 달라요!");
             } // [check 2]
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 는  패배자입니다요!");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player " + changeWinnerPlayerIndex + "> 는  패배자입니다요!");
         } // [check 1]
 
         return isEqual;

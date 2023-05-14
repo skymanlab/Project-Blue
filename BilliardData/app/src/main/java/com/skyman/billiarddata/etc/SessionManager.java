@@ -2,8 +2,8 @@ package com.skyman.billiarddata.etc;
 
 import android.content.Intent;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.friend.data.FriendData;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SessionManager {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "SessionManager";
 
     // singleton : 해당 어플에서 공유해서 사용하기 위해서
@@ -69,8 +69,8 @@ public class SessionManager {
 
         UserData userData = (UserData) intent.getSerializableExtra(USER_DATA);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
-        DeveloperManager.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
+        DeveloperLog.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
 
         return userData;
     } // End of method [getUserDataInIntent]
@@ -101,8 +101,8 @@ public class SessionManager {
 
         BilliardData billiardData = (BilliardData) intent.getSerializableExtra(BILLIARD_DATA);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
-        DeveloperManager.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardData);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
+        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardData);
 
         return billiardData;
     } // End of method [getBilliardDataInIntent]
@@ -134,8 +134,8 @@ public class SessionManager {
 
         ArrayList<FriendData> participatedFriendListInGame = (ArrayList<FriendData>) intent.getSerializableExtra(PARTICIPATED_FRIEND_LIST_IN_GAME);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
-        DeveloperManager.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, participatedFriendListInGame);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
+        DeveloperLog.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, participatedFriendListInGame);
 
         return participatedFriendListInGame;
     } // End of method [setIntentOfParticipatedFriendListInGame]
@@ -163,11 +163,11 @@ public class SessionManager {
     public static ArrayList<PlayerData> getPlayerDataArrayListFromIntent(Intent intent) {
         ArrayList<PlayerData> playerDataArrayList = (ArrayList<PlayerData>) intent.getSerializableExtra(PLAYER_DATA_ARRAY_LIST);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "=====>>> SessionManager <<<===="
         );
-        DeveloperManager.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
+        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
 
         return playerDataArrayList;
     }
@@ -198,8 +198,8 @@ public class SessionManager {
 
         int pageNumber = intent.getIntExtra(PAGE_NUMBER, -1);
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "pageNumber : " + pageNumber);
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=====>>> SessionManager <<<====");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "pageNumber : " + pageNumber);
 
         return pageNumber;
     } // End of method [getPageNumberInIntent]

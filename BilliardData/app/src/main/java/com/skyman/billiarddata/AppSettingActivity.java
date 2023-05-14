@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.file.FileConstants;
 import com.skyman.billiarddata.etc.file.FileExport;
@@ -26,7 +26,7 @@ import java.io.IOException;
 public class AppSettingActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "AppSettingActivity";
 
     // instance variable : session
@@ -63,7 +63,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[onActivityResult() 실행 중]");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[onActivityResult() 실행 중]");
 
         if (requestCode == FileConstants.REQUEST_CODE_CREATE_FILE && resultCode == Activity.RESULT_OK) {
 
@@ -71,7 +71,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
 
                 // 파일이 만들어진 위치의 Uri 를 가져오기
                 Uri uri = data.getData();
-                DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                DeveloperLog.printLog(CLASS_LOG_SWITCH,
                         CLASS_NAME,
                         "내보내기/uri : " + uri.toString()
                 );
@@ -118,7 +118,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
 
                 // 선택한 파일 uri
                 Uri uri = data.getData();
-                DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                DeveloperLog.printLog(CLASS_LOG_SWITCH,
                         CLASS_NAME,
                         "가져오기/uri : " + uri.toString()
                 );

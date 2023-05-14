@@ -13,8 +13,8 @@ import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.UserManagerActivity;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
@@ -31,7 +31,7 @@ import com.skyman.billiarddata.table.user.data.UserData;
 public class UserInfoFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "UserInfoFragment";
 
     // constant
@@ -209,7 +209,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
 
     @Override
     public void initWidget() {
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[initWidget() 수행 중]");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[initWidget() 수행 중]");
 
         // [check 1] : userData 가 있다.
         if (this.userData != null) {
@@ -232,7 +232,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
             );
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "userData 가 null 입니다. : 초기 셋팅 필요 없음.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "userData 가 null 입니다. : 초기 셋팅 필요 없음.");
         } // [check 1]
 
     }

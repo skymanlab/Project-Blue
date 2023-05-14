@@ -1,9 +1,7 @@
 package com.skyman.billiarddata.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +22,14 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 
 public class AdMobDialog extends DialogFragment implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "AdMobDialog";
 
     // instance variable
@@ -126,15 +124,15 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
                                         // show it a second time.
                                         AdMobDialog.this.interstitialAd = null;
 
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdFailedToShowFullScreenContent() 실행 중 -> 즉, 실패");
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "에러 내용 : " + adError.toString());
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdFailedToShowFullScreenContent() 실행 중 -> 즉, 실패");
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "에러 내용 : " + adError.toString());
 
                                     }
 
                                     @Override
                                     public void onAdShowedFullScreenContent() {
                                         // Called when fullscreen content is shown.
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdShowedFullScreenContent() 실행 중 -> 즉, 성공");
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdShowedFullScreenContent() 실행 중 -> 즉, 성공");
                                     }
 
                                     @Override
@@ -143,7 +141,7 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
                                         // Make sure to set your reference to null so you don't
                                         // show it a second time.
                                         AdMobDialog.this.interstitialAd = null;
-                                        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdDismissedFullScreenContent() 실행 중");
+                                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdDismissedFullScreenContent() 실행 중");
                                     }
                                 }
 

@@ -8,8 +8,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.fragment.user.UserViewPagerAdapter;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.SessionManager;
@@ -20,7 +20,7 @@ import com.skyman.billiarddata.table.user.data.UserData;
 public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "UserManagerActivity";
 
     // constant
@@ -68,17 +68,17 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
         connectWidget();
         initWidget();
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "======================================>>>>>>>>>>>>>>>>>>>>> user manager activity 에서"
         );
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "userData Object = " + userData
         );
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                 CLASS_NAME,
                 "appDbManager Object = " + appDbManager
         );
@@ -153,7 +153,7 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
     private void moveFragmentPage() {
         final String METHOD_NAME = "[moveFragmentPage] ";
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "pageNumber : " + pageNumberOfFragment + " 입니다.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "pageNumber : " + pageNumberOfFragment + " 입니다.");
         switch (pageNumberOfFragment) {
 
             case USER_INPUT_FRAGMENT:

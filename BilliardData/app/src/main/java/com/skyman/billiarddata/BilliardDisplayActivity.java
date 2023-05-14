@@ -14,8 +14,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.dialog.BilliardLvExplainDialog;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.listView.BilliardLvAdapter2;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class BilliardDisplayActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "BilliardDisplayActivity";
 
     // instance variable : session
@@ -120,7 +120,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             initWidgetOfBilliardListView();
 
         } else {
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 가 없으므로 가져올 billiardData 도 없습니다.");
         } // [check 1]
 
         // widget (more) : click listener
@@ -175,14 +175,14 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                     @Override
                     public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "=============>>> playerDataArrayList"
 
                         );
                         tempPlayerDataArrayList[0] = playerDbManager2.loadAllContentByPlayerIdAndPlayerName(userData.getId(), userData.getName());
 
-                        DeveloperManager.printLogPlayerData(
+                        DeveloperLog.printLogPlayerData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 tempPlayerDataArrayList[0]
@@ -199,7 +199,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                     @Override
                     public void requestQuery(BilliardDbManager2 billiardDbManager2) {
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "=============>>> billiardDataArrayList"
 
@@ -213,7 +213,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             );
                         }
 
-                        DeveloperManager.printLogBilliardData(
+                        DeveloperLog.printLogBilliardData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 billiardDataArrayList
@@ -271,7 +271,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
 
         } else {
 
-            DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
+            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "userData 가 없으므로 삭제 및 초기화할 필요가 없습니다.");
 
             // <사용자 알림>
             Toast.makeText(
@@ -308,7 +308,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             numberOfDeletedRows += playerDbManager2.deleteContentByBilliardCount(billiardDataArrayList.get(index).getCount());
                         }
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "player 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
                         );
@@ -328,7 +328,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             numberOfDeletedRows += billiardDbManager2.deleteContentByCount(billiardDataArrayList.get(index).getCount());
                         }
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "billiard 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
                         );
@@ -350,7 +350,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                                 0
                         );
 
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "user 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
                         );
@@ -371,7 +371,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                                 0,
                                 0
                         );
-                        DeveloperManager.printLog(CLASS_LOG_SWITCH,
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 "player 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
                         );
@@ -389,7 +389,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                         // 새롭게 갱신된 내용 반영하기
                         userData = userDbManager2.loadContent(userData.getId());
 
-                        DeveloperManager.printLogUserData(
+                        DeveloperLog.printLogUserData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 userData
@@ -418,7 +418,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                         // adapter 에 변경된 데이터가 있다는 것을 알려준다.
                         billiardLvAdapter2.notifyDataSetChanged();
 
-                        DeveloperManager.printLogBilliardData(
+                        DeveloperLog.printLogBilliardData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,
                                 billiardDataArrayList

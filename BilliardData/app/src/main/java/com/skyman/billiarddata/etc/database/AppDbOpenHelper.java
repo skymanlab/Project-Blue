@@ -3,12 +3,11 @@ package com.skyman.billiarddata.etc.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.billiard.database.BilliardTableSetting;
 import com.skyman.billiarddata.table.friend.database.FriendTableSetting;
 import com.skyman.billiarddata.table.player.database.PlayerTableSetting;
@@ -38,8 +37,8 @@ import com.skyman.billiarddata.table.user.database.UserTableSetting;
 public class AppDbOpenHelper extends SQLiteOpenHelper {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
-    private static final String CLASS_NAME = "[DbH]_ProjectBlueDatabaseHelper";
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final String CLASS_NAME = "AppDbOpenHelper";
 
     // constructor
     public AppDbOpenHelper(Context context) {
@@ -54,19 +53,19 @@ public class AppDbOpenHelper extends SQLiteOpenHelper {
 
         final String METHOD_NAME = "[onCreate] ";
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is executing........");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db is not exist.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is executing........");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db is not exist.");
         db.execSQL(UserTableSetting.SQL_CREATE_TABLE);                      // user
         db.execSQL(FriendTableSetting.SQL_CREATE_TABLE);                    // friend
         db.execSQL(BilliardTableSetting.SQL_CREATE_TABLE);                  // billiard
         db.execSQL(PlayerTableSetting.SQL_CREATE_TABLE);                    // player
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db has been created.");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "user table has been created.");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "friend table has been created.");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiard table has been created.");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player table has been created.");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "All tables must be created when creating a project_blue.db. ");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db has been created.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "user table has been created.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "friend table has been created.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "billiard table has been created.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "player table has been created.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "All tables must be created when creating a project_blue.db. ");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
 
     }
 
@@ -75,15 +74,15 @@ public class AppDbOpenHelper extends SQLiteOpenHelper {
         final String METHOD_NAME = "[onUpgrade] ";
         // project_blue.db 버전 업그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 업그레이드 된 테이블을 생성한다.
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is executing........");
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db is upgrading.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is executing........");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The project_blue.db is upgrading.");
         db.execSQL(UserTableSetting.SQL_DROP_TABLE_IF_EXISTS);                      // user
         db.execSQL(FriendTableSetting.SQL_DROP_TABLE_IF_EXISTS);                    // friend
         db.execSQL(BilliardTableSetting.SQL_DROP_TABLE_IF_EXISTS);                  // billiard
         db.execSQL(PlayerTableSetting.SQL_DROP_TABLE_IF_EXISTS);                    // player
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "already existed table delete.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "already existed table delete.");
         onCreate(db);
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
     }
 
     @Override
@@ -92,7 +91,7 @@ public class AppDbOpenHelper extends SQLiteOpenHelper {
         // project_blue.db 버전 다운그레이드 하면, project_blue.db의 모든 테이블을 삭제 후, 다운그레이드 된 테이블을 생성한다.
 
         onUpgrade(db, oldVersion, newVersion);
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete!");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete!");
     }
 
     @Override
@@ -101,7 +100,7 @@ public class AppDbOpenHelper extends SQLiteOpenHelper {
         super.onOpen(db);
         // project_blue.db 에 billiard, user 테이블이 생성되면(존재하면), onOpen method 가 실행 된다.
 
-        DeveloperManager.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "The method is complete.");
     }
 
     @Override

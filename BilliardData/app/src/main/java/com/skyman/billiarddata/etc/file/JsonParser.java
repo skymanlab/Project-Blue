@@ -1,9 +1,7 @@
 package com.skyman.billiarddata.etc.file;
 
-import android.util.Log;
-
-import com.skyman.billiarddata.developer.DeveloperManager;
-import com.skyman.billiarddata.developer.Display;
+import com.skyman.billiarddata.developer.DeveloperLog;
+import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.friend.data.FriendData;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -18,8 +16,8 @@ import java.util.ArrayList;
 public class JsonParser {
 
     // constant
-    private static final Display CLASS_LOG_SWITCH = Display.OFF;
-    private static final String CLASS_NAME = "FileImport";
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final String CLASS_NAME = "JsonParser";
 
     // instance variable
     private String content;
@@ -253,10 +251,10 @@ public class JsonParser {
      */
     public void printLog(UserData userData, ArrayList<FriendData> friendDataArrayList, ArrayList<BilliardData> billiardDataArrayList, ArrayList<PlayerData> playerDataArrayList) {
 
-        DeveloperManager.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
-        DeveloperManager.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
-        DeveloperManager.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
-        DeveloperManager.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
+        DeveloperLog.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
+        DeveloperLog.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
+        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
+        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
     }
 
 }

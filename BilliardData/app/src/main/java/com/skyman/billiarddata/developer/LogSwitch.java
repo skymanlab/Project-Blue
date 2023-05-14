@@ -1,5 +1,5 @@
 package com.skyman.billiarddata.developer;
 
-public enum Display {
+public enum LogSwitch {
     ON, OFF
 }
