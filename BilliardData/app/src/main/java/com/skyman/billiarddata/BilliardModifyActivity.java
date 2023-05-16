@@ -37,7 +37,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
     // constant
     private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
-    private static final String CLASS_NAME = "BilliardInputActivity";
+    private static final String CLASS_NAME = "BilliardModifyActivity";
 
     // instance variable
     private UserData userData = null;
@@ -79,12 +79,18 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billiard_modify);
 
-        // <1> 
+        // <1>
         // sessionManager : getter ( userData, billiardData, friendDataArrayList, playerDataArrayList )
         this.userData = SessionManager.getUserDataFromIntent(getIntent());
         this.billiardData = SessionManager.getBilliardDataFromIntent(getIntent());
         this.friendDataArrayList = SessionManager.getParticipatedFriendListInGameFromIntent(getIntent());
         this.playerDataArrayList = SessionManager.getPlayerDataArrayListFromIntent(getIntent());
+
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,CLASS_NAME, "=====================================================");
+        DeveloperLog.printLogUserData(CLASS_LOG_SWITCH,CLASS_NAME, userData);
+        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardData);
+        DeveloperLog.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
+        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
 
         // AppDbManager
         initAppDbManager();
@@ -256,7 +262,6 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                         // [check 1] : intent 로 가져온 데이터 입력받았다.
                         if ((billiardData != null) && (userData != null) && !friendDataArrayList.isEmpty() && !playerDataArrayList.isEmpty()) {
 
-
                         }
                     }
                 }
@@ -282,6 +287,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                     }
                 }
         );
+
     }
 
 
@@ -355,6 +361,9 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
      * @param billiardData 선택된 게임 데이터가 들어있는
      */
     private void setAdapterOfDateSpinner(BilliardData billiardData) {
+        /*
+        문제 발생 원인 : R.array.year 에 없는 년도가 있으면 runtime 에러 발생!
+         */
 
         final String METHOD_NAME = "[setAdapterOfDateSpinner] ";
 

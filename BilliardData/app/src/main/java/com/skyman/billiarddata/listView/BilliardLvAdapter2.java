@@ -53,6 +53,10 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         this.userData = userData;
         this.billiardDataArrayList = billiardDataArrayList;
         this.appDbManager = appDbManager;
+//        DeveloperLog.printLog(CLASS_LOG_SWITCH,CLASS_NAME, "[생성자로 방은 데이터 확인] ");
+//        DeveloperLog.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME,this.userData);
+//        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH,CLASS_NAME,this.billiardDataArrayList);
+
     }
 
     @Override
@@ -78,8 +82,12 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.custom_lv_billiard_data, parent, false);
 
+//        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[ListView 내용 확인]");
+//        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "position : " + position);
+
         // [lv/C]BilliardData : 각 리스트에 뿌려줄 아이템을 받아오는데 BilliardData 재활용
         BilliardData billiardData = (BilliardData) getItem(position);
+//        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH,CLASS_NAME, billiardData);
 
         // 0. count (primary key/autoincrement)
         // 1. date
@@ -164,6 +172,10 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         // 2. 게임에 참가한 플레이어 목록에서 친구의 id 로 친구 목록을 가져온다.
         // 3. 사용자 확인 후 게임에 대한 수정을 위한 수정 화면으로 이동한다.
 
+        DeveloperLog.printLog(CLASS_LOG_SWITCH,CLASS_NAME, "[countWrapper click 내용 확인] ");
+
+        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME,billiardData);
+
         // <1>
         ArrayList<PlayerData> playerDataArrayList = new ArrayList<>();
 
@@ -177,6 +189,8 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                     }
                 }
         );
+
+        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, playerDataArrayList);
 
         // <2>
         ArrayList<FriendData> friendDataArrayList = new ArrayList<>();
@@ -199,6 +213,8 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                 }
         );
 
+        DeveloperLog.printLogFriendData(CLASS_LOG_SWITCH, CLASS_NAME, friendDataArrayList);
+
         // <3>
         // <사용자 확인>
         new AlertDialog.Builder(context)
@@ -216,7 +232,7 @@ public class BilliardLvAdapter2 extends BaseAdapter {
                         SessionManager.setParticipatedFriendListInGameFromIntent(intent, friendDataArrayList);    // 게임에 참여한 친구
                         SessionManager.setPlayerDataArrayListFromIntent(intent, playerDataArrayList);             // 게임에 참여한 모든 플레이어 : 나 + 게임에_참여한_친구
 
-
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[alertDialog ok 버튼 내용 확인]");
                         DeveloperLog.printLogUserData(
                                 CLASS_LOG_SWITCH,
                                 CLASS_NAME,

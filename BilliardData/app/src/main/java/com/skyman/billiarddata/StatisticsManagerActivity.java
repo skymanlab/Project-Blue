@@ -13,6 +13,7 @@ import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.SessionManager;
 import com.skyman.billiarddata.etc.calendar.SameDate;
 import com.skyman.billiarddata.etc.calendar.SameDateCheckerUtil;
+import com.skyman.billiarddata.etc.calendar.SameDateGameAnalysis;
 import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
@@ -114,6 +115,11 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
                 SameDateCheckerUtil sameDateCheckerUtil = new SameDateCheckerUtil();
                 sameDate = sameDateCheckerUtil.createSameDate(userData, billiardDataArrayList);
 
+                SameDateGameAnalysis analysis = new SameDateGameAnalysis();
+                analysis.analyze(userData, billiardDataArrayList);
+
+                MonthStats monthStats = new MonthStats();
+                monthStats.analyze(analysis.getSameDateGameList().get("2023년 05월 14일"), analysis.getSortedBilliardDataArrayList());
             }
 
         }
@@ -143,6 +149,7 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
                     }
                 }
         ).attach();
+
 
     }
 

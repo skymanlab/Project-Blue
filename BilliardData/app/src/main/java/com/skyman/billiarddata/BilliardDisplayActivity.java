@@ -1,5 +1,6 @@
 package com.skyman.billiarddata;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuInflater;
@@ -18,14 +19,14 @@ import com.skyman.billiarddata.developer.DeveloperLog;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.dialog.BilliardLvExplainDialog;
 import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.etc.SessionManager;
+import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.listView.BilliardLvAdapter2;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.friend.database.FriendDbManager2;
 import com.skyman.billiarddata.table.player.data.PlayerData;
 import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
-import com.skyman.billiarddata.etc.SessionManager;
-import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.table.user.data.UserData;
 import com.skyman.billiarddata.table.user.database.UserDbManager2;
 
@@ -76,6 +77,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
     @Override
     protected void onDestroy() {
 
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onDestroy 실행 ======================================");
         appDbManager.closeDb();
 
         super.onDestroy();
@@ -175,18 +177,10 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                     @Override
                     public void requestQuery(PlayerDbManager2 playerDbManager2) {
 
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "=============>>> playerDataArrayList"
-
-                        );
+//                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=============>>> playerDataArrayList");
                         tempPlayerDataArrayList[0] = playerDbManager2.loadAllContentByPlayerIdAndPlayerName(userData.getId(), userData.getName());
 
-                        DeveloperLog.printLogPlayerData(
-                                CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                tempPlayerDataArrayList[0]
-                        );
+//                        DeveloperLog.printLogPlayerData(CLASS_LOG_SWITCH, CLASS_NAME, tempPlayerDataArrayList[0]);
                     }
                 }
         );
@@ -199,11 +193,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                     @Override
                     public void requestQuery(BilliardDbManager2 billiardDbManager2) {
 
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "=============>>> billiardDataArrayList"
-
-                        );
+//                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "=============>>> billiardDataArrayList");
 
                         billiardDataArrayList = new ArrayList<>();
 
@@ -213,11 +203,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             );
                         }
 
-                        DeveloperLog.printLogBilliardData(
-                                CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                billiardDataArrayList
-                        );
+//                        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
                     }
                 }
         );
@@ -308,10 +294,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             numberOfDeletedRows += playerDbManager2.deleteContentByBilliardCount(billiardDataArrayList.get(index).getCount());
                         }
 
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "player 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
-                        );
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "player 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다.");
                     }
                 }
         );
@@ -328,10 +311,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                             numberOfDeletedRows += billiardDbManager2.deleteContentByCount(billiardDataArrayList.get(index).getCount());
                         }
 
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "billiard 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다."
-                        );
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "billiard 테이블에서 총 " + numberOfDeletedRows + " 개의 열을 삭제하였습니다.");
                     }
                 }
         );
@@ -349,11 +329,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                                 0,
                                 0
                         );
-
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "user 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
-                        );
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "user 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다.");
                     }
                 }
         );
@@ -371,10 +347,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                                 0,
                                 0
                         );
-                        DeveloperLog.printLog(CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                "player 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다."
-                        );
+                        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "player 테이블에서 총 " + numberOfUpdatedRows + " 개의 열을 업데이트하였습니다.");
                     }
                 }
         );
@@ -389,11 +362,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                         // 새롭게 갱신된 내용 반영하기
                         userData = userDbManager2.loadContent(userData.getId());
 
-                        DeveloperLog.printLogUserData(
-                                CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                userData
-                        );
+                        DeveloperLog.printLogUserData(CLASS_LOG_SWITCH, CLASS_NAME, userData);
 
                     }
 
@@ -418,11 +387,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                         // adapter 에 변경된 데이터가 있다는 것을 알려준다.
                         billiardLvAdapter2.notifyDataSetChanged();
 
-                        DeveloperLog.printLogBilliardData(
-                                CLASS_LOG_SWITCH,
-                                CLASS_NAME,
-                                billiardDataArrayList
-                        );
+                        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, billiardDataArrayList);
 
                     }
 
