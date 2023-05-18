@@ -59,6 +59,7 @@ public class Date {
     public static Date createDateByParsing(String parsedDate) {
         LocalDate localDate = LocalDate.parse(parsedDate, DateTimeFormatter.ofPattern(DATE_PATTERN));
         return new Date(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+
     }
 
     public void setDateByParsing(String date) {
@@ -82,7 +83,7 @@ public class Date {
         this.month = localDate.getMonthValue();
     }
 
-    public boolean equal(String date) {
+    public boolean equals(String date) {
         if (toString().equals(date))
             return true;
         else

@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class SameDateGameAnalysis {
 
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "SameDateGameAnalysis";
 
     Map<String, SameDateGame> sameYearGameList;
@@ -52,6 +52,12 @@ public class SameDateGameAnalysis {
         return sortedBilliardDataArrayList;
     }
 
+    /**
+     * 매개변수로 받은 UserData 객체와 ArrayList<BilliardData> 객체를 받고, ArrayList<BilliardaData> 의 모든 BilliardData 의 날짜를 검사하여 같은 날짜의 게임은 sameDataGame 객체에 필요한 정보를 저장하고, 이를 sameDateGameList 에 추가하는 메소드
+     *
+     * @param userData
+     * @param billiardDataArrayList 분석할 BilliardData 객체가 담긴 ArrayList
+     */
     public void analyzeSameDateGame(UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
 
         if (!billiardDataArrayList.isEmpty()) {
@@ -82,7 +88,7 @@ public class SameDateGameAnalysis {
                         if (!isAnalyzed[nextIndex]) {       // --> 분석되지 않았을 때만(isAnalyzed=true 이면)
 
                             // if 2 : sameDateGame 의 날짜와 nextIndex 번째의 billiardData 의 날짜가 같은 날짜인가?
-                            if (sameDateGame.getDate().equal(billiardDataArrayList.get(nextIndex).getDate())) {         // --> 같은 날짜 일때
+                            if (sameDateGame.getDate().equals(billiardDataArrayList.get(nextIndex).getDate())) {         // --> 같은 날짜 일때
                                 // 분석된(할) 데이터이다!!
                                 isAnalyzed[nextIndex] = true;                                                // isAnalyzed : 기준 날짜와 같으면 기준 날짜에 해당하는 sameDate2 객체에 추가하므로 이때 ture로 변경
 
@@ -97,6 +103,12 @@ public class SameDateGameAnalysis {
         }
     }
 
+    /**
+     * 매개변수로 받은 모든 BilliardData 객체의 날짜를 분석하여 년별(sameYearGame), 월별(sameMonthGame), 날짜별(sameDateGame)로 저장하는 메소드
+     *
+     * @param userData
+     * @param billiardDataArrayList 분석할 BilliardData 객체가 담긴 ArrayList
+     */
     public void analyze(UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
 
         if (!billiardDataArrayList.isEmpty()) {
@@ -192,12 +204,23 @@ public class SameDateGameAnalysis {
         }
     }
 
+    /**
+     * 매개변수로 받은 size 값으로 boolean[] 배열을 생성하고, 모든 값을 false 로 채워 이를 반환하는 메소드
+     *
+     * @param size
+     * @return
+     */
     public boolean[] fillFalse(int size) {
         boolean[] values = new boolean[size];
         Arrays.fill(values, false);
         return values;
     }
 
+    /**
+     * 매개변수로 받은 ArrayList<BilliardData> 객체의 sort()를 사용하여 billiardData 의 날짜를 비교하여 정렬된 ArrayList<BilliardData> 객체로 반환하는 메소드
+     *
+     * @param billiardDataArrayList
+     */
     public void sort(ArrayList<BilliardData> billiardDataArrayList) {
 
         billiardDataArrayList.sort(new Comparator<BilliardData>() {
@@ -212,17 +235,31 @@ public class SameDateGameAnalysis {
         });
     }
 
-
+    /**
+     * 매개변수로 받은 SameDateGame 객체의 record, recordTypeArrayList, totalCost, referenceArrayList 에 확인된 정보를 저장하는 메소드
+     *
+     * @param sameDateGame
+     * @param userData
+     * @param billiardData
+     * @param index
+     */
     private void setInfo(SameDateGame sameDateGame, UserData userData, BilliardData billiardData, int index) {
         // 전적, 승/패
         checkMyWin(sameDateGame, userData, billiardData);
         // 총 비용
-        sameDateGame.getTotalCost().addCost(billiardData.getCost());
+        sameDateGame.getTotalCost().plus(billiardData.getCost());
         // billiardData 추가
         sameDateGame.getReferenceArrayList().add(new Reference((int) billiardData.getCount(), index));
 
     }
 
+    /**
+     * 매개변수로 받은 UserData 객체와 BilliardData 객체의 데이터를 이용하여 내가 이긴 경기지인 패배한 경기인지를 판단하고, 이 결과를 매개변수로 받은 SameDataGame 객체의 record와 recordTypeArrayList 변수에 반영하는 메소드
+     *
+     * @param sameDateGame
+     * @param userData
+     * @param billiardData
+     */
     private void checkMyWin(SameDateGame sameDateGame, UserData userData, BilliardData billiardData) {
 
         if ((userData.getId() == billiardData.getWinnerId()) &&

@@ -7,6 +7,10 @@ public class Counter {
         value = 0;
     }
 
+    public Counter(int value) {
+        this.value = value;
+    }
+
     public int getValue() {
         return value;
     }
@@ -19,7 +23,7 @@ public class Counter {
         this.value += 1;
     }
 
-    public void plusValue(int value) {
+    public void plus(int value) {
         this.value += value;
     }
 }
