@@ -15,7 +15,7 @@ import com.skyman.billiarddata.etc.calendar.SameDate;
 import com.skyman.billiarddata.etc.calendar.SameDateCheckerUtil;
 import com.skyman.billiarddata.etc.calendar.SameDateGameAnalysis;
 import com.skyman.billiarddata.etc.database.AppDbManager;
-import com.skyman.billiarddata.etc.statistics.MonthStatsAnalysis;
+import com.skyman.billiarddata.etc.statistics.StatsAnalysis;
 import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class StatisticsManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
     private static final String CLASS_NAME = "StatisticsManagerActivity";
 
     // instance variable
@@ -119,8 +119,11 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
                 SameDateGameAnalysis analysis = new SameDateGameAnalysis();
                 analysis.analyze(userData, billiardDataArrayList);
 
-                MonthStatsAnalysis monthStatsAnalysis = new MonthStatsAnalysis(appDbManager);
-                monthStatsAnalysis.analyze(analysis.getSameDateGameList().get("2023년 05월 14일"), analysis.getSortedBilliardDataArrayList());
+                StatsAnalysis statsAnalysis = new StatsAnalysis(appDbManager);
+                statsAnalysis.analyze(
+                        analysis.getAllGame(),
+                        analysis.getSortedBilliardDataList()
+                );
             }
 
         }

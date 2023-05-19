@@ -112,7 +112,7 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         TextView cost = (TextView) convertView.findViewById(R.id.clv_billiardData_cost);                              // 8. cost
 
         // init widget :
-        count.setText(billiardData.getCount() + "");                                                                // 0. count
+        count.setText((position+1)+"");                                                                // 0. count
         date.setText(billiardData.getDate());                                                                       // 1. date
         gameMode.setText(billiardData.getGameMode());                                                               // 2. game mode
         playerCount.setText(billiardData.getPlayerCount() + "");                                                    // 3. player count

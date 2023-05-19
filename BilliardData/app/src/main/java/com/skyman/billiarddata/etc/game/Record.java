@@ -14,24 +14,21 @@ public class Record {
         return winCounter;
     }
 
-    public void setWinCounter(Counter winCounter) {
-        this.winCounter = winCounter;
-    }
-
     public Counter getLossCounter() {
         return lossCounter;
     }
 
-    public void setLossCounter(Counter lossCounter) {
-        this.lossCounter = lossCounter;
+    public Counter totalNumberOfGame() {
+        return new Counter(winCounter.getValue() + lossCounter.getValue());
     }
 
-    public int getTotalNumberOfGame() {
-        return winCounter.getValue() + lossCounter.getValue();
+    public void plusByType(Record record) {
+        winCounter.plus(record.getWinCounter().getValue());
+        lossCounter.plus(record.getLossCounter().getValue());
     }
 
     public String toString() {
-        return getTotalNumberOfGame() + "전 " + winCounter.getValue() + "승 " + lossCounter.getValue() + "패 ";
+        return totalNumberOfGame().getValue() + "전 " + winCounter.getValue() + "승 " + lossCounter.getValue() + "패 ";
     }
 
     public static enum Type {

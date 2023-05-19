@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Date {
-
-    public static final String DATE_PATTERN = "yyyy년 MM월 dd일";
     private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "Date";
+
+    public static final String DATE_PATTERN = "yyyy년 MM월 dd일";
 
     private int year;
     private int month;
@@ -56,18 +56,9 @@ public class Date {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public static Date createDateByParsing(String parsedDate) {
+    public static Date createByParsing(String parsedDate) {
         LocalDate localDate = LocalDate.parse(parsedDate, DateTimeFormatter.ofPattern(DATE_PATTERN));
         return new Date(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
-
-    }
-
-    public void setDateByParsing(String date) {
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_PATTERN));
-
-        this.year = localDate.getYear();
-        this.month = localDate.getMonthValue();
-        this.dayOfMonth = localDate.getDayOfMonth();
 
     }
 
@@ -83,17 +74,16 @@ public class Date {
         this.month = localDate.getMonthValue();
     }
 
+    public void setDateByParsing(String date) {
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_PATTERN));
+
+        this.year = localDate.getYear();
+        this.month = localDate.getMonthValue();
+        this.dayOfMonth = localDate.getDayOfMonth();
+
+    }
     public boolean equals(String date) {
         if (toString().equals(date))
-            return true;
-        else
-            return false;
-    }
-
-    public boolean equalYear(String date) {
-        Date parsedDate = createDateByParsing(date);
-
-        if (this.year == parsedDate.getYear())
             return true;
         else
             return false;
@@ -106,25 +96,9 @@ public class Date {
             return false;
     }
 
-    public boolean equalMonth(String date) {
-        Date parsedDate = createDateByParsing(date);
-
-        if (this.month == parsedDate.getMonth())
-            return true;
-        else
-            return false;
-    }
 
     public boolean equalMonth(int month) {
         if (this.month == month)
-            return true;
-        else
-            return false;
-    }
-
-    public boolean equalDayOfMonth(String date) {
-        Date parsedDate = createDateByParsing(date);
-        if (this.dayOfMonth == parsedDate.getDayOfMonth())
             return true;
         else
             return false;

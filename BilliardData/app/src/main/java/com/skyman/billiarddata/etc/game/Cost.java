@@ -31,17 +31,27 @@ public class Cost {
         this.cost += cost;
     }
 
-    public static Cost calculateAverageCost(List<Cost> costArrayList) {
-        int totalCost = 0;
-        for (int index = 0; index < costArrayList.size(); index++) {
-            totalCost += costArrayList.get(index).getCost();
-        }
-
-        return new Cost(totalCost / costArrayList.size());
+    public static Cost totalCost(List<Cost> costList) {
+        Cost totalCost = new Cost();
+        costList.forEach(
+                cost1 -> {
+                    totalCost.plus(cost1.getCost());
+                }
+        );
+        return totalCost;
     }
 
-    public static Cost maxCost(List<Cost> costArrayList) {
-        return Collections.max(costArrayList, new Comparator<Cost>() {
+    public static Cost averageCost(List<Cost> costList) {
+        int totalCost = 0;
+        for (int index = 0; index < costList.size(); index++) {
+            totalCost += costList.get(index).getCost();
+        }
+
+        return new Cost(totalCost / costList.size());
+    }
+
+    public static Cost maxCost(List<Cost> costList) {
+        return Collections.max(costList, new Comparator<Cost>() {
             @Override
             public int compare(Cost cost, Cost t1) {
                 if (cost.getCost() > t1.getCost())
@@ -54,8 +64,8 @@ public class Cost {
         });
     }
 
-    public static Cost minCost(List<Cost> costArrayList) {
-        return Collections.min(costArrayList, ((cost, t1) -> {
+    public static Cost minCost(List<Cost> costList) {
+        return Collections.min(costList, ((cost, t1) -> {
             if (cost.getCost() > t1.getCost())
                 return 1;
             else if (cost.getCost() < t1.getCost())

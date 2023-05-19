@@ -16,24 +16,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SameDateGameAnalysis {
 
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
     private static final String CLASS_NAME = "SameDateGameAnalysis";
 
-    Map<String, SameDateGame> sameYearGameList;
-    Map<String, SameDateGame> sameMonthGameList;
-    Map<String, SameDateGame> sameDateGameList;                         // key : 날짜(날짜순으로 정렬하기 위해서 key로 사용)
+    SameDateGame allGame;                       // 년, 월, 일에 상관없이 모든 게임의 리스트
+    Map<String, SameDateGame> sameYearGameList;     // 같은 년도의 게임 리스트
+    Map<String, SameDateGame> sameMonthGameList;    // 같은 년, 월의 게임 리스트
+    Map<String, SameDateGame> sameDateGameList;     // 같은 년, 월, 일의 게임 리스트
 
-    ArrayList<BilliardData> sortedBilliardDataArrayList;
+    List<BilliardData>sortedBilliardDataList;
 
     public SameDateGameAnalysis() {
+        allGame = new SameDateGame();
         sameYearGameList = new LinkedHashMap<>();
         sameMonthGameList = new LinkedHashMap<>();
         sameDateGameList = new LinkedHashMap<>();
-        sortedBilliardDataArrayList = new ArrayList<>();
+        sortedBilliardDataList = new ArrayList<>();
+    }
+
+    public SameDateGame getAllGame() {
+        return allGame;
     }
 
     public Map<String, SameDateGame> getSameYearGameList() {
@@ -48,8 +55,8 @@ public class SameDateGameAnalysis {
         return sameDateGameList;
     }
 
-    public ArrayList<BilliardData> getSortedBilliardDataArrayList() {
-        return sortedBilliardDataArrayList;
+    public List<BilliardData> getSortedBilliardDataList() {
+        return sortedBilliardDataList;
     }
 
     /**
@@ -113,14 +120,14 @@ public class SameDateGameAnalysis {
 
         if (!billiardDataArrayList.isEmpty()) {
 
-            this.sortedBilliardDataArrayList.addAll(billiardDataArrayList);
-            sort(this.sortedBilliardDataArrayList);
-//            DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, sortedBilliardDataArrayList);
+            this.sortedBilliardDataList.addAll(billiardDataArrayList);
+            sort(this.sortedBilliardDataList);
+//            DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, sortedBilliardDataList);
 
             // billiardData 와 1:1 대응되어서 해당 데이터가 분석된 것인지 판단한다!
-            boolean[] isAnalyzed = fillFalse(this.sortedBilliardDataArrayList.size());
+            boolean[] isAnalyzed = fillFalse(this.sortedBilliardDataList.size());
 
-            for (int index = 0; index < this.sortedBilliardDataArrayList.size(); index++) {
+            for (int index = 0; index < this.sortedBilliardDataList.size(); index++) {
 
                 // if : index 번째의 billiardData 가 분석된 것인가?
                 if (!isAnalyzed[index]) {       // --> 분석되지 않았을 때(isAnalyzed=true 이면)
@@ -128,48 +135,55 @@ public class SameDateGameAnalysis {
                     // 분석된(할) 데이터이다!
                     isAnalyzed[index] = true;
 
-                    Date date = Date.createDateByParsing(this.sortedBilliardDataArrayList.get(index).getDate());
+                    Date date = Date.createByParsing(this.sortedBilliardDataList.get(index).getDate());
 
-                    // date
+                    // all game
+                    setInfo(allGame, userData, this.sortedBilliardDataList.get(index), index);
+
+                    // same date game
                     SameDateGame sameDateGame = new SameDateGame();
-                    sameDateGame.getDate().setDateByParsing(this.sortedBilliardDataArrayList.get(index).getDate());
-                    setInfo(sameDateGame, userData, this.sortedBilliardDataArrayList.get(index), index);
+                    sameDateGame.getDate().setDateByParsing(this.sortedBilliardDataList.get(index).getDate());
+                    setInfo(sameDateGame, userData, this.sortedBilliardDataList.get(index), index);
 
-                    // Year
+                    // same Year game
                     SameDateGame sameYearGame = new SameDateGame();
                     sameYearGame.getDate().setYear(date.getYear());
-                    setInfo(sameYearGame, userData, this.sortedBilliardDataArrayList.get(index), index);
+                    setInfo(sameYearGame, userData, this.sortedBilliardDataList.get(index), index);
 
-                    // Month
+                    // same Month game
                     SameDateGame sameMonthGame = new SameDateGame();
                     sameMonthGame.getDate().setYear(date.getYear());
                     sameMonthGame.getDate().setMonth(date.getMonth());
-                    setInfo(sameMonthGame, userData, this.sortedBilliardDataArrayList.get(index), index);
+                    setInfo(sameMonthGame, userData, this.sortedBilliardDataList.get(index), index);
 
 
-                    for (int nextIndex = index + 1; nextIndex < this.sortedBilliardDataArrayList.size(); nextIndex++) {
+                    for (int nextIndex = index + 1; nextIndex < this.sortedBilliardDataList.size(); nextIndex++) {
 
                         // if : nextIndex 번째의 billiardData 가 분석된 것인가?
                         if (!isAnalyzed[nextIndex]) {       // --> 분석되지 않았을 때만(isAnalyzed=true 이면)
 
-                            Date comparedDate = Date.createDateByParsing(this.sortedBilliardDataArrayList.get(nextIndex).getDate());
+                            Date comparedDate = Date.createByParsing(this.sortedBilliardDataList.get(nextIndex).getDate());
+
 
                             // if : year 가 같은가?
                             if (sameDateGame.getDate().equalYear(comparedDate.getYear())) {
 
-                                setInfo(sameYearGame, userData, this.sortedBilliardDataArrayList.get(nextIndex), nextIndex);
+                                setInfo(sameYearGame, userData, this.sortedBilliardDataList.get(nextIndex), nextIndex);
 
                                 // if : month 가 같은가?
                                 if (sameDateGame.getDate().equalMonth(comparedDate.getMonth())) {
 
-                                    setInfo(sameMonthGame, userData, this.sortedBilliardDataArrayList.get(nextIndex), nextIndex);
+                                    setInfo(sameMonthGame, userData, this.sortedBilliardDataList.get(nextIndex), nextIndex);
 
                                     // if : dayOfMonth 가 같은가?
                                     if (sameDateGame.getDate().equalDayOfMonth(comparedDate.getDayOfMonth())) {
 
                                         // year, month, dayOfMonth 가 모두 같을 때를 기준으로 isAnalyzed 를 true 로 변경
                                         isAnalyzed[nextIndex] = true;
-                                        setInfo(sameDateGame, userData, this.sortedBilliardDataArrayList.get(nextIndex), nextIndex);
+                                        setInfo(sameDateGame, userData, this.sortedBilliardDataList.get(nextIndex), nextIndex);
+
+                                        // all game
+                                        setInfo(allGame, userData, this.sortedBilliardDataList.get(nextIndex), nextIndex);
 
                                     }
                                 }
@@ -195,13 +209,8 @@ public class SameDateGameAnalysis {
                     }
                 }
             }
-            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "============== year ==============");
-            printLog(sameYearGameList);
-            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "============== month ==============");
-            printLog(sameMonthGameList);
-            DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "============== date ==============");
-            printLog(sameDateGameList);
         }
+        printLog();
     }
 
     /**
@@ -221,7 +230,7 @@ public class SameDateGameAnalysis {
      *
      * @param billiardDataArrayList
      */
-    public void sort(ArrayList<BilliardData> billiardDataArrayList) {
+    public void sort(List<BilliardData> billiardDataArrayList) {
 
         billiardDataArrayList.sort(new Comparator<BilliardData>() {
             @Override
@@ -249,7 +258,7 @@ public class SameDateGameAnalysis {
         // 총 비용
         sameDateGame.getTotalCost().plus(billiardData.getCost());
         // billiardData 추가
-        sameDateGame.getReferenceArrayList().add(new Reference((int) billiardData.getCount(), index));
+        sameDateGame.getReferenceList().add(new Reference((int) billiardData.getCount(), index));
 
     }
 
@@ -264,99 +273,29 @@ public class SameDateGameAnalysis {
 
         if ((userData.getId() == billiardData.getWinnerId()) &&
                 userData.getName().equals(billiardData.getWinnerName())) {
-            sameDateGame.getRecord().getWinCounter().plusOne();                  // winCounter +1
-            sameDateGame.getRecordTypeArrayList().add(Record.Type.WIN);         // record type WIN 추가
+            sameDateGame.getRecord().getWinCounter().plusOne();         // winCounter +1
+            sameDateGame.getRecordTypeList().add(Record.Type.WIN);      // record type WIN 추가
         } else {
-            sameDateGame.getRecord().getLossCounter().plusOne();                 // lossCounter +1
-            sameDateGame.getRecordTypeArrayList().add(Record.Type.LOSS);        // record type LOSS 추가
+            sameDateGame.getRecord().getLossCounter().plusOne();        // lossCounter +1
+            sameDateGame.getRecordTypeList().add(Record.Type.LOSS);     // record type LOSS 추가
         }
     }
 
-
-    public void printLog(Map<String, SameDateGame> sameDateGameList) {
-
-        if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
-            if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
-
-                Log.d(CLASS_NAME, "[HashMap<String, SameDateGame> 내용 확인]");
-
-                sameDateGameList.forEach(
-                        (s, sameDateGame) -> {
-                            Log.d(CLASS_NAME, "---- " + s + " -----");
-                            Log.d(CLASS_NAME, "Date / year : " + sameDateGame.getDate().getYear());
-                            Log.d(CLASS_NAME, "Date / month : " + sameDateGame.getDate().getMonth());
-                            Log.d(CLASS_NAME, "Date / day : " + sameDateGame.getDate().getDayOfMonth());
-                            Log.d(CLASS_NAME, "Record / winCounter : " + sameDateGame.getRecord().getWinCounter().getValue());
-                            Log.d(CLASS_NAME, "Record / lossCounter : " + sameDateGame.getRecord().getLossCounter().getValue());
-                            Log.d(CLASS_NAME, "Record / totalNumberOfGame : " + sameDateGame.getRecord().getTotalNumberOfGame());
-                            Log.d(CLASS_NAME, "Cost / cost  : " + sameDateGame.getTotalCost().getCost());
-
-                            StringBuilder recordType = new StringBuilder();
-                            recordType.append("Record.Type : ");
-                            StringBuilder countOfBilliardData = new StringBuilder();
-                            countOfBilliardData.append("BilliardData / counts : ");
-                            StringBuilder indexOfArrayList = new StringBuilder();
-                            indexOfArrayList.append("ArrayList<BilliardData> / index : ");
-
-                            sameDateGame.getRecordTypeArrayList().forEach(
-                                    (r) -> {
-                                        recordType.append("[" + r + "]");
-                                    }
-                            );
-
-                            sameDateGame.getReferenceArrayList().forEach(
-                                    (r) -> {
-                                        countOfBilliardData.append("[" + r.getCount() + "]");
-                                        indexOfArrayList.append("[" + r.getIndex() + "]");
-                                    }
-                            );
-                            Log.d(CLASS_NAME, recordType.toString());
-                            Log.d(CLASS_NAME, countOfBilliardData.toString());
-                            Log.d(CLASS_NAME, indexOfArrayList.toString());
-                        }
-                );
-
-            }
-
-    } //
-
-    public void printLog(SameDateGame sameDateGame) {
-
-        if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
-            if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
-
-                Log.d(CLASS_NAME, "[sameDateGame 내용 확인]");
-                Log.d(CLASS_NAME, "Date / year : " + sameDateGame.getDate().getYear());
-                Log.d(CLASS_NAME, "Date / month : " + sameDateGame.getDate().getMonth());
-                Log.d(CLASS_NAME, "Date / day : " + sameDateGame.getDate().getDayOfMonth());
-                Log.d(CLASS_NAME, "Record / winCounter : " + sameDateGame.getRecord().getWinCounter().getValue());
-                Log.d(CLASS_NAME, "Record / lossCounter : " + sameDateGame.getRecord().getLossCounter().getValue());
-                Log.d(CLASS_NAME, "Record / totalNumberOfGame : " + sameDateGame.getRecord().getTotalNumberOfGame());
-                Log.d(CLASS_NAME, "Cost / cost  : " + sameDateGame.getTotalCost().getCost());
-
-                StringBuilder recordType = new StringBuilder();
-                recordType.append("Record.Type : ");
-                StringBuilder countOfBilliardData = new StringBuilder();
-                countOfBilliardData.append("BilliardData / counts : ");
-                StringBuilder indexOfArrayList = new StringBuilder();
-                indexOfArrayList.append("ArrayList<BilliardData> / index : ");
-
-                sameDateGame.getRecordTypeArrayList().forEach(
-                        (r) -> {
-                            recordType.append("[" + r + "]");
-                        }
-                );
-
-                sameDateGame.getReferenceArrayList().forEach(
-                        (r) -> {
-                            countOfBilliardData.append("[" + r.getCount() + "]");
-                            indexOfArrayList.append("[" + r.getIndex() + "]");
-                        }
-                );
-                Log.d(CLASS_NAME, recordType.toString());
-                Log.d(CLASS_NAME, countOfBilliardData.toString());
-                Log.d(CLASS_NAME, indexOfArrayList.toString());
-            }
+    public void printLog() {
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> allGame <<<<<<<<<<<<<<<<");
+        allGame.printLog();
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameYearGame <<<<<<<<<<<<<<<<");
+        sameYearGameList.forEach(
+                (s, sameDateGame) -> sameDateGame.printLog()
+        );
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameMonthGame <<<<<<<<<<<<<<<<");
+        sameMonthGameList.forEach(
+                (s, sameDateGame) -> sameDateGame.printLog()
+        );
+        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameDateGame <<<<<<<<<<<<<<<<");
+        sameDateGameList.forEach(
+                (s, sameDateGame) -> sameDateGame.printLog()
+        );
     }
 
 

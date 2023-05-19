@@ -1,6 +1,5 @@
 package com.skyman.billiarddata.etc.game;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,29 +24,39 @@ public class Time {
         this.minute = minute;
     }
 
-    public void plus(int minute) {
-        this.minute += minute;
-    }
-
     public void setMinuteTo(int hour, int minute) {
         this.minute = (hour * 60) + minute;
     }
 
-    public int calculateMinute(int hour, int minute) {
-        return (hour * 60) + minute;
+    public void plus(int minute) {
+        this.minute += minute;
     }
 
-    public static Time calculateAverageMinute(List<Time> timeArrayList) {
+    public Time countInMinutes(int hour, int minute) {
+        return new Time((hour * 60) + minute);
+    }
+
+    public static Time totalTime(List<Time> timeList) {
+        Time totalTime = new Time();
+        timeList.forEach(
+                time -> {
+                    totalTime.plus(time.getMinute());
+                }
+        );
+        return totalTime;
+    }
+
+    public static Time averageMinute(List<Time> timeList) {
         int totalMinute = 0;
 
-        for (int index = 0; index < timeArrayList.size(); index++) {
-            totalMinute += timeArrayList.get(index).getMinute();
+        for (int index = 0; index < timeList.size(); index++) {
+            totalMinute += timeList.get(index).getMinute();
         }
-        return new Time(totalMinute / timeArrayList.size());
+        return new Time(totalMinute / timeList.size());
     }
 
-    public static Time maxTime(List<Time> timeArrayList) {
-        return Collections.max(timeArrayList, ((time, t1) -> {
+    public static Time maxTime(List<Time> timeList) {
+        return Collections.max(timeList, ((time, t1) -> {
             if (time.getMinute() > t1.getMinute())
                 return 1;
             else if (time.getMinute() < t1.getMinute())
@@ -57,8 +66,8 @@ public class Time {
         }));
     }
 
-    public static Time minTime(List<Time> timeArrayList) {
-        return Collections.min(timeArrayList, new Comparator<Time>() {
+    public static Time minTime(List<Time> timeList) {
+        return Collections.min(timeList, new Comparator<Time>() {
             @Override
             public int compare(Time time, Time t1) {
                 if (time.getMinute() > t1.getMinute())
@@ -76,7 +85,7 @@ public class Time {
 
         if ((this.minute / 60) > 0) {
             time.append(this.minute / 60);
-            time.append("시");
+            time.append("시 ");
         }
         time.append(this.minute % 60);
         time.append("분");
@@ -90,7 +99,7 @@ public class Time {
 
         if ((minute / 60) > 0) {
             time.append(minute / 60);
-            time.append("시");
+            time.append("시 ");
         }
         time.append(minute % 60);
         time.append("분");
