@@ -17,14 +17,20 @@ import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.developer.DeveloperLog;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
+import com.skyman.billiarddata.etc.calendar.SameDateGame;
+import com.skyman.billiarddata.listView.ByMonthStatsLvAdapter;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
-import com.skyman.billiarddata.etc.DataFormatUtil;
 import com.skyman.billiarddata.etc.statistics.MonthStatistics;
 import com.skyman.billiarddata.etc.calendar.SameDate;
-import com.skyman.billiarddata.listView.MonthStatisticsLvAdapter;
 import com.skyman.billiarddata.table.user.data.UserData;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,25 +40,31 @@ import java.util.ArrayList;
 public class ChartFragment extends Fragment implements SectionManager.Initializable {
 
     // constant
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
     private static final String CLASS_NAME = "ChartFragment";
 
     // constant
     private static final String USER_DATA = "userData";
-    private static final String BILLIARD_DATA_ARRAY_LIST = "billiardDataArrayList";
-    private static final String SAME_DATE_CHECKER = "sameDateChecker";
+    private static final String BILLIARD_DATA_LIST = "billiardDataList";
+    private static final String ALL_GAME = "allGame";
+    private static final String SAME_YEAR_GAME_LIST = "sameYearGameList";
+    private static final String SAME_MONTH_GAME_LIST = "sameMonthGameList";
+
+
 
     // instance variable
     private UserData userData;
-    private ArrayList<BilliardData> billiardDataArrayList;
-    private SameDate sameDate;
+    private List<BilliardData> billiardDataList;
+    private SameDateGame allGame ;
+    private Map<String, SameDateGame> sameYearGameList;
+    private Map<String, SameDateGame> sameMonthGameList;
+
 
     // instance variable
-    private TextView myTotalGameRecord;
-    private ListView monthStatistics;
+    private TextView recordOfAllGame;
+    private ListView byMonthStats;
 
-    // instance variable
-    private ArrayList<MonthStatistics> monthStatisticsArrayList;
+
 
     public ChartFragment() {
         // Required empty public constructor
@@ -66,12 +78,16 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
      */
     // TODO: Rename and change types and number of parameters
     public static ChartFragment newInstance(UserData userData,
-                                            ArrayList<BilliardData> billiardDataArrayList,
-                                            SameDate sameDate) {
+                                            List<BilliardData> billiardDataList,
+                                            SameDateGame allGame,
+                                            Map<String, SameDateGame> sameYearGameList,
+                                            Map<String, SameDateGame> sameMonthGameList) {
         Bundle args = new Bundle();
         args.putSerializable(USER_DATA, userData);
-        args.putSerializable(BILLIARD_DATA_ARRAY_LIST, billiardDataArrayList);
-        args.putSerializable(SAME_DATE_CHECKER, sameDate);
+        args.putSerializable(BILLIARD_DATA_LIST, (Serializable) billiardDataList);
+        args.putSerializable(ALL_GAME, allGame);
+        args.putSerializable(SAME_YEAR_GAME_LIST, (Serializable) sameYearGameList);
+        args.putSerializable(SAME_MONTH_GAME_LIST, (Serializable) sameMonthGameList);
 
         ChartFragment fragment = new ChartFragment();
         fragment.setArguments(args);
@@ -83,8 +99,10 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userData = (UserData) getArguments().getSerializable(USER_DATA);
-            billiardDataArrayList = (ArrayList<BilliardData>) getArguments().getSerializable(BILLIARD_DATA_ARRAY_LIST);
-            sameDate = (SameDate) getArguments().getSerializable(SAME_DATE_CHECKER);
+            billiardDataList = (ArrayList<BilliardData>) getArguments().getSerializable(BILLIARD_DATA_LIST);
+            allGame = (SameDateGame) getArguments().getSerializable(ALL_GAME);
+            sameYearGameList = (LinkedHashMap<String, SameDateGame>) getArguments().getSerializable(SAME_YEAR_GAME_LIST);
+            sameMonthGameList = (LinkedHashMap<String, SameDateGame>) getArguments().getSerializable(SAME_MONTH_GAME_LIST);
         }
     }
 
@@ -98,9 +116,6 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // appDbManager
-        initAppDbManager();
 
         // widget : connect -> init
         connectWidget();
@@ -116,174 +131,55 @@ public class ChartFragment extends Fragment implements SectionManager.Initializa
     @Override
     public void connectWidget() {
 
-        this.myTotalGameRecord = (TextView) getView().findViewById(R.id.F_chart_myTotalGameRecord);
+        this.recordOfAllGame = (TextView) getView().findViewById(R.id.F_chart_recordOfAllGame);
 
-        this.monthStatistics = (ListView) getView().findViewById(R.id.F_chart_monthStatistics);
+        this.byMonthStats = (ListView) getView().findViewById(R.id.F_chart_byMonthStats);
 
     }
 
     @Override
     public void initWidget() {
-        /*
-        1. 모든 게임 내용이 담긴 billiardDataArrayList
-         */
+
+        // <1> 등록된 유저가 있는 지 확인
         if (userData != null) {
-            if (!billiardDataArrayList.isEmpty()) {
 
-                // month statistics 의 data 생성하기
-                monthStatisticsArrayList = new ArrayList<>();
-
-                createMonthStatisticsData();
-
+            // <2> 등록된 게임이 있는 지 확인
+            if (!billiardDataList.isEmpty()) {
                 /*
                 1. 월별로 정리된 통계 데이터가 담긴 monthStaticsArrayList를 ListView와 연결시킬 adapter를 생성
                 2. ListView monthStatics 에 1번 adapter를 연결 -> 월별 전적 표시
                 3. userData 의 승리, 패배로 총 전적 표시
                  */
-                // ListView adapter 생성
-                MonthStatisticsLvAdapter adapter = new MonthStatisticsLvAdapter(reverseOrder(monthStatisticsArrayList));
 
-                // ListView : monthStatistics
-                this.monthStatistics.setAdapter(adapter);
+                // sameMonthGameList 를 날짜의 역순으로 정렬하고 이를 ArrayList 형태로 변환하여
+                // ByMonthStatsLvAdapter 로 전달
+                ByMonthStatsLvAdapter adapter = new ByMonthStatsLvAdapter(reverse(sameMonthGameList));
+                this.byMonthStats.setAdapter(adapter);
 
-                // TextView : myTotalGameRecord
-                this.myTotalGameRecord.setText(
-                        DataFormatUtil.formatOfGameRecord(
-                                userData.getGameRecordWin(),
-                                userData.getGameRecordLoss()
-                        )
+                // allGame 의 record.toString()으로 문자열 셋팅
+                this.recordOfAllGame.setText(
+                        allGame.getRecord().toString()
                 );
-
             }
         }
-
     }
 
+    private ArrayList<SameDateGame> reverse(Map<String, SameDateGame> sameDateGameList) {
+        ArrayList<SameDateGame> arrayList = new ArrayList<>();
 
-    /**
-     * SameDateChecker 을 통해서 같은 year, month 를 구분하여 그 year, month 의 winCount, lossCount 를 구한다.
-     */
-    private void createMonthStatisticsData() {
+        // key set 가져오기
+        ArrayList<String> keySet = new ArrayList<>(sameDateGameList.keySet());
+        // 날짜 역순으로 정렬
+        Collections.reverse(keySet);
+        // ListIterator -> String(날짜)
+        ListIterator<String> iterator = keySet.listIterator();
 
-        for (int index = 0; index < sameDate.getArraySize(); index++) {
-
-            // sameDateChecker 의 첫번째 index 는 무조건 standardDate 이므로 추가한다.
-            if (monthStatisticsArrayList.size() == 0) {
-
-                MonthStatistics monthStatistics = new MonthStatistics();
-                monthStatistics.setYear(sameDate.getYearToIndex(index));
-                monthStatistics.setMonth(sameDate.getMonthToIndex(index));
-                monthStatistics.setWinCount(sameDate.getWinCountToIndex(index));
-                monthStatistics.setLossCount(sameDate.getLossCountToIndex(index));
-                monthStatistics.setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDate.getSameDateItemToIndex(index)));
-
-                monthStatisticsArrayList.add(monthStatistics);
-                continue;
-            }
-
-            // sameDateChecker 의 index 번째가 standardDate 이면
-            // monthStatisticsDataArrayList 에서 같은 year, month 가 있는지 검사한다.
-            if (sameDate.getStandardDateToIndex(index)) {
-
-                boolean isSame = false;
-
-                for (int innerIndex = 0; innerIndex < monthStatisticsArrayList.size(); innerIndex++) {
-
-                    // sameDateChecker 의 데이터가 monthStatisticsDateArrayList 에서 같은 year, month 가 발견되면
-                    // monthStatisticsDateArrayList 의 winCount, lossCount 에 sameDateChecker 의 winCount, lossCount 값을 더한다.
-                    if (sameDate.getYearToIndex(index) == monthStatisticsArrayList.get(innerIndex).getYear()
-                            && sameDate.getMonthToIndex(index) == monthStatisticsArrayList.get(innerIndex).getMonth()) {
-
-                        // year, month 가 같은 날이 있으면
-                        // winCount, lossCount 를 기존의 값에 더한다.
-                        int winCount = monthStatisticsArrayList.get(innerIndex).getWinCount() + sameDate.getWinCountToIndex(index);
-                        int lossCount = monthStatisticsArrayList.get(innerIndex).getLossCount() + sameDate.getLossCountToIndex(index);
-
-                        monthStatisticsArrayList.get(innerIndex).setWinCount(winCount);
-                        monthStatisticsArrayList.get(innerIndex).setLossCount(lossCount);
-                        monthStatisticsArrayList.get(innerIndex).setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDate.getSameDateItemToIndex(index)));
-
-                        isSame = true;
-
-                    }
-
-                }
-
-                // 만약 위의 for 구문에서 같은 year, month 를 찾지 못 하면
-                // MonthStatisticsData 를 생성하여 monthStatisticsDataArrayList 에 추가한다.
-                if (!isSame) {
-
-                    MonthStatistics monthStatistics = new MonthStatistics();
-                    monthStatistics.setYear(sameDate.getYearToIndex(index));
-                    monthStatistics.setMonth(sameDate.getMonthToIndex(index));
-                    monthStatistics.setWinCount(sameDate.getWinCountToIndex(index));
-                    monthStatistics.setLossCount(sameDate.getLossCountToIndex(index));
-                    monthStatistics.setBilliardDataArrayList(getBilliardDataArrayListToSameDateItemArrayList(sameDate.getSameDateItemToIndex(index)));
-
-                    monthStatisticsArrayList.add(monthStatistics);
-
-                }
-            }
+        // ListIterator 순환하며 가져온 날짜를 통해
+        while (iterator.hasNext()) {
+            String date = iterator.next();
+            arrayList.add(sameDateGameList.get(date));
         }
 
+        return arrayList;
     }
-
-    private ArrayList<BilliardData> getBilliardDataArrayListToSameDateItemArrayList(ArrayList<SameDate.SameDateItem> sameDateItemArrayList) {
-
-        ArrayList<BilliardData> billiardDataArrayListOfMonth = new ArrayList<>();
-
-        for (int index = 0; index < sameDateItemArrayList.size(); index++) {
-
-            billiardDataArrayListOfMonth.add(
-                    this.billiardDataArrayList.get(sameDateItemArrayList.get(index).getIndex())
-            );
-
-        }
-
-        return billiardDataArrayListOfMonth;
-    }
-
-
-    /**
-     * monthStaticsArrayList를 역순으로 바꾼다.
-     */
-    private ArrayList<MonthStatistics> reverseOrder(ArrayList<MonthStatistics> monthStatisticsArrayList) {
-        ArrayList<MonthStatistics> reverseOrderArrayList = new ArrayList<>();
-
-        for (int index = monthStatisticsArrayList.size() - 1; index >= 0; index--) {
-            reverseOrderArrayList.add(monthStatisticsArrayList.get(index));
-        }
-
-        printLog(reverseOrderArrayList);
-        return reverseOrderArrayList;
-    }
-
-    /**
-     * MonthStatisticsData 를 로그로 출력한다.
-     */
-    private void printLog(ArrayList<MonthStatistics> monthStatisticsArrayList) {
-        if (DeveloperLog.PROJECT_LOG_SWITCH == LogSwitch.ON)
-            if (CLASS_LOG_SWITCH == LogSwitch.ON) {
-                Log.d(CLASS_NAME, "[monthStatisticsDataArrayList 내용 확인]");
-
-                for (int index = 0; index < monthStatisticsArrayList.size(); index++) {
-
-                    Log.d(CLASS_NAME, "---- " + index + "번째 ----");
-                    Log.d(CLASS_NAME, "year : " + monthStatisticsArrayList.get(index).getYear());
-                    Log.d(CLASS_NAME, "month : " + monthStatisticsArrayList.get(index).getMonth());
-                    Log.d(CLASS_NAME, "winCount : " + monthStatisticsArrayList.get(index).getWinCount());
-                    Log.d(CLASS_NAME, "lossCount : " + monthStatisticsArrayList.get(index).getLossCount());
-
-                    StringBuilder billiardCount = new StringBuilder();
-                    billiardCount.append("billiarData / count : ");
-                    for (int innerIndex = 0; innerIndex < monthStatisticsArrayList.get(index).getBilliardDataArrayList().size(); innerIndex++) {
-
-                        billiardCount.append("[" + monthStatisticsArrayList.get(index).getBilliardDataArrayList().get(innerIndex).getCount() + "]");
-                    }
-                    Log.d(CLASS_NAME, billiardCount.toString());
-                }
-            }
-
-    }
-
 }

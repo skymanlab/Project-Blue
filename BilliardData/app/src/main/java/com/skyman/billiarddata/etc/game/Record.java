@@ -2,8 +2,8 @@ package com.skyman.billiarddata.etc.game;
 
 public class Record {
 
-    private Counter winCounter;
-    private Counter lossCounter;
+    private Counter winCounter;         // 승리 카운터
+    private Counter lossCounter;        // 패배 카운터
 
     public Record() {
         winCounter = new Counter();

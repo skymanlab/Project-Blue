@@ -1,7 +1,5 @@
 package com.skyman.billiarddata.etc.calendar;
 
-import android.util.Log;
-
 import com.skyman.billiarddata.developer.DeveloperLog;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.game.Date;
@@ -17,19 +15,16 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class SameDateGameAnalysis {
-
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
-    private static final String CLASS_NAME = "SameDateGameAnalysis";
 
     SameDateGame allGame;                       // 년, 월, 일에 상관없이 모든 게임의 리스트
     Map<String, SameDateGame> sameYearGameList;     // 같은 년도의 게임 리스트
     Map<String, SameDateGame> sameMonthGameList;    // 같은 년, 월의 게임 리스트
     Map<String, SameDateGame> sameDateGameList;     // 같은 년, 월, 일의 게임 리스트
-
-    List<BilliardData>sortedBilliardDataList;
+    ArrayList<BilliardData> sortedBilliardDataList; // 정렬된 billiardDataList
 
     public SameDateGameAnalysis() {
         allGame = new SameDateGame();
@@ -55,7 +50,7 @@ public class SameDateGameAnalysis {
         return sameDateGameList;
     }
 
-    public List<BilliardData> getSortedBilliardDataList() {
+    public ArrayList<BilliardData> getSortedBilliardDataList() {
         return sortedBilliardDataList;
     }
 
@@ -114,15 +109,16 @@ public class SameDateGameAnalysis {
      * 매개변수로 받은 모든 BilliardData 객체의 날짜를 분석하여 년별(sameYearGame), 월별(sameMonthGame), 날짜별(sameDateGame)로 저장하는 메소드
      *
      * @param userData
-     * @param billiardDataArrayList 분석할 BilliardData 객체가 담긴 ArrayList
+     * @param billiardDataList 분석할 BilliardData 객체가 담긴 ArrayList
      */
-    public void analyze(UserData userData, ArrayList<BilliardData> billiardDataArrayList) {
+    public void analyze(UserData userData, ArrayList<BilliardData> billiardDataList) {
 
-        if (!billiardDataArrayList.isEmpty()) {
+        if (!billiardDataList.isEmpty()) {
 
-            this.sortedBilliardDataList.addAll(billiardDataArrayList);
+            // billiardDataList 복사
+            this.sortedBilliardDataList.addAll(billiardDataList);
+            // 날짜 순으로 정렬
             sort(this.sortedBilliardDataList);
-//            DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH, CLASS_NAME, sortedBilliardDataList);
 
             // billiardData 와 1:1 대응되어서 해당 데이터가 분석된 것인지 판단한다!
             boolean[] isAnalyzed = fillFalse(this.sortedBilliardDataList.size());
@@ -135,7 +131,7 @@ public class SameDateGameAnalysis {
                     // 분석된(할) 데이터이다!
                     isAnalyzed[index] = true;
 
-                    Date date = Date.createByParsing(this.sortedBilliardDataList.get(index).getDate());
+                    Date date = Date.newInstanceByParsing(this.sortedBilliardDataList.get(index).getDate());
 
                     // all game
                     setInfo(allGame, userData, this.sortedBilliardDataList.get(index), index);
@@ -162,8 +158,7 @@ public class SameDateGameAnalysis {
                         // if : nextIndex 번째의 billiardData 가 분석된 것인가?
                         if (!isAnalyzed[nextIndex]) {       // --> 분석되지 않았을 때만(isAnalyzed=true 이면)
 
-                            Date comparedDate = Date.createByParsing(this.sortedBilliardDataList.get(nextIndex).getDate());
-
+                            Date comparedDate = Date.newInstanceByParsing(this.sortedBilliardDataList.get(nextIndex).getDate());
 
                             // if : year 가 같은가?
                             if (sameDateGame.getDate().equalYear(comparedDate.getYear())) {
@@ -193,24 +188,21 @@ public class SameDateGameAnalysis {
 
                     // date
                     // 같은 날짜의 billiardData 를 분석하였을 때 put()
-//                    printLog(sameDateGame);
                     sameDateGameList.put(sameDateGame.getDate().toString(), sameDateGame);
 
                     // if : year / sameYearGameList 에 포함된 SameDateGame 객체인가?
                     if (!sameYearGameList.containsKey(new Date(date.getYear(), 0, 0).toString())) {
-//                        printLog(sameYearGame);
                         sameYearGameList.put(sameYearGame.getDate().toString(), sameYearGame);
                     }
 
                     // if : month / sameMonthGameList 에 포함된 SameDateGame 객체인가?
                     if (!sameMonthGameList.containsKey(new Date(date.getYear(), date.getMonth(), 0).toString())) {
-//                        printLog(sameMonthGame);
                         sameMonthGameList.put(sameMonthGame.getDate().toString(), sameMonthGame);
                     }
                 }
             }
         }
-        printLog();
+//        printLog();
     }
 
     /**
@@ -281,20 +273,38 @@ public class SameDateGameAnalysis {
         }
     }
 
-    public void printLog() {
+
+    /**
+     * Map<Sting, SameDateGame> 형태의 객체를 ArrayList<SameDateGame> 형태의 객체로 변환하여 반환하는 메소드
+     * @param sameDateGameList
+     * @return
+     */
+    public static ArrayList<SameDateGame> convertToArrayList(Map<String, SameDateGame> sameDateGameList) {
+        ArrayList<String> keySet = new ArrayList<>(sameDateGameList.keySet());
+        ListIterator<String> iterator = keySet.listIterator();
+
+        ArrayList<SameDateGame> arrayList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            arrayList.add(sameDateGameList.get(key));
+        }
+        return arrayList;
+    }
+
+    public void printLog(LogSwitch CLASS_LOG_SWITCH, String CLASS_NAME) {
         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> allGame <<<<<<<<<<<<<<<<");
-        allGame.printLog();
+        allGame.printLog(CLASS_LOG_SWITCH, CLASS_NAME);
         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameYearGame <<<<<<<<<<<<<<<<");
         sameYearGameList.forEach(
-                (s, sameDateGame) -> sameDateGame.printLog()
+                (s, sameDateGame) -> sameDateGame.printLog(CLASS_LOG_SWITCH, CLASS_NAME)
         );
         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameMonthGame <<<<<<<<<<<<<<<<");
         sameMonthGameList.forEach(
-                (s, sameDateGame) -> sameDateGame.printLog()
+                (s, sameDateGame) -> sameDateGame.printLog(CLASS_LOG_SWITCH, CLASS_NAME)
         );
         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, ">>>>>>>>>>>>>> sameDateGame <<<<<<<<<<<<<<<<");
         sameDateGameList.forEach(
-                (s, sameDateGame) -> sameDateGame.printLog()
+                (s, sameDateGame) -> sameDateGame.printLog(CLASS_LOG_SWITCH, CLASS_NAME)
         );
     }
 

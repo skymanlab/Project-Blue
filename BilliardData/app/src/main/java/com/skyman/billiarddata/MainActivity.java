@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
     private Button billiardInput;
     private Button billiardDisplay;
     private Button userManager;
-    private Button statisticsManager;
+    private Button stats;
     private Button appInfo;
     private Button appSetting;
 
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         userManager = (Button) findViewById(R.id.main_button_userManager);
 
         // 통계
-        statisticsManager = (Button) findViewById(R.id.main_button_statisticsManager);
+        stats = (Button) findViewById(R.id.main_button_stats);
 
         // 어플 설정
         appSetting = (Button) findViewById(R.id.main_button_appSetting);
@@ -215,12 +215,12 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
         );
 
         // [lv/C]Button : statistics click listener setting
-        statisticsManager.setOnClickListener(
+        stats.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(getApplicationContext(), StatisticsManagerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
 
                         // sessionManager : set ( userData)
                         SessionManager.setUserDataFromIntent(intent, userData);

@@ -47,7 +47,7 @@
                     android:background="@color/cardview_dark_background" />
 
                 <TextView
-                    android:id="@+id/F_chart_myTotalGameRecord"
+                    android:id="@+id/F_chart_recordOfAllGame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/F_chart_myTotalGameRecord_default" />
@@ -55,7 +55,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <ListView
-            android:id="@+id/F_chart_monthStatistics"
+            android:id="@+id/F_chart_byMonthStats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"

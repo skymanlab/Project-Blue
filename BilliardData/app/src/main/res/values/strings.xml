@@ -13,7 +13,7 @@
     <string name="main_button_billiardInput">당구 데이터 입력</string>
     <string name="main_button_billiardDisplay">당구 데이터 보기</string>
     <string name="main_button_userManager">나의 정보</string>
-    <string name="main_button_statisticsManager">통계</string>
+    <string name="main_button_stats">통계</string>
     <string name="main_button_appSetting">설정</string>
     <string name="main_button_appInfo">어플 정보</string>
     <string name="main_footer">Developed by JDI ⓒ 2020 skymanlab.</string>
@@ -112,10 +112,10 @@
     <string name="userManager_tabLayout_userInfo">정보 보기</string>
     <string name="userManager_tabLayout_userFriend">친구 목록</string>
 
-    <!-- Activity : statistics manager -->
-    <string name="statisticsManager_title">통계</string>
-    <string name="statisticsManager_tabLayout_calendar">달력</string>
-    <string name="statisticsManager_tabLayout_monthStatistics">차트</string>
+    <!-- Activity : stats -->
+    <string name="stats_title">통계</string>
+    <string name="stats_tabLayout_calendar">달력</string>
+    <string name="stats_tabLayout_monthStatistics">차트</string>
 
     <!-- Activity : app info -->
     <string name="appInfo_title">어플리케이션 정보</string>
@@ -255,25 +255,25 @@
     <!--                                Dialog
     ===============================================================================================-
     -->
-    <!-- Dialog : game record -->
-    <string name="d_gameRecord_title">게임 기록</string>
-    <string name="d_gameRecord_explain">버튼을 클릭하여 해당 경기에 대한 내용을 확인하세요.</string>
-    <string name="d_gameRecord_date">날짜</string>
-    <string name="d_gameRecord_date_default">####년 ##월 ##일</string>
-    <string name="d_gameRecord_speciality">종목</string>
-    <string name="d_gameRecord_speciality_default">3구, 4구, 포켓볼 중 하나</string>
-    <string name="d_gameRecord_playTime">게임 시간</string>
-    <string name="d_gameRecord_playTime_default">## 분</string>
-    <string name="d_gameRecord_playerList">참가자</string>
-    <string name="d_gameRecord_playerList_explain">* 참가자 : 이름(수지)</string>
-    <string name="d_gameRecord_playerList_default"></string>
-    <string name="d_gameRecord_winner">승리자</string>
-    <string name="d_gameRecord_winner_default">### 님입니다.</string>
-    <string name="d_gameRecord_score">스코어</string>
-    <string name="d_gameRecord_score_default"># : #</string>
-    <string name="d_gameRecord_cost">비용</string>
-    <string name="d_gameRecord_cost_default">###,### 원</string>
-    <string name="d_gameRecord_button_close">종료</string>
+    <!-- Dialog : game info -->
+    <string name="d_gameInfo_title">게임 정보</string>
+    <string name="d_gameInfo_explain">버튼을 클릭하여 해당 경기에 대한 내용을 확인하세요.</string>
+    <string name="d_gameInfo_date">날짜</string>
+    <string name="d_gameInfo_date_default">####년 ##월 ##일</string>
+    <string name="d_gameInfo_speciality">종목</string>
+    <string name="d_gameInfo_speciality_default">3구, 4구, 포켓볼 중 하나</string>
+    <string name="d_gameInfo_playTime">게임 시간</string>
+    <string name="d_gameInfo_playTime_default">## 분</string>
+    <string name="d_gameInfo_players">참가자</string>
+    <string name="d_gameInfo_players_explain">* 참가자 : 이름(수지)</string>
+    <string name="d_gameInfo_playerList_default"></string>
+    <string name="d_gameInfo_winner">승리자</string>
+    <string name="d_gameInfo_winner_default">### 님입니다.</string>
+    <string name="d_gameInfo_score">스코어</string>
+    <string name="d_gameInfo_score_default"># : #</string>
+    <string name="d_gameInfo_cost">비용</string>
+    <string name="d_gameInfo_cost_default">###,### 원</string>
+    <string name="d_gameInfo_button_close">종료</string>
 
     <!-- Dialog : player list-->
     <string name="d_playerList_title">선수 목록</string>
@@ -295,7 +295,7 @@
     <string name="d_friend_list_explanation">해당 자료는 나를 기준으로 나타낸 것입니다.</string>
 
 
-    <!--                                Custom Layout
+    <!--                                Custom list view
     ===============================================================================================-
     -->
     <!-- Custom ListView : billiard data-->
@@ -316,7 +316,7 @@
     <string name="clv_billiardData_cost_default">###,### 원</string>
 
     <!-- Custom ListView : friend data -->
-    <string name="clv_friend_data_game_record">나의 전적</string>
+    <string name="clv_friend_data_game_record">상대 전적</string>
     <string name="clv_friend_data_game_record_default">x전 y승 z패</string>
     <string name="clv_friend_data_recent_play_date">최근 경기 날짜</string>
     <string name="clv_friend_data_recent_play_date_default">xxxx년 xx월 xx일</string>
@@ -326,16 +326,12 @@
     <string name="clv_friend_data_total_cost_default">xxx,xxx원</string>
     <string name="clv_friend_data_bt_delete">삭제</string>
 
-    <!-- Custom ListView : month statistics -->
-    <string name="clv_monthStatistics_month_default">1월</string>
-    <string name="clv_monthStatistics_gameRecord">전적</string>
-    <string name="clv_monthStatistics_gameRecord_default">10전 2승 8패</string>
-    <string name="clv_monthStatistics_"></string>
+    <!-- Custom ListView : by month stats -->
+    <string name="clv_byMonthStats_year_default">2023년</string>
+    <string name="clv_byMonthStats_month_default">1월</string>
+    <string name="clv_byMonthStats_record">전적</string>
+    <string name="clv_byMonthStats_record_default">10전 2승 8패</string>
 
-    <!-- Custom GridView : player list -->
-    <string name="cgv_player_list_user_name">XXX 님</string>
-    <string name="cgv_player_list_target_score">수지</string>
-    <string name="cgv_player_list_score">점수</string>
 
 
     <!--                                    Etc

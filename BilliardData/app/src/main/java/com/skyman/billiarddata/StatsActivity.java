@@ -11,12 +11,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.SessionManager;
-import com.skyman.billiarddata.etc.calendar.SameDate;
-import com.skyman.billiarddata.etc.calendar.SameDateCheckerUtil;
 import com.skyman.billiarddata.etc.calendar.SameDateGameAnalysis;
 import com.skyman.billiarddata.etc.database.AppDbManager;
-import com.skyman.billiarddata.etc.statistics.StatsAnalysis;
-import com.skyman.billiarddata.fragment.statistics.StatisticsViewPagerAdapter;
+import com.skyman.billiarddata.fragment.statistics.StatsViewPagerAdapter;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
 import com.skyman.billiarddata.table.billiard.database.BilliardDbManager2;
 import com.skyman.billiarddata.table.player.data.PlayerData;
@@ -25,18 +22,15 @@ import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 
-public class StatisticsManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
+public class StatsActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
-    private static final String CLASS_NAME = "StatisticsManagerActivity";
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final String CLASS_NAME = "StatsActivity";
 
     // instance variable
     private UserData userData = null;
-
-    // instance variable
-    private ArrayList<BilliardData> billiardDataArrayList;
-    private SameDate sameDate;
+    private ArrayList<BilliardData> billiardDataList;
 
     // instance variable
     private AppDbManager appDbManager;
@@ -46,7 +40,7 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
     private ViewPager2 viewPager2;
 
     // instance variable
-    private StatisticsViewPagerAdapter adapter;
+    private StatsViewPagerAdapter adapter;
 
     // getter
     public AppDbManager getAppDbManager() {
@@ -56,7 +50,7 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistics_manager);
+        setContentView(R.layout.activity_stats);
 
         // sessionManager : getter ( userData )
         this.userData = SessionManager.getUserDataFromIntent(getIntent());
@@ -97,39 +91,32 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
     @Override
     public void connectWidget() {
 
-        this.tabLayout = (TabLayout) findViewById(R.id.statisticsManager_tabLayout);
+        this.tabLayout = (TabLayout) findViewById(R.id.stats_tabLayout);
 
-        this.viewPager2 = (ViewPager2) findViewById(R.id.statisticsManager_viewPager2);
+        this.viewPager2 = (ViewPager2) findViewById(R.id.stats_viewPager);
 
     }
 
     @Override
     public void initWidget() {
 
+        SameDateGameAnalysis analysis = new SameDateGameAnalysis();
+
         // 등록된 게임 정보를 가져오기
         if (userData != null) {
 
-            billiardDataArrayList = loadBilliardDataArrayList();
+            billiardDataList = loadBilliardDataArrayList();
 
-            if (!billiardDataArrayList.isEmpty()) {
+            if (!billiardDataList.isEmpty()) {
 
-                SameDateCheckerUtil sameDateCheckerUtil = new SameDateCheckerUtil();
-                sameDate = sameDateCheckerUtil.createSameDate(userData, billiardDataArrayList);
-
-                SameDateGameAnalysis analysis = new SameDateGameAnalysis();
-                analysis.analyze(userData, billiardDataArrayList);
-
-                StatsAnalysis statsAnalysis = new StatsAnalysis(appDbManager);
-                statsAnalysis.analyze(
-                        analysis.getAllGame(),
-                        analysis.getSortedBilliardDataList()
-                );
+                // 같은 날짜 게임 구하는 알고리즘 실행
+                analysis.analyze(userData, billiardDataList);
             }
-
         }
 
         // tabLayout, viewPager2 설정
-        adapter = new StatisticsViewPagerAdapter(this, userData, billiardDataArrayList, sameDate);
+        // analysis 와 analysis 에서 정렬 된 billiardDataList 를
+        adapter = new StatsViewPagerAdapter(this, userData, analysis.getSortedBilliardDataList(), analysis);
         viewPager2.setAdapter(adapter);
         viewPager2.setOffscreenPageLimit(2);
         new TabLayoutMediator(
@@ -141,10 +128,10 @@ public class StatisticsManagerActivity extends AppCompatActivity implements Sect
 
                         switch (position) {
                             case 0:
-                                tab.setText(getString(R.string.statisticsManager_tabLayout_calendar));
+                                tab.setText(getString(R.string.stats_tabLayout_calendar));
                                 break;
                             case 1:
-                                tab.setText(getString(R.string.statisticsManager_tabLayout_monthStatistics));
+                                tab.setText(getString(R.string.stats_tabLayout_monthStatistics));
                                 break;
                             default:
                                 break;

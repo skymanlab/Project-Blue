@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 public class Point {
     private String playerName;      // 참가자 이름
     private int targetPoint;        // 목표 점수
-    private int earnedPoints;        // 획득 점수
+    private int earnedPoints;       // 획득 점수
 
     public Point(String playerName, int targetPoint, int earnedPoints) {
         this.playerName = playerName;
@@ -42,4 +42,5 @@ public class Point {
     public String toString() {
         return "참가자 이름 : " +playerName +", 목표 점수 : " + targetPoint + ", 획득 점수 : " + earnedPoints;
     }
+
 }

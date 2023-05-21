@@ -20,22 +20,24 @@ import com.skyman.billiarddata.table.player.database.PlayerDbManager2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StatsAnalysis extends Stats {
 
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
     private static final String CLASS_NAME = "StatsAnalysis";
+
 
     // instance variable : information
     protected Map<Integer, Counter> playerCounterList;                  // 모든 게임의 참가자 수 별 게임 횟수
-    protected Map<GameMode, Counter> gameModeCounterList;               // 모듬 게임의 게임 모드 별 게임 횟수
-    protected Map<String, RelativeRecordStats> relativeRecordStatsList;  // 모든 게임의 상대 전적 통계 리스트
+    protected Map<GameMode, Counter> gameModeCounterList;               // 모든 게임의 게임 모드 별 게임 횟수
+    protected Map<String, RelativeRecordStats> relativeRecordStatsList;  // 모든 게임의 상대 전적 리스트
+
 
     // instance variable : DB
     private AppDbManager appDbManager;
+
 
     public StatsAnalysis(AppDbManager appDbManager) {
         super();
@@ -46,6 +48,7 @@ public class StatsAnalysis extends Stats {
         this.gameModeCounterList = new HashMap<>();
         this.relativeRecordStatsList = new HashMap<>();
     }
+
 
     public Map<Integer, Counter> getPlayerCounterList() {
         return playerCounterList;
@@ -59,6 +62,13 @@ public class StatsAnalysis extends Stats {
         return relativeRecordStatsList;
     }
 
+
+    /**
+     * 매개변수로 SameDataGame 객체와 ArrayList<BilliardData> 객체를 받아서, 분석한 뒤 필요한 정보를 해당 변수에 저장하는 메소드
+     *
+     * @param sameDateGame
+     * @param billiardDataList
+     */
     public void analyze(SameDateGame sameDateGame, List<BilliardData> billiardDataList) {
         if (billiardDataList == null || billiardDataList.size() == 0)
             return;
@@ -138,10 +148,10 @@ public class StatsAnalysis extends Stats {
 
                                 // 상대 전적 - 위에서 추출한 데이터로 셋팅
                                 if (relativeRecordStatsList.containsKey(name)) {
-                                    relativeRecordStatsList.get(name).updateAll(gameMode,record, cost,time,type,score);
+                                    relativeRecordStatsList.get(name).updateAll(gameMode, record, cost, time, type, score);
                                 } else {
                                     RelativeRecordStats relativeRecord = new RelativeRecordStats(name);
-                                    relativeRecord.updateAll(gameMode, record,cost,time, type,score);
+                                    relativeRecord.updateAll(gameMode, record, cost, time, type, score);
                                     relativeRecordStatsList.put(name, relativeRecord);
                                 }
                             }
@@ -155,6 +165,12 @@ public class StatsAnalysis extends Stats {
         printLog();
     }
 
+
+    /**
+     * gameModeCounterList 에서 매개변수로 받은 게임모드(key, String or GameMode)와 같은 key에 해당하는 Counter에 +1 하는 메소드
+     *
+     * @param gameMode
+     */
     private void updateGameModeCounterList(String gameMode) {
         GameMode convertedGameMode = GameMode.of(gameMode);
         if (gameModeCounterList.containsKey(convertedGameMode)) {
@@ -166,6 +182,12 @@ public class StatsAnalysis extends Stats {
         }
     }
 
+
+    /**
+     * playerCounterList 에서 매개변수로 받은 참가자수(numberOfPlayers)와 같은 key에 해당하는 Counter에 +1 하는 메소드
+     *
+     * @param numberOfPlayers
+     */
     private void updatePlayerCounterList(int numberOfPlayers) {
         if (playerCounterList.containsKey(numberOfPlayers)) {
             playerCounterList.get(numberOfPlayers).plusOne();
@@ -179,7 +201,7 @@ public class StatsAnalysis extends Stats {
     public void printLog() {
         if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
             if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
-                Log.d(CLASS_NAME, "[MonthStatsAnalysis 분석 결과 확인]");
+                Log.d(CLASS_NAME, "[StatsAnalysis 분석 결과 확인]");
 
                 // record
                 Log.d(CLASS_NAME, "1. 총 전적 : " + record);
@@ -222,7 +244,7 @@ public class StatsAnalysis extends Stats {
                 scoreList.forEach(
                         score -> {
                             scoreListString.append("[");
-                            scoreListString.append(score);
+                            scoreListString.append(score.toScoreString());
                             scoreListString.append("]");
                         }
                 );
@@ -277,7 +299,7 @@ public class StatsAnalysis extends Stats {
                 // relative record
                 relativeRecordStatsList.forEach(
                         (s, relativeRecord) -> {
-                            relativeRecord.printLog();
+                            relativeRecord.printLog(CLASS_LOG_SWITCH, CLASS_NAME);
                         }
                 );
             }

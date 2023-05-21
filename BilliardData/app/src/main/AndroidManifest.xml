@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AppSettingActivity" />
         <activity android:name=".BilliardModifyActivity" />
-        <activity android:name=".StatisticsManagerActivity" />
+        <activity android:name=".StatsActivity" />
         <activity android:name=".AppInfoActivity" />
         <activity android:name=".UserManagerActivity" />
         <activity android:name=".BilliardDisplayActivity" />

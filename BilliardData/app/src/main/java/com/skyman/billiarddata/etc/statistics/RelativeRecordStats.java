@@ -14,10 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RelativeRecordStats extends Stats {
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
-    private static final String CLASS_NAME = "RelativeRecordStats";
-    private String name;                                    // 이름
-    private Map<GameMode, ByGameMode> byGameModeList;       // 게임 모드 별 상대 전적 리스트
+    private String name;                                    // 상대의 이름
+    private Map<GameMode, ByGameMode> byGameModeList;       // 게임 모드 별로 상대 전적을 저장하는 이너 클래스
 
     public RelativeRecordStats(String name) {
         super();
@@ -33,6 +31,16 @@ public class RelativeRecordStats extends Stats {
         return byGameModeList;
     }
 
+    /**
+     * 매개변수로 받은 객체로 현재 객체의 내용들을 업데이트하는 메소드(record, costList, timeList, typeList, scoreList, byGameModeList 업데이트)
+     *
+     * @param gameMode   게임 모드
+     * @param record1    전적
+     * @param cost       비용
+     * @param time       시간
+     * @param recordType 승패 유형
+     * @param score      스코어
+     */
     public void updateAll(GameMode gameMode, Record record1, Cost cost, Time time, Record.Type recordType, Score score) {
         // record
         super.record.plusByType(record1);
@@ -47,6 +55,16 @@ public class RelativeRecordStats extends Stats {
         }
     }
 
+    /**
+     * 매개변수로 받은 객체로 byGameModeList 에 기존에 있는 byGameMode 객체의 내용을 업데이트 하는 메소드
+     *
+     * @param gameMode   게임 모드
+     * @param record     전적
+     * @param cost       비용
+     * @param time       시간
+     * @param recordType 승패 유형
+     * @param score      스코어
+     */
     public void updateByGameMode(GameMode gameMode, Record record, Cost cost, Time time, Record.Type recordType, Score score) {
         // record
         byGameModeList.get(gameMode).getRecord().plusByType(record);
@@ -55,6 +73,16 @@ public class RelativeRecordStats extends Stats {
         byGameModeList.get(gameMode).add(cost, time, recordType, score);
     }
 
+    /**
+     * 매개변수로 받은 객체의 토대로 새로운 ByGameMode 객체를 생성하여, 이를 byGameModeList 에 추가 하는 메소드
+     *
+     * @param gameMode   게임 모드
+     * @param record     전적
+     * @param cost       비용
+     * @param time       시간
+     * @param recordType 승패 유형
+     * @param score      스코어
+     */
     public void putByGameMode(GameMode gameMode, Record record, Cost cost, Time time, Record.Type recordType, Score score) {
         ByGameMode byGameMode = new ByGameMode(gameMode);
         // record
@@ -67,9 +95,10 @@ public class RelativeRecordStats extends Stats {
     }
 
     @Override
-    public void printLog() {
+    public void printLog(LogSwitch CLASS_LOG_SWITCH, String CLASS_NAME) {
         if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
             if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
+                Log.d(CLASS_NAME, "[RelativeRecordStats 내용 확인");
                 Log.d(CLASS_NAME, "==== name : " + name + " ====");
 
                 // record
@@ -113,7 +142,7 @@ public class RelativeRecordStats extends Stats {
                 scoreList.forEach(
                         score -> {
                             scoreListString.append("[");
-                            scoreListString.append(score);
+                            scoreListString.append(score.toScoreString());
                             scoreListString.append("]");
                         }
                 );
@@ -137,9 +166,10 @@ public class RelativeRecordStats extends Stats {
                 );
                 Log.d(CLASS_NAME, recordTypeString.toString());
 
+                Log.d(CLASS_NAME, "[byGameMode 내용 확인]");
                 byGameModeList.forEach(
                         (gameMode, byGameMode) -> {
-                            byGameMode.printLog();
+                            byGameMode.printLog(CLASS_LOG_SWITCH, CLASS_NAME);
                         }
                 );
             }
@@ -158,7 +188,7 @@ public class RelativeRecordStats extends Stats {
         }
 
         @Override
-        public void printLog() {
+        public void printLog(LogSwitch CLASS_LOG_SWITCH, String CLASS_NAME) {
             if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
                 if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
                     Log.d(CLASS_NAME, "==== game mode : " + gameMode.toString() + " ====");
@@ -204,7 +234,7 @@ public class RelativeRecordStats extends Stats {
                     scoreList.forEach(
                             score -> {
                                 scoreListString.append("[");
-                                scoreListString.append(score);
+                                scoreListString.append(score.toScoreString());
                                 scoreListString.append("]");
                             }
                     );

@@ -71,22 +71,41 @@ public class Score {
         }
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        if (pointList.size() == 0)
-            return null;
+    public String toScoreString() {
 
-        // 2인 경기만
         StringBuilder scoreString = new StringBuilder();
-        scoreString.append(pointList.get(0).getEarnedPoints());
-        scoreString.append(":");
-        scoreString.append(pointList.get(1).getEarnedPoints());
+        for (int index = 0; index < pointList.size(); index++) {
+
+            if (index == (pointList.size() - 1)) {
+                scoreString.append(pointList.get(index).getEarnedPoints());
+            } else {
+                scoreString.append(pointList.get(index).getEarnedPoints());
+                scoreString.append(":");
+            }
+        }
+
         return scoreString.toString();
     }
 
+    public String toPlayersString() {
+
+        StringBuilder playerString = new StringBuilder();
+
+        for (int index = 0; index < pointList.size(); index++) {
+            playerString.append(pointList.get(index).getPlayerName());
+            playerString.append("(");
+            playerString.append(pointList.get(index).getTargetPoint());
+            playerString.append(")");
+
+            if (index != (pointList.size() - 1)) {
+              playerString.append(" : ");
+            }
+        }
+        return playerString.toString();
+    }
+
     public static class ScoreException extends Exception {
-        public ScoreException(String msg){
+        public ScoreException(String msg) {
             super(msg);
         }
     }

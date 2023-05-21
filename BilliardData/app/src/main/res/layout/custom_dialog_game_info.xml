@@ -13,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/d_gameRecord_title"
+            android:text="@string/d_gameInfo_title"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/d_gameRecord_button_close"
+            android:id="@+id/d_gameInfo_button_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/d_gameRecord_explain"
+        android:text="@string/d_gameInfo_explain"
         android:textAlignment="center" />
 
     <!-- win or loss -->
@@ -58,7 +58,7 @@
             android:paddingEnd="5dp">
 
             <LinearLayout
-                android:id="@+id/d_gameRecord_win_or_loss"
+                android:id="@+id/d_gameInfo_win_or_loss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
@@ -92,7 +92,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_date" />
+                    android:text="@string/d_gameInfo_date" />
 
                 <View
                     android:layout_width="1dp"
@@ -102,7 +102,7 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_date"
+                    android:id="@+id/d_gameInfo_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -127,7 +127,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_speciality" />
+                    android:text="@string/d_gameInfo_speciality" />
 
                 <View
                     android:layout_width="1dp"
@@ -137,11 +137,44 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_speciality"
+                    android:id="@+id/d_gameInfo_speciality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout><!-- End of speciality -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray" />
+
+            <!-- winner -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="@string/d_gameInfo_winner" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/d_gameInfo_winner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout><!-- End of winner -->
 
             <View
                 android:layout_width="match_parent"
@@ -161,7 +194,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_playerList" />
+                    android:text="@string/d_gameInfo_players" />
 
                 <View
                     android:layout_width="1dp"
@@ -171,45 +204,13 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_playerList"
+                    android:id="@+id/d_gameInfo_playerList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout><!-- End of playerList -->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/darker_gray" />
 
-            <!-- winner -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_winner" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/d_gameRecord_winner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout><!-- End of winner -->
 
             <View
                 android:layout_width="match_parent"
@@ -229,7 +230,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_score" />
+                    android:text="@string/d_gameInfo_score" />
 
                 <View
                     android:layout_width="1dp"
@@ -239,7 +240,7 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_score"
+                    android:id="@+id/d_gameInfo_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -264,7 +265,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_playTime" />
+                    android:text="@string/d_gameInfo_playTime" />
 
                 <View
                     android:layout_width="1dp"
@@ -274,7 +275,7 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_playTime"
+                    android:id="@+id/d_gameInfo_playTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -299,7 +300,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
-                    android:text="@string/d_gameRecord_cost" />
+                    android:text="@string/d_gameInfo_cost" />
 
                 <View
                     android:layout_width="1dp"
@@ -309,7 +310,7 @@
                     android:background="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/d_gameRecord_cost"
+                    android:id="@+id/d_gameInfo_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -324,6 +325,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/d_gameRecord_playerList_explain"
+        android:text="@string/d_gameInfo_players_explain"
         android:textAlignment="textEnd" />
 </LinearLayout>

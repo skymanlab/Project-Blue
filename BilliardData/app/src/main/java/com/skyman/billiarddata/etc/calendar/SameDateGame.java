@@ -9,17 +9,16 @@ import com.skyman.billiarddata.etc.game.Date;
 import com.skyman.billiarddata.etc.game.Record;
 import com.skyman.billiarddata.etc.game.Reference;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SameDateGame {
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.ON;
-    private static final String CLASS_NAME = "SameDateGame";
-    private Date date;
-    private Record record;
-    private Cost totalCost;
-    private List<Record.Type> recordTypeList;
-    private List<Reference> referenceList;
+public class SameDateGame implements Serializable {
+    private Date date;                          // 날짜
+    private Record record;                      // 전적
+    private Cost totalCost;                     // 가격
+    private List<Record.Type> recordTypeList;   // 승패 유형 리스트
+    private List<Reference> referenceList;      // 참고 리스트
 
     public SameDateGame() {
         this.date = new Date();
@@ -49,7 +48,7 @@ public class SameDateGame {
         return referenceList;
     }
 
-    public void printLog() {
+    public void printLog(LogSwitch CLASS_LOG_SWITCH, String CLASS_NAME) {
         if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
             if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {
                 Log.d(CLASS_NAME, "[sameDateGame 내용 확인]");

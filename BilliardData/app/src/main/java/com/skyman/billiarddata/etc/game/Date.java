@@ -56,7 +56,7 @@ public class Date {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public static Date createByParsing(String parsedDate) {
+    public static Date newInstanceByParsing(String parsedDate) {
         LocalDate localDate = LocalDate.parse(parsedDate, DateTimeFormatter.ofPattern(DATE_PATTERN));
         return new Date(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
 

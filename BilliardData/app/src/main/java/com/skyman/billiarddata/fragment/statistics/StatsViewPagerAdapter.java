@@ -5,25 +5,26 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.skyman.billiarddata.etc.calendar.SameDateGameAnalysis;
+import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.table.billiard.data.BilliardData;
-import com.skyman.billiarddata.etc.calendar.SameDate;
 import com.skyman.billiarddata.table.user.data.UserData;
 
 import java.util.ArrayList;
 
-public class StatisticsViewPagerAdapter extends FragmentStateAdapter {
+public class StatsViewPagerAdapter extends FragmentStateAdapter {
 
     // instance variable
     private UserData userData;
-    private ArrayList<BilliardData> billiardDataArrayList;
-    private SameDate sameDate;
+    private ArrayList<BilliardData> billiardDataList;
+    private SameDateGameAnalysis analysis;
 
     // constructor
-    public StatisticsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, UserData userData, ArrayList<BilliardData> billiardDataArrayList, SameDate sameDate) {
+    public StatsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, UserData userData, ArrayList<BilliardData> billiardDataList, SameDateGameAnalysis analysis) {
         super(fragmentActivity);
         this.userData = userData;
-        this.billiardDataArrayList = billiardDataArrayList;
-        this.sameDate = sameDate;
+        this.billiardDataList = billiardDataList;
+        this.analysis = analysis;
     }
 
     @NonNull
@@ -32,9 +33,9 @@ public class StatisticsViewPagerAdapter extends FragmentStateAdapter {
 
         switch (position) {
             case 0:
-                return CalendarFragment.newInstance(userData, billiardDataArrayList, sameDate);
+                return CalendarFragment.newInstance(userData, billiardDataList, analysis.getSameDateGameList());
             case 1:
-                return ChartFragment.newInstance(userData, billiardDataArrayList, sameDate);
+                return ChartFragment.newInstance(userData, billiardDataList, analysis.getAllGame(), analysis.getSameYearGameList(), analysis.getSameMonthGameList());
             default:
                 return null;
         }
