@@ -12,7 +12,6 @@ import com.skyman.billiarddata.R;
 import com.skyman.billiarddata.etc.calendar.SameDateGame;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ByMonthStatsLvAdapter extends BaseAdapter {
 
@@ -46,16 +45,16 @@ public class ByMonthStatsLvAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // view
-        convertView = inflater.inflate(R.layout.custom_lv_by_month_stats, parent, false);
+        convertView = inflater.inflate(R.layout.lv_by_month_stats, parent, false);
 
         // sameDateGame
         SameDateGame sameMonthGame = (SameDateGame) getItem(position);
 
         // widget
-        MaterialCardView contentWrapper = convertView.findViewById(R.id.clv_byMonthStats_contentWrapper);
-        MaterialTextView year = convertView.findViewById(R.id.clv_byMonthStats_year);
-        MaterialTextView month = convertView.findViewById(R.id.clv_byMonthStats_month);
-        MaterialTextView record = convertView.findViewById(R.id.clv_byMonthStats_record);
+        MaterialCardView contentWrapper = convertView.findViewById(R.id.lv_byMonthStats_contentWrapper);
+        MaterialTextView year = convertView.findViewById(R.id.lv_byMonthStats_year);
+        MaterialTextView month = convertView.findViewById(R.id.lv_byMonthStats_month);
+        MaterialTextView record = convertView.findViewById(R.id.lv_byMonthStats_record);
 
         // setup widget
         year.setText(sameMonthGame.getDate().getYear() + "년");

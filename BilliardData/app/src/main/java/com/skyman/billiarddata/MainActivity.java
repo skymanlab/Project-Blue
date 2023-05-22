@@ -145,22 +145,22 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
     public void connectWidget() {
 
         // 당구 데이터 입력
-        billiardInput = (Button) findViewById(R.id.main_button_billiardInput);
+        billiardInput = (Button) findViewById(R.id.A_main_button_billiardInput);
 
         // 당구 데이터 보기
-        billiardDisplay = (Button) findViewById(R.id.main_button_billiardDisplay);
+        billiardDisplay = (Button) findViewById(R.id.A_main_button_billiardDisplay);
 
         // 나의 정보
-        userManager = (Button) findViewById(R.id.main_button_userManager);
+        userManager = (Button) findViewById(R.id.A_main_button_userManager);
 
         // 통계
-        stats = (Button) findViewById(R.id.main_button_stats);
+        stats = (Button) findViewById(R.id.A_main_button_stats);
 
         // 어플 설정
-        appSetting = (Button) findViewById(R.id.main_button_appSetting);
+        appSetting = (Button) findViewById(R.id.A_main_button_appSetting);
 
         // 어플 정보
-        appInfo = (Button) findViewById(R.id.main_button_appInfo);
+        appInfo = (Button) findViewById(R.id.A_main_button_appInfo);
 
     }
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 
                         // sessionManager : set ( userData)
                         SessionManager.setUserDataFromIntent(intent, userData);
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
         // <사용자 확인>
         new AlertDialog.Builder(this)
-                .setTitle(R.string.main_dialog_playerChoiceInGame_title)
+                .setTitle(R.string.A_main_dialog_playerChoiceInGame_title)
                 .setSingleChoiceItems(
                         friendNameList,
                         0,
@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         }
                 )
                 .setPositiveButton(
-                        R.string.main_dialog_playerChoiceInGame_positive,
+                        R.string.A_main_dialog_playerChoiceInGame_positive,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         }
                 )
                 .setNegativeButton(
-                        R.string.main_dialog_playerChoiceInGame_negative,
+                        R.string.A_main_dialog_playerChoiceInGame_negative,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
         // <사용자 확인>
         new AlertDialog.Builder(this)
-                .setTitle(R.string.main_dialog_playerChoiceInGame_title)
+                .setTitle(R.string.A_main_dialog_playerChoiceInGame_title)
                 .setMultiChoiceItems(
                         friendNameList,
                         null,
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         }
                 )
                 .setPositiveButton(
-                        R.string.main_dialog_playerChoiceInGame_positive,
+                        R.string.A_main_dialog_playerChoiceInGame_positive,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                                     // <사용자 알림>
                                     Toast.makeText(
                                             getApplicationContext(),
-                                            R.string.main_noticeUser_choicePlayer,
+                                            R.string.A_main_noticeUser_choicePlayer,
                                             Toast.LENGTH_LONG
                                     ).show();
                                     return;
@@ -464,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
                         }
                 )
                 .setNegativeButton(
-                        R.string.main_dialog_playerChoiceInGame_negative,
+                        R.string.A_main_dialog_playerChoiceInGame_negative,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -477,32 +477,32 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     /**
-     * AlertDialog : 사용자 등록을 하기위해 이동한다. ( UserManagerActivity 의 UserInputFragment )
+     * AlertDialog : 사용자 등록을 하기위해 이동한다. ( UserActivity 의 UserInputFragment )
      */
     private void showDialogOfUserRegisterCheck() {
         final String METHOD_NAME = "[showDialogOfUserRegisterCheck] ";
 
         // <사용자 알림>
         new AlertDialog.Builder(this)
-                .setTitle(R.string.main_dialog_userRegisterCheck_title)
-                .setMessage(R.string.main_dialog_userRegisterCheck_message)
-                .setPositiveButton(R.string.main_dialog_userRegisterCheck_positive, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.A_main_dialog_userRegisterCheck_title)
+                .setMessage(R.string.A_main_dialog_userRegisterCheck_message)
+                .setPositiveButton(R.string.A_main_dialog_userRegisterCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "나의 정보가 없어서 등록하러 이동합니다.");
 
-                        Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 
                         // sessionManager : set ( pageNumber )
-                        SessionManager.setPageNumberFromIntent(intent, UserManagerActivity.USER_INPUT_FRAGMENT);
+                        SessionManager.setPageNumberFromIntent(intent, UserActivity.USER_INPUT_FRAGMENT);
 
                         // 이동
                         startActivity(intent);
 
                     }
                 })
-                .setNegativeButton(R.string.main_dialog_userRegisterCheck_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.A_main_dialog_userRegisterCheck_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -513,33 +513,33 @@ public class MainActivity extends AppCompatActivity implements SectionManager.In
 
 
     /**
-     * AlertDialog : 친구등록을 하기위해 이동한다. ( UserManagerActivity 의 UserFriendFragment )
+     * AlertDialog : 친구등록을 하기위해 이동한다. ( UserActivity 의 UserFriendFragment )
      */
     private void showDialogOfFriendRegisterCheck() {
         final String METHOD_NAME = "[showDialogOfFriendRegisterCheck] ";
 
         // <사용자 알림>
         new AlertDialog.Builder(this)
-                .setTitle(R.string.main_dialog_friendRegisterCheck_title)
-                .setMessage(R.string.main_dialog_friendRegisterCheck_message)
-                .setPositiveButton(R.string.main_dialog_friendRegisterCheck_positive, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.A_main_dialog_friendRegisterCheck_title)
+                .setMessage(R.string.A_main_dialog_friendRegisterCheck_message)
+                .setPositiveButton(R.string.A_main_dialog_friendRegisterCheck_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "등록된 친구가 없어서 추가하러 이동합니다.");
 
-                        Intent intent = new Intent(getApplicationContext(), UserManagerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 
                         // sessionManager : set ( userData, pageNumber )
                         SessionManager.setUserDataFromIntent(intent, userData);
-                        SessionManager.setPageNumberFromIntent(intent, UserManagerActivity.USER_FRIEND_FRAGMENT);
+                        SessionManager.setPageNumberFromIntent(intent, UserActivity.USER_FRIEND_FRAGMENT);
 
                         // 이동
                         startActivity(intent);
 
                     }
                 })
-                .setNegativeButton(R.string.main_dialog_friendRegisterCheck_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.A_main_dialog_friendRegisterCheck_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

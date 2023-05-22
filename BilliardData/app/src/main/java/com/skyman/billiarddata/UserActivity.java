@@ -17,11 +17,11 @@ import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.table.user.data.UserData;
 
 
-public class UserManagerActivity extends AppCompatActivity implements SectionManager.Initializable {
+public class UserActivity extends AppCompatActivity implements SectionManager.Initializable {
 
     // constant
     private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
-    private static final String CLASS_NAME = "UserManagerActivity";
+    private static final String CLASS_NAME = "UserActivity";
 
     // constant
     public static final int USER_INPUT_FRAGMENT = 0;
@@ -55,7 +55,7 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
     protected void onCreate(Bundle savedInstanceState) {
         final String METHOD_NAME = "[onCreate] ";
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_manager);
+        setContentView(R.layout.activity_user);
 
         // sessionManager : getter ( userData )
         this.userData = SessionManager.getUserDataFromIntent(getIntent());
@@ -108,9 +108,9 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
     @Override
     public void connectWidget() {
 
-        tabLayout = (TabLayout) findViewById(R.id.userManager_tabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.A_user_tabLayout);
 
-        viewPager2 = (ViewPager2) findViewById(R.id.userManager_viewPager2);
+        viewPager2 = (ViewPager2) findViewById(R.id.A_user_viewPager2);
 
     }
 
@@ -130,13 +130,13 @@ public class UserManagerActivity extends AppCompatActivity implements SectionMan
 
                         switch (position) {
                             case 0:
-                                tab.setText(getString(R.string.userManager_tabLayout_userInput));
+                                tab.setText(getString(R.string.A_user_tabLayout_userInput));
                                 break;
                             case 1:
-                                tab.setText(getString(R.string.userManager_tabLayout_userInfo));
+                                tab.setText(getString(R.string.A_user_tabLayout_userInfo));
                                 break;
                             case 2:
-                                tab.setText(getString(R.string.userManager_tabLayout_userFriend));
+                                tab.setText(getString(R.string.A_user_tabLayout_userFriend));
                         }
                     }
                 }

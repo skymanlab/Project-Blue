@@ -19,7 +19,7 @@
             android:background="@color/colorActivityTitle"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/appInfo_title" />
+            android:text="@string/A_appInfo_title" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_appName" />
+                                android:text="@string/A_appInfo_appName" />
 
                             <View
                                 android:layout_width="1dp"
@@ -66,7 +66,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_appName_content" />
+                                android:text="@string/A_appInfo_appName_content" />
                         </LinearLayout><!-- End of content 2 -->
 
                         <!-- content 2. developer group-->
@@ -79,7 +79,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_developerGroup" />
+                                android:text="@string/A_appInfo_developerGroup" />
 
                             <View
                                 android:layout_width="1dp"
@@ -91,7 +91,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_developerGroup_content" />
+                                android:text="@string/A_appInfo_developerGroup_content" />
                         </LinearLayout><!-- End of content 2 -->
 
                         <!-- content 3. developer -->
@@ -104,7 +104,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_developer" />
+                                android:text="@string/A_appInfo_developer" />
 
                             <View
                                 android:layout_width="1dp"
@@ -116,7 +116,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_developer_content" />
+                                android:text="@string/A_appInfo_developer_content" />
                         </LinearLayout><!-- End of content 3 -->
 
                         <!-- content 4. version -->
@@ -129,7 +129,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_version" />
+                                android:text="@string/A_appInfo_version" />
 
                             <View
                                 android:layout_width="1dp"
@@ -141,7 +141,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_version_content" />
+                                android:text="@string/A_appInfo_version_content" />
                         </LinearLayout><!-- End of content 4 -->
 
                         <!-- content 5. main site -->
@@ -154,7 +154,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_blog_1" />
+                                android:text="@string/A_appInfo_blog_1" />
 
                             <View
                                 android:layout_width="1dp"
@@ -164,11 +164,11 @@
                                 android:background="@android:color/black" />
 
                             <TextView
-                                android:id="@+id/appInfo_blog_1"
+                                android:id="@+id/A_appInfo_blog_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:text="@string/appInfo_blog_1_content" />
+                                android:text="@string/A_appInfo_blog_1_content" />
                         </LinearLayout><!-- End of content 5 -->
 
                         <LinearLayout
@@ -180,7 +180,7 @@
                             <TextView
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appInfo_blog_2" />
+                                android:text="@string/A_appInfo_blog_2" />
 
                             <View
                                 android:layout_width="1dp"
@@ -190,36 +190,36 @@
                                 android:background="@android:color/black" />
 
                             <TextView
-                                android:id="@+id/appInfo_blog_2"
+                                android:id="@+id/A_appInfo_blog_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:text="@string/appInfo_blog_2_content" />
+                                android:text="@string/A_appInfo_blog_2_content" />
                         </LinearLayout><!-- End of content 5 -->
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/appInfo_adMob"
+                    android:id="@+id/A_appInfo_adMob"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:layout_marginEnd="15dp"
-                    android:text="@string/appInfo_button_adMob" />
+                    android:text="@string/A_appInfo_button_adMob" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/appInfo_adView"
+                        android:id="@+id/A_appInfo_adView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         ads:adSize="SMART_BANNER"
-                        ads:adUnitId="@string/appInfo_adMob_smartBanner_realId" />
+                        ads:adUnitId="@string/A_appInfo_adMob_smartBanner_realId" />
                 </FrameLayout>
             </LinearLayout><!-- End of content -->
         </ScrollView>

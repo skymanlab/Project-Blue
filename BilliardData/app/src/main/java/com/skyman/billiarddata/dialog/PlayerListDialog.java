@@ -64,7 +64,7 @@ public class PlayerListDialog extends DialogFragment implements SectionManager.I
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.custom_dialog_player_list, container, false);
+        return inflater.inflate(R.layout.dialog_player_list, container, false);
     }
 
     @Override

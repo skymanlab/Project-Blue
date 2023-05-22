@@ -80,14 +80,11 @@ public class BilliardLvAdapter2 extends BaseAdapter {
 
         // inflate
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.custom_lv_billiard_data, parent, false);
+        convertView = inflater.inflate(R.layout.lv_billiard_data, parent, false);
 
-//        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "[ListView 내용 확인]");
-//        DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "position : " + position);
 
         // [lv/C]BilliardData : 각 리스트에 뿌려줄 아이템을 받아오는데 BilliardData 재활용
         BilliardData billiardData = (BilliardData) getItem(position);
-//        DeveloperLog.printLogBilliardData(CLASS_LOG_SWITCH,CLASS_NAME, billiardData);
 
         // 0. count (primary key/autoincrement)
         // 1. date
@@ -100,16 +97,16 @@ public class BilliardLvAdapter2 extends BaseAdapter {
         // 8. cost
 
         // connect widget
-        LinearLayout countWrapper = (LinearLayout) convertView.findViewById(R.id.clv_billiardData_count_wrapper);
-        TextView count = (TextView) convertView.findViewById(R.id.clv_billiardData_count);                            // 0. count
-        TextView date = (TextView) convertView.findViewById(R.id.clv_billiardData_date);                              // 1. date
-        TextView gameMode = (TextView) convertView.findViewById(R.id.clv_billiardData_gameMode);                      // 2. game mode
-        LinearLayout playerCountWrapper = (LinearLayout) convertView.findViewById(R.id.clv_billiardData_playerCount_wrapper);
-        TextView playerCount = (TextView) convertView.findViewById(R.id.clv_billiardData_playerCount);                // 3. player count
-        TextView winnerName = (TextView) convertView.findViewById(R.id.clv_billiardData_winnerName);                  // 5. winner name
-        TextView playTime = (TextView) convertView.findViewById(R.id.clv_billiardData_playTime);                      // 6. play time
-        TextView score = (TextView) convertView.findViewById(R.id.clv_billiardData_score);                            // 7. score
-        TextView cost = (TextView) convertView.findViewById(R.id.clv_billiardData_cost);                              // 8. cost
+        LinearLayout countWrapper = (LinearLayout) convertView.findViewById(R.id.lv_billiardData_count_wrapper);
+        TextView count = (TextView) convertView.findViewById(R.id.lv_billiardData_count);                            // 0. count
+        TextView date = (TextView) convertView.findViewById(R.id.lv_billiardData_date);                              // 1. date
+        TextView gameMode = (TextView) convertView.findViewById(R.id.lv_billiardData_gameMode);                      // 2. game mode
+        LinearLayout playerCountWrapper = (LinearLayout) convertView.findViewById(R.id.lv_billiardData_playerCount_wrapper);
+        TextView playerCount = (TextView) convertView.findViewById(R.id.lv_billiardData_playerCount);                // 3. player count
+        TextView winnerName = (TextView) convertView.findViewById(R.id.lv_billiardData_winnerName);                  // 5. winner name
+        TextView playTime = (TextView) convertView.findViewById(R.id.lv_billiardData_playTime);                      // 6. play time
+        TextView score = (TextView) convertView.findViewById(R.id.lv_billiardData_score);                            // 7. score
+        TextView cost = (TextView) convertView.findViewById(R.id.lv_billiardData_cost);                              // 8. cost
 
         // init widget :
         count.setText((position+1)+"");                                                                // 0. count

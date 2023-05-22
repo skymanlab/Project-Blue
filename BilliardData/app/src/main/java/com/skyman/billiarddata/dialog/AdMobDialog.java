@@ -54,7 +54,7 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.custom_dialog_admob, container, false);
+        return inflater.inflate(R.layout.dialog_admob, container, false);
     }
 
     @Override
@@ -114,7 +114,6 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
 
                         AdMobDialog.this.interstitialAd = interstitialAd;
 
-
                         interstitialAd.setFullScreenContentCallback(
                                 new FullScreenContentCallback() {
                                     @Override
@@ -123,7 +122,6 @@ public class AdMobDialog extends DialogFragment implements SectionManager.Initia
                                         // Make sure to set your reference to null so you don't
                                         // show it a second time.
                                         AdMobDialog.this.interstitialAd = null;
-
                                         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "onAdFailedToShowFullScreenContent() 실행 중 -> 즉, 실패");
                                         DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, "에러 내용 : " + adError.toString());
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.UserManagerActivity;
+import com.skyman.billiarddata.UserActivity;
 import com.skyman.billiarddata.developer.DeveloperLog;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
@@ -147,8 +147,8 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
 
                             // userData 내용이 삭제되었으므로 userData 도 null 로 변경
                             // (주의) userInput 에서 userData 에 null 로 변경하였더라도
-                            //        여기의 userData 는 여전히 UserManagerActivity 의 userData 를 가리키고 있으므로
-                            //        만약 이 Fragment 에서 userData 로 하는 작업이 있다면 UserManagerActivity 의 userData 를 사용하면 안되므로
+                            //        여기의 userData 는 여전히 UserActivity 의 userData 를 가리키고 있으므로
+                            //        만약 이 Fragment 에서 userData 로 하는 작업이 있다면 UserActivity 의 userData 를 사용하면 안되므로
                             //        UserInfoFragment 의 userData 는 null 로 바꾸어 주어야 한다.
                             userData = null;
 
@@ -174,7 +174,7 @@ public class UserInfoFragment extends Fragment implements SectionManager.Initial
     @Override
     public void initAppDbManager() {
 
-        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+        appDbManager = ((UserActivity) getActivity()).getAppDbManager();
 
     }
 

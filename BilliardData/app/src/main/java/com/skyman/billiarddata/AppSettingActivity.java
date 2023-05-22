@@ -91,7 +91,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                                         // <사용자 알림>
                                         Toast.makeText(
                                                 getApplicationContext(),
-                                                R.string.appSetting_dataBackUp_export_noticeUser_success,
+                                                R.string.A_appSetting_dataBackUp_export_noticeUser_success,
                                                 Toast.LENGTH_SHORT
                                         ).show();
                                     }
@@ -104,14 +104,13 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                         // <사용자 알림>
                         Toast.makeText(
                                 getApplicationContext(),
-                                R.string.appSetting_dataBackUp_export_noticeUser_error,
+                                R.string.A_appSetting_dataBackUp_export_noticeUser_error,
                                 Toast.LENGTH_SHORT
                         ).show();
                         e.printStackTrace();
                     }
                 }
             }
-
         } else if (requestCode == FileConstants.REQUEST_CODE_OPEN_FILE && resultCode == Activity.RESULT_OK) {
 
             if (data != null) {
@@ -134,7 +133,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                                         // <사용자 알림>
                                         Toast.makeText(
                                                 getApplicationContext(),
-                                                R.string.appSetting_dataBackUp_import_noticeUser_success,
+                                                R.string.A_appSetting_dataBackUp_import_noticeUser_success,
                                                 Toast.LENGTH_SHORT
                                         ).show();
                                     }
@@ -145,17 +144,14 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                         // <사용자 알림>
                         Toast.makeText(
                                 getApplicationContext(),
-                                R.string.appSetting_dataBackUp_import_noticeUser_error,
+                                R.string.A_appSetting_dataBackUp_import_noticeUser_error,
                                 Toast.LENGTH_SHORT
                         ).show();
                         e.printStackTrace();
                     }
                 }
-
             }
-
         }
-
     }
 
     @Override
@@ -182,9 +178,9 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
     @Override
     public void connectWidget() {
 
-        dataBackupExportWrapper = (LinearLayout) findViewById(R.id.appSetting_dataBackUp_exportWrapper);
+        dataBackupExportWrapper = (LinearLayout) findViewById(R.id.A_appSetting_dataBackUp_exportWrapper);
 
-        dataBackupImportWrapper = (LinearLayout) findViewById(R.id.appSetting_dataBackUp_importWrapper);
+        dataBackupImportWrapper = (LinearLayout) findViewById(R.id.A_appSetting_dataBackUp_importWrapper);
     }
 
     @Override
@@ -210,7 +206,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                                 // <사용자 알림>
                                 Toast.makeText(
                                         getApplicationContext(),
-                                        R.string.appSetting_dataBackUp_export_noticeUser_error,
+                                        R.string.A_appSetting_dataBackUp_export_noticeUser_error,
                                         Toast.LENGTH_SHORT
                                 ).show();
 
@@ -222,12 +218,11 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                             // <사용자 알림>
                             Toast.makeText(
                                     getApplicationContext(),
-                                    R.string.appSetting_dataBackUp_export_noticeUser_noData,
+                                    R.string.A_appSetting_dataBackUp_export_noticeUser_noData,
                                     Toast.LENGTH_SHORT
                             ).show();
 
                         }
-
                     }
                 }
         );
@@ -243,7 +238,7 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                             // <사용자 알림>
                             Toast.makeText(
                                     getApplicationContext(),
-                                    R.string.appSetting_dataBackUp_import_noticeUser_noImport,
+                                    R.string.A_appSetting_dataBackUp_import_noticeUser_noImport,
                                     Toast.LENGTH_SHORT
                             ).show();
 
@@ -254,7 +249,6 @@ public class AppSettingActivity extends AppCompatActivity implements SectionMana
                             fileImport.init();
 
                         }
-
                     }
                 }
         );

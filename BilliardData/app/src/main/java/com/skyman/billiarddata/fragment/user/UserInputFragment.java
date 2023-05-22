@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.UserManagerActivity;
+import com.skyman.billiarddata.UserActivity;
 import com.skyman.billiarddata.developer.DeveloperLog;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.etc.SectionManager;
@@ -139,7 +139,7 @@ public class UserInputFragment extends Fragment implements SectionManager.Initia
     @Override
     public void initAppDbManager() {
 
-        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+        appDbManager = ((UserActivity) getActivity()).getAppDbManager();
 
     }
 

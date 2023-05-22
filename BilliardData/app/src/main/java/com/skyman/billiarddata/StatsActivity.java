@@ -91,9 +91,9 @@ public class StatsActivity extends AppCompatActivity implements SectionManager.I
     @Override
     public void connectWidget() {
 
-        this.tabLayout = (TabLayout) findViewById(R.id.stats_tabLayout);
+        this.tabLayout = (TabLayout) findViewById(R.id.A_stats_tabLayout);
 
-        this.viewPager2 = (ViewPager2) findViewById(R.id.stats_viewPager);
+        this.viewPager2 = (ViewPager2) findViewById(R.id.A_stats_viewPager);
 
     }
 
@@ -128,10 +128,10 @@ public class StatsActivity extends AppCompatActivity implements SectionManager.I
 
                         switch (position) {
                             case 0:
-                                tab.setText(getString(R.string.stats_tabLayout_calendar));
+                                tab.setText(getString(R.string.A_stats_tabLayout_calendar));
                                 break;
                             case 1:
-                                tab.setText(getString(R.string.stats_tabLayout_monthStatistics));
+                                tab.setText(getString(R.string.A_stats_tabLayout_monthStatistics));
                                 break;
                             default:
                                 break;

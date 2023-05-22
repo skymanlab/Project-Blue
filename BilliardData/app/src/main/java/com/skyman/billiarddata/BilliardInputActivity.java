@@ -118,50 +118,50 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
     public void connectWidget() {
 
         // playerSection wrapper
-        this.playerWrapper[0] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_0);
-        this.playerWrapper[1] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_1);
-        this.playerWrapper[2] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_2);
-        this.playerWrapper[3] = (LinearLayout) findViewById(R.id.billiardInput_playerSection_Wrapper_3);
+        this.playerWrapper[0] = (LinearLayout) findViewById(R.id.A_billiardInput_playerSection_Wrapper_0);
+        this.playerWrapper[1] = (LinearLayout) findViewById(R.id.A_billiardInput_playerSection_Wrapper_1);
+        this.playerWrapper[2] = (LinearLayout) findViewById(R.id.A_billiardInput_playerSection_Wrapper_2);
+        this.playerWrapper[3] = (LinearLayout) findViewById(R.id.A_billiardInput_playerSection_Wrapper_3);
 
         // playerSection name
-        this.playerName[0] = (TextView) findViewById(R.id.billiardInput_playerSection_name_0);
-        this.playerName[1] = (TextView) findViewById(R.id.billiardInput_playerSection_name_1);
-        this.playerName[2] = (TextView) findViewById(R.id.billiardInput_playerSection_name_2);
-        this.playerName[3] = (TextView) findViewById(R.id.billiardInput_playerSection_name_3);
+        this.playerName[0] = (TextView) findViewById(R.id.A_billiardInput_playerSection_name_0);
+        this.playerName[1] = (TextView) findViewById(R.id.A_billiardInput_playerSection_name_1);
+        this.playerName[2] = (TextView) findViewById(R.id.A_billiardInput_playerSection_name_2);
+        this.playerName[3] = (TextView) findViewById(R.id.A_billiardInput_playerSection_name_3);
 
         // playerSection targetScore
-        this.playerTargetScore[0] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_0);
-        this.playerTargetScore[1] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_1);
-        this.playerTargetScore[2] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_2);
-        this.playerTargetScore[3] = (Spinner) findViewById(R.id.billiardInput_playerSection_targetScore_3);
+        this.playerTargetScore[0] = (Spinner) findViewById(R.id.A_billiardInput_playerSection_targetScore_0);
+        this.playerTargetScore[1] = (Spinner) findViewById(R.id.A_billiardInput_playerSection_targetScore_1);
+        this.playerTargetScore[2] = (Spinner) findViewById(R.id.A_billiardInput_playerSection_targetScore_2);
+        this.playerTargetScore[3] = (Spinner) findViewById(R.id.A_billiardInput_playerSection_targetScore_3);
 
         // playerSection score
-        this.playerScore[0] = (EditText) findViewById(R.id.billiardInput_playerSection_score_0);
-        this.playerScore[1] = (EditText) findViewById(R.id.billiardInput_playerSection_score_1);
-        this.playerScore[2] = (EditText) findViewById(R.id.billiardInput_playerSection_score_2);
-        this.playerScore[3] = (EditText) findViewById(R.id.billiardInput_playerSection_score_3);
+        this.playerScore[0] = (EditText) findViewById(R.id.A_billiardInput_playerSection_score_0);
+        this.playerScore[1] = (EditText) findViewById(R.id.A_billiardInput_playerSection_score_1);
+        this.playerScore[2] = (EditText) findViewById(R.id.A_billiardInput_playerSection_score_2);
+        this.playerScore[3] = (EditText) findViewById(R.id.A_billiardInput_playerSection_score_3);
 
         // [iv/C]TextView : date mapping / 날짜
-        this.date = (TextView) findViewById(R.id.billiardInput_date);
+        this.date = (TextView) findViewById(R.id.A_billiardInput_date);
 
         // [iv/C]TextView : reDate mapping / 날짜 다시
-        this.reDate = (TextView) findViewById(R.id.billiardInput_billiardSection_date_button_re);
+        this.reDate = (TextView) findViewById(R.id.A_billiardInput_billiardSection_date_button_re);
 
         // [iv/C]Spinner : gameMode mapping / 종목
-        this.gameMode = (Spinner) findViewById(R.id.billiardInput_billiardSection_gameMode);
+        this.gameMode = (Spinner) findViewById(R.id.A_billiardInput_billiardSection_gameMode);
 
         // [iv/C]Spinner : winnerName mapping / 승자
-        this.playerNameList = (Spinner) findViewById(R.id.billiardInput_spinner_playerNameList);
+        this.playerNameList = (Spinner) findViewById(R.id.A_billiardInput_spinner_playerNameList);
 
         // [iv/C]EditText : playTime mapping / 게임 시간
-        this.playTime = (EditText) findViewById(R.id.billiardInput_billiardSection_playTime);
+        this.playTime = (EditText) findViewById(R.id.A_billiardInput_billiardSection_playTime);
 
         // [iv/C]EditText : cost mapping / 비용
-        this.cost = (EditText) findViewById(R.id.billiardInput_billiardSection_cost);
+        this.cost = (EditText) findViewById(R.id.A_billiardInput_billiardSection_cost);
 
 
         // [iv/C]Button : input mapping / 입력 버튼
-        this.save = (Button) findViewById(R.id.billiardInput_billiardSection_button_save);
+        this.save = (Button) findViewById(R.id.A_billiardInput_billiardSection_button_save);
 
     }
 
@@ -460,9 +460,9 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
 
                             // <사용자 확인>
                             new AlertDialog.Builder(this)
-                                    .setTitle(R.string.billiardInput_dialog_saveData_title)
-                                    .setMessage(R.string.billiardInput_dialog_saveData_message)
-                                    .setPositiveButton(R.string.billiardInput_dialog_saveData_positive, new DialogInterface.OnClickListener() {
+                                    .setTitle(R.string.A_billiardInput_dialog_saveData_title)
+                                    .setMessage(R.string.A_billiardInput_dialog_saveData_message)
+                                    .setPositiveButton(R.string.A_billiardInput_dialog_saveData_positive, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
 
@@ -470,7 +470,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                                             saveData();
                                         }
                                     })
-                                    .setNegativeButton(R.string.billiardInput_dialog_saveData_negative, new DialogInterface.OnClickListener() {
+                                    .setNegativeButton(R.string.A_billiardInput_dialog_saveData_negative, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
 
@@ -484,7 +484,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                             // <사용자 알림>
                             Toast.makeText(
                                     this,
-                                    R.string.billiardInput_noticeUser_inputDataCheck_playTime,
+                                    R.string.A_billiardInput_noticeUser_inputDataCheck_playTime,
                                     Toast.LENGTH_SHORT
                             ).show();
                         } // [check 5]
@@ -495,7 +495,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                         // <사용자 알림>
                         Toast.makeText(
                                 this,
-                                R.string.billiardInput_noticeUser_winnerScoreCheck,
+                                R.string.A_billiardInput_noticeUser_winnerScoreCheck,
                                 Toast.LENGTH_SHORT
                         ).show();
 
@@ -507,7 +507,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                     DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<billiard widget> 모든 데이터를 입력해줘!");
                     Toast.makeText(
                             this,
-                            R.string.billiardInput_noticeUser_billiardDataCheck,
+                            R.string.A_billiardInput_noticeUser_billiardDataCheck,
                             Toast.LENGTH_SHORT
                     ).show();
 
@@ -519,7 +519,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
                 DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<score> 범위에 맞는 점수를 입력해줘!");
                 Toast.makeText(
                         this,
-                        R.string.billiardInput_noticeUser_scoreRangeCheck,
+                        R.string.A_billiardInput_noticeUser_scoreRangeCheck,
                         Toast.LENGTH_SHORT
                 ).show();
 
@@ -531,7 +531,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
             DeveloperLog.printLog(CLASS_LOG_SWITCH, CLASS_NAME, METHOD_NAME + "<player widget> 모든 데이터를 입력해줘!");
             Toast.makeText(
                     this,
-                    R.string.billiardInput_noticeUser_playerDataCheck,
+                    R.string.A_billiardInput_noticeUser_playerDataCheck,
                     Toast.LENGTH_SHORT
             ).show();
 
@@ -585,7 +585,7 @@ public class BilliardInputActivity extends AppCompatActivity implements SectionM
         // <사용자 알림>
         Toast.makeText(
                 this,
-                R.string.billiardInput_noticeUser_saveComplete,
+                R.string.A_billiardInput_noticeUser_saveComplete,
                 Toast.LENGTH_SHORT
         ).show();
 

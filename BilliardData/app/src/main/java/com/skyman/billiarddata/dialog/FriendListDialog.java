@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.UserManagerActivity;
+import com.skyman.billiarddata.UserActivity;
 import com.skyman.billiarddata.etc.SectionManager;
 import com.skyman.billiarddata.etc.database.AppDbManager;
 import com.skyman.billiarddata.listView.FriendLvAdapter2;
@@ -66,7 +66,7 @@ public class FriendListDialog extends DialogFragment implements SectionManager.I
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.custom_dialog_friend_list, container, false);
+        return inflater.inflate(R.layout.dialog_friend_list, container, false);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class FriendListDialog extends DialogFragment implements SectionManager.I
 
     @Override
     public void initAppDbManager() {
-        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+        appDbManager = ((UserActivity) getActivity()).getAppDbManager();
     }
 
     @Override

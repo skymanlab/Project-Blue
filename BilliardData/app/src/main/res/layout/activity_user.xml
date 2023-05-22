@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserManagerActivity">
+    tools:context=".UserActivity">
 
     <!-- main -->
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
             android:padding="10dp"
-            android:text="@string/userManager_title"
+            android:text="@string/A_user_title"
             android:textAlignment="center" />
 
         <!-- content -->
@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/userManager_tabLayout"
+                android:id="@+id/A_user_tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPagerTab" />
@@ -39,7 +39,7 @@
                 android:background="?android:attr/listDivider" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/userManager_viewPager2"
+                android:id="@+id/A_user_viewPager2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

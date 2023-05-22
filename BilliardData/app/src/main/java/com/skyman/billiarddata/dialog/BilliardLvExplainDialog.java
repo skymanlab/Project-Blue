@@ -39,7 +39,7 @@ public class BilliardLvExplainDialog extends DialogFragment implements SectionMa
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.custom_dialog_billiard_lv_explain, container, false);
+        return inflater.inflate(R.layout.dialog_billiard_lv_explain, container, false);
     }
 
     @Override

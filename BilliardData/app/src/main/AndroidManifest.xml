@@ -15,7 +15,7 @@
         <activity android:name=".BilliardModifyActivity" />
         <activity android:name=".StatsActivity" />
         <activity android:name=".AppInfoActivity" />
-        <activity android:name=".UserManagerActivity" />
+        <activity android:name=".UserActivity" />
         <activity android:name=".BilliardDisplayActivity" />
         <activity android:name=".BilliardInputActivity" />
         <activity

@@ -128,78 +128,78 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
     public void connectWidget() {
 
         // [iv/C]TextView : count mapping
-        this.count = (TextView) findViewById(R.id.billiardModify_count);
+        this.count = (TextView) findViewById(R.id.A_billiardModify_count);
 
         // [iv/C]Spinner : dateYear mapping
-        this.dateYear = (Spinner) findViewById(R.id.billiardModify_sp_date_year);
+        this.dateYear = (Spinner) findViewById(R.id.A_billiardModify_sp_date_year);
 
         // [iv/C]Spinner : dateMonth mapping
-        this.dateMonth = (Spinner) findViewById(R.id.billiardModify_sp_date_month);
+        this.dateMonth = (Spinner) findViewById(R.id.A_billiardModify_sp_date_month);
 
         // [iv/C]Spinner : dateDay mapping
-        this.dateDay = (Spinner) findViewById(R.id.billiardModify_sp_date_day);
+        this.dateDay = (Spinner) findViewById(R.id.A_billiardModify_sp_date_day);
 
         // [iv/C]Spinner : gameMode mapping
-        this.gameMode = (Spinner) findViewById(R.id.billiardModify_gameMode);
+        this.gameMode = (Spinner) findViewById(R.id.A_billiardModify_gameMode);
 
         // [iv/C]TextView : playerCount mapping
-        this.playerCount = (TextView) findViewById(R.id.billiardModify_playerCount);
+        this.playerCount = (TextView) findViewById(R.id.A_billiardModify_playerCount);
 
         // [iv/C]TextView : playerCount mapping
-        this.winnerId = (TextView) findViewById(R.id.billiardModify_winnerId);
+        this.winnerId = (TextView) findViewById(R.id.A_billiardModify_winnerId);
 
         // [iv/C]Spinner : winner mapping
-        this.winnerName = (Spinner) findViewById(R.id.billiardModify_winnerName);
+        this.winnerName = (Spinner) findViewById(R.id.A_billiardModify_winnerName);
 
         // [iv/C]EditText : playTime mapping
-        this.playTime = (EditText) findViewById(R.id.billiardModify_playTime);
+        this.playTime = (EditText) findViewById(R.id.A_billiardModify_playTime);
 
         // [iv/C]LinearLayout : playerSection 배열 생생
         this.playerSection = new LinearLayout[4];
 
         // [iv/C]LinearLayout : playerSection mapping
-        this.playerSection[0] = (LinearLayout) findViewById(R.id.billiardModify_playerSection_0);
-        this.playerSection[1] = (LinearLayout) findViewById(R.id.billiardModify_playerSection_1);
-        this.playerSection[2] = (LinearLayout) findViewById(R.id.billiardModify_playerSection_2);
-        this.playerSection[3] = (LinearLayout) findViewById(R.id.billiardModify_playerSection_3);
+        this.playerSection[0] = (LinearLayout) findViewById(R.id.A_billiardModify_playerSection_0);
+        this.playerSection[1] = (LinearLayout) findViewById(R.id.A_billiardModify_playerSection_1);
+        this.playerSection[2] = (LinearLayout) findViewById(R.id.A_billiardModify_playerSection_2);
+        this.playerSection[3] = (LinearLayout) findViewById(R.id.A_billiardModify_playerSection_3);
 
         // [iv/C]TextView : playerName 배열 생성
         this.playerName = new TextView[4];
 
         // [iv/C]TextView : playerName mapping
-        this.playerName[0] = (TextView) findViewById(R.id.billiardModify_playerSection_playerName_0);
-        this.playerName[1] = (TextView) findViewById(R.id.billiardModify_playerSection_playerName_1);
-        this.playerName[2] = (TextView) findViewById(R.id.billiardModify_playerSection_playerName_2);
-        this.playerName[3] = (TextView) findViewById(R.id.billiardModify_playerSection_playerName_3);
+        this.playerName[0] = (TextView) findViewById(R.id.A_billiardModify_playerSection_playerName_0);
+        this.playerName[1] = (TextView) findViewById(R.id.A_billiardModify_playerSection_playerName_1);
+        this.playerName[2] = (TextView) findViewById(R.id.A_billiardModify_playerSection_playerName_2);
+        this.playerName[3] = (TextView) findViewById(R.id.A_billiardModify_playerSection_playerName_3);
 
         // [iv/C]Spinner : targetScore 배열 생성
         this.targetScore = new Spinner[4];
 
         // [iv/C]Spinner : targetScore mapping
-        this.targetScore[0] = (Spinner) findViewById(R.id.billiardModify_playerSection_targetScore_0);
-        this.targetScore[1] = (Spinner) findViewById(R.id.billiardModify_playerSection_targetScore_1);
-        this.targetScore[2] = (Spinner) findViewById(R.id.billiardModify_playerSection_targetScore_2);
-        this.targetScore[3] = (Spinner) findViewById(R.id.billiardModify_playerSection_targetScore_3);
+        this.targetScore[0] = (Spinner) findViewById(R.id.A_billiardModify_playerSection_targetScore_0);
+        this.targetScore[1] = (Spinner) findViewById(R.id.A_billiardModify_playerSection_targetScore_1);
+        this.targetScore[2] = (Spinner) findViewById(R.id.A_billiardModify_playerSection_targetScore_2);
+        this.targetScore[3] = (Spinner) findViewById(R.id.A_billiardModify_playerSection_targetScore_3);
 
         // [iv/C]EditText : score 배열 생성
         this.score = new EditText[4];
 
         // [iv/C]EditText : score mapping
-        this.score[0] = (EditText) findViewById(R.id.billiardModify_playerSection_score_0);
-        this.score[1] = (EditText) findViewById(R.id.billiardModify_playerSection_score_1);
-        this.score[2] = (EditText) findViewById(R.id.billiardModify_playerSection_score_2);
-        this.score[3] = (EditText) findViewById(R.id.billiardModify_playerSection_score_3);
+        this.score[0] = (EditText) findViewById(R.id.A_billiardModify_playerSection_score_0);
+        this.score[1] = (EditText) findViewById(R.id.A_billiardModify_playerSection_score_1);
+        this.score[2] = (EditText) findViewById(R.id.A_billiardModify_playerSection_score_2);
+        this.score[3] = (EditText) findViewById(R.id.A_billiardModify_playerSection_score_3);
 
         // [iv/C]EditText : cost mapping
-        this.cost = (EditText) findViewById(R.id.billiardModify_cost);
+        this.cost = (EditText) findViewById(R.id.A_billiardModify_cost);
 
         // [iv/C]Button : modify mapping
-        this.modify = (Button) findViewById(R.id.billiardModify_button_modify);
+        this.modify = (Button) findViewById(R.id.A_billiardModify_button_modify);
 
-        this.delete = (Button) findViewById(R.id.billiardModify_button_delete);
+        this.delete = (Button) findViewById(R.id.A_billiardModify_button_delete);
 
         // [iv/C]Button : cancel mapping
-        this.cancel = (Button) findViewById(R.id.billiardModify_button_cancel);
+        this.cancel = (Button) findViewById(R.id.A_billiardModify_button_cancel);
 
     }
 
@@ -549,9 +549,9 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
                         // <사용자 확인>
                         new AlertDialog.Builder(this)
-                                .setTitle(R.string.billiardModify_dialog_modifyData_title)
-                                .setMessage(R.string.billiardModify_dialog_modifyData_message)
-                                .setPositiveButton(R.string.billiardModify_dialog_modifyData_positive, new DialogInterface.OnClickListener() {
+                                .setTitle(R.string.A_billiardModify_dialog_modifyData_title)
+                                .setMessage(R.string.A_billiardModify_dialog_modifyData_message)
+                                .setPositiveButton(R.string.A_billiardModify_dialog_modifyData_positive, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
@@ -584,7 +584,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
                                     }
                                 })
-                                .setNegativeButton(R.string.billiardModify_dialog_modifyData_negative, new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.A_billiardModify_dialog_modifyData_negative, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
@@ -599,7 +599,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                         // <사용자 알림>
                         Toast.makeText(
                                 this,
-                                R.string.billiardModify_noticeUser_noChangedData,
+                                R.string.A_billiardModify_noticeUser_noChangedData,
                                 Toast.LENGTH_LONG
                         ).show();
                     } // [check 4]
@@ -625,10 +625,10 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
 
         // <사용자 확인>
         new AlertDialog.Builder(this)
-                .setTitle(R.string.billiardModify_dialog_deleteData_title)
-                .setMessage(R.string.billiardModify_dialog_deleteData_message)
+                .setTitle(R.string.A_billiardModify_dialog_deleteData_title)
+                .setMessage(R.string.A_billiardModify_dialog_deleteData_message)
                 .setPositiveButton(
-                        R.string.billiardModify_dialog_deleteData_positive,
+                        R.string.A_billiardModify_dialog_deleteData_positive,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -638,7 +638,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                         }
                 )
                 .setNegativeButton(
-                        R.string.billiardModify_dialog_deleteData_negative,
+                        R.string.A_billiardModify_dialog_deleteData_negative,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -774,9 +774,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                                     friendDataArrayList.get(index).getTotalPlayTime(),
                                     friendDataArrayList.get(index).getTotalCost()
                             );
-
                         }
-
                     }
                 }
         );
@@ -806,9 +804,7 @@ public class BilliardModifyActivity extends AppCompatActivity implements Section
                             result[index] = playerDbManager2.updateContentByCount(
                                     playerDataArrayList.get(index)
                             );
-
                         }
-
                     }
                 }
         );

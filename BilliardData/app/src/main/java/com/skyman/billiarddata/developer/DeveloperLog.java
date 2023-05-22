@@ -16,11 +16,6 @@ public final class DeveloperLog {
 
     public static final LogSwitch PROJECT_LOG_SWITCH = LogSwitch.ON;
 
-//    public static void displayLog(String className, String logMessage) {
-//        if (PROJECT_LOG_SWITCH == LogSwitch.ON)
-//            Log.d(className, logMessage);
-//    }
-
     public static void printLog(LogSwitch CLASS_LOG_SWITCH, String className, String log) {
         if (PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
             if (CLASS_LOG_SWITCH.equals(LogSwitch.ON))
@@ -92,7 +87,6 @@ public final class DeveloperLog {
                 } else {
                     Log.d(className, "userDataArrayList 의 size 가 0 입니다.");
                 }
-
     }
 
 
@@ -125,7 +119,6 @@ public final class DeveloperLog {
                 } else {
                     Log.d(className, "friendData 가 null 입니다.");
                 }
-
     }
 
     /**
@@ -157,7 +150,6 @@ public final class DeveloperLog {
                 } else {
                     Log.d(className, "friendDataArrayList 의 size 가 0 입니다.");
                 }
-
     }
 
 
@@ -191,7 +183,6 @@ public final class DeveloperLog {
                 } else {
                     Log.d(className, "billiardData 가 null 입니다.");
                 }
-
     }
 
     /**
@@ -221,11 +212,9 @@ public final class DeveloperLog {
                         Log.d(className, "8. cost : " + billiardDataArrayList.get(index).getCost());                        // 8. cost
 
                     }
-
                 } else {
                     Log.d(className, "billiardDataArrayList 의 size 가 0 입니다.");
                 }
-
     }
 
 
@@ -257,11 +246,8 @@ public final class DeveloperLog {
                         Log.d(className, "5. score : " + playerDataArrayList.get(index).getScore());                       // 5. score
 
                     }
-
                 } else {
                     Log.d(className, "playerDataArrayList 의 size 가 0 입니다.");
                 }
-
     }
-
 }

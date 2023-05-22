@@ -19,7 +19,7 @@
             android:background="@color/colorActivityTitle"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/appSetting_title" />
+            android:text="@string/A_appSetting_title" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="@string/appSetting_dataBackUp"
+                    android:text="@string/A_appSetting_dataBackUp"
                     android:textColor="@android:color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -61,7 +61,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/appSetting_dataBackUp_exportWrapper"
+                            android:id="@+id/A_appSetting_dataBackUp_exportWrapper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -72,17 +72,17 @@
                             android:paddingBottom="10dp">
 
                             <TextView
-                                android:id="@+id/appSetting_dataBackUp_export"
+                                android:id="@+id/A_appSetting_dataBackUp_export"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appSetting_dataBackUp_export"
+                                android:text="@string/A_appSetting_dataBackUp_export"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appSetting_dataBackUp_export_explanation" />
+                                android:text="@string/A_appSetting_dataBackUp_export_explanation" />
                         </LinearLayout>
 
                         <View
@@ -93,7 +93,7 @@
                             android:background="?android:attr/listDivider" />
 
                         <LinearLayout
-                            android:id="@+id/appSetting_dataBackUp_importWrapper"
+                            android:id="@+id/A_appSetting_dataBackUp_importWrapper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -104,17 +104,17 @@
                             android:paddingBottom="15dp">
 
                             <TextView
-                                android:id="@+id/appSetting_data_import"
+                                android:id="@+id/A_appSetting_data_import"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appSetting_dataBackUp_import"
+                                android:text="@string/A_appSetting_dataBackUp_import"
                                 android:textColor="@android:color/black"
                                 android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/appSetting_dataBackUp_import_explanation" />
+                                android:text="@string/A_appSetting_dataBackUp_import_explanation" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView><!-- End of content 1. data -->

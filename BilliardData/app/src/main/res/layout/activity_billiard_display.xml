@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
             android:padding="10dp"
-            android:text="@string/billiardDisplay_title"
+            android:text="@string/A_billiardDisplay_title"
             android:textAlignment="center" />
 
         <com.google.android.material.card.MaterialCardView
@@ -50,10 +50,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="5dp"
-                        android:text="@string/billiardDisplay_listView_title" />
+                        android:text="@string/A_billiardDisplay_listView_title" />
 
                     <ImageView
-                        android:id="@+id/billiardDisplay_button_more"
+                        android:id="@+id/A_billiardDisplay_button_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|end"
@@ -68,7 +68,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <ListView
-                    android:id="@+id/billiardDisplay_listView_billiardList"
+                    android:id="@+id/A_billiardDisplay_listView_billiardList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
@@ -79,12 +79,12 @@
                     android:background="?android:attr/listDivider" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/billiardDisplay_button_delete"
+                    android:id="@+id/A_billiardDisplay_button_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/billiardDisplay_button_delete"
+                    android:text="@string/A_billiardDisplay_button_delete"
                     app:backgroundTint="@color/colorBackgroundPrimary" />
 
             </LinearLayout><!-- End of content -->

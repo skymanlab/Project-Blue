@@ -63,13 +63,13 @@ public class AppInfoActivity extends AppCompatActivity implements SectionManager
     @Override
     public void connectWidget() {
 
-        this.blog1 = (TextView) findViewById(R.id.appInfo_blog_1);
+        this.blog1 = (TextView) findViewById(R.id.A_appInfo_blog_1);
 
-        this.blog2 = (TextView) findViewById(R.id.appInfo_blog_2);
+        this.blog2 = (TextView) findViewById(R.id.A_appInfo_blog_2);
 
-        this.adMob = (MaterialButton) findViewById(R.id.appInfo_adMob);
+        this.adMob = (MaterialButton) findViewById(R.id.A_appInfo_adMob);
 
-        this.adView = (AdView) findViewById(R.id.appInfo_adView);
+        this.adView = (AdView) findViewById(R.id.A_appInfo_adView);
 
     }
 
@@ -121,24 +121,21 @@ public class AppInfoActivity extends AppCompatActivity implements SectionManager
                             // <사용자 확인>
                             Toast.makeText(
                                     AppInfoActivity.this,
-                                    R.string.appInfo_noticeUser_loadFullAd,
+                                    R.string.A_appInfo_noticeUser_loadFullAd,
                                     Toast.LENGTH_SHORT
                             ).show();
 
                             interstitialAd.show(AppInfoActivity.this);
 
                         } else {
-
                             // <사용자 확인>
                             Toast.makeText(
                                     AppInfoActivity.this,
-                                    R.string.appInfo_noticeUser_didNotLoadFullAd,
+                                    R.string.A_appInfo_noticeUser_didNotLoadFullAd,
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
-
                     }
-
                 }
         );
 
@@ -173,7 +170,6 @@ public class AppInfoActivity extends AppCompatActivity implements SectionManager
                 new OnInitializationCompleteListener() {
                     @Override
                     public void onInitializationComplete(InitializationStatus initializationStatus) {
-
                     }
                 }
         );
@@ -214,10 +210,8 @@ public class AppInfoActivity extends AppCompatActivity implements SectionManager
                                         // Make sure to set your reference to null so you don't
                                         // show it a second time.
                                         AppInfoActivity.this.interstitialAd = null;
-
                                     }
                                 }
-
                         );
                         super.onAdLoaded(interstitialAd);
                     }
@@ -233,7 +227,7 @@ public class AppInfoActivity extends AppCompatActivity implements SectionManager
                         // <사용자 확인>
                         Toast.makeText(
                                 AppInfoActivity.this,
-                                R.string.appInfo_noticeUser_errorAdMob,
+                                R.string.A_appInfo_noticeUser_errorAdMob,
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

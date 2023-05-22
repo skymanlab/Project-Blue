@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/clv_byMonthStats_contentWrapper"
+        android:id="@+id/lv_byMonthStats_contentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
@@ -31,17 +31,17 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/clv_byMonthStats_year"
+                        android:id="@+id/lv_byMonthStats_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="@string/clv_byMonthStats_year_default"/>
+                        android:text="@string/lv_byMonthStats_year_default"/>
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/clv_byMonthStats_month"
+                        android:id="@+id/lv_byMonthStats_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/clv_byMonthStats_month_default"
+                        android:text="@string/lv_byMonthStats_month_default"
                         android:textSize="20sp"
                         android:textColor="@color/cardview_dark_background"/>
                 </LinearLayout>
@@ -67,7 +67,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/clv_byMonthStats_record"/>
+                        android:text="@string/lv_byMonthStats_record"/>
 
                     <View
                         android:layout_width="1dp"
@@ -77,10 +77,10 @@
                         android:background="@color/cardview_dark_background" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/clv_byMonthStats_record"
+                        android:id="@+id/lv_byMonthStats_record"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/clv_byMonthStats_record_default"/>
+                        android:text="@string/lv_byMonthStats_record_default"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

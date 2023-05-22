@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="@string/main_title" />
+                android:text="@string/A_main_title" />
 
             <!-- icon image-->
             <ImageView
@@ -35,74 +35,74 @@
 
             <!-- billiard input -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_billiardInput"
+                android:id="@+id/A_main_button_billiardInput"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_billiardInput"
+                android:text="@string/A_main_button_billiardInput"
                 app:cornerRadius="5dp" />
 
             <!-- billiard display -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_billiardDisplay"
+                android:id="@+id/A_main_button_billiardDisplay"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_billiardDisplay"
+                android:text="@string/A_main_button_billiardDisplay"
                 app:cornerRadius="5dp" />
 
             <!-- user manager -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_userManager"
+                android:id="@+id/A_main_button_userManager"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_userManager"
+                android:text="@string/A_main_button_userManager"
                 app:cornerRadius="5dp" />
 
             <!-- statistics manager -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_stats"
+                android:id="@+id/A_main_button_stats"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_stats"
+                android:text="@string/A_main_button_stats"
                 app:cornerRadius="5dp" />
 
             <!-- setting -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_appSetting"
+                android:id="@+id/A_main_button_appSetting"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_appSetting"
+                android:text="@string/A_main_button_appSetting"
                 app:cornerRadius="5dp" />
 
             <!-- app info -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_button_appInfo"
+                android:id="@+id/A_main_button_appInfo"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/main_button_appInfo"
+                android:text="@string/A_main_button_appInfo"
                 app:cornerRadius="5dp" />
 
             <!-- footer -->
@@ -111,7 +111,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal|bottom"
                 android:padding="5dp"
-                android:text="@string/main_footer" />
+                android:text="@string/A_main_footer" />
         </LinearLayout><!-- End of content -->
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

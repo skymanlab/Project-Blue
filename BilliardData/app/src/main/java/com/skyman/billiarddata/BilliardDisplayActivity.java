@@ -100,12 +100,12 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
     @Override
     public void connectWidget() {
 
-        this.more = (ImageView) findViewById(R.id.billiardDisplay_button_more);
+        this.more = (ImageView) findViewById(R.id.A_billiardDisplay_button_more);
 
-        this.billiardListView = (ListView) findViewById(R.id.billiardDisplay_listView_billiardList);
+        this.billiardListView = (ListView) findViewById(R.id.A_billiardDisplay_listView_billiardList);
 
         // [iv/C]Button : delete mapping
-        this.delete = (Button) findViewById(R.id.billiardDisplay_button_delete);
+        this.delete = (Button) findViewById(R.id.A_billiardDisplay_button_delete);
 
     }
 
@@ -233,9 +233,9 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
 
             // <사용자 확인>
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.billiardDisplay_dialog_allDataDelete_title)
-                    .setMessage(R.string.billiardDisplay_dialog_allDataDelete_message)
-                    .setPositiveButton(R.string.billiardDisplay_dialog_allDataDelete_positive,
+                    .setTitle(R.string.A_billiardDisplay_dialog_allDataDelete_title)
+                    .setMessage(R.string.A_billiardDisplay_dialog_allDataDelete_message)
+                    .setPositiveButton(R.string.A_billiardDisplay_dialog_allDataDelete_positive,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -245,7 +245,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
                                 }
                             }
                     )
-                    .setNegativeButton(R.string.billiardDisplay_dialog_allDataDelete_negative,
+                    .setNegativeButton(R.string.A_billiardDisplay_dialog_allDataDelete_negative,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -262,7 +262,7 @@ public class BilliardDisplayActivity extends AppCompatActivity implements Sectio
             // <사용자 알림>
             Toast.makeText(
                     this,
-                    R.string.billiardDisplay_noticeUser_noData,
+                    R.string.A_billiardDisplay_noticeUser_noData,
                     Toast.LENGTH_SHORT
             ).show();
 

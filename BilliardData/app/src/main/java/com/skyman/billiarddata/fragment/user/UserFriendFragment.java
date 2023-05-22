@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.skyman.billiarddata.R;
-import com.skyman.billiarddata.UserManagerActivity;
+import com.skyman.billiarddata.UserActivity;
 import com.skyman.billiarddata.developer.LogSwitch;
 import com.skyman.billiarddata.dialog.FriendListDialog;
 import com.skyman.billiarddata.etc.SectionManager;
@@ -162,7 +162,7 @@ public class UserFriendFragment extends Fragment implements SectionManager.Initi
 
     @Override
     public void initAppDbManager() {
-        appDbManager = ((UserManagerActivity) getActivity()).getAppDbManager();
+        appDbManager = ((UserActivity) getActivity()).getAppDbManager();
     }
 
     @Override

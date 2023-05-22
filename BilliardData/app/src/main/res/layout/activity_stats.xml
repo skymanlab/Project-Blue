@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorActivityTitle"
             android:padding="10dp"
-            android:text="@string/stats_title"
+            android:text="@string/A_stats_title"
             android:textAlignment="center" />
 
         <!-- content -->
@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/stats_tabLayout"
+                android:id="@+id/A_stats_tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPagerTab" />
@@ -40,7 +40,7 @@
 
             <!-- content 2. pager-->
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/stats_viewPager"
+                android:id="@+id/A_stats_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
