@@ -11,7 +11,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Date {
-    private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
+
+    // 날짜 유형
+    // 1. 년도만 있는 형태 - 예) 2023년 0월 0일
+    // 2. 년도, 월만 있는 형태 - 예) 2023년 10월 0일
+    // 3. 일반적인 형태 - 예) 2023년 10월 1일일
+   private static final LogSwitch CLASS_LOG_SWITCH = LogSwitch.OFF;
     private static final String CLASS_NAME = "Date";
 
     public static final String DATE_PATTERN = "yyyy년 MM월 dd일";

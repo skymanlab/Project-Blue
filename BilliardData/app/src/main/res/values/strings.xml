@@ -244,6 +244,7 @@
     <!-- Fragment : chart -->
     <string name="F_chart_title">차트로 확인해봐요.</string>
     <string name="F_chart_myTotalGameRecord">총 전적</string>
+    <string name="F_chart_recentFiveGame">최근 전적</string>
     <string name="F_chart_myTotalGameRecord_default">0전 0승 0패</string>
 
 

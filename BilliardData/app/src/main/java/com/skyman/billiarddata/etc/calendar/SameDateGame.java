@@ -48,6 +48,47 @@ public class SameDateGame implements Serializable {
         return referenceList;
     }
 
+    public String recentFiveGame() {
+
+        if (recordTypeList != null && recordTypeList.size() != 0) {
+
+            StringBuilder recentFiveGame = new StringBuilder();
+
+            // 예시 : 3 wins 2losses 4draws of 9 matches
+            int wins = 0;       // 승
+            int losses = 0;     // 패
+
+            for (int index = recordTypeList.size()-1, gameCounter = 5; gameCounter > 0 ; index--, gameCounter--) {
+
+                if (index < 0)
+                    break;
+
+                switch (recordTypeList.get(index)) {
+                    case WIN:
+                        wins++;
+                        break;
+                    case LOSS:
+                        losses++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            recentFiveGame.append(wins + losses);
+            recentFiveGame.append("전 ");
+            recentFiveGame.append(wins);
+            recentFiveGame.append("승 ");
+            recentFiveGame.append(losses);
+            recentFiveGame.append("패 ");
+
+            return recentFiveGame.toString();
+        } else {
+            return null;
+        }
+
+    }
+
     public void printLog(LogSwitch CLASS_LOG_SWITCH, String CLASS_NAME) {
         if (DeveloperLog.PROJECT_LOG_SWITCH.equals(LogSwitch.ON))
             if (CLASS_LOG_SWITCH.equals(LogSwitch.ON)) {

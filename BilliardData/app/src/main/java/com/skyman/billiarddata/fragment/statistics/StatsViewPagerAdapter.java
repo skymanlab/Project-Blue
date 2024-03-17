@@ -19,12 +19,14 @@ public class StatsViewPagerAdapter extends FragmentStateAdapter {
     private ArrayList<BilliardData> billiardDataList;
     private SameDateGameAnalysis analysis;
 
+
     // constructor
     public StatsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, UserData userData, ArrayList<BilliardData> billiardDataList, SameDateGameAnalysis analysis) {
         super(fragmentActivity);
         this.userData = userData;
         this.billiardDataList = billiardDataList;
         this.analysis = analysis;
+
     }
 
     @NonNull

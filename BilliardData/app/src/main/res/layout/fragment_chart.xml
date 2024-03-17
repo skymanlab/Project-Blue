@@ -22,36 +22,37 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/F_chart_totalSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             app:cardCornerRadius="10dp">
 
-            <!-- my total game record -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/F_chart_myTotalGameRecord" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@color/cardview_dark_background" />
-
-                <TextView
-                    android:id="@+id/F_chart_recordOfAllGame"
+                <!-- my total game record -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/F_chart_myTotalGameRecord_default" />
-            </LinearLayout><!-- End of my total game record -->
+                    android:orientation="horizontal"
+                    android:padding = "15dp">
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/F_chart_myTotalGameRecord" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/cardview_dark_background" />
+
+                    <TextView
+                        android:id="@+id/F_chart_recordOfAllGame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/F_chart_myTotalGameRecord_default" />
+                </LinearLayout><!-- End of my total game record -->
+
         </com.google.android.material.card.MaterialCardView>
 
         <ListView

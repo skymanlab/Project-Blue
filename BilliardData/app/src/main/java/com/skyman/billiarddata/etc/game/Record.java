@@ -27,6 +27,10 @@ public class Record {
         lossCounter.plus(record.getLossCounter().getValue());
     }
 
+    public String winningPercentage() {
+        return (winCounter.getValue() / totalNumberOfGame().getValue()) + "%";
+    }
+
     public String toString() {
         return totalNumberOfGame().getValue() + "전 " + winCounter.getValue() + "승 " + lossCounter.getValue() + "패 ";
     }

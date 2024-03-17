@@ -30,9 +30,9 @@ public class StatsAnalysis extends Stats {
 
 
     // instance variable : information
-    protected Map<Integer, Counter> playerCounterList;                  // 모든 게임의 참가자 수 별 게임 횟수
-    protected Map<GameMode, Counter> gameModeCounterList;               // 모든 게임의 게임 모드 별 게임 횟수
-    protected Map<String, RelativeRecordStats> relativeRecordStatsList;  // 모든 게임의 상대 전적 리스트
+    protected Map<Integer, Counter> playerCounterList;                  // 모든 게임의 참가자 수 별 게임 횟수 : <참가자 수(2인, 3인, 4인), 게임 횟수>
+    protected Map<GameMode, Counter> gameModeCounterList;               // 모든 게임의 게임 모드 별 게임 횟수 : <게임 모드(3구, 4구, 포켓볼), 게임 횟수>
+    protected Map<String, RelativeRecordStats> relativeRecordStatsList;  // 모든 게임의 상대 전적 리스트 : <상대 이름, 전적>
 
 
     // instance variable : DB

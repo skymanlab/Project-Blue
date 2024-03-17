@@ -21,9 +21,9 @@ import java.util.Map;
 public class SameDateGameAnalysis {
 
     SameDateGame allGame;                       // 년, 월, 일에 상관없이 모든 게임의 리스트
-    Map<String, SameDateGame> sameYearGameList;     // 같은 년도의 게임 리스트
-    Map<String, SameDateGame> sameMonthGameList;    // 같은 년, 월의 게임 리스트
-    Map<String, SameDateGame> sameDateGameList;     // 같은 년, 월, 일의 게임 리스트
+    Map<String, SameDateGame> sameYearGameList;     // 같은 년도의 게임 리스트 : <년도, 같은 년도에 한 게임>
+    Map<String, SameDateGame> sameMonthGameList;    // 같은 년, 월의 게임 리스트 : <년도, 같은 달에 한 게임>
+    Map<String, SameDateGame> sameDateGameList;     // 같은 년, 월, 일의 게임 리스트 : <년도, 같은 날짜에 한 게임>
     ArrayList<BilliardData> sortedBilliardDataList; // 정렬된 billiardDataList
 
     public SameDateGameAnalysis() {
